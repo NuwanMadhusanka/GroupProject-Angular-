@@ -1,0 +1,26 @@
+<div class="container-fluid">
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    <button (click)=closeError() type="button" aria-hidden="true" class="close">
+      <i class="now-ui-icons ui-1_simple-remove"></i>
+    </button>
+    <span>{{errorMessage}}</span>
+  </div>
+
+    <div class="row">
+      <div class="card" style="width: 20rem;">
+          <form>
+            <div class="form-group">
+              <input [formControl]="email" type="text" class="form-control"  placeholder="Email">
+            </div>
+            <div class="form-group">
+              <input [formControl]="password" type="text" class="form-control"  placeholder="Password">
+            </div>
+
+            <button (click)="handleLogin()" type="button" class="btn btn-primary">Login</button>
+          </form>
+  
+      </div>
+    </div>
+  
+</div>
