@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserServiceService,UserBean } from '../../service/user/user-service.service';
-
-
+import { UserServiceService} from '../../service/user/user-service.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { throwError } from 'rxjs';
+import { StudentServiceService } from '../../service/student/student-service.service';
+import { UserModel } from '../../ClassModel/UserModel';
+import { StudentModel } from '../../ClassModel/StudentModel';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-student-add',
@@ -25,17 +29,19 @@ export class StudentAddComponent implements OnInit {
   test:boolean;//Regular exprssion result
 
   //idate:Date;
-
-  user:UserBean;//user Object
+  
 
   constructor(
    private router:Router,
-   private userService:UserServiceService
+   private userService:UserServiceService,
+   private studentService:StudentServiceService
   ) { }
 
   ngOnInit() {
+    
   }
 
+  //Student Registration Funtion
   registerStudent(){
     
     this.errorMessage="";
@@ -48,14 +54,14 @@ export class StudentAddComponent implements OnInit {
     //validate NIC
     if(this.nic===""){
       this.errorMessage+="NIC number is mandatory / ";
-    }else if( this.nic.length != 10 || (this.isPatternNic())){
+    }else if( (this.isPatternNic()) ){
       this.errorMessage+="Enter Valid NIC Number / "
     }
 
     //Valid Number
-    if(this.tel=="" || this.tel==null){
+    if(this.tel===""){
       this.errorMessage+="Telephone number is mandatory / ";
-    }else if(  this.tel.length!=10 || (this.isTel()) ){
+    }else if( (this.isTel()) ){
       this.errorMessage+="Enter Valid Telephone Number / ";
     }
 
@@ -89,48 +95,99 @@ export class StudentAddComponent implements OnInit {
     //   this.errorMessage+="Enter Correct Exam date and Trial date / "
     // }
 
-    if(this.errorMessage==""){
-      console.log(this.email)
-      //create user object
-      this.user.email=this.email;
-      this.user.password=this.password;
-      this.user.regDate=new Date();
-      this.user.role=5;
-      this.user.status=1
 
+    //Save to the DB
+    if(this.errorMessage==""){
+    
       //work with backend service
-      this.userService.userRegister(this.user).subscribe(
-        response => this.handleSuccessfulResponse(response),
+
+      //1)Save User relevant Data
+      this.userService.userRegister(new UserModel(-1,this.email,this.password,new Date(),1,5)).subscribe(
+        response => {
+          var userId=response.userId
+          console.log(userId);
+
+          //Save Student relevant Data
+          this.studentService.studentRegister(new StudentModel(-1,this.name,this.tel,this.nic,this.examDate,this.trialDate,this.address,response)).subscribe(
+            response => {
+              console.log(response);
+              this.router.navigate(['student-list'])},
+            error => {
+              //If it's error should delete user record from the db
+              this.userService.userDelete(userId).subscribe(
+                response => {console.log("user delete success")},
+                error => {console.log("User delete not success")}
+
+              )
+              console.log(error);
+              this.handleErrorResponse(error);
+            }
+          )
+
+        },
         error => this.handleErrorResponse(error)
       )
+      
     }
 
   }
 
-  handleSuccessfulResponse(response){
-    console.log(response);
-  }
+  
+  // handleSuccessfulResponse(response){
+  //   //2)Save the student date    
+  //   console.log("response")
+  //   console.log(response.Data);
+  // }
 
-  handleErrorResponse(error){
-    console.log(error);
-  }
+  // handleErrorResponse(error){
+  //   console.log("error")
+  //   console.log(error);
+  // }
 
+  private handleErrorResponse(error: HttpErrorResponse) {
+    this.errorMessage="Not Successful Registration";
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    }
+    // return an observable with a user-facing error message
+    return throwError(
+      'Something bad happened; please try again later.');
+  };
+
+
+  //Validation Functions
   isPatternNic(){
-    this.regexp = new RegExp('\d{9,9}[v,V]');
-    this.test = this.regexp.test(this.nic);
-    if(this.test){
-      return false;
+    if(this.nic.length == 10){
+      this.regexp = new RegExp('\\d{9,9}[v,V]');
+      this.test = this.regexp.test(this.nic);
+      if(this.test){
+        return false;
+      }else{
+        return true;
+      }
     }
-    return false;
+    return true;
   }
 
   isTel(){
-    this.regexp = new RegExp('\d{10,10}');
-    this.test = this.regexp.test(this.tel);
-    if(this.test){
-      return false;
+    if(this.tel.length == 10){
+      this.regexp = new RegExp('\\d{10,10}');
+      this.test = this.regexp.test(this.tel);
+      if(this.test){
+        return false;
+      }else{
+        return true;
+      }
+      
     }
-    return false;
+    return true;
   }
 
   closeError(){

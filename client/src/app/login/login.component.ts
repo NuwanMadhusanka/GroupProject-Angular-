@@ -1,19 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule, FormControl } from '@angular/forms';
+import { FormsModule, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { UserAuthenticationServiceService } from '../service/user-authentication-service.service';
+import { throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
-
-export class UserBean{
-  constructor(
-    public userId:Number,
-    public email:String,
-    public password:String,
-    public regDate:String,
-    public status:Number,
-    public role:Number
-  ){}
-}
 
 @Component({
   selector: 'app-login',
@@ -22,15 +13,29 @@ export class UserBean{
 })
 export class LoginComponent implements OnInit {
 
+  //reactive form definition
+  loginForm=this.fb.group({
+    email:['',[Validators.required,Validators.email]],
+    password:['',Validators.required]
+  });
+
+  //getters for reactive form module email
+  get emailField(){
+    return this.loginForm.get('email')
+  }
+
+  //getters for reactive form module password
+  get passwordField(){
+    return this.loginForm.get('password')
+  }
+
   errorMessage;
 
-  //1.form control 
-  email=new FormControl();
-  password=new FormControl();
 
   constructor(
     private router:Router,
-    private userAuthenticationService:UserAuthenticationServiceService
+    private userAuthenticationService:UserAuthenticationServiceService,
+    private fb:FormBuilder
   ) { }
 
   ngOnInit(
@@ -40,19 +45,17 @@ export class LoginComponent implements OnInit {
   }
 
   handleLogin(){
-    
-    //1)validation
-    if(this.email.value==="" &&  this.password.value==="" ){
-      this.errorMessage="Enter Valid Email & Password!";
+
+    if(this.loginForm.valid){
+        //2) get the relevant data by userAuthentication Service(Call to API)
+        
+        this.userAuthenticationService.authenticate(this.emailField.value,this.passwordField.value).subscribe(
+          response => this.handleSuccessfulResponse(response),
+          error => this.handleErrorResponse(error)
+        )
     }else{
-
-      //2) get the relevant data by userAuthentication Service
-
-      this.userAuthenticationService.authenticate(this.email.value,this.password.value).subscribe(
-        response => this.handleSuccessfulResponse(response),
-        error => this.handleErrorResponse(error)
-      )
-    }
+        this.errorMessage="Insert Valid Inputs";
+    } 
 
   }
 
@@ -67,9 +70,23 @@ export class LoginComponent implements OnInit {
   }
 
   //Invalid User
-  handleErrorResponse(error){
-    this.errorMessage="Enter Valid Email & Password";
-  }
+  private handleErrorResponse(error: HttpErrorResponse) {
+    this.errorMessage="Not successful request";
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      this.errorMessage="Check the Network Connection"
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    }
+    // return an observable with a user-facing error message
+    return throwError(
+      'Something bad happened; please try again later.');
+  };
 
   //
   closeError(){

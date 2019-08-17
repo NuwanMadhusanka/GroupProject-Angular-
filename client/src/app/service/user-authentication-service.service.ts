@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UserBean } from '../login/login.component';
+import { UserModel } from '../ClassModel/UserModel';
+
 
 
 @Injectable({
@@ -14,6 +15,6 @@ export class UserAuthenticationServiceService {
   ) { }
 
   authenticate(email,password){
-    return this.http.get<UserBean>(`http://localhost:8080/login/${email}/${password}`);
+    return this.http.get<UserModel>(`http://localhost:8080/login/${email}/${password}`);
   }
 }

@@ -13,6 +13,8 @@ import { ReportListComponent } from '../../report/report-list/report-list.compon
 import { VehicleListComponent } from '../../vehicle/vehicle-list/vehicle-list.component';
 import { StudentListComponent } from '../../student/student-list/student-list.component';
 import { StudentAddComponent } from '../../student/student-add/student-add.component';
+import { StudentPackageAddComponent } from '../../student/student-package-add/student-package-add.component';
+import { StudentPaymentComponent } from '../../student/student-payment/student-payment.component';
 
 @NgModule({
   imports: [
@@ -30,7 +32,9 @@ import { StudentAddComponent } from '../../student/student-add/student-add.compo
     ReportListComponent,
     VehicleListComponent,
     StudentListComponent,
-    StudentAddComponent
+    StudentAddComponent,
+    StudentPackageAddComponent,
+    StudentPaymentComponent
   ]
 })
 

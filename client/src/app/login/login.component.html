@@ -9,15 +9,23 @@
 
     <div class="row">
       <div class="card" style="width: 20rem;">
-          <form>
-            <div class="form-group">
-              <input [formControl]="email" type="text" class="form-control"  placeholder="Email">
-            </div>
-            <div class="form-group">
-              <input [formControl]="password" type="text" class="form-control"  placeholder="Password">
-            </div>
 
-            <button (click)="handleLogin()" type="button" class="btn btn-primary">Login</button>
+          <form [formGroup]="loginForm" (ngSubmit)="handleLogin()">
+              <div class="form-group">
+                <input [class.is-invalid]="loginForm.get('email').invalid && loginForm.get('email').touched" formControlName="email" type="text" class="form-control"  placeholder="Email">
+                <div *ngIf="loginForm.get('email').invalid && loginForm.get('email').touched">
+                    <small *ngIf="emailField.errors?.required" class="text-danger">Email Required</small>
+                    <small *ngIf="emailField.errors?.email" class="text-danger">Required Valid Email</small>
+                </div>
+              </div>
+              <div class="form-group">
+                  <input [class.is-invalid]="loginForm.get('password').invalid && loginForm.get('password').touched" formControlName="password" type="password" class="form-control"  placeholder="Password">
+                  <div *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched">
+                      <small *ngIf="passwordField.errors?.required" class="text-danger">Password Required</small>
+                  </div>
+                </div>
+  
+              <button  type="submit" class="btn btn-primary">Login</button>
           </form>
   
       </div>

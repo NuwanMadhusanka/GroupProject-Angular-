@@ -1,16 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+import { UserModel } from '../../ClassModel/UserModel';
 
-export class UserBean{
-  constructor(
-    public userId:Number,
-    public email:String,
-    public password:String,
-    public regDate:Date,
-    public status:Number,
-    public role:Number
-  ){}
-}
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +10,17 @@ export class UserBean{
 export class UserServiceService {
 
   constructor(
-    private http:HttpClient
+    private http:HttpClient,
   ) { }
 
-  userRegister(user:UserBean){
-      return this.http.post(`http://localhost:8080/user/register`,user);
+  userRegister(user:UserModel){
+      console.log(user);
+      return this.http.post<UserModel>('http://localhost:8080/user/register',user);
+      //console.log(user);
+  }
+
+  userDelete(userId:Number){
+    console.log(userId)
+    return this.http.delete<any>(`http://localhost:8080/user/${userId}`);
   }
 }
