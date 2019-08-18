@@ -15,6 +15,7 @@ import { StudentListComponent } from '../../student/student-list/student-list.co
 import { StudentAddComponent } from '../../student/student-add/student-add.component';
 import { StudentPackageAddComponent } from '../../student/student-package-add/student-package-add.component';
 import { StudentPaymentComponent } from '../../student/student-payment/student-payment.component';
+import { StudentMoreDetailsComponent } from '../../student/student-more-details/student-more-details.component';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import { StudentPaymentComponent } from '../../student/student-payment/student-p
     StudentListComponent,
     StudentAddComponent,
     StudentPackageAddComponent,
-    StudentPaymentComponent
+    StudentPaymentComponent,
+    StudentMoreDetailsComponent
   ]
 })
 

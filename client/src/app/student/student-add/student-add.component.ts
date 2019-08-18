@@ -48,14 +48,14 @@ export class StudentAddComponent implements OnInit {
 
     //validate name
     if(this.name===""){
-      this.errorMessage="Name is mandatory / "
+      this.errorMessage="Name is mandatory / ";
     }
 
     //validate NIC
     if(this.nic===""){
       this.errorMessage+="NIC number is mandatory / ";
     }else if( (this.isPatternNic()) ){
-      this.errorMessage+="Enter Valid NIC Number / "
+      this.errorMessage+="Enter Valid NIC Number / ";
     }
 
     //Valid Number

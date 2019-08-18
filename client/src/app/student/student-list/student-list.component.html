@@ -23,9 +23,10 @@
                   <td>{{student.tel}}</td>
                   <td>{{student.address}}</td>
                   <td>  
-                    <a href="#" ><button class="btn btn-info btn-sm"><i class="fas fa-eye fa-sm" title="Advanced"></i></button></a>
+                    <a  (click)=moreDetails(student.studentId)><button class="btn btn-info btn-sm"><i class="fas fa-eye fa-sm" title="MoreDetails"></i></button></a>
                     <a  (click)=addPackage(student.studentId)><button class="btn btn-primary btn-sm"><i class="fas fa-plus fa-sm" title="Add Package"></i></button></a>
                     <a  (click)=addPayment(student.studentId)><button class="btn btn-secondary btn-sm"><i class="fas fa-dollar-sign fa-sm" title="Add Payment"></i></button></a>
+                    <a  (click)=deleteStudent(student.studentId)><button class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm" title="Delete Student"></i></button></a>
                   </td>
                 </tr>
               </tbody>

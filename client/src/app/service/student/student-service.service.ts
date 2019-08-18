@@ -62,4 +62,19 @@ export class StudentServiceService {
      return this.http.post<any>(`http://localhost:8080/student/coursefee/${studentPackageId}`,courseFee);
   }
 
+  //Get Specific Student Details
+  studentGet(studentId){
+    return this.http.get<StudentModel>(`http://localhost:8080/student/${studentId}`);
+  }
+
+  //Update Student Data
+  studentUpdate(student:StudentModel){
+    return this.http.put<StudentModel>('http://localhost:8080/student/update',student);
+  }
+
+  //delete Student Data
+  studentDelete(stuId){
+    return this.http.delete<any>(`http://localhost:8080/student/${stuId}`);
+  }
+
 }

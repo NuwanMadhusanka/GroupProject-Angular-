@@ -9,6 +9,7 @@ import { StudentListComponent } from '../../student/student-list/student-list.co
 import { StudentAddComponent } from '../../student/student-add/student-add.component';
 import { StudentPackageAddComponent } from '../../student/student-package-add/student-package-add.component';
 import { StudentPaymentComponent } from '../../student/student-payment/student-payment.component';
+import { StudentMoreDetailsComponent } from '../../student/student-more-details/student-more-details.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -19,5 +20,6 @@ export const AdminLayoutRoutes: Routes = [
     {path:'student-list',     component:StudentListComponent},
     {path:'student-add',     component:StudentAddComponent},
     {path:'student-package-add/:id',     component:StudentPackageAddComponent},
-    {path:'student-payment/:id',     component:StudentPaymentComponent}
+    {path:'student-payment/:id',     component:StudentPaymentComponent},
+    {path:'student-more-details/:id',   component:StudentMoreDetailsComponent}
 ];
