@@ -277,7 +277,7 @@
       @include sidebar-color($orange-color);
     }
     &[data-color="red"]{
-      @include sidebar-color($danger-color);
+      @include sidebar-color($social-facebook-state-color);
     }
     &[data-color="yellow"]{
       @include sidebar-color($warning-color);
@@ -352,7 +352,7 @@
   height: 260px;
   padding-top: 80px;
   padding-bottom: 45px;
-  @include panel-gradient($black-color);
+  @include panel-gradient($info-navbar);
   position: relative;
   overflow: hidden;
 

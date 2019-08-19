@@ -156,5 +156,6 @@ export class NavbarComponent implements OnInit {
     logOut(){
       sessionStorage.removeItem('userId');
       sessionStorage.removeItem('userRole');
+      this.router.navigate(['']);
     }
 }

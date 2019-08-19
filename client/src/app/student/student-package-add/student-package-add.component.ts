@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { PackageServiceService } from '../../service/package/package-service.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
-import { FormControl, FormArray, FormGroup, FormBuilder, ValidatorFn } from '@angular/forms';
 import { StudentServiceService } from '../../service/student/student-service.service';
 import Swal from 'sweetalert2';
 import { PackageModel } from '../../ClassModel/PackageModel';
@@ -25,98 +24,96 @@ export class StudentPackageAddComponent implements OnInit {
 
   studentId:Number;//get student id by the
   errorMessage:String;
-  successMessage:String;
   
-  //When new package add to student
-  selectedPackage:StudentPackage[]=[];
-  object;
-  form: FormGroup;
-  
-
-  //get package List
-  packages: PackageModel[] = [];
+  packages: PackageModel[] = [];//get package List
 
   //student packageId store
   list: [];//store student following packageId
   studentPackages:PackageModel[]=[];//store student following packages
 
-
+  selectPackageId;
+  isSelectPackageHasTransmission;
+  isAutoLesson;
+  isManualLesson;
+  isBothLesson;
+  selectPackage:PackageModel;
+  selectTransmissionType=1;
 
   constructor(
     private route:ActivatedRoute,
     private packageService:PackageServiceService,
-    private fromBuilder:FormBuilder,
     private studentService:StudentServiceService
-  ) {
-    this.form = this.fromBuilder.group({
-      packageFormArray: new FormArray([],minSelectedCheckboxes(1)),
-    });
+  ) {}
 
-    this.addCheckboxes();
-  }
-
-
-  private addCheckboxes() {
-    this.packages.map((o, i) => {
-      //console.log("o"+o+" i:"+i);
-      const control = new FormControl(i === 0); // if first item set to true, else false
-      (this.form.controls.packageFormArray as FormArray).push(control);
-    });
-  }
-
-  submit() {
-    const selectedOrderIds = this.form.value.packageFormArray
-      .map((v, i) => v ? this.packages[i].packageId : null)
-      .filter(v => v !== null);
-    console.log(selectedOrderIds);
-  }
-
-  
 
   ngOnInit() {
     this.studentId=this.route.snapshot.params['id'];//get student id by url
-    //console.log("Package"+this.studentId)
     this.packageList();
     this.studentPackageList();
   }
 
-  addPackage(){
-    console.log("addpackage");
+  
+  //Use to select the package transmission type
+  packageTransmission(packageId){
+      this.isBothLesson=false;
+      this.isAutoLesson=false;
+      this.isManualLesson=false;
+
+      this.selectPackageId=packageId;
       
+      this.packages.forEach(element => {
+        if(element.packageId===packageId){
+          this.selectPackage=element;
+          this.isSelectPackageHasTransmission=true;
+          if(element.autoLes != null && element.autoLes>0){
+              this.isAutoLesson=true;
+              if(element.manualLes !=null && element.manualLes>0){
+                this.isBothLesson=true;
+                this.isAutoLesson=false;
+              }
+          }else{
+            this.isManualLesson=true;
+          }
+        }
+      });
+  }
 
-      this.selectedPackage.push(new StudentPackage(1,1))
-      this.selectedPackage.push(new StudentPackage(2,1))
+  //Add new Package to student
+  confirmPackageAdd(transmission){
+      
+      let studentPackageSelected;
+      if(transmission === 1)  studentPackageSelected =new StudentPackage(this.selectPackage.packageId,this.selectTransmissionType);
+      if(transmission === 2)  studentPackageSelected =new StudentPackage(this.selectPackage.packageId,1);
+      if(transmission === 3)  studentPackageSelected =new StudentPackage(this.selectPackage.packageId,2);
 
-      //pass this object to the api
-      this.object={
-        "studentPackageMap":this.selectedPackage
-      }
       
       //Insert student package details to the db
-      this.studentService.studentPackegeAdd(this.object,this.studentId).subscribe(
+      this.studentService.studentPackegeAdd(studentPackageSelected,this.studentId).subscribe(
         response => {
-            var result:String=response;
-            if(result==="ok"){
-              console.log("ok")
-              
-            }
+          Swal.fire('Save is Completed!')
+          this.isSelectPackageHasTransmission=false;
+          this.studentPackages=[];
+          this.studentPackageList();
+          
         },
         error =>{
-          console.log(error);
+          //console.log(error);
           this.handleErrorResponse(error);
+          Swal.fire({
+            type: 'error',
+            title: 'Oops...',
+            text: 'Submission is not Successful!',
+            footer: 'Something bad happened, please try again later.'
+          })
         }
       )
-
-      this.selectedPackage=[];
   }
 
   //get package details
   packageList(){
     this.packageService.packageList().subscribe(
       response => {
-        //onsole.log(response);
         this.packages=response;
-        console.log(this.packages)
         },
       error => {
         console.log(error);
@@ -149,6 +146,17 @@ export class StudentPackageAddComponent implements OnInit {
       }
     )
   }
+
+  //selectTransmission
+  selectTransmission(selectTransmission){
+    this.selectTransmissionType=selectTransmission;
+  }
+
+  //close 
+  close(){
+    this.isSelectPackageHasTransmission=false;
+  }
+
 
   //delete package specific student
   deletePackage(packageId,title){
@@ -216,21 +224,4 @@ export class StudentPackageAddComponent implements OnInit {
 
   
 
-}
-
-
-
-function minSelectedCheckboxes(min = 1) {
-  const validator: ValidatorFn = (formArray: FormArray) => {
-    const totalSelected = formArray.controls
-      // get a list of checkbox values (boolean)
-      .map(control => control.value)
-      // total up the number of checked checkboxes
-      .reduce((prev, next) => next ? prev + next : prev, 0);
-
-    // if the total is not greater than the minimum, return the error message
-    return totalSelected >= min ? null : { required: true };
-  };
-
-  return validator;
 }

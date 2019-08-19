@@ -47,7 +47,8 @@ export class SidebarComponent implements OnInit {
     ];
 
     this.adminStaffStudent=[
-      { path: '/student-list', title: 'Student(AS)',  icon:'design_bullet-list-67', class: '' }
+      { path: '/dashboard', title: 'DashBoard',  icon:'design_bullet-list-67', class: '' },
+      { path: '/student-list', title: 'Student',  icon:'design_bullet-list-67', class: '' }
     ];
 
     this.instructor=[

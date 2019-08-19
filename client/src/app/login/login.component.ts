@@ -51,7 +51,10 @@ export class LoginComponent implements OnInit {
         
         this.userAuthenticationService.authenticate(this.emailField.value,this.passwordField.value).subscribe(
           response => this.handleSuccessfulResponse(response),
-          error => this.handleErrorResponse(error)
+          error => {
+            this.errorMessage="Login Denied.";
+            this.handleErrorResponse(error)
+          }
         )
     }else{
         this.errorMessage="Insert Valid Inputs";
@@ -65,13 +68,13 @@ export class LoginComponent implements OnInit {
       sessionStorage.setItem('userId',response.userId);
       sessionStorage.setItem('userRole',response.role);
       // should check status backendside
-      this.router.navigate([''])
+      this.router.navigate(['dashboard'])
     }
   }
 
   //Invalid User
   private handleErrorResponse(error: HttpErrorResponse) {
-    this.errorMessage="Not successful request";
+    //this.errorMessage="Not successful request";
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       this.errorMessage="Check the Network Connection"

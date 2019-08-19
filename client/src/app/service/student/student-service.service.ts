@@ -42,9 +42,8 @@ export class StudentServiceService {
 
 
   //insert student package details
-  studentPackegeAdd(selectedPackages,id){
-    console.log(selectedPackages);
-    return this.http.post<String>(`http://localhost:8080/student/package/list/${id}`,selectedPackages);
+  studentPackegeAdd(selectedPackage,id){
+    return this.http.post<any>(`http://localhost:8080/student/package/${id}`,selectedPackage);
   }
 
   //delete student package details
@@ -58,8 +57,10 @@ export class StudentServiceService {
   }
 
   // Add Course Fees
-  studentCourseFeeAdd(courseFee:CourseFee,studentPackageId){
-     return this.http.post<any>(`http://localhost:8080/student/coursefee/${studentPackageId}`,courseFee);
+  studentCourseFeeAdd(courseFee:CourseFee,studentPackageId,packageId){
+    
+    console.log(courseFee+" package Id:"+studentPackageId)
+     return this.http.post<any>(`http://localhost:8080/student/coursefee/${studentPackageId}/${packageId}`,courseFee);
   }
 
   //Get Specific Student Details

@@ -38,15 +38,22 @@
             
             <!-- New Payment Add -->
             <div *ngIf="isPayment" class="card">
-              <div class="col-sm-6 col-lg-4">
-                <div class="form-group">
-                    <label>Amount:</label>
-                    <input type="text" value="" placeholder="Rs:" class="form-control" name="newPayment" [(ngModel)]="newPayment"/>
-                    <small *ngIf="errorPaymentMessage" class="text-danger">{{errorPaymentMessage}}</small>
-                </div>
+              <div class="card-header">
+                  <button (click)=close() type="button" aria-hidden="true" class="close">
+                      <i class="now-ui-icons ui-1_simple-remove"></i>
+                  </button>
               </div>
-              <button  (click)="doPayment(selectPackage.packageId)" type="button" class="btn btn-secondary btn-round">Pay</button>
-            </div>
+              <div class="card-body">
+                <div class="col-sm-6 col-lg-4">
+                  <div class="form-group">
+                      <label>Amount:</label>
+                      <input type="text" value="" placeholder="Rs:" class="form-control" name="newPayment" [(ngModel)]="newPayment"/>
+                      <small *ngIf="errorPaymentMessage" class="text-danger">{{errorPaymentMessage}}</small>
+                  </div>
+                </div>
+                <button  (click)="doPayment(selectPackage.packageId)" type="button" class="btn btn-secondary btn-round">Pay</button>
+              </div>
+              </div>
             <!-- New Payment Add Finish -->
 
               <!-- Table -->

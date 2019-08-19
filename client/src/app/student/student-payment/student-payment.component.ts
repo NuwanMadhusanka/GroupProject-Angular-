@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { StudentServiceService } from '../../service/student/student-service.service';
-import { StudentPackage } from '../student-package-add/student-package-add.component';
 import { PackageModel } from '../../ClassModel/PackageModel';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
-import { element } from '@angular/core/src/render3';
-import { FormControl } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { CourseFee } from '../../ClassModel/CourseFeeModel';
+import { HttpError } from '../../Shared/httpError/HttpError';
 
 
 
@@ -31,15 +29,15 @@ export class StudentPaymentComponent implements OnInit {
   selectPackage:PackageModel;
   courseFeelist:[];
   isPayment=false;
-  newPayment;
+  newPayment:number=0.00;
   studentPackageId;
 
   isErrorPayment=false;
   errorPaymentMessage;  
   
-  courseFee:number;//course fee
-  balance:number;//balnace=coursefee-payment
-  payment:number;
+  courseFee:number=0.00;//course fee
+  balance:number=0.00;//balnace=coursefee-payment
+  payment:number=0.00;
 
   regexp:any;//Regular Expression for new Payment
 
@@ -58,10 +56,7 @@ export class StudentPaymentComponent implements OnInit {
           if(this.studentPackages.length <= 0){
             console.log("No any Packages")
             this.errorMessage="Student Not Following Any Packages"
-          }else{
-            console.log(this.studentPackages)
-          }
-          
+          }       
       },
       error =>{
         console.log(error);
@@ -72,8 +67,7 @@ export class StudentPaymentComponent implements OnInit {
 
   //show payment details
   paymentDetails(packageId){
-      //console.log(packageId)
-
+    
     //call to the API and get student Payment Details
     this.studentService.studentCourseFees(this.studentId,packageId).subscribe(
       response => {
@@ -96,7 +90,6 @@ export class StudentPaymentComponent implements OnInit {
 
           //calculate balance
           this.balance=this.courseFee-this.payment;
-
       },
       error =>{
         console.log(error);
@@ -110,25 +103,14 @@ export class StudentPaymentComponent implements OnInit {
           this.selectPackage=element;
         }
       });
+
   }
 
   //error handling
   private handleErrorResponse(error: HttpErrorResponse) {
-    this.errorMessage="Not successful request";
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      this.errorMessage="Check the Network Connection"
-      console.error('An error occurred:', error.error.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
-    }
-    // return an observable with a user-facing error message
-    return throwError(
-      'Something bad happened; please try again later.');
+    this.errorMessage="Something bad happened, please try again later.";
+    let httpError=new HttpError;
+    httpError.ErrorResponse(error);
   };
 
   closeError(){
@@ -143,7 +125,7 @@ export class StudentPaymentComponent implements OnInit {
   }
  
    doPayment(packageId){
-      //console.log(this.newPayment)
+     
       if(this.isValidCash()){
           if(this.newPayment>this.balance){
               this.errorPaymentMessage="can't pay more than Rs: "+this.balance;
@@ -162,22 +144,25 @@ export class StudentPaymentComponent implements OnInit {
               confirmButtonText: 'Yes, Do Payment!'
             }).then((result) => {
               if (result.value) {
-                 //console.log("ok")
 
                 //Payment Confirm Ok
                 //call to API to add payment details
                 //console.log(packageId+" "+this.studentId+" "+this.newPayment+" "+this.getStudentPackageId())
-                let course=new CourseFee(null,this.newPayment,new Date(),1,null);
-                console.log(course);
-                this.studentService.studentCourseFeeAdd(course,this.getStudentPackageId()).subscribe(
+                let course=new CourseFee(-1,this.newPayment,new Date(),1,null);
+               
+                this.studentService.studentCourseFeeAdd(course,this.studentId,packageId).subscribe(
                   response => {
                     Swal.fire(
                       'Payment Succeed!'
                     )
+                    
                     this.isPayment=false;
+
                     //refresh the StudentCourseFee
                     this.courseFeelist=[];
                     this.paymentDetails(packageId);
+                    this.newPayment=0.00;
+                    
                   }, 
                   error =>{
         
@@ -216,11 +201,7 @@ export class StudentPaymentComponent implements OnInit {
     return false;
   }
 
-  //get StudentPackage Id
-  getStudentPackageId(){
-    this.courseFeelist.forEach(element => {
-      this.studentPackageId=element[4]
-    });
-    return this.studentPackageId;
+  close(){
+    this.isPayment=false;
   }
 }
