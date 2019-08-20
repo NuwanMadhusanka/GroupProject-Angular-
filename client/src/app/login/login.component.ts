@@ -4,6 +4,7 @@ import { RouterLink, Router } from '@angular/router';
 import { UserAuthenticationServiceService } from '../service/user-authentication-service.service';
 import { throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { HttpError } from '../Shared/httpError/HttpError';
 
 
 @Component({
@@ -68,27 +69,19 @@ export class LoginComponent implements OnInit {
       sessionStorage.setItem('userId',response.userId);
       sessionStorage.setItem('userRole',response.role);
       // should check status backendside
-      this.router.navigate(['dashboard'])
+      if(response.role === 2){
+        this.router.navigate(['admin-staff-student-dash-board'])
+      }else{
+        this.router.navigate(['dashboard'])
+      }
+    
     }
   }
 
   //Invalid User
   private handleErrorResponse(error: HttpErrorResponse) {
-    //this.errorMessage="Not successful request";
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      this.errorMessage="Check the Network Connection"
-      console.error('An error occurred:', error.error.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
-    }
-    // return an observable with a user-facing error message
-    return throwError(
-      'Something bad happened; please try again later.');
+    let httpError = new HttpError();
+    httpError.ErrorResponse(error);
   };
 
   //

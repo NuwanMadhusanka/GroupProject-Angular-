@@ -12,7 +12,9 @@ export const ROUTES: RouteInfo[] = [
     { path: '/staff-list', title: 'Staff List',  icon:'design_bullet-list-67', class: '' },
     { path: '/package-list', title: 'Package',  icon:'design_bullet-list-67', class: '' },
     { path: '/vehicle-list', title: 'Vehicle',  icon:'design_bullet-list-67', class: '' },
-    { path: '/student-list', title: 'Student',  icon:'design_bullet-list-67', class: '' }
+    { path: '/student-list', title: 'Student',  icon:'design_bullet-list-67', class: '' },
+    { path: '/student-payment', title: 'Payment',  icon:'design_bullet-list-67', class: '' },
+    { path: '/admin-staff-student-dash-board', title: 'Dashboard',  icon:'design_bullet-list-67', class: '' }
 ];
 
 @Component({
@@ -47,7 +49,7 @@ export class SidebarComponent implements OnInit {
     ];
 
     this.adminStaffStudent=[
-      { path: '/dashboard', title: 'DashBoard',  icon:'design_bullet-list-67', class: '' },
+      { path: '/admin-staff-student-dash-board', title: 'Dashboard',  icon:'design_bullet-list-67', class: '' },
       { path: '/student-list', title: 'Student',  icon:'design_bullet-list-67', class: '' }
     ];
 
@@ -56,7 +58,7 @@ export class SidebarComponent implements OnInit {
     ];
 
     this.student=[
-      { path: '/student-list', title: 'Student',  icon:'design_bullet-list-67', class: '' }
+      { path: '/student-payment/'+sessionStorage.getItem("userId"), title: 'Payment',  icon:'design_bullet-list-67', class: '' }
     ];
     
   }

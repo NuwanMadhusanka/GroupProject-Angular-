@@ -4,6 +4,9 @@ import { StudentPackageAddComponent,StudentPackage } from '../../student/student
 import { StudentModel } from '../../ClassModel/StudentModel';
 import { PackageModel } from '../../ClassModel/PackageModel';
 import { CourseFee } from '../../ClassModel/CourseFeeModel';
+import { PayPal } from '../../student/student-payment/student-payment.component';
+import { TrialList } from '../../adminStaff/admin-staff-student-dash-board/admin-staff-student-dash-board.component';
+
 
 
 
@@ -78,4 +81,17 @@ export class StudentServiceService {
     return this.http.delete<any>(`http://localhost:8080/student/${stuId}`);
   }
 
+  //get StudentId
+  getStudentId(userId){
+    return this.http.get<Number>(`http://localhost:8080/student/id/${userId}`);
+  }
+
+  //paypal
+  makePayment(sum) {
+    return this.http.post<PayPal>(`http://localhost:8080/paypal/make/payment/?sum=`+sum,{});
+  }
+
+  studentTrialList(){
+    return this.http.get<TrialList[]>('http://localhost:8080/student/trial/list');
+  }
 }

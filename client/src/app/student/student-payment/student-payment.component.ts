@@ -8,7 +8,12 @@ import Swal from 'sweetalert2';
 import { CourseFee } from '../../ClassModel/CourseFeeModel';
 import { HttpError } from '../../Shared/httpError/HttpError';
 
-
+export class PayPal{
+  constructor(
+    public redirect_url:Number,
+    public status:String
+  ){}
+}
 
 @Component({
   selector: 'app-student-payment',
@@ -31,6 +36,8 @@ export class StudentPaymentComponent implements OnInit {
   isPayment=false;
   newPayment:number=0.00;
   studentPackageId;
+  isStudent=false;
+  isAdminStaff=false;
 
   isErrorPayment=false;
   errorPaymentMessage;  
@@ -42,8 +49,30 @@ export class StudentPaymentComponent implements OnInit {
   regexp:any;//Regular Expression for new Payment
 
   ngOnInit() {
-    this.studentId=this.route.snapshot.params['id'];//get student id by url
-    this.studentPackageList();
+    let id=this.route.snapshot.params['id'];//get student id by url
+
+    if(sessionStorage.getItem("userId")===id){//when student visit to the page
+          
+      //get the student Id
+          this.studentService.getStudentId(id).subscribe(
+            response => {
+                console.log("Response:"+response);
+                this.studentId=response;
+                this.studentPackageList();
+                this.isStudent=true;
+            },
+            error =>{
+              console.log(error);
+              this.handleErrorResponse(error);
+            }
+          )
+
+    }else{
+      this.studentId=id;//whent AdminStaff(Student) visit to the page
+      this.studentPackageList();
+      this.isAdminStaff=true;
+    }
+    
   }
 
   //studentFollow Packages
@@ -199,6 +228,27 @@ export class StudentPaymentComponent implements OnInit {
     }
     this.errorPaymentMessage="Insert Valid Payment."
     return false;
+  }
+
+  doPayPalPayment(packageId){
+    if(this.isValidCash()){
+      if(this.newPayment>this.balance){
+          this.errorPaymentMessage="can't pay more than Rs: "+this.balance;
+      }else{
+        this.errorPaymentMessage="";
+        
+        this.studentService.makePayment(this.newPayment).subscribe(
+          response => {
+              console.log(response.redirect_url);  
+              window.open(""+response.redirect_url, "_blank");   
+          },
+          error =>{
+            console.log(error);
+            
+          }
+        )
+      }
+    }
   }
 
   close(){

@@ -32,11 +32,14 @@
             <!-- Drop Down Finish -->
 
           <hr>
+          
           <div *ngIf="isSelectPackage">
             <h3>{{selectPackage.title}} Payments</h3>
+            <p *ngIf="isStudent"><i class="fas fa-arrow-circle-down fa-1x"></i>  Do Online Payment</p>
             <a *ngIf="balance>0"  (click)=doPaymentActive()><button class="btn btn-primary btn-sm"><i class="fas fa-plus fa-sm" title="Do Payment"></i></button></a>
             
             <!-- New Payment Add -->
+            
             <div *ngIf="isPayment" class="card">
               <div class="card-header">
                   <button (click)=close() type="button" aria-hidden="true" class="close">
@@ -51,7 +54,9 @@
                       <small *ngIf="errorPaymentMessage" class="text-danger">{{errorPaymentMessage}}</small>
                   </div>
                 </div>
-                <button  (click)="doPayment(selectPackage.packageId)" type="button" class="btn btn-secondary btn-round">Pay</button>
+                <button *ngIf="isAdminStaff" (click)="doPayment(selectPackage.packageId)" type="button" class="btn btn-secondary btn-round">Pay</button>
+                <button *ngIf="isStudent" (click)="doPayPalPayment(selectPackage.packageId)" type="button" class="btn btn-primary btn-round"><i class="fab fa-paypal fa-1x">ay Pal</i></button>
+              
               </div>
               </div>
             <!-- New Payment Add Finish -->
