@@ -5,7 +5,7 @@ import { StudentModel } from '../../ClassModel/StudentModel';
 import { PackageModel } from '../../ClassModel/PackageModel';
 import { CourseFee } from '../../ClassModel/CourseFeeModel';
 import { PayPal } from '../../student/student-payment/student-payment.component';
-import { TrialList } from '../../adminStaff/admin-staff-student-dash-board/admin-staff-student-dash-board.component';
+import { ExamList } from '../../adminStaff/admin-staff-student-dash-board/admin-staff-student-dash-board.component';
 
 
 
@@ -91,7 +91,24 @@ export class StudentServiceService {
     return this.http.post<PayPal>(`http://localhost:8080/paypal/make/payment/?sum=`+sum,{});
   }
 
-  studentTrialList(){
-    return this.http.get<TrialList[]>('http://localhost:8080/student/trial/list');
+  studentTrialList(date){
+    return this.http.get<ExamList[]>('http://localhost:8080/student/trial/list?date='+date);
+  }
+
+  studentExamList(date){
+    return this.http.get<ExamList[]>(`http://localhost:8080/student/exam/list?date=`+date);
+  }
+
+  //written Exam Data
+  studentWrittenExamData(){
+    return this.http.get<[]>('http://localhost:8080/student/writtenexam/result');
+  }
+
+  submitWrittenExamResult(date,countPass,countFail){
+    return this.http.post<any>(`http://localhost:8080/student/writtenexam/result?date=`+date+"&countPass="+countPass+"&countFail="+countFail,{});
+  }
+
+  submitTrialExamResult(date,countPass,countFail){
+    return this.http.post<any>(`http://localhost:8080/student/trialexam/result?date=`+date+"&countPass="+countPass+"&countFail="+countFail,{});
   }
 }

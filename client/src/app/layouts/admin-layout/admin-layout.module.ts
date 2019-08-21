@@ -17,6 +17,7 @@ import { StudentPackageAddComponent } from '../../student/student-package-add/st
 import { StudentPaymentComponent } from '../../student/student-payment/student-payment.component';
 import { StudentMoreDetailsComponent } from '../../student/student-more-details/student-more-details.component';
 import { AdminStaffStudentDashBoardComponent } from '../../adminStaff/admin-staff-student-dash-board/admin-staff-student-dash-board.component';
+import { StudentExamResultAddComponent } from '../../student/student-exam-result-add/student-exam-result-add.component';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { AdminStaffStudentDashBoardComponent } from '../../adminStaff/admin-staf
     StudentPackageAddComponent,
     StudentPaymentComponent,
     StudentMoreDetailsComponent,
-    AdminStaffStudentDashBoardComponent
+    AdminStaffStudentDashBoardComponent,
+    StudentExamResultAddComponent
   ]
 })
 

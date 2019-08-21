@@ -7,6 +7,7 @@ import { StudentServiceService } from '../../service/student/student-service.ser
 import { UserModel } from '../../ClassModel/UserModel';
 import { StudentModel } from '../../ClassModel/StudentModel';
 import { FormBuilder, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-student-add',

@@ -2,8 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { StudentServiceService } from '../../service/student/student-service.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpError } from '../../Shared/httpError/HttpError';
+import { DatePipe } from '@angular/common';
+declare const require: any;
+const jsPDF = require('jspdf');
+require('jspdf-autotable');
 
-export class TrialList{
+export class ExamList{
   constructor(
     public name,
     public nic
@@ -69,17 +73,23 @@ export class AdminStaffStudentDashBoardComponent implements OnInit {
 
 
   constructor(
-    private studentService:StudentServiceService
+    private studentService:StudentServiceService,
+    private datePipe: DatePipe
   ) { }
 
 
   errorMessage;
-  trialStudents:TrialList[]=[];
-  index=0;
-  isTrialStudent=false;
+  trialStudents:ExamList[]=[];//trial exam
+  isTrialStudent=false;//trial exam
+  examStudents:ExamList[]=[];//written exam
+  isExamStudent=false;//written exam
+
+  lineChartWrittenExamData=[];
 
   ngOnInit() {
     this.studentTrialList();
+    this.studentExamList();
+    this.getlineChartWrittenExamData();
 
     this.chartColor = "#FFFFFF";
     this.canvas = document.getElementById("bigDashboardChart");
@@ -289,14 +299,14 @@ export class AdminStaffStudentDashBoardComponent implements OnInit {
 
     this.lineChartData = [
         {
-          label: "Active Users",
+          label: "Pass Student Rate",
           pointBorderWidth: 2,
           pointHoverRadius: 4,
           pointHoverBorderWidth: 1,
           pointRadius: 4,
           fill: true,
           borderWidth: 2,
-          data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 630]
+          data: [0,0,0, 0,0,0, 0, 0, 0, 0,0, 0]
         }
       ];
       this.lineChartColors = [
@@ -430,14 +440,91 @@ export class AdminStaffStudentDashBoardComponent implements OnInit {
   }
 
   studentTrialList(){
-     //get Student following packages Id
-     this.studentService.studentTrialList().subscribe(
+    let localdate=this.datePipe.transform(new Date(), 'yyyy-MM-dd')
+     this.studentService.studentTrialList(localdate).subscribe(
       response => {
-        console.log(response.length)
          this.trialStudents=response;
          if(this.trialStudents.length >0){
            this.isTrialStudent=true;
          }
+      },
+      error =>{
+        console.log(error);
+        this.handleErrorResponse(error);
+      }
+    )
+  }
+
+  studentExamList(){
+    let localdate=this.datePipe.transform(new Date(), 'yyyy-MM-dd')
+    this.studentService.studentExamList(localdate).subscribe(
+      response => {
+         this.examStudents=response;
+         if(this.examStudents.length >0){
+           this.isExamStudent=true;
+         }
+      },
+      error =>{
+        console.log(error);
+        this.handleErrorResponse(error);
+      }
+    )
+  }
+
+  generatePdf(title){
+    var doc = new jsPDF('p', 'pt');
+
+    doc.rect(20, 20, doc.internal.pageSize.width - 40, doc.internal.pageSize.height - 40, 'S');//page Border
+    doc.setFontType("bold");
+    doc.text("Sagarika Learners",250,40);
+
+    
+    var res = doc.autoTableHtmlToJson(document.getElementById("trial-table"));
+    
+    var today = new Date();
+    var year=today.getFullYear();
+    var month=today.getMonth();
+    var date=today.getDate();
+    var header = function(data) {
+      doc.setFontSize(14);
+      doc.setTextColor(40);
+      doc.setFontStyle('normal');
+      //doc.addImage(headerImgData, 'JPEG', data.settings.margin.left, 20, 50, 50);
+      doc.text(title, data.settings.margin.left, 70);
+    };
+  
+    var options = {
+      beforePageContent: header,
+      margin: {
+        top: 80
+      },
+      startY: doc.autoTableEndPosY() + 90
+    };
+    
+    doc.autoTable(res.columns, res.data, options);
+    doc.text("Date:"+year+"/"+month+"/"+date,30,doc.internal.pageSize.height-50)
+
+    
+    doc.text("Signature",480,doc.internal.pageSize.height-50)
+  
+    doc.save("Table.pdf");
+  }
+
+  //line chart data
+  getlineChartWrittenExamData(){
+    this.studentService.studentWrittenExamData().subscribe(
+      response => {
+        console.log(response)
+         this.lineChartWrittenExamData=response;
+
+         this.lineChartData = [
+          {
+            data: [this.lineChartWrittenExamData[0], this.lineChartWrittenExamData[1], this.lineChartWrittenExamData[2],  
+                   this.lineChartWrittenExamData[3], this.lineChartWrittenExamData[4], this.lineChartWrittenExamData[5], 
+                   this.lineChartWrittenExamData[6], this.lineChartWrittenExamData[7], this.lineChartWrittenExamData[8],
+                   this.lineChartWrittenExamData[9], this.lineChartWrittenExamData[10], this.lineChartWrittenExamData[11]]
+          }
+        ];
       },
       error =>{
         console.log(error);

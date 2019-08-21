@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { LoginComponent } from './login/login.component';
 
+import {DatePipe} from '@angular/common';
 
 
 
@@ -45,7 +46,7 @@ import { LoginComponent } from './login/login.component';
    
     
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -11,6 +11,7 @@ import { StudentPackageAddComponent } from '../../student/student-package-add/st
 import { StudentPaymentComponent } from '../../student/student-payment/student-payment.component';
 import { StudentMoreDetailsComponent } from '../../student/student-more-details/student-more-details.component';
 import { AdminStaffStudentDashBoardComponent } from '../../adminStaff/admin-staff-student-dash-board/admin-staff-student-dash-board.component';
+import { StudentExamResultAddComponent } from '../../student/student-exam-result-add/student-exam-result-add.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -23,5 +24,6 @@ export const AdminLayoutRoutes: Routes = [
     {path:'student-package-add/:id',     component:StudentPackageAddComponent},
     {path:'student-payment/:id',     component:StudentPaymentComponent},
     {path:'student-more-details/:id',   component:StudentMoreDetailsComponent},
-    {path:'admin-staff-student-dash-board',   component:AdminStaffStudentDashBoardComponent}
+    {path:'admin-staff-student-dash-board',   component:AdminStaffStudentDashBoardComponent},
+    {path:'student-exam-result-add',     component:StudentExamResultAddComponent}
 ];
