@@ -66,14 +66,25 @@ export class LoginComponent implements OnInit {
   //3)Valid User
   handleSuccessfulResponse(response){
     if(response.userId != null){
-      sessionStorage.setItem('userId',response.userId);
-      sessionStorage.setItem('userRole',response.role);
-      // should check status backendside
-      if(response.role === 2){
-        this.router.navigate(['admin-staff-student-dash-board'])
+      if(response.userId > 0){
+
+        sessionStorage.setItem('userId',response.userId);
+        sessionStorage.setItem('userRole',response.role);
+
+        // should check status backendside
+        if(response.role === 2){
+          this.router.navigate(['admin-staff-student-dash-board'])
+        }else{
+          this.router.navigate(['dashboard'])
+        }
+      }else if(response.userId == 0){
+        this.errorMessage="Account Deactivate.Please Inform to the administrator";
+      }else if(response.userId == -1){
+        this.errorMessage="Insert Correct Email and Password.";
       }else{
-        this.router.navigate(['dashboard'])
+        this.errorMessage="Insert Valid Email and Password";
       }
+     
     
     }
   }

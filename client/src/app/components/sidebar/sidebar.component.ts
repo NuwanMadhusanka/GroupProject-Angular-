@@ -14,7 +14,8 @@ export const ROUTES: RouteInfo[] = [
     { path: '/vehicle-list', title: 'Vehicle',  icon:'design_bullet-list-67', class: '' },
     { path: '/student-list', title: 'Student',  icon:'design_bullet-list-67', class: '' },
     { path: '/student-payment', title: 'Payment',  icon:'design_bullet-list-67', class: '' },
-    { path: '/admin-staff-student-dash-board', title: 'Dashboard',  icon:'design_bullet-list-67', class: '' }
+    { path: '/admin-staff-student-dash-board', title: 'Dashboard',  icon:'design_bullet-list-67', class: '' },
+    { path: '/time-table', title: 'Time Table',  icon:'design_bullet-list-67', class: '' }
 ];
 
 @Component({
@@ -45,6 +46,7 @@ export class SidebarComponent implements OnInit {
     ];
 
     this.adminStaffInstructor=[
+      { path: '/time-table', title: 'Time Table',  icon:'design_bullet-list-67', class: '' },
       { path: '/vehicle-list', title: 'Vehicle(AI)',  icon:'design_bullet-list-67', class: '' }
     ];
 

@@ -138,7 +138,7 @@ export class StudentMoreDetailsComponent implements OnInit {
     this.studentService.studentUpdate(this.studentData).subscribe(
       response => {
         console.log(response)
-        Swal.fire('Update is Successful')
+        Swal.fire('Update is Completed.')
         this.confirmUpdate=false;
         this.studentData=response;
 

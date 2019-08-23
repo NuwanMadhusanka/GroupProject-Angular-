@@ -12,6 +12,10 @@ import { StudentPaymentComponent } from '../../student/student-payment/student-p
 import { StudentMoreDetailsComponent } from '../../student/student-more-details/student-more-details.component';
 import { AdminStaffStudentDashBoardComponent } from '../../adminStaff/admin-staff-student-dash-board/admin-staff-student-dash-board.component';
 import { StudentExamResultAddComponent } from '../../student/student-exam-result-add/student-exam-result-add.component';
+import { TimeTableComponent } from '../../timeTable/time-table/time-table.component';
+import { LessonAddComponent } from '../../timeTable/lesson-add/lesson-add.component';
+import { TimeSlotComponent } from '../../timeTable/time-slot/time-slot.component';
+
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -25,5 +29,9 @@ export const AdminLayoutRoutes: Routes = [
     {path:'student-payment/:id',     component:StudentPaymentComponent},
     {path:'student-more-details/:id',   component:StudentMoreDetailsComponent},
     {path:'admin-staff-student-dash-board',   component:AdminStaffStudentDashBoardComponent},
-    {path:'student-exam-result-add',     component:StudentExamResultAddComponent}
+    {path:'student-exam-result-add',     component:StudentExamResultAddComponent},
+    
+    {path:'time-table',     component:TimeTableComponent},
+    {path:'lesson-add',     component:LessonAddComponent},
+    {path:'time-slot',     component:TimeSlotComponent}
 ];

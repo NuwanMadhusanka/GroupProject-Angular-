@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { StudentPackageAddComponent,StudentPackage } from '../../student/student-package-add/student-package-add.component';
 import { StudentModel } from '../../ClassModel/StudentModel';
 import { PackageModel } from '../../ClassModel/PackageModel';
@@ -30,7 +30,7 @@ export class StudentServiceService {
 
   //get StudentList
   studentList(){
-    return this.http.get<StudentModel[]>('http://localhost:8080/students');
+      return this.http.get<StudentModel[]>('http://localhost:8080/students');
   }
 
   //getStudent following package's Id(Result is integer list)
@@ -110,5 +110,12 @@ export class StudentServiceService {
 
   submitTrialExamResult(date,countPass,countFail){
     return this.http.post<any>(`http://localhost:8080/student/trialexam/result?date=`+date+"&countPass="+countPass+"&countFail="+countFail,{});
+  }
+
+  createBasicAuthenticationHttpHeader(){
+    let username="drivo";
+    let password="1234";
+    let basicAuthHeaderString='Basic ' + window.btoa(username +  ':' + password);
+    return basicAuthHeaderString;
   }
 }

@@ -1,7 +1,4 @@
-<div class="panel-header">
-  <div class="header text-center">
-    <h2 class="title">Student's Exam Result Submit</h2>
-  </div>
+<div class="panel-header panel-header-sm" >
 </div>
 
 <div class="main-content">
@@ -39,6 +36,7 @@
                     <button (click)=closeWrittenExamTable() type="button" aria-hidden="true" class="close">
                         <i class="now-ui-icons ui-1_simple-remove"></i>
                     </button>
+                    Date:<h6 class="card-title">{{examDate}}</h6>
                 </div>
                 <div class="card-body">
                       
@@ -108,6 +106,8 @@
                         <button (click)=closeTrialExamTable() type="button" aria-hidden="true" class="close">
                             <i class="now-ui-icons ui-1_simple-remove"></i>
                         </button>
+                        Date:<h6 class="card-title">{{trialDate}}</h6>
+
                     </div>
                     <div class="card-body">
                           

@@ -18,6 +18,10 @@ import { StudentPaymentComponent } from '../../student/student-payment/student-p
 import { StudentMoreDetailsComponent } from '../../student/student-more-details/student-more-details.component';
 import { AdminStaffStudentDashBoardComponent } from '../../adminStaff/admin-staff-student-dash-board/admin-staff-student-dash-board.component';
 import { StudentExamResultAddComponent } from '../../student/student-exam-result-add/student-exam-result-add.component';
+import { TimeTableComponent } from '../../timeTable/time-table/time-table.component';
+import { LessonAddComponent } from '../../timeTable/lesson-add/lesson-add.component';
+import { TimeSlotComponent } from '../../timeTable/time-slot/time-slot.component';
+
 
 @NgModule({
   imports: [
@@ -40,7 +44,11 @@ import { StudentExamResultAddComponent } from '../../student/student-exam-result
     StudentPaymentComponent,
     StudentMoreDetailsComponent,
     AdminStaffStudentDashBoardComponent,
-    StudentExamResultAddComponent
+    StudentExamResultAddComponent,
+
+    TimeTableComponent,
+    LessonAddComponent,
+    TimeSlotComponent
   ]
 })
 
