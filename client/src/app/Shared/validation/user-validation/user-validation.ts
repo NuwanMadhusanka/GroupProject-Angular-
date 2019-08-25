@@ -42,4 +42,16 @@ export class UserValidation {
     return false;
   }
 
+  //valid NIC Number
+  isValidNicNumber(nic){
+    if(nic.length == 10){
+      this.regExp = new RegExp('\\d{9,9}[v,V]');
+      this.test = this.regExp.test(nic);
+      if(this.test){
+        return true;
+      }
+    }
+    return false;
+  }
+
 }

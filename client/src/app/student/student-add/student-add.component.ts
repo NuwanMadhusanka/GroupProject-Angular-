@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserServiceService} from '../../service/user/user-service.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { throwError } from 'rxjs';
 import { StudentServiceService } from '../../service/student/student-service.service';
 import { UserModel } from '../../ClassModel/UserModel';
 import { StudentModel } from '../../ClassModel/StudentModel';
-import { FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { HttpError } from '../../Shared/httpError/HttpError';
+import { UserValidation } from '../../Shared/validation/user-validation/user-validation';
+
 
 @Component({
   selector: 'app-student-add',
@@ -16,14 +16,24 @@ import { DatePipe } from '@angular/common';
 })
 export class StudentAddComponent implements OnInit {
 
+  //form variables
   name:String="";
   nic:String="";
   tel:String="";
   address:String="";
   email:String="";
   password:String="";
-  examDate:Date;
+  examDate:Date=null;
   trialDate:Date;
+
+  //form error messages variables
+  errorName;
+  errorNic;
+  errorTel;
+  errorAddress;
+  errorEmail;
+  errorPassword;
+  errorExamDate;
 
   errorMessage:String;
   regexp:any;//Regular Expression for NIC
@@ -31,6 +41,8 @@ export class StudentAddComponent implements OnInit {
 
   //idate:Date;
   
+  //user Validation Instance
+  userValidation = new UserValidation();
 
   constructor(
    private router:Router,
@@ -45,49 +57,53 @@ export class StudentAddComponent implements OnInit {
   //Student Registration Funtion
   registerStudent(){
     
-    this.errorMessage="";
+    this.errorName="";
+    this.errorNic="";
+    this.errorTel="";
+    this.errorEmail="";
+    this.errorPassword="";
+    this.errorExamDate="";
 
     //validate name
     if(this.name===""){
-      this.errorMessage="Name is mandatory / ";
+      this.errorName="Name is mandatory";
     }
 
     //validate NIC
     if(this.nic===""){
-      this.errorMessage+="NIC number is mandatory / ";
-    }else if( (this.isPatternNic()) ){
-      this.errorMessage+="Enter Valid NIC Number / ";
+      this.errorNic="NIC number is mandatory ";
+    }else if( !this.userValidation.isValidNicNumber(this.nic) ){
+      this.errorNic="Enter Valid NIC Number";
     }
 
     //Valid Number
     if(this.tel===""){
-      this.errorMessage+="Telephone number is mandatory / ";
-    }else if( (this.isTel()) ){
-      this.errorMessage+="Enter Valid Telephone Number / ";
+      this.errorTel="Telephone number is mandatory";
+    }else if( !this.userValidation.isValidTelNumber(this.tel) ){
+      this.errorTel="Enter Valid Telephone Number ";
     }
 
     //valid address
-    if( this.address=="" || this.address==null ){
-      this.errorMessage+="Address is mandatory / ";
+    if( this.address === "" ){
+      this.errorAddress="Address is mandatory ";
     }
 
     //valid email
-    if( this.email=="" || this.email==null ){
-      this.errorMessage+="Email is mandatory / ";
+    if( this.email === "" ){
+      this.errorEmail="Email is mandatory ";
+    }else if( !this.userValidation.isValidEmail(this.email) ){
+       this.errorEmail="Enter Valid Email Address";
     }
-    // else if(){
-    //   this.errorMessage+="Enter Valid Email Address / ";
-    // }
 
     //password
-    if( this.password=="" || this.password==null ){
-      this.errorMessage+="Password is mandatory / ";
+    if( this.password === ""){
+      this.errorPassword="Password is mandatory";
     }  
 
     //valid Exam Date
-    // if(!this.isDateFuture(this.examDate)){
-    //   this.errorMessage+="Enter Valid Exam Date(future) / "
-    // }
+    if( this.examDate === null ){
+      this.errorExamDate="Exam Date is mandatory";
+    }
 
     //valid Trial Date
     // if(!this.isDateFuture(this.trialDate)){
@@ -133,66 +149,15 @@ export class StudentAddComponent implements OnInit {
 
   }
 
-  
-  // handleSuccessfulResponse(response){
-  //   //2)Save the student date    
-  //   console.log("response")
-  //   console.log(response.Data);
-  // }
-
-  // handleErrorResponse(error){
-  //   console.log("error")
-  //   console.log(error);
-  // }
-
-  private handleErrorResponse(error: HttpErrorResponse) {
-    this.errorMessage="Not Successful Registration";
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
-    }
-    // return an observable with a user-facing error message
-    return throwError(
-      'Something bad happened; please try again later.');
-  };
-
-
-  //Validation Functions
-  isPatternNic(){
-    if(this.nic.length == 10){
-      this.regexp = new RegExp('\\d{9,9}[v,V]');
-      this.test = this.regexp.test(this.nic);
-      if(this.test){
-        return false;
-      }else{
-        return true;
-      }
-    }
-    return true;
-  }
-
-  isTel(){
-    if(this.tel.length == 10){
-      this.regexp = new RegExp('\\d{10,10}');
-      this.test = this.regexp.test(this.tel);
-      if(this.test){
-        return false;
-      }else{
-        return true;
-      }
-      
-    }
-    return true;
-  }
 
   closeError(){
     this.errorMessage="";
   }
+
+  handleErrorResponse(error: HttpErrorResponse) {
+    this.errorMessage="There is a problem with the service. please try again later.";
+    let httpError = new HttpError();
+    httpError.ErrorResponse(error);
+  };
 
 }

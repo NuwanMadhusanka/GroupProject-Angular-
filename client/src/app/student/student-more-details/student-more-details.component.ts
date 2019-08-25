@@ -3,9 +3,8 @@ import { StudentModel } from '../../ClassModel/StudentModel';
 import { ActivatedRoute } from '@angular/router';
 import { StudentServiceService } from '../../service/student/student-service.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { throwError } from 'rxjs';
 import { UserModel } from '../../ClassModel/UserModel';
-import { UserValidation } from '../../shared/validation/user-validation/user-validation';
+import { UserValidation } from '../../Shared/validation/user-validation/user-validation';
 import Swal from 'sweetalert2';
 import { HttpError } from '../../Shared/httpError/HttpError';
 

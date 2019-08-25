@@ -12,8 +12,9 @@ import { HttpError } from '../../Shared/httpError/HttpError';
 })
 export class StudentListComponent implements OnInit {
 
+  errorMessage="";
+
   students: StudentModel[] = [];
-  httpError=new HttpError();
 
   constructor(
     private router:Router,
@@ -34,10 +35,10 @@ export class StudentListComponent implements OnInit {
     this.studentService.studentList().subscribe(
       response => {
         this.students=response;
-        console.log(this.students);
+        // console.log(this.students);
       },
       error => {
-        console.log(error);
+        this.handleErrorResponse(error);
       }
     )
   }
@@ -71,7 +72,7 @@ export class StudentListComponent implements OnInit {
             Swal.fire({
               type: 'error',
               title: 'Oops...',
-              text: 'Delete is not Successful!',
+              text: 'Delete Is Not Successful!',
               footer: 'Something bad happened, please try again later.'
             })
           }
@@ -79,10 +80,6 @@ export class StudentListComponent implements OnInit {
         )
       }
     })
-  }
-
-  handleErrorResponse(error){
-    this.httpError.ErrorResponse(error);
   }
 
   //navigate to student-package
@@ -99,6 +96,16 @@ export class StudentListComponent implements OnInit {
   //navigate to more details page
   moreDetails(studentId){
     this.router.navigate(['student-more-details',studentId]);
+  }
+
+  closeError(){
+    this.errorMessage="";
+  }
+
+  handleErrorResponse(error){
+    this.errorMessage="There is a problem with the service. please try again later.";
+    let httpError = new HttpError();
+    httpError.ErrorResponse(error);
   }
 
 }

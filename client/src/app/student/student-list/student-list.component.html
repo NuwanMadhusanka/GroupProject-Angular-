@@ -1,6 +1,18 @@
 <div class="panel-header panel-header-sm">
 </div>
 <div class="main-content">
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage">
+      <div class="alert alert-danger">
+          <button (click)=closeError() type="button" aria-hidden="true" class="close">
+            <i class="now-ui-icons ui-1_simple-remove"></i>
+          </button>
+          <span>{{errorMessage}}</span>
+      </div>
+    </div> 
+    <!-- Error Message End -->
+
   <div class="row">
     <div class="col-md-12">
       <div class="card">
