@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { TimeSlotModel } from '../../ClassModel/TimeSlotModel';
 import { API_URL } from '../../app.constants';
 import { PackageModel } from '../../ClassModel/PackageModel';
+import { Path } from '../../ClassModel/PathModel';
 
 
 @Injectable({
@@ -14,6 +15,7 @@ export class TimeTableServiceService {
     private http:HttpClient
   ) { }
 
+  //Time Slots URL
   getTimeSlotList(){
     return this.http.get<TimeSlotModel[]>(`${API_URL}/timetable/timeslots`);
   }
@@ -30,7 +32,32 @@ export class TimeTableServiceService {
     return this.http.delete(`${API_URL}/timetable/timeslot/${timeSlotId}`);
   }
 
+  //Path URL
+  addPath(path:Path){
+    return this.http.post<any>(`${API_URL}/timetable/path`,path);
+  }
+
+  deletePath(pathId){
+    console.log(pathId);
+    return this.http.delete<any>(`${API_URL}/timetable/path/${pathId}`)
+  }
+
+  getPathList(){
+    return this.http.get<Path[]>(`${API_URL}/timetable/path`);
+  }
+
+  //subPath
+  addSubPath(pathId,subPaths){
+    return this.http.post<Number>(`${API_URL}/timetable/subpath/${pathId}`,subPaths);
+  }
+
+  getSubPathList(pathId){
+    return this.http.get<String[]>(`${API_URL}/timetable/subpath/${pathId}`);
+  }
+
   getRelevantInstructorsList(day:Number ,selectPackageId:Number, selectTimeSlotId:Number, transmission:Number){
       return this.http.get<any>(`${API_URL}/timetable/instructors/${day}/${selectPackageId}/${selectTimeSlotId}/${transmission}`);
   }
+
+
 }

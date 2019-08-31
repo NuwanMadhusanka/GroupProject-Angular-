@@ -21,6 +21,7 @@ import { StudentExamResultAddComponent } from '../../student/student-exam-result
 import { TimeTableComponent } from '../../timeTable/time-table/time-table.component';
 import { LessonAddComponent } from '../../timeTable/lesson-add/lesson-add.component';
 import { TimeSlotComponent } from '../../timeTable/time-slot/time-slot.component';
+import { PathMapComponent } from '../../timeTable/path-map/path-map.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { TimeSlotComponent } from '../../timeTable/time-slot/time-slot.component
 
     TimeTableComponent,
     LessonAddComponent,
-    TimeSlotComponent
+    TimeSlotComponent,
+    PathMapComponent
   ]
 })
 

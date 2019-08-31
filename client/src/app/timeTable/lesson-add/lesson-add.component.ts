@@ -97,6 +97,10 @@ export class LessonAddComponent implements OnInit {
     this.router.navigate(['time-slot']);
   }
 
+  maps(){
+    this.router.navigate(['path-map']);
+  }
+
   showTransmission(pac:PackageModel){
     this.isTransmissionSelect=false;
     if( (pac.manualLes >0) && (pac.autoLes>0)){

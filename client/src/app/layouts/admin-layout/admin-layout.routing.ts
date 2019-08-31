@@ -15,6 +15,7 @@ import { StudentExamResultAddComponent } from '../../student/student-exam-result
 import { TimeTableComponent } from '../../timeTable/time-table/time-table.component';
 import { LessonAddComponent } from '../../timeTable/lesson-add/lesson-add.component';
 import { TimeSlotComponent } from '../../timeTable/time-slot/time-slot.component';
+import { PathMapComponent } from '../../timeTable/path-map/path-map.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -33,5 +34,6 @@ export const AdminLayoutRoutes: Routes = [
     
     {path:'time-table',     component:TimeTableComponent},
     {path:'lesson-add',     component:LessonAddComponent},
-    {path:'time-slot',     component:TimeSlotComponent}
+    {path:'time-slot',     component:TimeSlotComponent},
+    {path:'path-map', component:PathMapComponent}
 ];
