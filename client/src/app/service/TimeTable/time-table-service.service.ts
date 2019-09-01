@@ -46,6 +46,11 @@ export class TimeTableServiceService {
     return this.http.get<Path[]>(`${API_URL}/timetable/path`);
   }
 
+  updatePath(path:Path){
+    console.log(path)
+    return this.http.put<any>(`${API_URL}/timetable/path`,path);
+  }
+
   //subPath
   addSubPath(pathId,subPaths){
     return this.http.post<Number>(`${API_URL}/timetable/subpath/${pathId}`,subPaths);
@@ -53,6 +58,12 @@ export class TimeTableServiceService {
 
   getSubPathList(pathId){
     return this.http.get<String[]>(`${API_URL}/timetable/subpath/${pathId}`);
+  }
+
+  updateSubPath(pathId,subPaths){
+    console.log(pathId)
+    console.log(subPaths)
+    return this.http.put<Number>(`${API_URL}/timetable/subpath/${pathId}`,subPaths);
   }
 
   getRelevantInstructorsList(day:Number ,selectPackageId:Number, selectTimeSlotId:Number, transmission:Number){

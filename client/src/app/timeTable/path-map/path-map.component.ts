@@ -28,11 +28,16 @@ export class PathMapComponent implements OnInit {
   newsubPaths=[];
   errorSubPath;
 
-  updateMap:Path;
-  updateSubPaths:String[]=[];
   isUpdateMap=false;
+  updateMap:Path;
+  errorUpdatePathName;
+  errorUpdateOrigin;
+  errorUpdateDestination;
+  
+  updateSubPaths:String[]=[];
+  updateSubPath="";
   isUpdateSubpath=false;
-
+  errorUpdateSubPath;
 
   constructor(
     private timeTableService:TimeTableServiceService
@@ -73,12 +78,28 @@ export class PathMapComponent implements OnInit {
   }
 
   //buttons
+
+  //This function use List(1)/Insert(2)/Update(3)
   googleMap(map:Path,type){
+    let error;
+
+    if(type==2){
+      this.errorPathName="";
+      this.errorOrigin="";
+      this.errorDestination="";
+    }else if(type==3){
+      this.errorUpdatePathName="";
+      this.errorUpdateOrigin="";
+      this.errorUpdateDestination="";
+    }
+
     if(map.origin == ""){
-      this.errorOrigin="Origin is mandatory";
+      error="Origin is mandatory";
+      (type==2 ? this.errorOrigin=error : this.errorUpdateOrigin=error);
     }
     if(map.destination == ""){
-      this.errorDestination="Destination is mandatory.";
+      error="Destination is mandatory.";
+      (type==2 ? this.errorDestination=error : this.errorUpdateDestination=error);
     }
 
     if( (map.origin != "") && (map.destination!="")){
@@ -131,65 +152,104 @@ export class PathMapComponent implements OnInit {
   }
 
   addMap(){
+    this.newMap.pathName="";
     this.newMap.origin="";
     this.newMap.destination="";
+    this.newSubPath="";
+    this.newsubPaths=[];
+
     this.isAddMap=true;
   }
 
-  addSubPath(){
-    this.errorSubPath="";
-    if(this.newSubPath != ""){
-        this.newsubPaths.push(this.newSubPath);
+  //This function use both update and insert functionality.
+   //type=1 --> Insert , type=2 --> Update
+  addSubPath(type){
+
+    let error;
+    let subPath;
+
+    (type==1 ? this.errorSubPath="" : this.errorUpdateSubPath="");
+    (type==1 ? subPath=this.newSubPath : subPath=this.updateSubPath);
+
+    if(subPath != ""){
+        (type==1 ? this.newsubPaths.push(subPath) : this.updateSubPaths.push(subPath) );
     }else{
-         this.errorSubPath="Insert Valid Path";
+         error="Insert Valid Path";
+         (type==1 ? this.errorSubPath=error : this.errorUpdateSubPath=error);
     }
-    this.newSubPath="";
+    (type==1 ?  this.newSubPath="" : this.updateSubPath="");
   }
 
-  saveConfirm(){
-    this.errorPathName="";
-    this.errorOrigin="";
-    this.errorDestination="";
-
+  //use Insert/Update Functionality
+  saveConfirm(type){
+   
+    if(type==1){
+      this.errorPathName="";
+      this.errorOrigin="";
+      this.errorDestination="";
+    }else{
+      this.errorUpdatePathName="";
+      this.errorUpdateOrigin="";
+      this.errorUpdateDestination="";
+    }
+    
     //validation
-    if(this.newMap.pathName == ""){
-      this.errorPathName="Path Name is mandatory.";
+    let error="";
+    let pathMap:Path;
+
+    (type==1 ? pathMap=this.newMap : pathMap=this.updateMap);
+ 
+    if(pathMap.pathName == ""){
+      error="Path Name is mandatory";
+      (type==1 ? this.errorPathName=error : this.errorUpdatePathName=error);
     }
-    if(this.newMap.origin == ""){
-      this.errorOrigin="Origin is mandatory.";
+    if(pathMap.origin == ""){
+      error="Origin is mandatory.";
+      (type==1 ? this.errorOrigin=error : this.errorUpdateOrigin=error);
     }
-    if(this.newMap.destination == ""){
-      this.errorDestination="Destination is mandatory."
+    if(pathMap.destination == ""){
+      error="Destination is mandatory.";
+      (type==1 ? this.errorDestination=error : this.errorUpdateDestination=error);
     }
 
-    if( (this.errorPathName == "") && (this.errorOrigin == "") && (this.errorDestination == "")){
-      console.log(this.newMap);
-      //save newMap Data
-      this.timeTableService.addPath(this.newMap).subscribe(
+    if( error=="" ){
+      
+      //save newMap/updateMap Data
+      (type==1 ? this.timeTableService.addPath(pathMap) : this.timeTableService.updatePath(pathMap)).subscribe(
         response => {
           let pathId=response;
-          
-          if(this.newsubPaths.length>0){
-              //save the subpath
-              this.timeTableService.addSubPath(pathId,this.newsubPaths).subscribe(
-                response =>{
-                  Swal.fire('Submission is Completed.');
-                  this.newMap.pathName="";
-                  this.newMap.origin="";
-                  this.newMap.destination="";
+          let subPaths=[];
 
-                  this.newsubPaths=[];
-                  this.isAddMap=false;
+          (type==1 ? subPaths=this.newsubPaths : subPaths=this.updateSubPaths);
+          
+          if(subPaths.length>0){
+              //save the subpath
+              (type==1 ?  this.timeTableService.addSubPath(pathId,subPaths) : this.timeTableService.updateSubPath(pathId,subPaths)).subscribe(
+                response =>{
+                  let msg="";
+                  (type==1 ? msg="Submission is Completed." :msg="Update Successful.");
+                  Swal.fire(msg);
+
+                  pathMap.pathName="";
+                  pathMap.origin="";
+                  pathMap.destination="";
+                  
+                  subPaths=[];
+                  (type==1 ? this.isAddMap=false : this.isUpdateMap=false);
+                  
                   this.getPathList();
                 },
                 error => {
                   //delete Path
                   this.timeTableService.deletePath(pathId).subscribe();
 
+                  let msg;
+                  (type==1 ? msg="submission is not Successful!" : msg="Update not Successful!");
+
                   Swal.fire({
                     type: 'error',
                     title: 'Oops...',
-                    text: 'submission is not Successful!',
+                    text: msg,
                     footer: 'Something bad happened, please try again later.'
                   });
                   console.log(error);
@@ -197,15 +257,22 @@ export class PathMapComponent implements OnInit {
                 }
               );
           }else{
-                Swal.fire('Submission is Completed.');
+                let msg="";
+                (type==1 ? msg="Submission is Completed." :msg="Update Successful.");
+                Swal.fire(msg);
+               
+                (type==1 ? this.isAddMap=false : this.isUpdateMap=false);
+                this.getPathList();
           }
         },
         error => {
           console.error(error)
+          let msg;
+          (type==1 ? msg="submission is not Successful!" : msg="Update not Successful!");
           Swal.fire({
             type: 'error',
             title: 'Oops...',
-            text: 'submission is not Successful!',
+            text: msg,
             footer: 'Something bad happened, please try again later.'
           });
         }
@@ -220,6 +287,11 @@ export class PathMapComponent implements OnInit {
   }
 
   isUpdate(path:Path){
+    this.errorUpdatePathName="";
+    this.errorUpdateOrigin="";
+    this.errorUpdateDestination="";
+    this.errorUpdateSubPath="";
+
     this.isUpdateMap=true;
     this.updateMap=new Path(path.pathId,path.pathName,path.origin,path.destination);
     this.getSubPathList(path.pathId);
@@ -235,8 +307,8 @@ export class PathMapComponent implements OnInit {
     this.isAddMap=false;
   }
 
-  clearSubPath(){
-    this.newsubPaths=[];
+  clearSubPath(type){
+    (type==1? this.newsubPaths=[] : this.updateSubPaths=[]);
   }
 
   closeUpdateMap(){

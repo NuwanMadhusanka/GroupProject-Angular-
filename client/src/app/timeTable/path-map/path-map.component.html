@@ -43,7 +43,7 @@
 
                           <button (click)="googleMap(newMap,2)" type="button" class="btn btn-primary btn-round"><i class="fas fa-map-signs"></i> Map</button>
                           <br>
-                          <button  (click)="saveConfirm()" type="button" class="btn btn-secondary btn-round">Save</button>
+                          <button  (click)="saveConfirm(1)" type="button" class="btn btn-secondary btn-round">Save</button>
 
                       </div>  
                  
@@ -64,8 +64,8 @@
                           <small *ngIf="errorSubPath" class="text-danger">{{errorSubPath}}</small>
                         </div>
                         
-                        <button (click)="addSubPath()" type="button" class="btn btn-primary btn-round">ADD</button>
-                        <button (click)="clearSubPath()" type="button" class="btn btn-danger btn-round">Clear</button> 
+                        <button (click)="addSubPath(1)" type="button" class="btn btn-primary btn-round">ADD</button>
+                        <button (click)="clearSubPath(1)" type="button" class="btn btn-danger btn-round">Clear</button> 
                         <!-- Sub Path Table -->
                           <div *ngFor="let subPath of newsubPaths">
                             <small>{{subPath}}</small> <br>
@@ -144,22 +144,22 @@
                                 <div class="form-group">
                                     <label>Path Name:</label>
                                     <input type="text"  class="form-control"  name="pathName"  [(ngModel)]="updateMap.pathName"/>
-                                    <small *ngIf="errorPathName" class="text-danger">{{errorPathName}}</small>
+                                    <small *ngIf="errorUpdatePathName" class="text-danger">{{errorUpdatePathName}}</small>
                                 </div>
                                 <div class="form-group">
                                     <label>Origin:</label>
                                     <input type="text"  class="form-control"  name="origin"  [(ngModel)]="updateMap.origin"/>
-                                    <small *ngIf="errorOrigin" class="text-danger">{{errorOrigin}}</small>
+                                    <small *ngIf="errorUpdateOrigin" class="text-danger">{{errorUpdateOrigin}}</small>
                                 </div>
                                 <div class="form-group">
                                     <label>Destination:</label>
                                     <input type="text"  class="form-control"  name="destination"  [(ngModel)]="updateMap.destination"/>
-                                    <small *ngIf="errorDestination" class="text-danger">{{errorDestination}}</small>
+                                    <small *ngIf="errorUpdateDestination" class="text-danger">{{errorUpdateDestination}}</small>
                                 </div>
 
                                 <button (click)="googleMap(updateMap,3)" type="button" class="btn btn-primary btn-round"><i class="fas fa-map-signs"></i> Map</button>
                                 <br>
-                                <button  (click)="saveConfirm()" type="button" class="btn btn-secondary btn-round">Update</button>
+                                <button  (click)="saveConfirm(2)" type="button" class="btn btn-secondary btn-round">Update</button>
 
                             </div>  
                       
@@ -176,12 +176,12 @@
 
                               <div class="form-group">
                                 <label>Town/Road:</label>
-                                <input type="text"  class="form-control"  name="newSubPath"  [(ngModel)]="newSubPath"/>
-                                <small *ngIf="errorSubPath" class="text-danger">{{errorSubPath}}</small>
+                                <input type="text"  class="form-control"  name="updateSubPath"  [(ngModel)]="updateSubPath"/>
+                                <small *ngIf="errorUpdateSubPath" class="text-danger">{{errorUpdateSubPath}}</small>
                               </div>
                               
-                              <button (click)="addSubPath()" type="button" class="btn btn-primary btn-round">ADD</button>
-                              <button (click)="clearSubPath()" type="button" class="btn btn-danger btn-round">Clear</button> 
+                              <button (click)="addSubPath(2)" type="button" class="btn btn-primary btn-round">ADD</button>
+                              <button (click)="clearSubPath(2)" type="button" class="btn btn-danger btn-round">Clear</button> 
                               <!-- Sub Path Table -->
                                 <div *ngFor="let subPath of updateSubPaths">
                                   <small>{{subPath}}</small> <br>
