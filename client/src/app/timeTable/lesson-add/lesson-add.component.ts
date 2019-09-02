@@ -6,6 +6,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { HttpError } from '../../Shared/httpError/HttpError';
 import { PackageServiceService } from '../../service/package/package-service.service';
 import { PackageModel } from '../../ClassModel/PackageModel';
+import { Path } from '../../ClassModel/PathModel';
+import { InstructorMap } from '../../ClassModel/MapObject/InstructorMap';
+import Swal from 'sweetalert2';
 
 
 
@@ -18,6 +21,9 @@ export class LessonAddComponent implements OnInit {
 
   timeSlotListData:TimeSlotModel[]=[];
   packageListData:PackageModel[]=[];
+  pathListData:Path[]=[];
+  instructorListData:InstructorMap[]=[];
+
   dayListData:any[] = [
     {id:1 ,name:'Monday'},
     {id:2 ,name:'Tuesday'},
@@ -33,8 +39,20 @@ export class LessonAddComponent implements OnInit {
   //form Variable
   selectDay;
   selectTimeSlot:TimeSlotModel;
+  selectPath:Path;
+  selectInstructor:InstructorMap;
   selectPackage:PackageModel;
   selectTransmission=1;
+  numStudent;
+
+  //error message of form variable
+  errorSelectDay;
+  errorSelectTimeSlot;
+  errorSelectPath;
+  errorSelectInstructor;
+  errorSelectPackage;
+  //errorSelectTransmission;
+  errorNumStudent;
 
   isTransmissionSelect;
   isdisableInstructor=true;
@@ -42,12 +60,13 @@ export class LessonAddComponent implements OnInit {
   constructor(
     private router:Router,
     private timeTableService:TimeTableServiceService,
-    private packageService:PackageServiceService
+    private packageService:PackageServiceService,
   ) { }
 
   ngOnInit() {
     this.timeSlotList();
     this.packageList();
+    this.pathList();
   }
 
   //get time Slot Details
@@ -76,12 +95,75 @@ export class LessonAddComponent implements OnInit {
     );
   }
 
+  //get path List
+  pathList(){
+    this.timeTableService.getPathList().subscribe(
+      response => {
+        this.pathListData=response;
+        console.log(this.pathList)
+      },
+      error => {
+          console.log(error);
+          this.handleErrorResponse(error);
+      }
+    )
+  }
+
   //Save the lesson data
   save(){
-    console.log("timeSlot:"+this.selectTimeSlot);
-    console.log("day:"+this.selectDay);
-    console.log("package"+this.selectPackage);
-    console.log("transmission"+this.selectTransmission);
+    let errorFlag=false;
+
+    this.errorSelectDay="";
+    this.errorSelectTimeSlot="";
+    this.errorSelectPath="";
+    this.errorSelectInstructor="";
+    this.errorSelectPackage="";
+    //this.errorSelectTransmission="";
+    this.errorNumStudent="";
+
+    if(this.selectDay == null){
+        this.errorSelectDay="Day should be selected.";
+        errorFlag=true;
+    }
+    if(this.selectTimeSlot == null){
+        this.errorSelectTimeSlot="Time should be selected.";
+        errorFlag=true;
+    }
+    if(this.selectPackage == null){
+        this.errorSelectPackage="Package should be selected.";
+        errorFlag=true;
+    }
+    if(this.selectPath == null){
+      this.errorSelectPath="Path should be selected.";
+      errorFlag=true;
+    }
+    if(this.selectInstructor == null){
+      this.errorSelectInstructor="Instructor should be selected.";
+      errorFlag=true;
+    }
+    if(this.numStudent == null){
+      this.errorNumStudent="Insert valid input.";
+      errorFlag=true;
+    }
+
+    if(!errorFlag){
+      this.timeTableService.addLesson(this.selectDay,this.selectTimeSlot.timeSlotId,this.selectPath.pathId,this.selectPackage.packageId,this.selectInstructor.instructorId,this.numStudent,this.selectTransmission).subscribe(
+       response => {
+        Swal.fire("Save Completed.");
+        this.router.navigate(['time-table'])
+       },
+       error => {
+        console.log(error);
+        this.handleErrorResponse(error);
+        Swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: "Save Not Completed.",
+          footer: 'Something bad happened, please try again later.'
+        });
+       }
+      )
+    }
   }
 
  //error handling
@@ -116,7 +198,9 @@ export class LessonAddComponent implements OnInit {
   }
 
   showInstructor(){
-    if( this.selectDay!=null && this.selectPackage!=null && this.selectTimeSlot!=null){
+   
+    this.isdisableInstructor=true;
+    if( this.selectDay!=null && this.selectPackage!=null && this.selectTimeSlot!=null && this.selectPath!=null){
         let transmission=0;
 
         //find selection transmission
@@ -130,12 +214,16 @@ export class LessonAddComponent implements OnInit {
 
       
         //get Instructor List
-        this.timeTableService.getRelevantInstructorsList(this.selectDay,this.selectPackage.packageId,this.selectTimeSlot.timeSlotId,transmission).subscribe(
+        this.timeTableService.getRelevantInstructorsList(this.selectDay,this.selectPackage.packageId,this.selectTimeSlot.timeSlotId,this.selectPath.pathId,transmission).subscribe(
           response => {
-
+              this.instructorListData=response;
+              if(this.instructorListData.length>0){
+                this.isdisableInstructor=false;
+              }
           },
           error => {
-
+              console.log(error);
+              this.handleErrorResponse(error);
           }
         )
     }

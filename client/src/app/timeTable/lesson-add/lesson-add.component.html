@@ -33,6 +33,7 @@
                                     <option [ngValue]="undefined" selected disabled>Select a Day</option>
                                     <option (click)="showInstructor()" *ngFor="let day of dayListData"  [ngValue]="day.id" >{{day.name}}</option>
                                   </select>
+                                  <small *ngIf="errorSelectDay" class="text-danger">{{errorSelectDay}}</small>
                               </div>
                            </div>
                            <!-- Finish Day Selection -->
@@ -46,11 +47,25 @@
                                       <option [ngValue]="undefined" selected disabled>Select a Time Slot</option>
                                       <option (click)="showInstructor()"  *ngFor="let timeSlot of timeSlotListData"  [ngValue]="timeSlot" >{{timeSlot.startTime | slice:0:5}} - {{timeSlot.finishTime | slice:0:5}}</option>
                                     </select>
-                                  
+                                    <small *ngIf="errorSelectTimeSlot" class="text-danger">{{errorSelectTimeSlot}}</small>
                                   <!-- <p>Form value: {{ f.value | json }}</p> -->
                               </div>
                            </div>
                            <!-- Finish Time Slot Selection -->
+
+                           <!-- Path selection -->
+                           <div class="col-sm-8 col-lg-12">
+                              <div>
+                                  
+                                    <label for="sel1">Path(Map):</label>
+                                    <select  class="form-control" [(ngModel)]="selectPath" name="selectPath">
+                                      <option [ngValue]="undefined" selected disabled>Select a Path</option>
+                                      <option  *ngFor="let path of pathListData"  [ngValue]="path" >{{path.pathName}} ({{path.origin}}-{{path.destination}})</option>
+                                    </select>
+                                    <small *ngIf="errorSelectPath" class="text-danger">{{errorSelectPath}}</small>
+                              </div>
+                           </div>
+                           <!-- Package Selection -->
 
                            <!-- Package selection -->
                            <div class="col-sm-8 col-lg-12">
@@ -61,7 +76,7 @@
                                       <option [ngValue]="undefined" selected disabled>Select a Package</option>
                                       <option (click)="showTransmission(package)" *ngFor="let package of packageListData"  [ngValue]="package" >{{package.title}}</option>
                                     </select>
-                                 
+                                    <small *ngIf="errorSelectPackage" class="text-danger">{{errorSelectPackage}}</small>
                               </div>
                            </div>
                            <!-- Package Selection -->
@@ -88,11 +103,11 @@
                               <div>
                                   
                                     <label for="sel1">Instructor:</label>
-                                    <select  class="form-control" [(ngModel)]="selectPackage" name="selectTimeSlot"   [attr.disabled] = " isdisableInstructor ? 'disabled' : null">
+                                    <select  class="form-control" [(ngModel)]="selectInstructor" name="selectInstructor"   [attr.disabled] = " isdisableInstructor ? 'disabled' : null">
                                       <option [ngValue]="undefined" selected disabled>Select a Instructor</option>
-                                      <option (click)="showTransmission(package)" *ngFor="let package of packageListData"  [ngValue]="package" >{{package.title}}</option>
+                                      <option  *ngFor="let instructor of instructorListData"  [ngValue]="instructor" >{{instructor.name}}</option>
                                     </select>
-                                 
+                                    <small *ngIf="errorSelectInstructor && !isdisableInstructor" class="text-danger">{{errorSelectInstructor}}</small>
                               </div>
                            </div>
                            <!-- Instructor Selection -->
@@ -101,7 +116,8 @@
                            <div class="col-sm-6 col-lg-4">
                               <div class="form-group">
                                   <label>Number Of Students</label>
-                                  <input type="text" value="" placeholder="0" class="form-control" />
+                                  <input type="number" value="" placeholder="0" class="form-control" [(ngModel)]="numStudent" />
+                                  <small *ngIf="errorNumStudent" class="text-danger">{{errorNumStudent}}</small>
                               </div>
                           </div>
                           <!-- Finish Student Add -->

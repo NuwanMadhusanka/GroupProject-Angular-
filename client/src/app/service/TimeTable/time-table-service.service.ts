@@ -4,6 +4,7 @@ import { TimeSlotModel } from '../../ClassModel/TimeSlotModel';
 import { API_URL } from '../../app.constants';
 import { PackageModel } from '../../ClassModel/PackageModel';
 import { Path } from '../../ClassModel/PathModel';
+import { InstructorMap } from '../../ClassModel/MapObject/InstructorMap';
 
 
 @Injectable({
@@ -66,9 +67,14 @@ export class TimeTableServiceService {
     return this.http.put<Number>(`${API_URL}/timetable/subpath/${pathId}`,subPaths);
   }
 
-  getRelevantInstructorsList(day:Number ,selectPackageId:Number, selectTimeSlotId:Number, transmission:Number){
-      return this.http.get<any>(`${API_URL}/timetable/instructors/${day}/${selectPackageId}/${selectTimeSlotId}/${transmission}`);
+
+  getRelevantInstructorsList(day:Number ,selectPackageId:Number, selectTimeSlotId:Number, selectPathId:Number, transmission:Number){
+      return this.http.get<InstructorMap[]>(`${API_URL}/timetable/instructors/${day}/${selectPackageId}/${selectTimeSlotId}/${selectPathId}/${transmission}`);
   }
 
+  //lesson url
+  addLesson(day,timeSlotId,pathId,packageId,instructorId,numStudent,transmission){
+      return this.http.post<any>(`${API_URL}/timetable/lesson/${day}/${packageId}/${timeSlotId}/${pathId}/${transmission}/${instructorId}/${numStudent}`,{});
+  }
 
 }
