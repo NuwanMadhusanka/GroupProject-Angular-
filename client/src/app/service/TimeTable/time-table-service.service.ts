@@ -5,6 +5,7 @@ import { API_URL } from '../../app.constants';
 import { PackageModel } from '../../ClassModel/PackageModel';
 import { Path } from '../../ClassModel/PathModel';
 import { InstructorMap } from '../../ClassModel/MapObject/InstructorMap';
+import { TimeTableDataList } from '../../ClassModel/MapObject/TimeTableDataList';
 
 
 @Injectable({
@@ -75,6 +76,14 @@ export class TimeTableServiceService {
   //lesson url
   addLesson(day,timeSlotId,pathId,packageId,instructorId,numStudent,transmission){
       return this.http.post<any>(`${API_URL}/timetable/lesson/${day}/${packageId}/${timeSlotId}/${pathId}/${transmission}/${instructorId}/${numStudent}`,{});
+  }
+
+  getTimeTableList(){
+    return this.http.get<TimeTableDataList[]>(`${API_URL}/lesson`);
+  }
+
+  deleteLesson(lessonId){
+    return this.http.delete<Number>(`${API_URL}/lesson/${lessonId}`);
   }
 
 }
