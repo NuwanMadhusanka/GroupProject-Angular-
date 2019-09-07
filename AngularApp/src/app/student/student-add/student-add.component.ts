@@ -114,8 +114,8 @@ export class StudentAddComponent implements OnInit {
 
 
     //Save to the DB
-    if(this.errorMessage==""){
-    
+    if(this.errorName=="" && this.errorNic=="" && this.errorTel=="" && this.errorAddress=="" && this.errorEmail=="" && this.errorPassword=="" && this.errorExamDate==""){
+      console.log("ok")
       //work with backend service
 
       //1)Save User relevant Data

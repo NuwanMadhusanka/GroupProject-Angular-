@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserModel } from '../ClassModel/UserModel';
+import { API_URL } from '../app.constants';
 
 
 
@@ -15,6 +16,6 @@ export class UserAuthenticationServiceService {
   ) { }
 
   authenticate(email,password){
-    return this.http.get<UserModel>(`http://localhost:8080/login/${email}/${password}`);
+    return this.http.get<UserModel>(`${API_URL}/login/${email}/${password}`);
   }
 }

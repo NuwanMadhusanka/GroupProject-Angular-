@@ -16,6 +16,7 @@ import { TimeTableComponent } from '../../timeTable/time-table/time-table.compon
 import { LessonAddComponent } from '../../timeTable/lesson-add/lesson-add.component';
 import { TimeSlotComponent } from '../../timeTable/time-slot/time-slot.component';
 import { PathMapComponent } from '../../timeTable/path-map/path-map.component';
+import { LessonUpdateComponent } from '../../timeTable/lesson-update/lesson-update.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -34,6 +35,7 @@ export const AdminLayoutRoutes: Routes = [
     
     {path:'time-table',     component:TimeTableComponent},
     {path:'lesson-add',     component:LessonAddComponent},
+    {path:'lesson-update/:id/:type',   component:LessonUpdateComponent},
     {path:'time-slot',     component:TimeSlotComponent},
     {path:'path-map', component:PathMapComponent}
 ];

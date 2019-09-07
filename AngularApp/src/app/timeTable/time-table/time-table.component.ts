@@ -18,6 +18,10 @@ export class TimeTableComponent implements OnInit {
   timeTableList:TimeTableDataList[]=[];
   rowSpanLength=[];
 
+  isDeactiveLesson=false;
+  deactivateLessonList:TimeTableDataList[]=[];
+  deacivateRowSpanLength=[];
+
   successMsg="";
   errorMsg="";
 
@@ -34,7 +38,7 @@ export class TimeTableComponent implements OnInit {
 
   getTimeTableList(){
     this.rowSpanLength=[];
-    this.timeTableService.getTimeTableList().subscribe(
+    this.timeTableService.getTimeTableList(1).subscribe(
       response => {
         this.timeTableList=response;
 
@@ -85,12 +89,109 @@ export class TimeTableComponent implements OnInit {
     });
   }
 
+  lessonDeactivate(lessonId){   
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Lesson Is Deactivated.",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Deactivate!'
+    }).then((result) => {
+      if (result.value) {
+        this.timeTableService.lessonDeactivate(lessonId).subscribe(
+          response => {
+            this.successMsg="Lesson Deactivated Successful.";
+            this.getTimeTableList();
+            this.getDeactivateLessonList();
+          },
+          error => {
+            this.errorMsg="Lesson Deactivated Not Successful.";
+          }
+        )
+      }
+    })
+  }
+
+ 
+
+  getDeactivateLessonList(){
+    this.deacivateRowSpanLength=[];
+    this.timeTableService.getTimeTableList(0).subscribe(
+      response => {
+        this.deactivateLessonList=response;
+
+        this.deactivateLessonList.forEach(element => {
+          let lengthRow=0;
+          element.numStuData.forEach( x => {
+            lengthRow+=x.length;
+          });
+          this.deacivateRowSpanLength.push(lengthRow);
+        });
+
+      },
+      error =>{
+        console.log(error);
+      }
+    )
+  }
+
+  lessonActivate(lessonId){ 
+    this.timeTableService.lessonActivate(lessonId).subscribe(
+      response => {
+        if(response == 1){
+          this.getTimeTableList();
+          this.getDeactivateLessonList();
+          Swal.fire({
+            position: 'top-end',
+            type: 'success',
+            title: 'Lesson Activated',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }else{
+          Swal.fire({
+            title: "Can't Activate Lesson.(Lesson's Instructor not available.)",
+            text: "Can Activate lesson by update the lesson's instructor",
+            type: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Update Instructor'
+          }).then((result) => {
+            if (result.value) {
+              this.router.navigate(['lesson-update',lessonId,0]);
+            }
+          });
+        }
+      },
+      error => {
+        console.log(error);
+        this.handleErrorResponse(error);
+      }
+    )
+  }
+
+  activateLesson(){
+    this.isDeactiveLesson=true;
+    this.getDeactivateLessonList();
+  }
+
   addLesson(){
     this.router.navigate(['lesson-add']);
   }
 
+  lessonUpdate(lessonId){
+    this.router.navigate(['lesson-update',lessonId,1]);
+  }
+
   closeMsg(type){
     (type==1 ? this.errorMsg="" : this.successMsg="");
+  }
+
+  close(){
+    this.isDeactiveLesson=false;
   }
 
   //error handling

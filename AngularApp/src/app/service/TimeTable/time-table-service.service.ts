@@ -6,6 +6,7 @@ import { PackageModel } from '../../ClassModel/PackageModel';
 import { Path } from '../../ClassModel/PathModel';
 import { InstructorMap } from '../../ClassModel/MapObject/InstructorMap';
 import { TimeTableDataList } from '../../ClassModel/MapObject/TimeTableDataList';
+import { LessonModel } from '../../ClassModel/LessonModel';
 
 
 @Injectable({
@@ -22,6 +23,10 @@ export class TimeTableServiceService {
     return this.http.get<TimeSlotModel[]>(`${API_URL}/timetable/timeslots`);
   }
 
+  getOrderTimeSlotList(lessonId){
+    return this.http.get<TimeSlotModel[]>(`${API_URL}/timetable/timeslot/${lessonId}`)
+  }
+
   updateTimeSlot(timeSlot:TimeSlotModel){
     return this.http.put<any>(`${API_URL}/timetable/timeslot`,timeSlot);  
   }
@@ -33,6 +38,7 @@ export class TimeTableServiceService {
   deleteTimeSlot(timeSlotId){
     return this.http.delete(`${API_URL}/timetable/timeslot/${timeSlotId}`);
   }
+
 
   //Path URL
   addPath(path:Path){
@@ -46,6 +52,10 @@ export class TimeTableServiceService {
 
   getPathList(){
     return this.http.get<Path[]>(`${API_URL}/timetable/path`);
+  }
+
+  getOrderPathList(lessonId){
+    return this.http.get<Path[]>(`${API_URL}/timetable/path/${lessonId}`);
   }
 
   updatePath(path:Path){
@@ -78,12 +88,28 @@ export class TimeTableServiceService {
       return this.http.post<any>(`${API_URL}/timetable/lesson/${day}/${packageId}/${timeSlotId}/${pathId}/${transmission}/${instructorId}/${numStudent}`,{});
   }
 
-  getTimeTableList(){
-    return this.http.get<TimeTableDataList[]>(`${API_URL}/lesson`);
+  getTimeTableList(type){//type 0:Deactivate Lessons / 1:Activate Lessons
+    return this.http.get<TimeTableDataList[]>(`${API_URL}/timetable/lessons/${type}`);
+  }
+
+  getLesson(lessonId){
+    return this.http.get<LessonModel>(`${API_URL}/timetable/lesson/${lessonId}`);
   }
 
   deleteLesson(lessonId){
-    return this.http.delete<Number>(`${API_URL}/lesson/${lessonId}`);
+    return this.http.delete<Number>(`${API_URL}/timetable/lesson/${lessonId}`);
+  }
+
+  lessonDeactivate(lessonId){
+    return this.http.put<any>(`${API_URL}/timetable/lesson/deactivate/${lessonId}`,{});
+  }
+
+  lessonActivate(lessonId){
+    return this.http.put<any>(`${API_URL}/timetable/lesson/activate/${lessonId}`,{});
+  }
+
+  updateLesson(lessonId,type,datId,timeSlotId,pathId,instructorId,numStudent){
+    return this.http.put<any>(`${API_URL}/timetable/lesson/${lessonId}/${type}/${datId}/${timeSlotId}/${pathId}/${instructorId}/${numStudent}`,{})
   }
 
 }
