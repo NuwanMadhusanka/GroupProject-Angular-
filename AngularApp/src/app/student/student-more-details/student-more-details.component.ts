@@ -45,7 +45,7 @@ export class StudentMoreDetailsComponent implements OnInit {
 
   isUpdate(option){
     this.errorUpdateMessage="";
-    console.log(option);
+    
     if( (option === 1)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Email";  this.updateName="Email"; this.updateVariable=this.studentData.userId.email;}
     if( (option === 2)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Password";  this.updateName="Password"; this.updateVariable=this.studentData.userId.password;}
     if( (option === 3)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Exam Date"; this.updateName="Exam Date"; this.updateVariable=this.studentData.examDate;}

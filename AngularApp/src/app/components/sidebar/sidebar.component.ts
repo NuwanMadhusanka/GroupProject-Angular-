@@ -13,9 +13,11 @@ export const ROUTES: RouteInfo[] = [
     { path: '/package-list', title: 'Package',  icon:'design_bullet-list-67', class: '' },
     { path: '/vehicle-list', title: 'Vehicle',  icon:'design_bullet-list-67', class: '' },
     { path: '/student-list', title: 'Student',  icon:'design_bullet-list-67', class: '' },
-    { path: '/student-payment', title: 'Payment',  icon:'design_bullet-list-67', class: '' },
     { path: '/admin-staff-student-dash-board', title: 'Dashboard',  icon:'design_bullet-list-67', class: '' },
-    { path: '/time-table', title: 'Time Table',  icon:'design_bullet-list-67', class: '' }
+    { path: '/time-table', title: 'Time Table',  icon:'design_bullet-list-67', class: '' },
+    
+    { path: '/student-payment', title: 'Payment',  icon:'business_money-coins', class: '' },
+    { path: '/trial-lesson-list', title: 'Trial Lesson',  icon:'design_bullet-list-67', class: '' }
 ];
 
 @Component({
@@ -60,7 +62,9 @@ export class SidebarComponent implements OnInit {
     ];
 
     this.student=[
-      { path: '/student-payment/'+sessionStorage.getItem("userId"), title: 'Payment',  icon:'design_bullet-list-67', class: '' }
+      { path: '/time-table', title: 'Time Table',  icon:'education_paper', class: '' },
+      { path: '/trial-lesson-list', title: 'Trial Lesson',  icon:'design_bullet-list-67', class: '' },
+      { path: '/student-payment/'+sessionStorage.getItem("userId"), title: 'Payment',  icon:'business_money-coins', class: '' }
     ];
     
   }

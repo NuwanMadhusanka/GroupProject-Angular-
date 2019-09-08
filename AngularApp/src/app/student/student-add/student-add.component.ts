@@ -7,6 +7,7 @@ import { UserModel } from '../../ClassModel/UserModel';
 import { StudentModel } from '../../ClassModel/StudentModel';
 import { HttpError } from '../../Shared/httpError/HttpError';
 import { UserValidation } from '../../Shared/validation/user-validation/user-validation';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -63,6 +64,7 @@ export class StudentAddComponent implements OnInit {
     this.errorEmail="";
     this.errorPassword="";
     this.errorExamDate="";
+    this.errorAddress="";
 
     //validate name
     if(this.name===""){
@@ -115,34 +117,74 @@ export class StudentAddComponent implements OnInit {
 
     //Save to the DB
     if(this.errorName=="" && this.errorNic=="" && this.errorTel=="" && this.errorAddress=="" && this.errorEmail=="" && this.errorPassword=="" && this.errorExamDate==""){
-      console.log("ok")
+      console.log("ok");
       //work with backend service
 
       //1)Save User relevant Data
       this.userService.userRegister(new UserModel(-1,this.email,this.password,new Date(),1,5)).subscribe(
         response => {
           var userId=response.userId
-          console.log(userId);
 
           //Save Student relevant Data
           this.studentService.studentRegister(new StudentModel(-1,this.name,this.tel,this.nic,this.examDate,this.trialDate,this.address,response)).subscribe(
             response => {
-              console.log(response);
-              this.router.navigate(['student-list'])},
-            error => {
-              //If it's error should delete user record from the db
-              this.userService.userDelete(userId).subscribe(
+             
+              if(response == 1){
+                
+                //register success
+                Swal.fire({
+                  position: 'top-end',
+                  type: 'success',
+                  title: 'Registration Successful.',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+                this.router.navigate(['student-list'])
+
+              }else{
+                
+                //student already registered
+                //If it's error should delete user record from the db
+
+                Swal.fire({
+                  type: 'error',
+                  title: 'Oops...',
+                  text: 'Student Registration Not Successful!.',
+                  footer: 'Student Already Registered.'
+                })
+
+                this.userService.userDelete(userId).subscribe(
                 response => {console.log("user delete success")},
                 error => {console.log("User delete not success")}
+                );
 
-              )
+              }
+              },
+            error => {
+
+              Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: 'Student Registration Not Successful!.',
+                footer: 'Please Try Again Later'
+              })
+
               console.log(error);
               this.handleErrorResponse(error);
             }
           )
 
         },
-        error => this.handleErrorResponse(error)
+        error => {
+          Swal.fire({
+            type: 'error',
+            title: 'Oops...',
+            text: 'Student Registration Not Successful!.',
+            footer: 'Please Try Again Later'
+          });
+          console.log(error);
+          this.handleErrorResponse(error)
+        }
       )
       
     }

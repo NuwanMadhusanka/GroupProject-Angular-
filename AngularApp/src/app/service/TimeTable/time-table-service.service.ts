@@ -108,8 +108,8 @@ export class TimeTableServiceService {
     return this.http.put<any>(`${API_URL}/timetable/lesson/activate/${lessonId}`,{});
   }
 
-  updateLesson(lessonId,type,datId,timeSlotId,pathId,instructorId,numStudent){
-    return this.http.put<any>(`${API_URL}/timetable/lesson/${lessonId}/${type}/${datId}/${timeSlotId}/${pathId}/${instructorId}/${numStudent}`,{})
+  updateLesson(lessonId,type,dayId,timeSlotId,pathId,instructorId,numStudent){
+    return this.http.put<any>(`${API_URL}/timetable/lesson/${lessonId}/${type}/${dayId}/${timeSlotId}/${pathId}/${instructorId}/${numStudent}`,{})
   }
 
 }

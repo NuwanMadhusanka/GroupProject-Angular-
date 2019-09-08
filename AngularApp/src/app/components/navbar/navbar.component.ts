@@ -158,4 +158,20 @@ export class NavbarComponent implements OnInit {
       sessionStorage.removeItem('userRole');
       this.router.navigate(['']);
     }
+
+    profile(){
+      let role=sessionStorage.getItem('userRole');
+      if(role == '1'){
+
+      }else if(role == '2'){
+
+      }else if(role == '3'){
+        
+      }else if(role == '4'){
+
+      }else if(role == '5'){
+        console.log("Hi")
+        this.router.navigate(['student-profile']);
+      }
+    }
 }

@@ -18,16 +18,24 @@ export class UserValidation {
 
   //valid Exam Date
   public isValidDate(examDate:Date,trialDate:Date){
-     let currentDate=new Date();
-     let eDate=new Date(examDate);
-     let tDate=new Date(trialDate);
    
-     if(currentDate.getTime() < eDate.getTime()){
-       if(eDate.getTime() < tDate.getTime()){
-         return true;
-       }
-     }
-     return false;
+     let currentDate=new Date();
+     let currentYear=currentDate.getFullYear();
+     let currentMonth=currentDate.getMonth()+1;
+     let currentDay=currentDate.getDate();
+
+    
+     let eDate=new Date(examDate);
+     let examYear=eDate.getFullYear();
+     let examMonth=eDate.getMonth();
+     let examDay=eDate.getDate();
+
+     let tDate=new Date(trialDate);
+     let trialYear=tDate.getFullYear();
+     let trialMonth=tDate.getMonth();
+     let trialDay=tDate.getDate();
+   
+     return true;
   }
 
   //Telephone number Validation

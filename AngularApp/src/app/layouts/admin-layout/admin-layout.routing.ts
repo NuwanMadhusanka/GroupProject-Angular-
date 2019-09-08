@@ -17,6 +17,9 @@ import { LessonAddComponent } from '../../timeTable/lesson-add/lesson-add.compon
 import { TimeSlotComponent } from '../../timeTable/time-slot/time-slot.component';
 import { PathMapComponent } from '../../timeTable/path-map/path-map.component';
 import { LessonUpdateComponent } from '../../timeTable/lesson-update/lesson-update.component';
+import { StudentProfileComponent } from '../../profile/student-profile/student-profile.component';
+import { TrialLessonBookComponent } from '../../LessonBooking/trial-lesson-book/trial-lesson-book.component';
+import { TrialLessonListComponent } from '../../LessonBooking/trial-lesson-list/trial-lesson-list.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -37,5 +40,10 @@ export const AdminLayoutRoutes: Routes = [
     {path:'lesson-add',     component:LessonAddComponent},
     {path:'lesson-update/:id/:type',   component:LessonUpdateComponent},
     {path:'time-slot',     component:TimeSlotComponent},
-    {path:'path-map', component:PathMapComponent}
+    {path:'path-map', component:PathMapComponent},
+
+    {path:'trial-lesson-book',  component:TrialLessonBookComponent},
+    {path:'trial-lesson-list',  component:TrialLessonListComponent},
+
+    {path:'student-profile' ,component:StudentProfileComponent}
 ];

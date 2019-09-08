@@ -23,6 +23,9 @@ import { LessonAddComponent } from '../../timeTable/lesson-add/lesson-add.compon
 import { TimeSlotComponent } from '../../timeTable/time-slot/time-slot.component';
 import { PathMapComponent } from '../../timeTable/path-map/path-map.component';
 import { LessonUpdateComponent } from '../../timeTable/lesson-update/lesson-update.component';
+import { StudentProfileComponent } from '../../profile/student-profile/student-profile.component';
+import { TrialLessonBookComponent } from '../../LessonBooking/trial-lesson-book/trial-lesson-book.component';
+import { TrialLessonListComponent } from '../../LessonBooking/trial-lesson-list/trial-lesson-list.component';
 
 
 @NgModule({
@@ -52,7 +55,12 @@ import { LessonUpdateComponent } from '../../timeTable/lesson-update/lesson-upda
     LessonAddComponent,
     LessonUpdateComponent,
     TimeSlotComponent,
-    PathMapComponent
+    PathMapComponent,
+
+    TrialLessonBookComponent,
+    TrialLessonListComponent,
+
+    StudentProfileComponent
   ]
 })
 

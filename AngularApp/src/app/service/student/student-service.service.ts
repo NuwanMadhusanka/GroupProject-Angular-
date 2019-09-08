@@ -7,6 +7,7 @@ import { CourseFee } from '../../ClassModel/CourseFeeModel';
 import { PayPal } from '../../student/student-payment/student-payment.component';
 import { ExamList } from '../../adminStaff/admin-staff-student-dash-board/admin-staff-student-dash-board.component';
 import { API_URL } from '../../app.constants';
+import { StudentPackageModel } from '../../ClassModel/StudentPackageModel';
 
 
 
@@ -24,9 +25,7 @@ export class StudentServiceService {
 
   //register the new student
   studentRegister(student:StudentModel){
-    console.log(student);
-    return this.http.post<StudentModel>(`${API_URL}/student/register`,student);
-    //console.log(user);
+    return this.http.post<any>(`${API_URL}/student/register`,student);
   }
 
   //get StudentList
@@ -77,6 +76,11 @@ export class StudentServiceService {
     return this.http.put<StudentModel>(`${API_URL}/student/update`,student);
   }
 
+  //getStudent data using userId
+  getStudentData(userId){
+    return this.http.get<StudentModel>(`${API_URL}/student/user/${userId}`);
+  }
+
   //delete Student Data
   studentDelete(stuId){
     return this.http.delete<any>(`${API_URL}/student/${stuId}`);
@@ -112,6 +116,4 @@ export class StudentServiceService {
   submitTrialExamResult(date,countPass,countFail){
     return this.http.post<any>(`${API_URL}/student/trialexam/result?date=`+date+"&countPass="+countPass+"&countFail="+countFail,{});
   }
-
-
 }

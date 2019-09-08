@@ -15,6 +15,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class TimeTableComponent implements OnInit {
 
+  userRole;
+
   timeTableList:TimeTableDataList[]=[];
   rowSpanLength=[];
 
@@ -33,6 +35,13 @@ export class TimeTableComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.userRole=sessionStorage.getItem('userRole');
+    console.log(this.userRole);
+    if(this.userRole == null){
+      this.router.navigate(['/']);
+    }
+
     this.getTimeTableList();
   }
 
@@ -192,6 +201,10 @@ export class TimeTableComponent implements OnInit {
 
   close(){
     this.isDeactiveLesson=false;
+  }
+
+  trialLessonBook(){
+    this.router.navigate(['trial-lesson-book']);
   }
 
   //error handling

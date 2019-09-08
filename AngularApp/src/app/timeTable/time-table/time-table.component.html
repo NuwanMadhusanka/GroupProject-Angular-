@@ -24,8 +24,9 @@
       <div class="card">
         <div class="card-header">
             <h4 class="card-title">Time Table</h4>
-            <a (click)=addLesson()><button type="button" class="btn btn-success" title="Add New Lesson"><i class="fas fa-plus"></i></button></a>
-            <a (click)=activateLesson()><button type="button" class="btn btn-info" title="Active Lesson"><i class="fas fa-check-circle"></i></button></a>
+            <a *ngIf="userRole != 5" (click)=addLesson()><button type="button" class="btn btn-success" title="Add New Lesson"><i class="fas fa-plus"></i></button></a>
+            <a *ngIf="userRole != 5" (click)=activateLesson()><button type="button" class="btn btn-info" title="Active Lesson"><i class="fas fa-check-circle"></i></button></a>
+            <a *ngIf="userRole == 5" (click)="trialLessonBook()"><button type="button" class="btn btn-primary btn-round">Reserve Lesson</button></a>
         </div>
         <div class="card-body">
          
@@ -42,7 +43,7 @@
                     <th>Instructor</th>
                     <th>Path</th>
                     <th>NumStu</th>
-                    <th>Option</th>
+                    <th *ngIf="userRole != 5">Option</th>
                   </thead>
                   <tbody>
                     
@@ -58,12 +59,12 @@
                             <td *ngIf="data.numStuData[0][0] != 0">{{data.numStuData[0][0]}}</td>
                             <td *ngIf="data.numStuData[0][0] == 0">-</td>
 
-                            <td *ngIf="data.numStuData[0][0] != 0">
+                            <td *ngIf="data.numStuData[0][0] != 0 && userRole!=5">
                                 <button (click)="lessonUpdate(data.idData[0][0])" type="button" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button>
                                 <button (click)="lessonDeactivate(data.idData[0][0])" type="button" class="btn btn-secondary btn-sm"><i class="fas fa-window-close" title="Deactivate"></i></button>
                                 <button (click)="lessonDelete(data.idData[0][0])" type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                             </td>
-                            <td *ngIf="data.numStuData[0][0] == 0">-</td>
+                            <td *ngIf="data.numStuData[0][0] == 0 && userRole!=5">-</td>
                         </tr>
 
                         <ng-container *ngFor="let time of data.timeSlotData; let i= index;">
@@ -74,7 +75,7 @@
                                     <td>{{data.instructorData[i][0]}}</td>
                                     <td>{{data.pathData[i][0]}}</td>
                                     <td>{{data.numStuData[i][0]}}</td>
-                                    <td>
+                                    <td *ngIf="userRole != 5">
                                       <button (click)="lessonUpdate(data.idData[i][0])" type="button" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button>
                                       <button (click)="lessonDeactivate(data.idData[i][0])" type="button" class="btn btn-secondary btn-sm"><i class="fas fa-window-close" title="Deactivate"></i></button>
                                       <button (click)="lessonDelete(data.idData[i][0])" type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
@@ -88,7 +89,7 @@
                                           <td>{{data.instructorData[i][j]}}</td>
                                           <td>{{data.pathData[i][j]}}</td>
                                           <td>{{data.numStuData[i][j]}}</td>
-                                          <td>
+                                          <td *ngIf="userRole != 5">
                                             <button (click)="lessonUpdate(data.idData[i][j])" type="button" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button>
                                             <button (click)="lessonDeactivate(data.idData[i][j])" type="button" class="btn btn-secondary btn-sm"><i class="fas fa-window-close" title="Deactivate"></i></button>
                                             <button (click)="lessonDelete(data.idData[i][j])" type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>

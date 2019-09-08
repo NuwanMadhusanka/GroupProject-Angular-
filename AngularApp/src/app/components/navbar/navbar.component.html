@@ -48,23 +48,26 @@
               </div>
             </li> -->
             <li class="nav-item">
-              <a class="nav-link" href="/staff-list">
-                <i class="now-ui-icons users_single-02"></i>
-                <p>
-                  <span class="d-lg-none d-md-block">Account</span>
-                </p>
+              <a (click)="profile()" class="nav-link">
+                <i class="now-ui-icons users_single-02" title="Profile" ></i>
               </a>
             </li>
+
+            <!-- Notification Button -->
+            <li class="nav-item">
+              <a href="#" title="Notification" class="nav-link" href="#">
+                <span data-notify="icon" class="now-ui-icons ui-1_bell-53"></span>
+              </a>
+            </li>
+            <!-- Finish Notification -->
 
             <!-- Logout Button -->
             <li class="nav-item">
               <a (click)=logOut()  title="LogOut" class="nav-link" href="#">
                 <i class="fas fa-sign-out-alt"></i>
-                <p>
-                  <span class="d-lg-none d-md-block">Account</span>
-                </p>
               </a>
             </li>
+            <!-- Finish LogOut -->
 
           </ul>
         </div>

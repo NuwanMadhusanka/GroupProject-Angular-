@@ -24,6 +24,9 @@ import {DatePipe} from '@angular/common';
 
 
 
+
+
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -40,9 +43,8 @@ import {DatePipe} from '@angular/common';
     AppComponent,
     AdminLayoutComponent,
     LoginComponent
-    
    
-    
+     
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
