@@ -7,11 +7,15 @@ import { TimeSlotModel } from '../../ClassModel/TimeSlotModel';
 import { TimeTableServiceService } from '../../service/TimeTable/time-table-service.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpError } from '../../Shared/httpError/HttpError';
+import { LessonModel } from '../../ClassModel/LessonModel';
+import { PathMapComponent } from '../../timeTable/path-map/path-map.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-trial-lesson-book',
   templateUrl: './trial-lesson-book.component.html',
-  styleUrls: ['./trial-lesson-book.component.scss']
+  styleUrls: ['./trial-lesson-book.component.scss'],
+  providers:[PathMapComponent]
 })
 export class TrialLessonBookComponent implements OnInit {
 
@@ -38,10 +42,13 @@ export class TrialLessonBookComponent implements OnInit {
   trialMonth;
   trialDay;
 
+  isAvailableLesson:boolean=false;
+  availableLesson:LessonModel=null;
+
   constructor(
-    private studentService:StudentServiceService,
     private lessonBookingService:LesonBookingService,
     private timeTableService:TimeTableServiceService,
+    private pathMap:PathMapComponent,
     private router:Router,
   ) { }
 
@@ -82,11 +89,21 @@ export class TrialLessonBookComponent implements OnInit {
 
   //get Available lesson
   getLesson(){
+    this.isAvailableLesson=false;
     this.errorMessage="";
     if(this.validInput()){
         this.lessonBookingService.getAvailableLesson(this.selectDay,this.selectStudentPackage.studentPackageId,this.selectTimeSlot.timeSlotId).subscribe(
           response => {
-            console.log(response);
+            this.availableLesson=response;
+            
+            if(this.availableLesson.lessonId > 0){
+              this.isAvailableLesson=true;
+            }else if(this.availableLesson.lessonId == 0){
+              this.errorMessage="No such a lesson.Please check time table and book the lesson."
+            }else{
+              this.errorMessage="No any available opertunity for this lesson."
+            }
+            console.log(this.availableLesson)
           },
           error => {
             console.log(error);
@@ -239,6 +256,51 @@ export class TrialLessonBookComponent implements OnInit {
     return true;
   }
 
+  //save the selected booking lesson
+  saveBooking(){
+    this.lessonBookingService.saveBooking(this.availableLesson.lessonId,this.selectStudentPackage.studentPackageId,this.selectDay).subscribe(
+      response => {
+        console.log(response)
+        
+        if(response == 1){
+          Swal.fire({
+            position: 'top-end',
+            type: 'success',
+            title: 'Leeson Booking Success.',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
+        
+        if(response == -2){
+          this.errorMessage="You Already Book This Lesson.";
+        }
+        
+        if(response == 0){
+          this.errorMessage="You Can't Book Lesson.Because You Haven't Any Available Lesson Further.";
+        }
+
+        this.isAvailableLesson=false;
+
+      },
+      error => {
+        console.log(error);
+        this.handleErrorResponse(error);
+        Swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: 'Booking Lesson Not Success!',
+          footer: 'Please Try Again Later'
+        });
+      }
+    )
+  }
+
+
+  googleMap(path){
+    this.pathMap.googleMap(path,1);
+  }
+
   closeMsg(){
     this.errorMessage="";
   }
@@ -247,5 +309,5 @@ export class TrialLessonBookComponent implements OnInit {
  private handleErrorResponse(error: HttpErrorResponse) {
   let httpError = new HttpError();
   httpError.ErrorResponse(error);
-};
+  }
 }
