@@ -26,6 +26,8 @@ import { LessonUpdateComponent } from '../../timeTable/lesson-update/lesson-upda
 import { StudentProfileComponent } from '../../profile/student-profile/student-profile.component';
 import { TrialLessonBookComponent } from '../../LessonBooking/trial-lesson-book/trial-lesson-book.component';
 import { TrialLessonListComponent } from '../../LessonBooking/trial-lesson-list/trial-lesson-list.component';
+import { PackageAnalysisComponent } from '../../timeTable/package-analysis/package-analysis.component';
+
 
 
 @NgModule({
@@ -56,7 +58,8 @@ import { TrialLessonListComponent } from '../../LessonBooking/trial-lesson-list/
     LessonUpdateComponent,
     TimeSlotComponent,
     PathMapComponent,
-
+    PackageAnalysisComponent,
+    
     TrialLessonBookComponent,
     TrialLessonListComponent,
 

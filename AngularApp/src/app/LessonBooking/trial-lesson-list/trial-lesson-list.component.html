@@ -26,13 +26,13 @@
             <button class="btn btn-info dropdown-toggle" ngbDropdownToggle>Select the package</button>
             <div ngbDropdownMenu>
                 <div *ngFor="let package of studentPackages">
-                  <a (click)="bookLessonDetails(package.packageId,package.title)" class="dropdown-item" >{{package.title}}</a>
+                  <a (click)="bookLessonDetails(package.packageId,package.title)"  class="dropdown-item" >{{package.title}}</a>
                 </div>
             </div>
           </div>
           <!-- Drop Down Finish -->
 
-          <div *ngIf="isBookLeeson" class="card">
+          <div class="card" *ngIf="isBookLeeson">
             <div class="card-body">
               <pre>Package Name     :{{selectPackageTitle}}({{transmission}})</pre>
               <pre>Total Lessons    :{{totalLesson}}</pre>
@@ -42,7 +42,7 @@
               <hr>
 
               <!-- Future Lesson Table -->
-              <div class="card">
+              <div *ngIf="isFutureLesson" class="card">
                 <div class="card-header">
                   <h4 class="card-title">Future(Book) Lessons</h4>
                 </div>
@@ -50,6 +50,7 @@
                       <div class="table-responsive">
                         <table class="table">
                           <thead class=" text-primary">
+                            <th></th>
                             <th>Date</th>
                             <th>Time</th>
                             <th>Vehicle</th>
@@ -58,13 +59,14 @@
                             <th>Option</th>
                           </thead>
                           <tbody>
-                            <tr *ngFor="let lesson of futureLesson">
-                              <td>{{lesson.date}}</td>
-                              <td>{{lesson.lessonId.timeSlotId.startTime | slice:0:5}} - {{lesson.lessonId.timeSlotId.finishTime | slice:0:5}}</td>
-                              <td>{{lesson.lessonId.packageId.vehicleCategoryId.category}}({{transmission}})</td>
-                              <td>{{lesson.lessonId.instructorId.staffId.name}}</td>
-                              <td><a  (click)=googleMap(lesson.lessonId.pathId,1)><button class="btn btn-info btn-sm"> <i class="fas fa-map" title="Google Map"></i></button></a></td>
-                              <td><a><button class="btn btn-danger btn-sm"> <i class="fas fa-window-close" title="Cancel Lesson"></i></button></a></td>
+                            <tr *ngFor="let studentLesson of futureLesson; let i = index;">
+                              <td>{{i+1}})</td>
+                              <td>{{studentLesson.date}}</td>
+                              <td>{{studentLesson.lessonId.timeSlotId.startTime | slice:0:5}} - {{studentLesson.lessonId.timeSlotId.finishTime | slice:0:5}}</td>
+                              <td>{{studentLesson.lessonId.packageId.vehicleCategoryId.category}}({{transmission}})</td>
+                              <td>{{studentLesson.lessonId.instructorId.staffId.name}}</td>
+                              <td><a  (click)=googleMap(studentLesson.lessonId.pathId,1)><button class="btn btn-info btn-sm"> <i class="fas fa-map" title="Google Map"></i></button></a></td>
+                              <td><a  (click)="cacelBooking(studentLesson)"><button class="btn btn-danger btn-sm"> <i class="fas fa-window-close" title="Cancel Lesson"></i></button></a></td>
                             </tr>
                           </tbody>
                         </table>
@@ -74,7 +76,7 @@
               <!--Finish  Future Lesson Table -->
 
               <!-- Previous Lessons -->
-              <div class="card">
+              <div  class="card" *ngIf="isPreviousLesson">
                 <div class="card-header">
                   <h4 class="card-title">Previous(Book) Lessons</h4>
                 </div>

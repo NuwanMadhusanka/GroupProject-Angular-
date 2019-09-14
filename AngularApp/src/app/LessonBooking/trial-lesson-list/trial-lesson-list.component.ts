@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { PackageModel } from '../../ClassModel/PackageModel';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpError } from '../../Shared/httpError/HttpError';
 import { LesonBookingService } from '../../service/LessonBooking/leson-booking.service';
 import { StudentLessonModel } from '../../ClassModel/StudentLessonModel';
 import { PathMapComponent } from '../../timeTable/path-map/path-map.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-trial-lesson-list',
@@ -19,6 +20,7 @@ export class TrialLessonListComponent implements OnInit {
   studentPackages:PackageModel[];
   selectPackageTitle;
   errorMessage;
+  successMessage;
 
   selectPackageBookLesson:StudentLessonModel[]=[];
   previousLesson:StudentLessonModel[]=[];
@@ -31,10 +33,26 @@ export class TrialLessonListComponent implements OnInit {
 
   isBookLeeson=false;
 
+  currentDate=new Date();
+  currentYear=this.currentDate.getFullYear();
+  currentMonth=this.currentDate.getMonth()+1;
+  currentDay=this.currentDate.getDate();
+
+    
+  currentTimeHour=new Date().getHours();
+  currentTImeMinute=new Date().getMinutes();
+
+  idOfSelectPackage;
+  titleOfSelectPackage;
+
+  isFutureLesson=false;
+  isPreviousLesson=false;
+
   constructor(
     private lessonBookService:LesonBookingService,
     private pathMap:PathMapComponent,
-    private router:Router
+    private router:Router,
+    private route:ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -43,7 +61,14 @@ export class TrialLessonListComponent implements OnInit {
         this.router.navigate(['/']);
     }
 
+    this.idOfSelectPackage=this.route.snapshot.params['package'];;
+    this.titleOfSelectPackage=this.route.snapshot.params['title'];
+    if(this.idOfSelectPackage != null && this.titleOfSelectPackage){
+      this.bookLessonDetails(this.idOfSelectPackage,this.titleOfSelectPackage);
+    }
+
     this.studentPackageList();
+    
   }
 
    //get Student following packages Id
@@ -63,6 +88,11 @@ export class TrialLessonListComponent implements OnInit {
   }
 
   bookLessonDetails(selectPackageId,title){
+
+    this.idOfSelectPackage=selectPackageId;
+    this.titleOfSelectPackage=title;
+
+    this.isBookLeeson=false;
     this.previousLesson=[];
     this.futureLesson=[];
 
@@ -97,17 +127,7 @@ export class TrialLessonListComponent implements OnInit {
       this.totalLesson = bookLesson[1].lessonId.packageId.manualLes;
     }
     this.reservedLesson=bookLesson.length;
-    this.remainLesson=this.totalLesson-this.reservedLesson;
-
-    let currentDate=new Date();
-    let currentYear=currentDate.getFullYear();
-    let currentMonth=currentDate.getMonth()+1;
-    let currentDay=currentDate.getDate();
-
-    
-    let currentTimeHour=new Date().getHours();
-    let currentTImeMinute=new Date().getMinutes();
-    
+    this.remainLesson=this.totalLesson-this.reservedLesson; 
 
     bookLesson.forEach(element => {
       
@@ -121,39 +141,100 @@ export class TrialLessonListComponent implements OnInit {
       let minute=+(startTime[3]+startTime[4]);
 
 
-      if(currentYear == year){
-        if(currentMonth == month){
-          if(currentDay == day ){
+      if(this.currentYear == year){
+        if(this.currentMonth == month){
+          if(this.currentDay == day ){
 
-              if(currentTimeHour == hour){
-                if(currentTImeMinute > minute){
+              if(this.currentTimeHour == hour){
+                if(this.currentTImeMinute > minute){
                   this.previousLesson.push(element);
                 }else{
                   this.futureLesson.push(element);
                 }
-              }else if(currentTimeHour > hour){
+              }else if(this.currentTimeHour > hour){
                 this.previousLesson.push(element);
               }else{
                 this.futureLesson.push(element);
               }
 
-          }else if(currentDay > day){
+          }else if(this.currentDay > day){
             this.previousLesson.push(element);
           }else{
             this.futureLesson.push(element);
           }
-        }else if(currentMonth > month){
+        }else if(this.currentMonth > month){
           this.previousLesson.push(element);
         }else{
           this.futureLesson.push(element);
         }
-      }else if(currentYear > year){
+      }else if(this.currentYear > year){
         this.previousLesson.push(element);
       }else{
         this.futureLesson.push(element);
       }
     });
 
+    if(this.futureLesson.length>0){
+      this.isFutureLesson=true;
+    }
+    if(this.previousLesson.length>0){
+      this.isPreviousLesson=true;
+    }
+
+  }
+
+  //cancel booking
+  /*Student can cacel the booking 
+    lesson before 1 day.
+  */
+  cacelBooking(studentLesson:StudentLessonModel){
+    let isAbleToCancelBooking=true;
+
+    let lessonDate=new  Date(studentLesson.date);
+    let year=lessonDate.getFullYear();
+    let month=lessonDate.getMonth()+1;
+    let day=lessonDate.getDate();
+
+    if(this.currentYear == year){
+      if(this.currentMonth == month){
+        if(this.currentDay == day){
+          isAbleToCancelBooking=false;
+        }else{
+          let dateGap=day-this.currentDay;
+          if(dateGap==1){
+            isAbleToCancelBooking=false;
+          }
+        }
+      }
+    }
+
+    if(isAbleToCancelBooking){
+      this.lessonBookService.cancelBooking(studentLesson.studentLessonId).subscribe(
+        response => {
+        this.bookLessonDetails(this.idOfSelectPackage,this.titleOfSelectPackage);
+         Swal.fire({
+            position: 'top-end',
+            type: 'success',
+            title: 'Reserved Lesson Succefully Cancelled.',
+            showConfirmButton: false,
+            timer: 2000
+          })
+        },
+        error => {
+          Swal.fire({
+            position: 'top-end',
+            type: 'error',
+            title: 'Reserved Lesson Not Successfully Canceled.Please Try Again Later',
+            showConfirmButton: false,
+            timer: 3000
+          })
+          console.log(error);
+          this.handleErrorResponse(error);
+        }
+      )
+    }else{
+      this.errorMessage="You Can't Cancel the Booking.(You Should Cancel the Booking Before One Day Of the Trial Date";
+    }
   }
 
   closeMsg(){

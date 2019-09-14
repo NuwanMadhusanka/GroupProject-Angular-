@@ -74,8 +74,12 @@ export class LoginComponent implements OnInit {
         // should check status backendside
         if(response.role === 2){
           this.router.navigate(['admin-staff-student-dash-board'])
+        }else if( response.role == 3 ){
+          this.router.navigate(['time-table']);
+        }else if( response.role == 5){
+          this.router.navigate(['time-table']);
         }else{
-          this.router.navigate(['dashboard'])
+          this.router.navigate(['dashboard']);
         }
       }else if(response.userId == 0){
         this.errorMessage="Account Deactivate.Please Inform to the administrator";

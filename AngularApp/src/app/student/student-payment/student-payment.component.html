@@ -49,7 +49,7 @@
               <div class="card-body">
                 <div class="col-sm-6 col-lg-4">
                   <div class="form-group">
-                      <label>Amount:</label>
+                      <label>Amount(Rs):</label>
                       <input type="text" value="" placeholder="Rs:" class="form-control" name="newPayment" [(ngModel)]="newPayment"/>
                       <small *ngIf="errorPaymentMessage" class="text-danger">{{errorPaymentMessage}}</small>
                   </div>
@@ -68,7 +68,7 @@
                       <th></th>
                       <th>Date</th>
                       <th>Method</th>
-                      <th>Fee</th>
+                      <th>Fee(Rs)</th>
                     </thead>
                     <tbody>
                       <tr *ngFor="let courseFee of courseFeelist">

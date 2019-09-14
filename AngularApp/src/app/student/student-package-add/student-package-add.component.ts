@@ -49,7 +49,6 @@ export class StudentPackageAddComponent implements OnInit {
   ngOnInit() {
     this.studentId=this.route.snapshot.params['id'];//get student id by url
     this.packageList();
-    this.studentPackageList();
   }
 
   
@@ -114,12 +113,13 @@ export class StudentPackageAddComponent implements OnInit {
     this.packageService.packageList().subscribe(
       response => {
         this.packages=response;
+        this.studentPackageList();
         },
       error => {
         console.log(error);
         this.handleErrorResponse(error);
       }
-    )
+    );
   }
 
   //studentFollow Packages
@@ -129,7 +129,7 @@ export class StudentPackageAddComponent implements OnInit {
     this.studentService.studentPackagesId(this.studentId).subscribe(
       response => {
           this.list=response;
-          
+           
           this.list.forEach(element1 => {
 
               this.packages.forEach(element2 => {

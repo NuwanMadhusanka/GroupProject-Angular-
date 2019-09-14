@@ -6,8 +6,9 @@ import { PackageModel } from '../../ClassModel/PackageModel';
 import { CourseFee } from '../../ClassModel/CourseFeeModel';
 import { PayPal } from '../../student/student-payment/student-payment.component';
 import { ExamList } from '../../adminStaff/admin-staff-student-dash-board/admin-staff-student-dash-board.component';
-import { API_URL } from '../../app.constants';
+import { API_URL, APP_ID_EXCHANGE_RATE } from '../../app.constants';
 import { StudentPackageModel } from '../../ClassModel/StudentPackageModel';
+import { ExchangeRate } from '../../ClassModel/MapObject/ExchangeRate';
 
 
 
@@ -61,8 +62,6 @@ export class StudentServiceService {
 
   // Add Course Fees
   studentCourseFeeAdd(courseFee:CourseFee,studentPackageId,packageId){
-    
-    console.log(courseFee+" package Id:"+studentPackageId)
      return this.http.post<any>(`${API_URL}/student/coursefee/${studentPackageId}/${packageId}`,courseFee);
   }
 
@@ -92,8 +91,16 @@ export class StudentServiceService {
   }
 
   //paypal
-  makePayment(sum) {
-    return this.http.post<PayPal>(`${API_URL}/paypal/make/payment/?sum=`+sum,{});
+  makePayment(sum,userId) {
+    return this.http.post<PayPal>(`${API_URL}/paypal/make/payment/?sum=`+sum+`&userId=`+userId,{});
+  }
+
+  completePayment(paymentId, payerId,userId,packageId,payment) {
+    return this.http.post<any>(`${API_URL}/paypal/complete/payment/${paymentId}/${payerId}/${userId}/${packageId}/${payment}`, {});
+  }
+
+  exchngeRate(){
+    return this.http.get<ExchangeRate>(`https://openexchangerates.org/api/latest.json?app_id=${APP_ID_EXCHANGE_RATE}&symbols=LKR`);
   }
 
   studentTrialList(date){
@@ -116,4 +123,5 @@ export class StudentServiceService {
   submitTrialExamResult(date,countPass,countFail){
     return this.http.post<any>(`${API_URL}/student/trialexam/result?date=`+date+"&countPass="+countPass+"&countFail="+countFail,{});
   }
+  
 }

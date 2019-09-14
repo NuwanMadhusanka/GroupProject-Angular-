@@ -1,0 +1,193 @@
+<div class="panel-header panel-header-sm">
+
+    <canvas hidden baseChart id="manualLessonChart"
+    [datasets]="lineChartGradientsNumbersData"
+    [labels]="lineChartGradientsNumbersLabels"
+    [colors]="lineChartGradientsNumbersColors"
+    [options]="lineChartGradientsNumbersOptions"
+    [chartType]="lineChartGradientsNumbersType"
+    (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)">
+    </canvas>
+
+    <canvas hidden baseChart id="manualLessonMoreChart"
+    [datasets]="lineChartGradientsNumbersData"
+    [labels]="lineChartGradientsNumbersLabels"
+    [colors]="lineChartGradientsNumbersColors"
+    [options]="lineChartGradientsNumbersOptions"
+    [chartType]="lineChartGradientsNumbersType"
+    (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)">
+    </canvas>
+
+</div>
+  
+<div class="main-content">
+  <div class="card">
+      <div class="card-header">
+          <h4 class="card-title">Package Analysis</h4>
+      </div>
+      <div class="card-body">
+
+          <!-- package details -->
+          <!-- Drop down -->
+          <div ngbDropdown class="dropdown" placement="bottom-left">
+              <button class="btn btn-secondary dropdown-toggle" ngbDropdownToggle>Select the package</button>
+              <div ngbDropdownMenu>
+                  <div *ngFor="let package of packageList">
+                    <a (click)="selectPackageDetails(package)" class="dropdown-item" >{{package.title}}</a>
+                  </div>
+              </div>
+          </div>
+          <!-- Drop Down Finish -->
+          <!-- End Package Details -->
+
+          <hr>
+
+          <div *ngIf="selectPackage" class="card">
+              <div class="card-header">
+                  <h4 class="card-title">{{selectPackage.title}}</h4>
+              </div>
+
+              <div *ngIf="isManual" class="card">
+                  <div class="card-header">
+                      <u><small class="card-title">{{selectPackage.title}}(Manual)</small></u>
+                  </div>
+                  <div class="card-body">
+    
+                      <!-- First Row -->
+                      <div class="row">
+                        <!-- <div class="col-md-1">  </div> -->
+
+                        <div class="col-md-3">
+
+                            <div class="card card-chart">
+                                <div class="card-header">
+                                    <h5 class="card-category">Number Of Lessons PerDay</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas baseChart id="manualLessonChart"
+                                        [datasets]="lineChartGradientsNumbersData"
+                                        [labels]="lineChartGradientsNumbersLabels"
+                                        [colors]="lineChartGradientsNumbersColors"
+                                        [options]="lineChartGradientsNumbersOptions"
+                                        [chartType]="lineChartGradientsNumbersType"
+                                        (chartHover)="chartHovered($event)"
+                                        (chartClick)="ManualLessonChartClicked($event)">
+                                        </canvas>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    Total Lessons : {{manualTotalLesson}}
+                                </div>
+                            </div>
+
+                            
+
+                        </div>
+                        <div class="col-md-3">
+                            <p>Total Students   :   <b>{{manualTotalStudent}}</b></p>
+                            <p class="info">Analysis the average number of lessons per week :</p>
+                            
+                            <div class="card">
+                                <div class="card-body">
+                                        <div class="col-md-12">
+                                                <label>Student's Trial TIme Period:</label>
+                                                <div class="form-group">
+                                                    <input type="text" value="" placeholder="10 min" class="form-control" />
+                                                </div>
+                                        </div>
+                                        <!-- Form Information -->
+                                        
+                                        <pre>Lesson Time Period  : 2hrs</pre>
+                                        <pre>Student Time Period : 15 min</pre>
+                                        <pre>Vehicle category    : Van</pre>
+                                        _________________________
+                                        <pre>Lessons Per week    : <b>12</b></pre>
+                                        <!-- Finish Information -->
+                                </div>
+                            </div>
+                           
+                        </div>
+
+                        <div class="col-md-6">  
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                        <th></th>
+                                        <th>8.00 : 10.00</th>
+                                        <th>8.00 : 10.00</th>
+                                        <th>8.00 : 10.00</th>
+                                        <th>8.00 : 10.00</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Moday</td>
+                                            <td>0</td>
+                                            <td>5</td>
+                                            <td>0</td>
+                                            <td>5</td>
+                                        </tr>
+                                        <tr>
+                                                <td>WednesDay</td>
+                                                <td>1</td>
+                                                <td>5</td>
+                                                <td>5</td>
+                                                <td>5</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                       
+                      </div>
+                    <!-- First Row Finish  -->
+                    
+                   
+                     <!-- Second Row -->
+                     <div *ngIf="isManualLessonMore" class="row">
+                        <hr>
+                        <div class="col-md-2">  </div>
+
+                        <div class="col-md-4">
+
+                            <div class="card card-chart">
+                                <div class="card-header">
+                                    <h5 class="card-category">Number Of Students PerLesson</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas baseChart id="manualLessonMoreChart"
+                                        [datasets]="lineChartGradientsNumbersData"
+                                        [labels]="lineChartGradientsNumbersLabels"
+                                        [colors]="lineChartGradientsNumbersColors"
+                                        [options]="lineChartGradientsNumbersOptions"
+                                        [chartType]="lineChartGradientsNumbersType"
+                                        (chartHover)="chartHovered($event)"
+                                        (chartClick)="chartClicked($event)">
+                                        </canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                        </div>
+                        <div class="col-md-4">
+                            jjlklklslssl
+                        </div>
+
+                        <div class="col-md-2">  </div>
+                      </div>
+                    <!-- Second Row Finish -->
+
+                  </div>
+              </div>
+          </div>
+
+      </div>
+  </div>
+</div>
+  

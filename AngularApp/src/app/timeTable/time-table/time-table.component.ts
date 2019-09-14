@@ -207,6 +207,10 @@ export class TimeTableComponent implements OnInit {
     this.router.navigate(['trial-lesson-book']);
   }
 
+  packageAnalysis(){
+    this.router.navigate(['package-analysis']);
+  }
+
   //error handling
   private handleErrorResponse(error: HttpErrorResponse) {
     this.httpError.ErrorResponse(error);

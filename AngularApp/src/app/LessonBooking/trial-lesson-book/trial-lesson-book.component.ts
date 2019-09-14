@@ -260,9 +260,10 @@ export class TrialLessonBookComponent implements OnInit {
   saveBooking(){
     this.lessonBookingService.saveBooking(this.availableLesson.lessonId,this.selectStudentPackage.studentPackageId,this.selectDay).subscribe(
       response => {
-        console.log(response)
+        
         
         if(response == 1){
+          this.router.navigate(['trial-lesson-list',this.selectStudentPackage.packageId.packageId,this.selectStudentPackage.packageId.title]);
           Swal.fire({
             position: 'top-end',
             type: 'success',

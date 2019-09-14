@@ -21,4 +21,8 @@ export class PackageServiceService {
   getOrderpackageList(lessonId){
     return this.http.get<PackageModel[]>(`${API_URL}/package/${lessonId}`);
   }
+
+  getNumStudentPackage(packageId,transmissionType){
+    return this.http.get<Number>(`${API_URL}/package/student/${packageId}/${transmissionType}`);
+  }
 }

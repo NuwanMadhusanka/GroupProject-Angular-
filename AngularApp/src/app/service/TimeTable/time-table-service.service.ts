@@ -7,6 +7,7 @@ import { Path } from '../../ClassModel/PathModel';
 import { InstructorMap } from '../../ClassModel/MapObject/InstructorMap';
 import { TimeTableDataList } from '../../ClassModel/MapObject/TimeTableDataList';
 import { LessonModel } from '../../ClassModel/LessonModel';
+import { LessonDistributionMap } from '../../ClassModel/MapObject/LessonDistributionMap';
 
 
 @Injectable({
@@ -110,6 +111,10 @@ export class TimeTableServiceService {
 
   updateLesson(lessonId,type,dayId,timeSlotId,pathId,instructorId,numStudent){
     return this.http.put<any>(`${API_URL}/timetable/lesson/${lessonId}/${type}/${dayId}/${timeSlotId}/${pathId}/${instructorId}/${numStudent}`,{})
+  }
+
+  getLessonDistributionDetails(packageId,transmission){
+    return this.http.get<LessonDistributionMap[]>(`${API_URL}/timetable/lesson/week/${packageId}/${transmission}`);
   }
 
 }

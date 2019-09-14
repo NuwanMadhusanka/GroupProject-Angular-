@@ -1,19 +1,36 @@
-<div class="panel-header">
-  <div class="header text-center">
-    <h2 class="title">Vehicle List</h2>
-  </div>
+<div class="panel-header panel-header-sm">
+ 
 </div>
 
 <div class="main-content">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-body">
-         
-          <h1>Hello</h1> 
-
+<div class="row">
+  
+ 
+  <div class="col-lg-4 col-md-6">
+    <div class="card card-chart">
+      <div class="card-header">
+        <h5 class="card-category">Email Statistics</h5>
+        <h4 class="card-title">24 Hours Performance</h4>
+      </div>
+      <div class="card-body">
+        <div class="chart-area">
+          <canvas baseChart id="barChartSimpleGradientsNumbers"
+                      [datasets]="lineChartGradientsNumbersData"
+                      [labels]="lineChartGradientsNumbersLabels"
+                      [colors]="lineChartGradientsNumbersColors"
+                      [options]="lineChartGradientsNumbersOptions"
+                      [chartType]="lineChartGradientsNumbersType"
+                      (chartHover)="chartHovered($event)"
+                      (chartClick)="chartClicked($event)"></canvas>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="stats">
+          <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
         </div>
       </div>
     </div>
   </div>
 </div>
+
+

@@ -7,6 +7,7 @@ import { throwError } from 'rxjs';
 import Swal from 'sweetalert2';
 import { CourseFee } from '../../ClassModel/CourseFeeModel';
 import { HttpError } from '../../Shared/httpError/HttpError';
+import { ExchangeRate } from '../../ClassModel/MapObject/ExchangeRate';
 
 export class PayPal{
   constructor(
@@ -34,7 +35,7 @@ export class StudentPaymentComponent implements OnInit {
   selectPackage:PackageModel;
   courseFeelist:[];
   isPayment=false;
-  newPayment:number=0.00;
+  newPayment:number;
   studentPackageId;
   isStudent=false;
   isAdminStaff=false;
@@ -48,25 +49,42 @@ export class StudentPaymentComponent implements OnInit {
 
   regexp:any;//Regular Expression for new Payment
 
+  paymentId;
+  payerId;
+  userId;
+
   ngOnInit() {
     let id=this.route.snapshot.params['id'];//get student id by url
 
     if(sessionStorage.getItem("userId")===id){//when student visit to the page
-          
-      //get the student Id
-          this.studentService.getStudentId(id).subscribe(
-            response => {
-                console.log("Response:"+response);
-                this.studentId=response;
-                this.studentPackageList();
-                this.isStudent=true;
-            },
-            error =>{
-              console.log(error);
-              this.handleErrorResponse(error);
-            }
-          )
 
+     this.userId=id;
+
+     //get the student Id
+     this.studentService.getStudentId(id).subscribe(
+      response => {
+          this.studentId=response;
+          this.studentPackageList();
+          this.isStudent=true;
+
+
+          //get paypal return result
+          this.route.queryParams.subscribe(params => {
+              this.paymentId = params['paymentId'];
+              this.payerId = params['PayerID']
+              
+              if(this.payerId!=null || this.paymentId!=null){
+                this.completePayPalPayment(this.paymentId,this.payerId);
+              }
+          });
+      },
+      error =>{
+        console.log(error);
+        this.handleErrorResponse(error);
+      }
+    );
+           
+         
     }else{
       this.studentId=id;//whent AdminStaff(Student) visit to the page
       this.studentPackageList();
@@ -96,12 +114,11 @@ export class StudentPaymentComponent implements OnInit {
 
   //show payment details
   paymentDetails(packageId){
-    
+   
     //call to the API and get student Payment Details
     this.studentService.studentCourseFees(this.studentId,packageId).subscribe(
       response => {
           this.courseFeelist=response;
-
 
           //calculate student installments
           let total:number=0;
@@ -112,7 +129,7 @@ export class StudentPaymentComponent implements OnInit {
           
           //find course fee
           this.studentPackages.forEach(element =>{
-              if(element.packageId===packageId){
+              if(element.packageId==packageId){
                 this.courseFee=element.price;
               }
           });
@@ -135,12 +152,6 @@ export class StudentPaymentComponent implements OnInit {
 
   }
 
-  //error handling
-  private handleErrorResponse(error: HttpErrorResponse) {
-    this.errorMessage="Something bad happened, please try again later.";
-    let httpError=new HttpError;
-    httpError.ErrorResponse(error);
-  };
 
   closeError(){
     this.errorMessage=null;
@@ -237,21 +248,84 @@ export class StudentPaymentComponent implements OnInit {
       }else{
         this.errorPaymentMessage="";
         
-        this.studentService.makePayment(this.newPayment).subscribe(
+        this.studentService.exchngeRate().subscribe(
           response => {
-              console.log(response.redirect_url);  
-              window.open(""+response.redirect_url, "_blank");   
-          },
-          error =>{
-            console.log(error);
+            let exchngeRate:ExchangeRate=response;
+            let LKRExchangeRate=exchngeRate.rates['LKR'];
+            let USDPayment=this.newPayment/LKRExchangeRate;
             
+            this.studentService.makePayment(USDPayment.toFixed(2),this.userId).subscribe(
+              response => {
+                  sessionStorage.setItem("payPalPaymentSelectPackageId",packageId); 
+                  let amount = new Number(this.newPayment); 
+                  sessionStorage.setItem('payPalAmount',amount.toString());
+                  //window.open(""+response.redirect_url, "_blank");   
+                  window.open(""+response.redirect_url);   
+              },
+              error =>{
+                console.log(error);
+                
+              }
+            );
+          },
+          error => {
+            console.log(error);
           }
         )
       }
     }
   }
 
+  completePayPalPayment(paymentId,payerId){
+    this.studentService.completePayment(paymentId,payerId,sessionStorage.getItem('userId'),sessionStorage.getItem('payPalPaymentSelectPackageId'),sessionStorage.getItem('payPalAmount')).subscribe(
+      response => {
+        this.paymentDetails(sessionStorage.getItem('payPalPaymentSelectPackageId'));
+        Swal.fire({
+          position: 'top-end',
+          type: 'success',
+          title: 'Your Payment Transaction Was Successfulled.',
+          showConfirmButton: false,
+          timer: 2000
+        });
+      },
+      error => {
+        Swal.fire({
+          position: 'top-end',
+          type: 'error',
+          title: 'Your Payment Transaction Was Not Successfulled.',
+          showConfirmButton: false,
+          timer: 2500
+        });
+        console.log(error);
+        this.handleErrorResponse(error);
+      }
+    );
+
+    //load package details
+    let pacId=sessionStorage.getItem('payPalPaymentSelectPackageId');
+    this.delay(1000).then(any=>{
+        this.studentPackages.forEach(element => {
+        if( (+pacId) == element.packageId){
+            this.selectPackage=element;
+            this.paymentDetails(pacId);
+          }
+        });
+    });
+    
+  }
+
   close(){
     this.isPayment=false;
   }
+
+    //error handling
+    private handleErrorResponse(error: HttpErrorResponse) {
+      this.errorMessage="Something bad happened, please try again later.";
+      let httpError=new HttpError;
+      httpError.ErrorResponse(error);
+    };
+
+    async delay(ms: number) {
+      await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>console.log("fired"));
+    }
 }

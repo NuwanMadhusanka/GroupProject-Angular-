@@ -20,6 +20,7 @@ import { LessonUpdateComponent } from '../../timeTable/lesson-update/lesson-upda
 import { StudentProfileComponent } from '../../profile/student-profile/student-profile.component';
 import { TrialLessonBookComponent } from '../../LessonBooking/trial-lesson-book/trial-lesson-book.component';
 import { TrialLessonListComponent } from '../../LessonBooking/trial-lesson-list/trial-lesson-list.component';
+import { PackageAnalysisComponent } from '../../timeTable/package-analysis/package-analysis.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -41,9 +42,10 @@ export const AdminLayoutRoutes: Routes = [
     {path:'lesson-update/:id/:type',   component:LessonUpdateComponent},
     {path:'time-slot',     component:TimeSlotComponent},
     {path:'path-map', component:PathMapComponent},
+    {path:'package-analysis'    ,component:PackageAnalysisComponent},
 
     {path:'trial-lesson-book',  component:TrialLessonBookComponent},
-    {path:'trial-lesson-list',  component:TrialLessonListComponent},
+    {path:'trial-lesson-list/:package/:title',  component:TrialLessonListComponent},
 
     {path:'student-profile' ,component:StudentProfileComponent}
 ];

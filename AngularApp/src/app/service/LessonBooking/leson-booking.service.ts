@@ -40,4 +40,9 @@ export class LesonBookingService {
   getBookLessonDetails(userId,packageId){
     return this.http.get<StudentLessonModel[]>(`${API_URL}/lessonbooking/booklessons/${userId}/${packageId}`);
   }
+
+  cancelBooking(studentLessonId){
+    console.log(studentLessonId)
+    return this.http.delete(`${API_URL}/lessonbooking/cancelbooking/${studentLessonId}`);
+  }
 }
