@@ -50,15 +50,25 @@
               </div>
 
               <div *ngIf="isManual" class="card">
+                  
                   <div class="card-header">
                       <u><small class="card-title">{{selectPackage.title}}(Manual)</small></u>
                   </div>
                   <div class="card-body">
-    
+
+                       <!-- Message -->
+                       <div *ngIf="errorMessage != null " class="alert alert-danger">
+                            <button (click)="closeMsg(1)" type="button" aria-hidden="true" class="close">
+                            <i class="now-ui-icons ui-1_simple-remove"></i>
+                            </button>
+                            <span *ngIf="errorMessage">{{errorMessage}}</span>
+                        </div>
+                        <!-- Message Finish -->   
+
                       <!-- First Row -->
                       <div class="row">
                         <!-- <div class="col-md-1">  </div> -->
-
+                       
                         <div class="col-md-3">
 
                             <div class="card card-chart">
@@ -93,51 +103,71 @@
                             <div class="card">
                                 <div class="card-body">
                                         <div class="col-md-12">
-                                                <label>Student's Trial TIme Period:</label>
+                                                <label>Lesson Time Period(min):</label>
                                                 <div class="form-group">
-                                                    <input type="text" value="" placeholder="10 min" class="form-control" />
+                                                    <input type="text" (keyup.enter)="lessonAnalysisReport(1);" [(ngModel)]="lessonTimePeriodManual"  placeholder="120 min" class="form-control" />
+                                                    <small *ngIf="errorMsgLessonTimePeriodManual != '' " class="text-danger">{{errorMsgLessonTimePeriodManual}}</small>
+                                                </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                                <label>Student's Trial Time Period(min):</label>
+                                                <div class="form-group">
+                                                    <input type="text" (keyup.enter)="lessonAnalysisReport(1);" [(ngModel)]="studentTimePeriodManual"  placeholder="20 min" class="form-control" />
+                                                    <small *ngIf="errorMsgStudentTimePeriodManual != '' " class="text-danger">{{errorMsgStudentTimePeriodManual}}</small>
                                                 </div>
                                         </div>
                                         <!-- Form Information -->
-                                        
-                                        <pre>Lesson Time Period  : 2hrs</pre>
-                                        <pre>Student Time Period : 15 min</pre>
-                                        <pre>Vehicle category    : Van</pre>
-                                        _________________________
-                                        <pre>Lessons Per week    : <b>12</b></pre>
+                                        <div *ngIf="isManualLessonAnalysisActive">
+                                            <pre>Lesson TimePeriod    : {{lessonTimePeriodManual}} min</pre>
+                                            <pre>Student TimePeriod   : {{studentTimePeriodManual}} min</pre>
+                                            <pre>Vehicle category     : {{vehicleCategory}}</pre>
+                                            <pre>Student In OneVehicle: {{numStudentForOneVehicleManual}}</pre>
+                                            _________________________
+                                            <pre>Lessons Per week    : <b>{{manualTotalLessonRecommend}}</b></pre>
+                                        </div>
                                         <!-- Finish Information -->
                                 </div>
                             </div>
                            
                         </div>
 
-                        <div class="col-md-6">  
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead class=" text-primary">
-                                        <th></th>
-                                        <th>8.00 : 10.00</th>
-                                        <th>8.00 : 10.00</th>
-                                        <th>8.00 : 10.00</th>
-                                        <th>8.00 : 10.00</th>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Moday</td>
-                                            <td>0</td>
-                                            <td>5</td>
-                                            <td>0</td>
-                                            <td>5</td>
-                                        </tr>
-                                        <tr>
-                                                <td>WednesDay</td>
-                                                <td>1</td>
-                                                <td>5</td>
-                                                <td>5</td>
-                                                <td>5</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                        <div class="col-md-6">
+                            <div class="card">  
+                                <div class="card-header">
+                                    <h4 class="card-title">Lesson Details</h4>
+                                </div>
+                                    <div *ngIf="isManualTableActive" class="table-responsive">
+                                        <table class="table">
+                                            <thead class=" text-primary">
+                                                <th></th>
+                                                <th *ngFor="let time of timeSlotIdManual">{{time.startTime}} - {{time.finishTime}}</th>
+                                            </thead>
+                                            <tbody>
+
+                                            <ng-container *ngFor="let lesson of  manualLessonTimeTable; let y= index">
+
+                                                    <tr>
+                                                        <td [attr.rowspan]="lesson.timeSlot.length">{{lesson.day}}</td>
+                                                        <ng-container *ngFor="let time of timeSlotIdManual">
+                                                            <td *ngIf="time.timeSlotId == lesson.timeSlot[0].timeSlotId">ok</td>
+                                                            <td *ngIf="time.timeSlotId != lesson.timeSlotId[0].timeSlotId">-</td>
+                                                        </ng-container>
+                                                    </tr>
+
+                                                    <ng-container *ngFor="let data of lesson.timeSlot; let i = index;">
+                                                        <tr *ngIf="i!=0">
+                                                                <ng-container *ngFor="let time of timeSlotIdManual">
+                                                                        <td *ngIf="time.timeSlotId==lesson.timeSlot[i].timeSlotId">ok</td>
+                                                                        <td *ngIf="time.timeSlotId != lesson.timeSlot[i].timeSlotId">-</td>
+                                                                </ng-container>
+                                                        </tr>
+                                                    </ng-container>
+
+                                            </ng-container>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
                             </div>
                         </div>
 

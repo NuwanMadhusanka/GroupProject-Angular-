@@ -4,7 +4,12 @@ import { PackageModel } from '../../ClassModel/PackageModel';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpError } from '../../Shared/httpError/HttpError';
 import { TimeTableServiceService } from '../../service/TimeTable/time-table-service.service';
-import { LessonDistributionMap } from 'src/app/ClassModel/MapObject/LessonDistributionMap';
+import { LessonDistributionMap } from '../../ClassModel/MapObject/LessonDistributionMap';
+import { hasClassName } from '@ng-bootstrap/ng-bootstrap/util/util';
+import { LessonModel } from '../../ClassModel/LessonModel';
+import { TimeTableDataList } from '../../ClassModel/MapObject/TimeTableDataList';
+import { PackageAnalysisData } from '../../ClassModel/MapObject/PackageAnalysisData';
+import { TimeSlotModel } from '../../ClassModel/TimeSlotModel';
 
 @Component({
   selector: 'app-package-analysis',
@@ -23,6 +28,32 @@ export class PackageAnalysisComponent implements OnInit {
 
   isAuto;
   autoTotalStudent;
+
+  isManualLessonAnalysisActive=false;
+  isManualTableActive=false;
+  lessonTimePeriodManual;
+  studentTimePeriodManual;
+  vehicleCategoryManual;
+  numStudentForOneVehicleManual;
+  manualTotalLessonRecommend;
+  manualLessonTimeTable:PackageAnalysisData[]=[];
+  timeSlotIdManual:TimeSlotModel[]=[];
+  errorMsgStudentTimePeriodManual;
+  errorMsgLessonTimePeriodManual;
+
+  isAutoLessonAnalysisActive=false;
+  lessonTimePeriodAuto=0;
+  studentTimePeriodAuto=0;
+  vehicleCategoryAuto;
+  numStudentForOneVehicleAuto;
+  autoTotalLessonRecommend;
+  autoLessonTimeTable:PackageAnalysisData[]=[];
+  timeSlotIdAuto:TimeSlotModel[]=[];
+  errorMsgStudentTimePeriodAuto;
+  errorMsgLessonTimePeriodAuto;
+
+  vehicleCategory;
+  errorMessage;
  
  
   public canvas : any;
@@ -309,8 +340,131 @@ export class PackageAnalysisComponent implements OnInit {
     this.isManual=false;
 
     this.selectPackage=selectpackage;
-    (this.selectPackage.manualLes>0 ? this.lessonAnalysis(1) : "");
-    (this.selectPackage.autoLes>0 ? this.lessonAnalysis(2): "");
+
+    if(selectpackage.manualLes>0){
+      this.lessonAnalysis(1);
+      this.lessonTimeTable(1);
+    }
+
+    if(selectpackage.autoLes>0){
+      this.lessonAnalysis(2);
+      this.lessonTimeTable(2);
+    }
+    
+  }
+
+
+  lessonAnalysisReport(transmission){
+
+        let lessonTimePeriod;
+        let studentTimePeriod;
+        let totalStudent;
+
+        if(transmission == 1){
+          this.isManualLessonAnalysisActive=false;
+          this.errorMsgLessonTimePeriodManual=false;
+          this.errorMsgStudentTimePeriodManual=false;
+          lessonTimePeriod=this.lessonTimePeriodManual;
+          studentTimePeriod=this.studentTimePeriodManual;
+          totalStudent=this.manualTotalStudent;
+        }else{
+          this.isAutoLessonAnalysisActive=false;
+          this.errorMsgLessonTimePeriodAuto=false;
+          this.errorMsgStudentTimePeriodAuto=false;
+          lessonTimePeriod=this.lessonTimePeriodAuto;
+          studentTimePeriod=this.studentTimePeriodAuto;
+          totalStudent=this.autoTotalStudent;
+        }
+        
+        if(totalStudent>0){
+            let errorMsg=false;
+            if(lessonTimePeriod==null){
+              let error = "Insert Valid Lesson Time Period";
+              (transmission==1 ? this.errorMsgLessonTimePeriodManual=error : this.errorMsgLessonTimePeriodAuto=error);
+              errorMsg=true;
+            }
+            if(studentTimePeriod==null){
+              let error = "Insert Valid Time Period";
+              (transmission==1 ? this.errorMsgStudentTimePeriodManual=error : this.errorMsgStudentTimePeriodAuto=error);
+              errorMsg=true;
+            }
+          
+          
+
+            if(!errorMsg){
+              if( (lessonTimePeriod>0) && (studentTimePeriod>0)  &&  (+studentTimePeriod <= +lessonTimePeriod)){
+                    this.vehicleCategory=this.selectPackage.vehicleCategoryId.category;
+                    let numStudentForOneVehicle=this.selectPackage.vehicleCategoryId.numStudent;
+                    let numOfStudentPerOneLesson=lessonTimePeriod/studentTimePeriod;
+                    numOfStudentPerOneLesson=Math.floor(numOfStudentPerOneLesson);
+
+                    let temporyNumberOfLesson = 0;
+                    temporyNumberOfLesson=totalStudent/numOfStudentPerOneLesson
+                    temporyNumberOfLesson=Math.ceil( temporyNumberOfLesson );
+                    
+                    if(numOfStudentPerOneLesson > numStudentForOneVehicle){
+                      
+                      let remainStudentForOneLesson = numOfStudentPerOneLesson-numStudentForOneVehicle;
+                      let totalRemainStudent = remainStudentForOneLesson*temporyNumberOfLesson;
+
+                      if(totalStudent%numOfStudentPerOneLesson > 0){
+                        temporyNumberOfLesson-=1;
+                        let remainStudentForLesson=totalStudent%numOfStudentPerOneLesson;
+
+                        if(remainStudentForLesson < remainStudentForOneLesson){
+                          totalRemainStudent = totalRemainStudent - (remainStudentForOneLesson-remainStudentForLesson);
+                        }
+                        if(remainStudentForLesson > remainStudentForOneLesson){
+                          totalRemainStudent = totalRemainStudent + (remainStudentForLesson-remainStudentForOneLesson);
+                        }
+                      }
+
+                      let extranLesson =Math.ceil(totalRemainStudent/numStudentForOneVehicle);
+                      let recommendLesson=temporyNumberOfLesson + extranLesson;
+                    
+                      (transmission==1 ? this.numStudentForOneVehicleManual=numStudentForOneVehicle : this.numStudentForOneVehicleAuto=numStudentForOneVehicle);
+                      (transmission==1 ? this.manualTotalLessonRecommend=recommendLesson : this.autoTotalLessonRecommend=recommendLesson);
+                      
+
+                    }else{
+                      (transmission==1 ? this.manualTotalLessonRecommend=temporyNumberOfLesson : this.autoTotalLessonRecommend=temporyNumberOfLesson);
+                    }
+
+                    (transmission==1 ? this.isManualLessonAnalysisActive=true : this.isAutoLessonAnalysisActive=true);
+              }else{
+                let error="Student TimePeriod Should be lessthan or equal to Lesson TimePeriod(Time Period Should be greater than Zero)";
+                (transmission==1 ? this.errorMsgStudentTimePeriodManual=error : this.errorMsgStudentTimePeriodAuto=error);
+              }
+
+            }
+        }else{
+          this.errorMessage = "There is no any student for this course.";
+        }
+   
+  }
+
+  lessonTimeTable(transmission){
+    this.timeTableService.getLessonsByPackageId(this.selectPackage.packageId,transmission).subscribe(
+      response => {
+        (transmission==1 ? this.manualLessonTimeTable=response : this.autoLessonTimeTable=response);
+        this.timeTableService.getLessonTimeSlotByPackageId(this.selectPackage.packageId,transmission).subscribe(
+          response => {
+            (transmission==1 ? this.timeSlotIdManual=response : this.timeSlotIdAuto=response);
+            console.log(this.timeSlotIdManual)
+            console.log(this.manualLessonTimeTable);
+            this.isManualTableActive=true;            
+          },
+          error => {
+            console.log(error);
+            this.handleErrorResponse(error); 
+          }
+        );
+      },
+      error => {
+        console.log(error);
+        this.handleErrorResponse(error);
+      }
+    )
   }
 
 

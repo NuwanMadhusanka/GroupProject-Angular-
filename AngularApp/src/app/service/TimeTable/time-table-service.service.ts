@@ -8,6 +8,7 @@ import { InstructorMap } from '../../ClassModel/MapObject/InstructorMap';
 import { TimeTableDataList } from '../../ClassModel/MapObject/TimeTableDataList';
 import { LessonModel } from '../../ClassModel/LessonModel';
 import { LessonDistributionMap } from '../../ClassModel/MapObject/LessonDistributionMap';
+import { PackageAnalysisData } from '../../ClassModel/MapObject/PackageAnalysisData';
 
 
 @Injectable({
@@ -115,6 +116,15 @@ export class TimeTableServiceService {
 
   getLessonDistributionDetails(packageId,transmission){
     return this.http.get<LessonDistributionMap[]>(`${API_URL}/timetable/lesson/week/${packageId}/${transmission}`);
+  }
+
+  //get lesson for relevant package
+  getLessonsByPackageId(packageId,transmission){
+    return this.http.get<PackageAnalysisData[]>(`${API_URL}/timetable/lesson/details/${packageId}/${transmission}`);
+  }
+
+  getLessonTimeSlotByPackageId(packageId,transmission){
+    return this.http.get<TimeSlotModel[]>(`${API_URL}/timetable/lesson/timeslot/${packageId}/${transmission}`);
   }
 
 }

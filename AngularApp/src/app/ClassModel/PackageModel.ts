@@ -1,3 +1,5 @@
+import { VehicleCategoryModel } from './MapObject/VehicleCategory';
+
 export class PackageModel{
     constructor(
     public packageId:Number,
@@ -8,6 +10,6 @@ export class PackageModel{
     public status:Number,
     public manualLes:Number,
     public autoLes:Number,
-    public vehicleCategory:any
+    public vehicleCategoryId:VehicleCategoryModel
   ){}
   }
