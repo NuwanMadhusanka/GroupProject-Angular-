@@ -10,6 +10,7 @@ import { LessonModel } from '../../ClassModel/LessonModel';
 import { TimeTableDataList } from '../../ClassModel/MapObject/TimeTableDataList';
 import { PackageAnalysisData } from '../../ClassModel/MapObject/PackageAnalysisData';
 import { TimeSlotModel } from '../../ClassModel/TimeSlotModel';
+import { StudentAttendanceWeeksMap } from '../../ClassModel/MapObject/StudentAttendanceWeeksMap';
 
 @Component({
   selector: 'app-package-analysis',
@@ -28,9 +29,19 @@ export class PackageAnalysisComponent implements OnInit {
 
   isAuto;
   autoTotalStudent;
+  autoTotalLesson:number=0;
+
+  isManualLesson=false;
+  manualLessonDay;
+  manualLessonTimeSlot;
+
+  isAutoLesson=false;
+  autoLessonDay;
+  autoLessonTimeSlot;
 
   isManualLessonAnalysisActive=false;
   isManualTableActive=false;
+  isManualGraphActive=false;
   lessonTimePeriodManual;
   studentTimePeriodManual;
   vehicleCategoryManual;
@@ -40,10 +51,13 @@ export class PackageAnalysisComponent implements OnInit {
   timeSlotIdManual:TimeSlotModel[]=[];
   errorMsgStudentTimePeriodManual;
   errorMsgLessonTimePeriodManual;
+  errorMsgManual;
 
   isAutoLessonAnalysisActive=false;
-  lessonTimePeriodAuto=0;
-  studentTimePeriodAuto=0;
+  isAutoGraphActive=false;
+  isAutoTableActive=false;
+  lessonTimePeriodAuto;
+  studentTimePeriodAuto;
   vehicleCategoryAuto;
   numStudentForOneVehicleAuto;
   autoTotalLessonRecommend;
@@ -51,22 +65,46 @@ export class PackageAnalysisComponent implements OnInit {
   timeSlotIdAuto:TimeSlotModel[]=[];
   errorMsgStudentTimePeriodAuto;
   errorMsgLessonTimePeriodAuto;
+  errorMsgAuto;
 
   vehicleCategory;
   errorMessage;
+
+  isFutureStudentAttendanceManual;
+  isPastStudentAttendanceManual;
+  isFutureStudentAttendanceAuto;
+  isPastStudentAttendanceAuto;
+  studentAttendanceLessonIdManual;
+  studentAttendanceLessonIdAuto;
+  lessonPublishDateManual;
+  lessonPublishDateAuto;
  
  
   public canvas : any;
   public ctx;
   public gradientFill;
+  public gradientStroke;
+  public chartColor;
 
+  public lessonChartOptionConfiguration;
+  public lessonStudentAttendanceChartOptionConfiguration;
 
   public lineChartGradientsNumbersType;
-  public lineChartGradientsNumbersData:Array<any>;
   public lineChartGradientsNumbersOptions:any;
   public lineChartGradientsNumbersLabels:Array<any>;
-  public lineChartGradientsNumbersColors:Array<any>
-  
+  public lineChartGradientsNumbersColors:Array<any>;
+
+  public lineChartWithNumbersAndGridType;
+  public lineChartWithNumbersAndGridOptions:any;
+  public lineChartWithNumbersAndGridLabelsManual:Array<any>;
+  public lineChartWithNumbersAndGridLabelsAuto:Array<any>;
+  public lineChartWithNumbersAndGridColors:Array<any>;
+
+  public lineChartManualData:Array<any>;
+  public lineChartAutoData:Array<any>;
+  public lineChartStudentAttendanceDataManual:Array<any>;
+  public lineChartStudentAttendanceDataAuto:Array<any>;
+
   // events
   public chartClicked(e:any):void {
     console.log(e);
@@ -102,6 +140,109 @@ export class PackageAnalysisComponent implements OnInit {
 
   ngOnInit() {
     this.getpackageList();
+    this.chartColor = "#FFFFFF";
+    //options
+
+    //start lessonChart Option 
+    this.lessonChartOptionConfiguration = {
+      maintainAspectRatio: false,
+      legend: {
+        display: false
+      },
+      tooltips: {
+        bodySpacing: 4,
+        mode: "nearest",
+        intersect: 0,
+        position: "nearest",
+        xPadding: 10,
+        yPadding: 10,
+        caretPadding: 10
+      },
+      responsive: 1,
+      scales: {
+        yAxes: [{
+          gridLines: {
+            zeroLineColor: "transparent",
+            drawBorder: false
+          }
+        }],
+        xAxes: [{
+          display: 0,
+          ticks: {
+            display: false
+          },
+          gridLines: {
+            zeroLineColor: "transparent",
+            drawTicks: false,
+            display: false,
+            drawBorder: false
+          }
+        }]
+      },
+      layout: {
+        padding: {
+          left: 0,
+          right: 0,
+          top: 15,
+          bottom: 15
+        }
+      }
+    }
+    //finish lessonChart Option Finish
+//---------------------------------------------------------------------------------------------------------------------
+    //lessonStudentAttendanceChartConfiguration Option Start
+    this.lessonStudentAttendanceChartOptionConfiguration={
+    
+      maintainAspectRatio: false,
+      legend: {
+        display: false
+      },
+      tooltips: {
+        bodySpacing: 4,
+        mode: "nearest",
+        intersect: 0,
+        position: "nearest",
+        xPadding: 10,
+        yPadding: 10,
+        caretPadding: 10
+      },
+      responsive: true,
+      scales: {
+        yAxes: [{
+          gridLines: {
+            zeroLineColor: "transparent",
+            drawBorder: false
+          }
+        }],
+        xAxes: [{
+          display: 0,
+          ticks: {
+            display: false
+          },
+          gridLines: {
+            zeroLineColor: "transparent",
+            drawTicks: false,
+            display: false,
+            drawBorder: false
+          }
+        }]
+      },
+      layout: {
+        padding: {
+          left: 0,
+          right: 0,
+          top: 15,
+          bottom: 15
+        }
+      },
+      elements: {
+        line: {
+            tension: 0
+        }
+      }
+    };
+    //lessonStudentAttendanceChartConfiguration Option Finish
+    //------------------------------------------------------------------------------------------------------------------------
 
     // Manual Lesson Graph Initialize
     this.canvas = document.getElementById("manualLessonChart");
@@ -112,7 +253,7 @@ export class PackageAnalysisComponent implements OnInit {
     this.gradientFill.addColorStop(1, this.hexToRGB('#2CA8FF', 0.6));
 
 
-    this.lineChartGradientsNumbersData = [
+    this.lineChartManualData = [
         {
           label: "Lessons",
           pointBorderWidth: 2,
@@ -121,7 +262,7 @@ export class PackageAnalysisComponent implements OnInit {
           pointRadius: 4,
           fill: true,
           borderWidth: 1,
-          data: [2, 0, 3, 0, 1, 0, 2]
+          data: [0, 0, 0, 0, 0, 0, 0]
         }
       ];
     this.lineChartGradientsNumbersColors = [
@@ -133,58 +274,15 @@ export class PackageAnalysisComponent implements OnInit {
      }
    ];
     this.lineChartGradientsNumbersLabels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-    this.lineChartGradientsNumbersOptions = {
-        maintainAspectRatio: false,
-        legend: {
-          display: false
-        },
-        tooltips: {
-          bodySpacing: 4,
-          mode: "nearest",
-          intersect: 0,
-          position: "nearest",
-          xPadding: 10,
-          yPadding: 10,
-          caretPadding: 10
-        },
-        responsive: 1,
-        scales: {
-          yAxes: [{
-            gridLines: {
-              zeroLineColor: "transparent",
-              drawBorder: false
-            }
-          }],
-          xAxes: [{
-            display: 0,
-            ticks: {
-              display: false
-            },
-            gridLines: {
-              zeroLineColor: "transparent",
-              drawTicks: false,
-              display: false,
-              drawBorder: false
-            }
-          }]
-        },
-        layout: {
-          padding: {
-            left: 0,
-            right: 0,
-            top: 15,
-            bottom: 15
-          }
-        }
-      }
+    this.lineChartGradientsNumbersOptions = this.lessonChartOptionConfiguration;
 
     this.lineChartGradientsNumbersType = 'bar';
     // Finish Manual Lesson Graph Initialization
     
 //--------------------------------------------------------------------------------------------------
     
-    // Manual Lesson More Details Graph Initialize
-    this.canvas = document.getElementById("manualLessonMoreChart");
+    // Auto Lesson  Graph Initialize
+    this.canvas = document.getElementById("autoLessonChart");
     this.ctx = this.canvas.getContext("2d");
 
     this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
@@ -192,7 +290,7 @@ export class PackageAnalysisComponent implements OnInit {
     this.gradientFill.addColorStop(1, this.hexToRGB('#2CA8FF', 0.6));
 
 
-    this.lineChartGradientsNumbersData = [
+    this.lineChartAutoData = [
         {
           label: "Students",
           pointBorderWidth: 2,
@@ -213,54 +311,94 @@ export class PackageAnalysisComponent implements OnInit {
      }
    ];
     this.lineChartGradientsNumbersLabels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-    this.lineChartGradientsNumbersOptions = {
-        maintainAspectRatio: false,
-        legend: {
-          display: false
-        },
-        tooltips: {
-          bodySpacing: 4,
-          mode: "nearest",
-          intersect: 0,
-          position: "nearest",
-          xPadding: 10,
-          yPadding: 10,
-          caretPadding: 10
-        },
-        responsive: 1,
-        scales: {
-          yAxes: [{
-            gridLines: {
-              zeroLineColor: "transparent",
-              drawBorder: false
-            }
-          }],
-          xAxes: [{
-            display: 0,
-            ticks: {
-              display: false
-            },
-            gridLines: {
-              zeroLineColor: "transparent",
-              drawTicks: false,
-              display: false,
-              drawBorder: false
-            }
-          }]
-        },
-        layout: {
-          padding: {
-            left: 0,
-            right: 0,
-            top: 15,
-            bottom: 15
-          }
-        }
-      }
+    this.lineChartGradientsNumbersOptions = this.lessonChartOptionConfiguration;
 
     this.lineChartGradientsNumbersType = 'bar';
     // Finish Manual Lesson More Details Graph Initialization
+
+
+    //------------------------------------------------------------------------------------------
+    //manualLessonStudentAttendance Graph(Manual) Initialize
+    this.canvas = document.getElementById("manualLessonStudentAttendanceChart");
+    this.ctx = this.canvas.getContext("2d");
+
+    this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
+    this.gradientStroke.addColorStop(0, '#18ce0f');
+    this.gradientStroke.addColorStop(1, this.chartColor);
+
+    this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
+    this.gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
+    this.gradientFill.addColorStop(1, this.hexToRGB('#18ce0f', 0.4));
+
+    this.lineChartStudentAttendanceDataManual = [
+        {
+           label: "Student Attendance",
+           pointBorderWidth: 2,
+           pointHoverRadius: 4,
+           pointHoverBorderWidth: 1,
+           pointRadius: 4,
+           fill: true,
+           borderWidth: 2,
+          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        }
+      ];
+      this.lineChartWithNumbersAndGridColors = [
+       {
+         borderColor: "#18ce0f",
+         pointBorderColor: "#FFF",
+         pointBackgroundColor: "#18ce0f",
+         backgroundColor: this.gradientFill
+       }
+     ];
+    this.lineChartWithNumbersAndGridLabelsManual = ['','','','','','','','','','','',''];
+    this.lineChartWithNumbersAndGridOptions = this.lessonStudentAttendanceChartOptionConfiguration;
+
+    this.lineChartWithNumbersAndGridType = 'line';
+    //Finish manualLessonStudentAttendance Graph(Manual) Initialize
+
+
+     //------------------------------------------------------------------------------------------
+    //autoLessonStudentAttendance Graph(Manual) Initialize
+    this.canvas = document.getElementById("autoLessonStudentAttendanceChart");
+    this.ctx = this.canvas.getContext("2d");
+
+    this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
+    this.gradientStroke.addColorStop(0, '#18ce0f');
+    this.gradientStroke.addColorStop(1, this.chartColor);
+
+    this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
+    this.gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
+    this.gradientFill.addColorStop(1, this.hexToRGB('#18ce0f', 0.4));
+
+    this.lineChartStudentAttendanceDataAuto = [
+        {
+           label: "Student Attendance",
+           pointBorderWidth: 2,
+           pointHoverRadius: 4,
+           pointHoverBorderWidth: 1,
+           pointRadius: 4,
+           fill: true,
+           borderWidth: 2,
+          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        }
+      ];
+      this.lineChartWithNumbersAndGridColors = [
+       {
+         borderColor: "#18ce0f",
+         pointBorderColor: "#FFF",
+         pointBackgroundColor: "#18ce0f",
+         backgroundColor: this.gradientFill
+       }
+     ];
+    this.lineChartWithNumbersAndGridLabelsAuto = ['','','','','','','','','','','',''];
+    this.lineChartWithNumbersAndGridOptions = this.lessonStudentAttendanceChartOptionConfiguration;
+
+    this.lineChartWithNumbersAndGridType = 'line';
+    //Finish manualLessonStudentAttendance Graph(Auto) Initialize
+
   }
+
+
 
   //get package details
   getpackageList(){
@@ -275,12 +413,72 @@ export class PackageAnalysisComponent implements OnInit {
     );
   }
 
-  lessonAnalysis(transmissionType){
+
+
+    //when user select package this function will be fired
+    selectPackageDetails(selectpackage:PackageModel){
+    
+      this.isAuto=false;
+      this.isManual=false;
+      this.isAutoLesson=false;
+      this.isManualLesson=false;
+      this.errorMsgLessonTimePeriodManual=false;
+      this.errorMsgStudentTimePeriodManual=false;
+      this.errorMsgLessonTimePeriodAuto=false;
+      this.errorMsgStudentTimePeriodAuto=false;
+      this.isManualGraphActive=false;
+      this.isAutoGraphActive=false;
+      this.isManualTableActive=false;
+      this.isAutoTableActive=false;
+      this.errorMsgAuto="";
+      this.errorMsgManual="";
+  
+      this.selectPackage=selectpackage;
+  
+      if(selectpackage.manualLes>0){
+        this.getTotalStudentOfPackage(1);
+        this.timeTableService.isAnyLesson(selectpackage.packageId,1).subscribe(
+          response => {
+            if(response){
+              this.getLessonTimeTable(1);
+              this.getLessonDistributionDetails(1);
+            }else{
+              this.errorMsgManual="There is no any lesson(Manual) for this package yet.";
+            }
+          },
+          error => {
+            console.log(error);
+            this.handleErrorResponse(error)
+          }
+        );
+        
+      }
+  
+      if(selectpackage.autoLes>0){
+        this.getTotalStudentOfPackage(2);
+        this.timeTableService.isAnyLesson(selectpackage.packageId,2).subscribe(
+          response => {
+            if(response){
+              this.getLessonTimeTable(2);
+              this.getLessonDistributionDetails(2);
+            }else{
+              this.errorMsgAuto="There is no any  lesson(Auto) for this package yet."
+            }
+          },
+          error => {
+            console.log(error);
+            this.handleErrorResponse(error)
+          }
+        );
+      }
+      
+    }
+
+    getTotalStudentOfPackage(transmissionType){
     this.packageService.getNumStudentPackage(this.selectPackage.packageId,transmissionType).subscribe(
       response => {
         (transmissionType == 1 ? this.isManual=true : this.isAuto=true);
         (transmissionType == 1 ? this.manualTotalStudent=response : this.autoTotalStudent=response);
-        (transmissionType == 1 ? this.getLessonDistributionDetails(transmissionType) : "");
       },
       error => {
         console.log(error);
@@ -288,6 +486,49 @@ export class PackageAnalysisComponent implements OnInit {
       }
     );
   }
+
+  getLessonTimeTable(transmission){
+    this.timeTableService.getLessonsByPackageId(this.selectPackage.packageId,transmission).subscribe(
+      response => {
+        (transmission==1 ? this.manualLessonTimeTable=response : this.autoLessonTimeTable=response);
+        this.timeTableService.getLessonTimeSlotByPackageId(this.selectPackage.packageId,transmission).subscribe(
+          response => {
+            (transmission==1 ? this.timeSlotIdManual=response : this.timeSlotIdAuto=response);
+            (transmission==2 ? this.isManualTableActive=true  :  this.isAutoTableActive=true);          
+          },
+          error => {
+            console.log(error);
+            this.handleErrorResponse(error); 
+          }
+        );
+      },
+      error => {
+        console.log(error);
+        this.handleErrorResponse(error);
+      }
+    )
+  }
+
+
+    //get number of lessons per week days
+    getLessonDistributionDetails(transmission){
+
+      this.timeTableService.getLessonDistributionDetails(this.selectPackage.packageId,transmission).subscribe(
+        response => {
+          if(response.length>0){
+            (transmission==1 ? this.isManualGraphActive=true : this.isAutoGraphActive=true);
+            let lessonDistribution:LessonDistributionMap[] = response;
+            (transmission == 1 ? this.manualLessonGraph(lessonDistribution) : this.autoLessonGraph(lessonDistribution));
+          }
+        },
+        error => {
+          console.log(error);
+          this.handleErrorResponse(error);
+        }
+      );
+    }
+
+
 
   manualLessonGraph(lessonDistribution:LessonDistributionMap[]){
     
@@ -302,7 +543,7 @@ export class PackageAnalysisComponent implements OnInit {
     });
    
 
-    this.lineChartGradientsNumbersData = [
+    this.lineChartManualData = [
       {
         label: "Lessons",
         pointBorderWidth: 2,
@@ -315,62 +556,48 @@ export class PackageAnalysisComponent implements OnInit {
       }
     ];
   }
-  ManualLessonMoreGraph(){
-    this.isManualLessonMore=true;
-  }
 
-  //get number of lessons per week days
-  getLessonDistributionDetails(transmission){
-    this.timeTableService.getLessonDistributionDetails(this.selectPackage.packageId,transmission).subscribe(
-      response => {
-        let lessonDistribution:LessonDistributionMap[] = response;
-        (transmission == 1 ? this.manualLessonGraph(lessonDistribution) : "");
-      },
-      error => {
-        console.log(error);
-        this.handleErrorResponse(error);
+  autoLessonGraph(lessonDistribution:LessonDistributionMap[]){
+    
+    // index:
+    // 0 -> Sunday
+    // 1 -> Monday
+    let array=[0,0,0,0,0,0,0];
+    this.autoTotalLesson=0;
+    lessonDistribution.forEach(element => {
+      array[+element.day]=element.lessonCount;
+      this.autoTotalLesson+=+element.lessonCount;
+    });
+   
+
+    this.lineChartAutoData = [
+      {
+        label: "Lessons",
+        pointBorderWidth: 2,
+        pointHoverRadius: 4,
+        pointHoverBorderWidth: 1,
+        pointRadius: 4,
+        fill: true,
+        borderWidth: 1,
+        data: [array[1], array[2], array[3],array[4], array[5], array[6], array[0]]
       }
-    )
+    ];
   }
 
-  //buttons
-  selectPackageDetails(selectpackage:PackageModel){
-    
-    this.isAuto=false;
-    this.isManual=false;
-
-    this.selectPackage=selectpackage;
-
-    if(selectpackage.manualLes>0){
-      this.lessonAnalysis(1);
-      this.lessonTimeTable(1);
-    }
-
-    if(selectpackage.autoLes>0){
-      this.lessonAnalysis(2);
-      this.lessonTimeTable(2);
-    }
-    
-  }
-
+ 
 
   lessonAnalysisReport(transmission){
-
         let lessonTimePeriod;
         let studentTimePeriod;
         let totalStudent;
-
+       
         if(transmission == 1){
           this.isManualLessonAnalysisActive=false;
-          this.errorMsgLessonTimePeriodManual=false;
-          this.errorMsgStudentTimePeriodManual=false;
           lessonTimePeriod=this.lessonTimePeriodManual;
           studentTimePeriod=this.studentTimePeriodManual;
           totalStudent=this.manualTotalStudent;
         }else{
           this.isAutoLessonAnalysisActive=false;
-          this.errorMsgLessonTimePeriodAuto=false;
-          this.errorMsgStudentTimePeriodAuto=false;
           lessonTimePeriod=this.lessonTimePeriodAuto;
           studentTimePeriod=this.studentTimePeriodAuto;
           totalStudent=this.autoTotalStudent;
@@ -421,8 +648,7 @@ export class PackageAnalysisComponent implements OnInit {
 
                       let extranLesson =Math.ceil(totalRemainStudent/numStudentForOneVehicle);
                       let recommendLesson=temporyNumberOfLesson + extranLesson;
-                    
-                      (transmission==1 ? this.numStudentForOneVehicleManual=numStudentForOneVehicle : this.numStudentForOneVehicleAuto=numStudentForOneVehicle);
+        
                       (transmission==1 ? this.manualTotalLessonRecommend=recommendLesson : this.autoTotalLessonRecommend=recommendLesson);
                       
 
@@ -430,6 +656,7 @@ export class PackageAnalysisComponent implements OnInit {
                       (transmission==1 ? this.manualTotalLessonRecommend=temporyNumberOfLesson : this.autoTotalLessonRecommend=temporyNumberOfLesson);
                     }
 
+                    (transmission==1 ? this.numStudentForOneVehicleManual=numStudentForOneVehicle : this.numStudentForOneVehicleAuto=numStudentForOneVehicle);
                     (transmission==1 ? this.isManualLessonAnalysisActive=true : this.isAutoLessonAnalysisActive=true);
               }else{
                 let error="Student TimePeriod Should be lessthan or equal to Lesson TimePeriod(Time Period Should be greater than Zero)";
@@ -443,28 +670,144 @@ export class PackageAnalysisComponent implements OnInit {
    
   }
 
-  lessonTimeTable(transmission){
-    this.timeTableService.getLessonsByPackageId(this.selectPackage.packageId,transmission).subscribe(
+  ManualLessonMoreGraph(){
+    this.isManualLessonMore=true;
+  }
+
+  closeMsg(type){
+    (type == 1 ? this.errorMsgManual="" : this.errorMsgAuto="");
+  }
+
+  lessonStudentAttendance(lessonId,day,transmission,timeSlot:TimeSlotModel){
+   
+    if(transmission == 1){
+      this.studentAttendanceLessonIdManual=lessonId;
+      this.manualLessonDay=day;
+      this.manualLessonTimeSlot=timeSlot;
+      this.studentAttendanceGraphManual(lessonId,1);
+      this.isPastStudentAttendanceManual=true;
+      this.isFutureStudentAttendanceManual=false;
+    }else{
+      this.studentAttendanceLessonIdAuto=lessonId;
+      this.autoLessonDay=day;
+      this.autoLessonTimeSlot=timeSlot;
+      this.studentAttendanceGraphAuto(lessonId,1);
+      this.isPastStudentAttendanceAuto=true;
+      this.isFutureStudentAttendanceAuto=false;
+    }
+
+    //get Lesson Publish Date
+    this.timeTableService.getLessonPublishDate(lessonId).subscribe(
       response => {
-        (transmission==1 ? this.manualLessonTimeTable=response : this.autoLessonTimeTable=response);
-        this.timeTableService.getLessonTimeSlotByPackageId(this.selectPackage.packageId,transmission).subscribe(
-          response => {
-            (transmission==1 ? this.timeSlotIdManual=response : this.timeSlotIdAuto=response);
-            console.log(this.timeSlotIdManual)
-            console.log(this.manualLessonTimeTable);
-            this.isManualTableActive=true;            
-          },
-          error => {
-            console.log(error);
-            this.handleErrorResponse(error); 
+        (transmission==1 ? this.lessonPublishDateManual=response : this.lessonPublishDateAuto=response);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  //time 1->past ,2->future
+  studentAttendanceGraphManual(lessonId,time){
+    this.isManualLesson=false;
+    this.timeTableService.getStudentAttendance(lessonId,time).subscribe(
+      response => {
+        let studentAttendance:StudentAttendanceWeeksMap[] = response;
+        
+        //set lables and data
+        let lineChartWithNumbersAndGridLabelsManualData = [];
+        let studentAttendancedata=[];
+
+        studentAttendance.forEach(element => {
+          lineChartWithNumbersAndGridLabelsManualData.push(element.week);
+          studentAttendancedata.push(element.numStudent);
+        });
+       
+        this.lineChartStudentAttendanceDataManual = [
+          {
+            label: "Student Attendance",
+            pointBorderWidth: 2,
+            pointHoverRadius: 4,
+            pointHoverBorderWidth: 1,
+            pointRadius: 4,
+            fill: true,
+            borderWidth: 2,
+            data: studentAttendancedata
           }
-        );
+        ];
+     
+        this.lineChartWithNumbersAndGridLabelsManual=lineChartWithNumbersAndGridLabelsManualData;
+        this.isManualLesson=true;
+
       },
       error => {
         console.log(error);
         this.handleErrorResponse(error);
       }
     )
+  }
+
+  studentAttendanceGraphAuto(lessonId,time){
+    this.isAutoLesson=false;
+    this.timeTableService.getStudentAttendance(lessonId,time).subscribe(
+      response => {
+        let studentAttendance:StudentAttendanceWeeksMap[] = response;
+        
+        //set lables and data
+        let lineChartWithNumbersAndGridLabelsManualData = [];
+        let studentAttendancedata=[];
+
+        studentAttendance.forEach(element => {
+          lineChartWithNumbersAndGridLabelsManualData.push(element.week);
+          studentAttendancedata.push(element.numStudent);
+        });
+       
+        this.lineChartStudentAttendanceDataAuto = [
+          {
+            label: "Student Attendance",
+            pointBorderWidth: 2,
+            pointHoverRadius: 4,
+            pointHoverBorderWidth: 1,
+            pointRadius: 4,
+            fill: true,
+            borderWidth: 2,
+            data: studentAttendancedata
+          }
+        ];
+        this.lineChartWithNumbersAndGridLabelsAuto=lineChartWithNumbersAndGridLabelsManualData;
+        this.isAutoLesson=true;
+
+      },
+      error => {
+        console.log(error);
+        this.handleErrorResponse(error);
+      }
+    )
+  }
+
+  //time 1->Past , 2->Future
+  studentAttendanceChangeButton(transmission,time){
+    if(transmission==1){
+      if(time==1){
+        this.isFutureStudentAttendanceManual=false;
+        this.isPastStudentAttendanceManual=true;
+        this.studentAttendanceGraphManual(this.studentAttendanceLessonIdManual,1);
+      }else{
+        this.isFutureStudentAttendanceManual=true;
+        this.isPastStudentAttendanceManual=false;
+        this.studentAttendanceGraphManual(this.studentAttendanceLessonIdManual,2);
+      }
+    }else{
+      if(time==1){
+        this.isFutureStudentAttendanceAuto=false;
+        this.isPastStudentAttendanceAuto=true;
+        this.studentAttendanceGraphAuto(this.studentAttendanceLessonIdAuto,1);
+      }else{
+        this.isFutureStudentAttendanceAuto=true;
+        this.isPastStudentAttendanceAuto=false;
+        this.studentAttendanceGraphAuto(this.studentAttendanceLessonIdAuto,2);
+      }
+    }
   }
 
 

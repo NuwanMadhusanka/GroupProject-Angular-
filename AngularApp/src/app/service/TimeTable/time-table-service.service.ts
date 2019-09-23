@@ -9,6 +9,7 @@ import { TimeTableDataList } from '../../ClassModel/MapObject/TimeTableDataList'
 import { LessonModel } from '../../ClassModel/LessonModel';
 import { LessonDistributionMap } from '../../ClassModel/MapObject/LessonDistributionMap';
 import { PackageAnalysisData } from '../../ClassModel/MapObject/PackageAnalysisData';
+import { StudentAttendanceWeeksMap } from '../../ClassModel/MapObject/StudentAttendanceWeeksMap';
 
 
 @Injectable({
@@ -125,6 +126,21 @@ export class TimeTableServiceService {
 
   getLessonTimeSlotByPackageId(packageId,transmission){
     return this.http.get<TimeSlotModel[]>(`${API_URL}/timetable/lesson/timeslot/${packageId}/${transmission}`);
+  }
+
+  //Give result as true , if selected package has any lesson.
+  isAnyLesson(packageId,transmission){
+    return this.http.get<Boolean>(`${API_URL}/timetable/lesson/isanylesson/${packageId}/${transmission}`);
+  }
+
+  //getStudent Attendance details week by weel
+  getStudentAttendance(lessonId,time){
+    return this.http.get<StudentAttendanceWeeksMap[]>(`${API_URL}/timetable/lesson/student/attendance/${lessonId}/${time}`);
+  }
+
+  //get Lesson Publish Date
+  getLessonPublishDate(lessonId){
+    return this.http.get<Date>(`${API_URL}/timetable/lesson/date/${lessonId}`);
   }
 
 }
