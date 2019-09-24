@@ -21,6 +21,8 @@ import { StudentProfileComponent } from '../../profile/student-profile/student-p
 import { TrialLessonBookComponent } from '../../LessonBooking/trial-lesson-book/trial-lesson-book.component';
 import { TrialLessonListComponent } from '../../LessonBooking/trial-lesson-list/trial-lesson-list.component';
 import { PackageAnalysisComponent } from '../../timeTable/package-analysis/package-analysis.component';
+import { InstructorTimeTableComponent } from '../../instructor/instructor-time-table/instructor-time-table.component';
+import { LessonAssignStudentComponent } from '../../instructor/lesson-assign-student/lesson-assign-student.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -47,5 +49,8 @@ export const AdminLayoutRoutes: Routes = [
     {path:'trial-lesson-book',  component:TrialLessonBookComponent},
     {path:'trial-lesson-list/:package/:title',  component:TrialLessonListComponent},
 
-    {path:'student-profile' ,component:StudentProfileComponent}
+    {path:'student-profile' ,component:StudentProfileComponent},
+
+    {path:'instructor-time-table', component:InstructorTimeTableComponent},
+    {path:'lesson-assign-student/:lessonId/:day/:timeSlot', component:LessonAssignStudentComponent}
 ];

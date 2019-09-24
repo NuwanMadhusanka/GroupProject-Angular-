@@ -76,6 +76,8 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['admin-staff-student-dash-board'])
         }else if( response.role == 3 ){
           this.router.navigate(['time-table']);
+        }else if(response.role==4){
+          this.router.navigate(['instructor-time-table']);
         }else if( response.role == 5){
           this.router.navigate(['time-table']);
         }else{
