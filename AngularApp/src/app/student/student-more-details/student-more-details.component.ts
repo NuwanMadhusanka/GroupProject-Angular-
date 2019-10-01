@@ -7,6 +7,7 @@ import { UserModel } from '../../ClassModel/UserModel';
 import { UserValidation } from '../../Shared/validation/user-validation/user-validation';
 import Swal from 'sweetalert2';
 import { HttpError } from '../../Shared/httpError/HttpError';
+import { EncryptDecryptServiceService } from '../../service/encrypt-decrypt-service.service';
 
 
 
@@ -36,6 +37,7 @@ export class StudentMoreDetailsComponent implements OnInit {
   constructor(
     private route:ActivatedRoute,
     private studentService:StudentServiceService,
+    private encoder : EncryptDecryptServiceService
   ) { }
 
   ngOnInit() {
@@ -122,7 +124,7 @@ export class StudentMoreDetailsComponent implements OnInit {
     this.studentService.studentGet(this.studentId).subscribe(
       response => {
           this.studentData=response;
-          console.log(this.studentData)
+          this.studentData.userId.password=this.encoder.decrypt(this.studentData.userId.password);
       },
       error =>{
         console.log(error);
@@ -134,13 +136,13 @@ export class StudentMoreDetailsComponent implements OnInit {
   //save updates
   saveUpdate(){
     //Save Update data(API)
+    this.studentData.userId.password=this.encoder.encrypt(this.studentData.userId.password);
     this.studentService.studentUpdate(this.studentData).subscribe(
       response => {
-        console.log(response)
         Swal.fire('Update is Completed.')
         this.confirmUpdate=false;
         this.studentData=response;
-
+        this.studentData.userId.password=this.encoder.decrypt(this.studentData.userId.password);
       },
       error => {
         console.log(error);

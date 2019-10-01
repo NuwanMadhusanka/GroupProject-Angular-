@@ -34,12 +34,12 @@ export class StudentServiceService {
       return this.http.get<StudentModel[]>(`${API_URL}/students`);
   }
 
-  //getStudent following package's Id(Result is integer list)
+  //getStudent following package's Id(Response is integer list)
   studentPackagesId(id:Number){
     return this.http.get<[]>(`${API_URL}/student/package/${id}`);
   }
 
-  //getStudent following package's(result is packageModel(list))
+  //getStudent following package's(Response is packageModel(list))
   studentPackages(id:Number){
     return this.http.get<PackageModel[]>(`${API_URL}/student/package/list/${id}`)
   }

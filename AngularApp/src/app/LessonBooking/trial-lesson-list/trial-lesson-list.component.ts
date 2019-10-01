@@ -7,6 +7,8 @@ import { LesonBookingService } from '../../service/LessonBooking/leson-booking.s
 import { StudentLessonModel } from '../../ClassModel/StudentLessonModel';
 import { PathMapComponent } from '../../timeTable/path-map/path-map.component';
 import Swal from 'sweetalert2';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PractricalLessonChartStudentComponent } from '../../instructor/practrical-lesson-chart-student/practrical-lesson-chart-student.component';
 
 @Component({
   selector: 'app-trial-lesson-list',
@@ -52,7 +54,8 @@ export class TrialLessonListComponent implements OnInit {
     private lessonBookService:LesonBookingService,
     private pathMap:PathMapComponent,
     private router:Router,
-    private route:ActivatedRoute
+    private route:ActivatedRoute,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
@@ -111,20 +114,25 @@ export class TrialLessonListComponent implements OnInit {
         console.log(error);
         this.handleErrorResponse(error);
       }
-    )
+    );
   }
 
   //select what are the lesson will held in future and past
   divideLesson(bookLesson:StudentLessonModel[]){
 
     this.isBookLeeson=true;
+    this.isPreviousLesson=false;
+    this.isFutureLesson=false;
+
     let transmission=bookLesson[0].lessonId.transmission;
     if(transmission==1){
       this.transmission="Manual";
-      this.totalLesson = bookLesson[0].lessonId.packageId.autoLes;
+      //this.totalLesson = bookLesson[0].lessonId.packageId.autoLes;
+      this.totalLesson = bookLesson[0].lessonId.packageId.manualLes;
     }else{
       this.transmission="Auto";
-      this.totalLesson = bookLesson[1].lessonId.packageId.manualLes;
+      //this.totalLesson = bookLesson[1].lessonId.packageId.manualLes;
+      this.totalLesson = bookLesson[1].lessonId.packageId.autoLes;
     }
     this.reservedLesson=bookLesson.length;
     this.remainLesson=this.totalLesson-this.reservedLesson; 
@@ -235,6 +243,13 @@ export class TrialLessonListComponent implements OnInit {
     }else{
       this.errorMessage="You Can't Cancel the Booking.(You Should Cancel the Booking Before One Day Of the Trial Date";
     }
+  }
+
+  studentChart(){
+    //getStudentLessonId and StudentName
+    const modalRef = this.modalService.open(PractricalLessonChartStudentComponent,{ centered: true });
+    modalRef.componentInstance.studentLessonId = this.selectPackageBookLesson[0].studentLessonId;
+    modalRef.componentInstance.studentName = "";
   }
 
   closeMsg(){

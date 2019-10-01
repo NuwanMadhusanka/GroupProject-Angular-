@@ -3,6 +3,9 @@ import { ROUTES } from '../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { Router } from '@angular/router';
 import Chart from 'chart.js';
+import { NotificationDataMap } from '../../ClassModel/MapObject/NotificationDataMap';
+import { NotificationServisceService } from '../../service/notification/notification-service.service';
+
 
 @Component({
   selector: 'app-navbar',
@@ -10,6 +13,14 @@ import Chart from 'chart.js';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+
+    userId;
+    userRole;
+    newNotificationList:NotificationDataMap[]=[];
+    earlyNotification:NotificationDataMap[]=[];
+    isNewNotification=false;
+    isEarlyNotification=false;
+
     private listTitles: any[];
     location: Location;
       mobile_menu_visible: any = 0;
@@ -18,7 +29,7 @@ export class NavbarComponent implements OnInit {
 
     public isCollapsed = true;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router) {
+    constructor(location: Location,  private element: ElementRef, private router: Router,private notificationService:NotificationServisceService) {
       this.location = location;
           this.sidebarVisible = false;
     }
@@ -35,6 +46,10 @@ export class NavbarComponent implements OnInit {
            this.mobile_menu_visible = 0;
          }
      });
+
+     this.userId=sessionStorage.getItem("userId");
+     this.userRole=sessionStorage.getItem("userRole");
+     this.getNotification();
     }
 
     collapse(){
@@ -170,8 +185,36 @@ export class NavbarComponent implements OnInit {
       }else if(role == '4'){
 
       }else if(role == '5'){
-        console.log("Hi")
         this.router.navigate(['student-profile']);
       }
     }
+
+    getNotification(){
+
+       //get unread notification
+       this.notificationService.getNotification(this.userId,this.userRole,0).subscribe(
+         response => {
+            this.newNotificationList=response;
+            if(this.newNotificationList.length>0){
+              this.isNewNotification=true;
+            }
+         },
+         error => {
+           console.log(error);
+         }
+       );
+
+       //get read notification
+       this.notificationService.getNotification(this.userId,this.userRole,1).subscribe(
+        response => {
+           this.earlyNotification=response;
+           if(this.earlyNotification.length>0){
+             this.isEarlyNotification=true;
+           }
+        },
+        error => {
+          console.log(error);
+        }
+      );
+  }
 }

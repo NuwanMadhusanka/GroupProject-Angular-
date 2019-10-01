@@ -274,7 +274,7 @@ export class TrialLessonBookComponent implements OnInit {
         }
         
         if(response == -2){
-          this.errorMessage="You Already Book This Lesson.";
+          this.errorMessage="You Already Book This Lesson Or You Booked Another Lesson In This Time Period .";
         }
         
         if(response == 0){

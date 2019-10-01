@@ -35,6 +35,7 @@ export class StudentAddComponent implements OnInit {
   errorEmail;
   errorPassword;
   errorExamDate;
+  errorTrialExamDate;  
 
   errorMessage:String;
   regexp:any;//Regular Expression for NIC
@@ -103,9 +104,18 @@ export class StudentAddComponent implements OnInit {
     }  
 
     //valid Exam Date
-    if( this.examDate === null ){
-      this.errorExamDate="Exam Date is mandatory";
+    if( this.examDate != null && this.trialDate==null){
+      if(!this.userValidation.isValidExamDate(new Date(this.examDate))){
+        this.errorExamDate="Wriiten Exam date should be future date.";
+      }
     }
+
+    //Valid Trial Date
+    if(this.trialDate != null && this.examDate==null){
+      if(!this.userValidation.isValidTrialDate(new Date(this.trialDate))){
+        this.errorTrialExamDate="Trial Exam date should be future date.";
+      }
+    } 
 
     //valid Trial Date
     // if(!this.isDateFuture(this.trialDate)){

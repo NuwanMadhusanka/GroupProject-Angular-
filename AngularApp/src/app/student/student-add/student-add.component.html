@@ -105,6 +105,7 @@
                   <div class="form-group">
                     <label>Exam Date</label>
                     <input [(ngModel)]="examDate" type="date" class="form-control" placeholder="Exam Date" name="examDate">
+                    <small class="text-info">Insert written exam date ,If student not face to written exam yet.</small><br>
                     <small *ngIf="errorExamDate" class="text-danger">{{errorExamDate}}</small>
                   </div>
                 </div>
@@ -112,12 +113,14 @@
                   <div class="form-group">
                     <label>Trial Date</label>
                     <input [(ngModel)]="trialDate" type="date" class="form-control" placeholder="Trial Date" name="trialDate">
+                    <small class="text-info">Insert trial exam date ,If student not face to trial exam yet.</small><br>
+                    <small *ngIf="errorTrialExamDate" class="text-danger">{{errorTrialExamDate}}</small>
                   </div>
                 </div>
               </div>
               <!-- End Third Row -->
             
-              <button  type="submit" class="btn btn-primary">Submit</button>
+              <button  type="submit" class="btn btn-secondary btn-round">Submit</button>
           </form>
         </div>
       </div>

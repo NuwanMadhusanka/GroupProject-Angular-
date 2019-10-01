@@ -15,7 +15,7 @@ export class UserAuthenticationServiceService {
     private http:HttpClient,
   ) { }
 
-  authenticate(email,password){
-    return this.http.get<UserModel>(`${API_URL}/login/${email}/${password}`);
+  authenticate(email){
+    return this.http.get<UserModel>(`${API_URL}/login/${email}`);
   }
 }

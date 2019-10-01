@@ -11,6 +11,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { HttpError } from '../../Shared/httpError/HttpError';
 import { LessonModel } from '../../ClassModel/LessonModel';
 
+/*
+If changing lesson's day is equal to today then changing is 
+not apply for today lessons and it's apply nextweek and upto lessons.
+*/
+
 @Component({
   selector: 'app-lesson-update',
   templateUrl: './lesson-update.component.html',

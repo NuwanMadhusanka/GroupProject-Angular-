@@ -277,7 +277,7 @@
       @include sidebar-color($orange-color);
     }
     &[data-color="red"]{
-      @include sidebar-color($social-facebook-state-color);
+      @include sidebar-color($medium-gray);
     }
     &[data-color="yellow"]{
       @include sidebar-color($warning-color);

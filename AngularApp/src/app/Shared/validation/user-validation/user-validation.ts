@@ -16,6 +16,24 @@ export class UserValidation {
     return false;
   }
 
+  //valid exam date
+  public isValidExamDate(examDate){
+    let currentDate = new Date();
+    if(examDate>currentDate){
+      return true;
+    }
+    return false;
+  }
+
+  //valid trial date
+  public isValidTrialDate(trialDate){
+    let currentDate = new Date();
+    if(trialDate>currentDate){
+      return true;
+    }
+    return false;
+  }
+
   //valid Exam Date
   public isValidDate(examDate:Date,trialDate:Date){
    
@@ -34,6 +52,10 @@ export class UserValidation {
      let trialYear=tDate.getFullYear();
      let trialMonth=tDate.getMonth();
      let trialDay=tDate.getDate();
+
+     if(currentDate>eDate){
+
+     }
    
      return true;
   }

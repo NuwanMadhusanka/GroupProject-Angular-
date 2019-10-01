@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { API_URL } from '../../app.constants';
 import { TimeTableDataList } from '../../ClassModel/MapObject/TimeTableDataList';
 import { LessonAssingStudentMap } from '../../ClassModel/MapObject/LessonAssignStudentMap';
+import { StudentPractricalChartDataMap } from '../../ClassModel/MapObject/StudentPractricalChartDataMap';
 
 @Injectable({
   providedIn: 'root'
@@ -27,5 +28,9 @@ export class InstructorServiceService {
 
   markStudentLesson(studentLessonId,mark){
     return this.http.post<any>(`${API_URL}/instructor/student/lesson/mark/${studentLessonId}/${mark}`,{});
+  }
+
+  getPractricalLessonChartStudentData(studentLessonId){
+    return this.http.get<StudentPractricalChartDataMap>(`${API_URL}/instructor/student/practrical/lesson/${studentLessonId}`);
   }
 }

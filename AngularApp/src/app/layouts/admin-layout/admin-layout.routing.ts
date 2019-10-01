@@ -23,6 +23,7 @@ import { TrialLessonListComponent } from '../../LessonBooking/trial-lesson-list/
 import { PackageAnalysisComponent } from '../../timeTable/package-analysis/package-analysis.component';
 import { InstructorTimeTableComponent } from '../../instructor/instructor-time-table/instructor-time-table.component';
 import { LessonAssignStudentComponent } from '../../instructor/lesson-assign-student/lesson-assign-student.component';
+import { PractricalLessonChartStudentComponent } from '../../instructor/practrical-lesson-chart-student/practrical-lesson-chart-student.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -52,5 +53,6 @@ export const AdminLayoutRoutes: Routes = [
     {path:'student-profile' ,component:StudentProfileComponent},
 
     {path:'instructor-time-table', component:InstructorTimeTableComponent},
-    {path:'lesson-assign-student/:lessonId/:day/:timeSlot', component:LessonAssignStudentComponent}
+    {path:'lesson-assign-student/:lessonId/:day/:timeSlot', component:LessonAssignStudentComponent},
+    {path:'practrical-lesson-chart-student', component:PractricalLessonChartStudentComponent}
 ];

@@ -4,6 +4,8 @@ import { InstructorServiceService } from '../../service/instructor/instructor-se
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpError } from '../../Shared/httpError/HttpError';
 import { LessonAssingStudentMap } from '../../ClassModel/MapObject/LessonAssignStudentMap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PractricalLessonChartStudentComponent } from '../practrical-lesson-chart-student/practrical-lesson-chart-student.component';
 
 @Component({
   selector: 'app-lesson-assign-student',
@@ -18,13 +20,33 @@ export class LessonAssignStudentComponent implements OnInit {
   lessonDate;
   lessonDay;
   lessonTimeSlot;
-  message;
+
   isAnyStudent=false;
+
+  warningMessage;
+  errorMessage;
+
+  // Student Char Data
+  public gradientStroke;
+  public chartColor;
+  public canvas : any;
+  public ctx;
+
+  
+
+  public gradientChartOptionsConfiguration: any;
+
+  public barChartType;
+  public barChartData:Array<any>;
+  public barChartOptions:any;
+  public barChartLabels:Array<any>;
+  public barChartColors:Array<any>
 
   constructor(
     private route:ActivatedRoute,
     private router:Router,
-    private instructorService:InstructorServiceService
+    private instructorService:InstructorServiceService,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
@@ -47,7 +69,7 @@ export class LessonAssignStudentComponent implements OnInit {
       response => {
         this.assingStudentList=response;
         if(this.assingStudentList.length == 0){
-          this.message="There is no any student yet.";
+          this.warningMessage="There is no any student yet.";
         }else{
           this.isAnyStudent=true;
           this.setLessonDate();
@@ -75,19 +97,62 @@ export class LessonAssignStudentComponent implements OnInit {
   //Mark the student's practrical ,Whether lesson complete or not
   // mark 1-->complete 2-->notcomplete
   markStudentLesson(studentLessonId,mark){
-   this.instructorService.markStudentLesson(studentLessonId,mark).subscribe(
-     response => {
-      this.getAssingStudent();
-     },
-     error => {
-       console.log(error);
-       this.handleErrorResponse(error);
-     }
-   );
+    if(this.isCurrentDateAndTime()){
+      this.instructorService.markStudentLesson(studentLessonId,mark).subscribe(
+        response => {
+        this.getAssingStudent();
+        },
+        error => {
+          console.log(error);
+          this.handleErrorResponse(error);
+        }
+      );
+    }else{
+      this.errorMessage="Can't Update Student Practrical Data.(Update Student's Practrical Mark Correct Date & Time)";
+    }
   }
 
-  closeMsg(){
-    this.message="";
+  //Student Practrical result should be insert on date 
+  isCurrentDateAndTime(){
+    let lessonDate = new Date(this.lessonDate);
+    let lessonDay = lessonDate.getDay();
+
+    let currentDate = new Date();
+    let currentDay = currentDate.getDay();
+
+    let lessonTimeHour = +(this.lessonTimeSlot[0]+this.lessonTimeSlot[1])
+    let lessonTimeMinute = +(this.lessonTimeSlot[3]+this.lessonTimeSlot[4])
+
+    let currentTimeHour = currentDate.getHours();
+    let currentTimeMinute = currentDate.getMinutes();
+
+    if( (currentDay == lessonDay)){
+      if(lessonTimeHour<currentTimeHour){
+        return true;
+      }else if(lessonTimeHour==currentTimeHour){
+        if(lessonTimeMinute<currentTimeMinute){
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  studentChart(studentLessonId,studentName){
+    const modalRef = this.modalService.open(PractricalLessonChartStudentComponent,{ centered: true });
+    modalRef.componentInstance.studentLessonId = studentLessonId;
+    modalRef.componentInstance.studentName = studentName;
+  }
+
+  /*
+  type 1-->Warning Message , 2--> Error Message
+  */
+  closeMsg(type){
+    if(type==1){
+      this.warningMessage="";
+    }else{
+      this.errorMessage="";
+    }
   }
 
   private handleErrorResponse(error: HttpErrorResponse) {

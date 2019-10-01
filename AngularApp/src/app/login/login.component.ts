@@ -5,6 +5,7 @@ import { UserAuthenticationServiceService } from '../service/user-authentication
 import { throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpError } from '../Shared/httpError/HttpError';
+import { EncryptDecryptServiceService } from '../service/encrypt-decrypt-service.service';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private router:Router,
     private userAuthenticationService:UserAuthenticationServiceService,
-    private fb:FormBuilder
+    private fb:FormBuilder,
+    private encoder : EncryptDecryptServiceService
   ) { }
 
   ngOnInit(
@@ -50,11 +52,18 @@ export class LoginComponent implements OnInit {
     if(this.loginForm.valid){
         //2) get the relevant data by userAuthentication Service(Call to API)
         
-        this.userAuthenticationService.authenticate(this.emailField.value,this.passwordField.value).subscribe(
-          response => this.handleSuccessfulResponse(response),
+        this.userAuthenticationService.authenticate(this.emailField.value).subscribe(
+          response => {
+            if(this.passwordField.value == this.encoder.decrypt(response.password)){
+              this.handleSuccessfulResponse(response);
+            }else{
+              this.errorMessage="Incorrect Password";
+            }
+            
+          },
           error => {
             this.errorMessage="Login Denied.";
-            this.handleErrorResponse(error)
+            this.handleErrorResponse(error);
           }
         )
     }else{
@@ -66,7 +75,7 @@ export class LoginComponent implements OnInit {
   //3)Valid User
   handleSuccessfulResponse(response){
     if(response.userId != null){
-      if(response.userId > 0){
+      if(response.userId > 0 && response.status==1){
 
         sessionStorage.setItem('userId',response.userId);
         sessionStorage.setItem('userRole',response.role);
@@ -83,14 +92,11 @@ export class LoginComponent implements OnInit {
         }else{
           this.router.navigate(['dashboard']);
         }
-      }else if(response.userId == 0){
+      }else if(response.status == 0){
         this.errorMessage="Account Deactivate.Please Inform to the administrator";
-      }else if(response.userId == -1){
-        this.errorMessage="Insert Correct Email and Password.";
       }else{
-        this.errorMessage="Insert Valid Email and Password";
+        //
       }
-     
     
     }
   }

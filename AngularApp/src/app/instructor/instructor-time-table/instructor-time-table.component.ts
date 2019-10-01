@@ -6,6 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { HttpError } from '../../Shared/httpError/HttpError';
 
 
+
 @Component({
   selector: 'app-instructor-time-table',
   templateUrl: './instructor-time-table.component.html',
@@ -17,6 +18,7 @@ export class InstructorTimeTableComponent implements OnInit {
   instructorLessonList:TimeTableDataList[]=[];
   rowSpanLength=[];
   message;
+
 
   constructor(
     private instructorService:InstructorServiceService,

@@ -18,47 +18,69 @@
           <span class="navbar-toggler-bar navbar-kebab"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="collapseExample" [ngbCollapse]="isCollapsed">
-          <!-- <form>
+          <form>
             <div class="input-group no-border">
-              <input type="text" value="" class="form-control" placeholder="Search...">
+              <input type="text" value="" class="form-control" placeholder="Search..." id="searchBox">
               <div class="input-group-append">
                 <div class="input-group-text">
                   <i class="now-ui-icons ui-1_zoom-bold"></i>
                 </div>
               </div>
             </div>
-          </form> -->
+          </form>
           <ul class="navbar-nav">
-            <!-- <li class="nav-item">
-              <a class="nav-link" href="#pablo"  title="Setting">
-                <i class="now-ui-icons media-2_sound-wave"></i>
-              </a>
-            </li> -->
-            <!-- <li class="nav-item" ngbDropdown>
-              <a class="nav-link" id="dropdownBasic1" ngbDropdownToggle>
-                <i class="now-ui-icons location_world"></i>
-                <p>
-                  <span class="d-lg-none d-md-block">Some Actions</span>
-                </p>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li> -->
+
+            <!-- Profile -->
             <li class="nav-item">
               <a (click)="profile()" class="nav-link">
                 <i class="now-ui-icons users_single-02" title="Profile" ></i>
               </a>
             </li>
+             <!-- Profile -->
 
             <!-- Notification Button -->
-            <li class="nav-item">
-              <a href="#" title="Notification" class="nav-link" href="#">
-                <span data-notify="icon" class="now-ui-icons ui-1_bell-53"></span>
+      
+            <li class="nav-item" ngbDropdown>
+              <a title="Notifications" class="nav-link notification" id="dropdownBasic1" ngbDropdownToggle>
+                <span data-notify="icon" class="now-ui-icons ui-1_bell-53"><span *ngIf="isNewNotification" class="badge">{{newNotificationList.length}}</span></span>
               </a>
+
+              <ul *ngIf="isEarlyNotification || isNewNotification" class="dropdown-menu-right notifications" role="menu" aria-labelledby="dropdownBasic1" ngbDropdownMenu>
+    
+                  <div class="notification-heading">
+                    <p class="menu-title">Notifications</p>
+                  </div>
+                  <li class="divider"></li>
+                 
+                  <div class="notifications-wrapper">
+                   
+                    <div *ngIf="isNewNotification" id="mainbox">
+                        <small style="color: coral;margin: 10px;">New</small>
+                        <a *ngFor="let notification of newNotificationList" class="content dropdown-item" href="#">
+                            <div class="notification-item">
+                              <h6 class="item-title">{{notification.title}}</h6>
+                              <p id="msg">{{notification.message}}</p><br>
+                              <small style="color: blue;">{{notification.dateDiff}}</small>
+                            </div>  
+                        </a>
+                    </div>
+
+                    <div *ngIf="isEarlyNotification">
+                        <small style="color: coral;margin: 10px;">Early</small>
+                        <a *ngFor="let notification of earlyNotification" class="content dropdown-item" href="#">
+                            <div class="notification-item">
+                              <h6 class="item-title">{{notification.title}}</h6>
+                              <p class="ow-anywhere">{{notification.message}}</p><br>
+                              <small style="color: blue;">{{notification.dateDiff}}</small>
+                            </div>  
+                        </a>
+                    </div>
+
+                  </div>
+                     
+                </ul>
             </li>
+
             <!-- Finish Notification -->
 
             <!-- Logout Button -->
@@ -73,3 +95,5 @@
         </div>
     </div>
 </nav>
+
+

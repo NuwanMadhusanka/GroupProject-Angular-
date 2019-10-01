@@ -53,6 +53,8 @@ export class StudentPaymentComponent implements OnInit {
   payerId;
   userId;
 
+  loader=false;
+
   ngOnInit() {
     let id=this.route.snapshot.params['id'];//get student id by url
 
@@ -184,7 +186,7 @@ export class StudentPaymentComponent implements OnInit {
               confirmButtonText: 'Yes, Do Payment!'
             }).then((result) => {
               if (result.value) {
-
+                this.loader=true;
                 //Payment Confirm Ok
                 //call to API to add payment details
                 //console.log(packageId+" "+this.studentId+" "+this.newPayment+" "+this.getStudentPackageId())
@@ -192,6 +194,10 @@ export class StudentPaymentComponent implements OnInit {
                
                 this.studentService.studentCourseFeeAdd(course,this.studentId,packageId).subscribe(
                   response => {
+                    console.log("Hello");
+                    this.loader=false;
+                    console.log("Payment reply ");
+                    console.log(response);
                     Swal.fire(
                       'Payment Succeed!'
                     )
@@ -205,7 +211,7 @@ export class StudentPaymentComponent implements OnInit {
                     
                   }, 
                   error =>{
-        
+                    this.loader=false;
                     console.log(error);
                     this.handleErrorResponse(error);
         
@@ -277,8 +283,12 @@ export class StudentPaymentComponent implements OnInit {
   }
 
   completePayPalPayment(paymentId,payerId){
+    this.loader=true;
     this.studentService.completePayment(paymentId,payerId,sessionStorage.getItem('userId'),sessionStorage.getItem('payPalPaymentSelectPackageId'),sessionStorage.getItem('payPalAmount')).subscribe(
       response => {
+        this.loader=false;
+        console.log("Payment reply ");
+        console.log(response);
         this.paymentDetails(sessionStorage.getItem('payPalPaymentSelectPackageId'));
         Swal.fire({
           position: 'top-end',
@@ -289,6 +299,7 @@ export class StudentPaymentComponent implements OnInit {
         });
       },
       error => {
+        this.loader=false;
         Swal.fire({
           position: 'top-end',
           type: 'error',
