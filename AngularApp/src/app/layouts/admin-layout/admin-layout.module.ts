@@ -30,6 +30,7 @@ import { PackageAnalysisComponent } from '../../timeTable/package-analysis/packa
 import { InstructorTimeTableComponent } from '../../instructor/instructor-time-table/instructor-time-table.component';
 import { LessonAssignStudentComponent } from '../../instructor/lesson-assign-student/lesson-assign-student.component';
 import { PractricalLessonChartStudentComponent } from '../../instructor/practrical-lesson-chart-student/practrical-lesson-chart-student.component';
+import { StudentPaymentCheckComponent } from '../../student/student-payment-check/student-payment-check.component';
 
 
 
@@ -44,17 +45,19 @@ import { PractricalLessonChartStudentComponent } from '../../instructor/practric
   ],
   declarations: [
     DashboardComponent,
+    AdminStaffStudentDashBoardComponent,
     StaffListComponent,
     PackageListComponent,
     ReportListComponent,
     VehicleListComponent,
+    
     StudentListComponent,
     StudentAddComponent,
     StudentPackageAddComponent,
     StudentPaymentComponent,
-    StudentMoreDetailsComponent,
-    AdminStaffStudentDashBoardComponent,
+    StudentMoreDetailsComponent,  
     StudentExamResultAddComponent,
+    StudentPaymentCheckComponent,
 
     TimeTableComponent,
     LessonAddComponent,

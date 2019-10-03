@@ -104,6 +104,10 @@ export class StudentListComponent implements OnInit {
     this.errorMessage="";
   }
 
+  studentPaymentCheck(){
+    this.router.navigate(['student-payment-check']);
+  }
+
   /*
   1 -->  Initialize API Call
   0 --> Other API Call

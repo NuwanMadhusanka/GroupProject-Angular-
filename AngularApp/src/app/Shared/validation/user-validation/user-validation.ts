@@ -17,47 +17,13 @@ export class UserValidation {
   }
 
   //valid exam date
-  public isValidExamDate(examDate){
+  public isFutureDate(date){
     let currentDate = new Date();
-    if(examDate>currentDate){
+    let futureDate = new Date(date);
+    if(futureDate>currentDate){
       return true;
     }
     return false;
-  }
-
-  //valid trial date
-  public isValidTrialDate(trialDate){
-    let currentDate = new Date();
-    if(trialDate>currentDate){
-      return true;
-    }
-    return false;
-  }
-
-  //valid Exam Date
-  public isValidDate(examDate:Date,trialDate:Date){
-   
-     let currentDate=new Date();
-     let currentYear=currentDate.getFullYear();
-     let currentMonth=currentDate.getMonth()+1;
-     let currentDay=currentDate.getDate();
-
-    
-     let eDate=new Date(examDate);
-     let examYear=eDate.getFullYear();
-     let examMonth=eDate.getMonth();
-     let examDay=eDate.getDate();
-
-     let tDate=new Date(trialDate);
-     let trialYear=tDate.getFullYear();
-     let trialMonth=tDate.getMonth();
-     let trialDay=tDate.getDate();
-
-     if(currentDate>eDate){
-
-     }
-   
-     return true;
   }
 
   //Telephone number Validation
@@ -80,6 +46,27 @@ export class UserValidation {
       if(this.test){
         return true;
       }
+    }
+    return false;
+  }
+
+  //valid date
+  isValidDate(date){
+    this.regExp = new RegExp('^\\\d{4}\\\-(0?[1-9]|1[012])\\\-(0?[1-9]|[12][0-9]|3[01])$');
+    this.test = this.regExp.test(date);
+    if(this.test){
+      return true;
+    }
+    return false;
+  }
+
+  //valid both examDate & Trial Date
+  isValidExamDateTrialDate(examDate,trialDate){
+    let e=new Date(examDate);
+    let t=new Date(trialDate);
+
+    if(e<t){
+      return true;
     }
     return false;
   }

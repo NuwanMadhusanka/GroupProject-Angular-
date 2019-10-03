@@ -2,9 +2,12 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { Router } from '@angular/router';
-import Chart from 'chart.js';
 import { NotificationDataMap } from '../../ClassModel/MapObject/NotificationDataMap';
 import { NotificationServisceService } from '../../service/notification/notification-service.service';
+import { WebSocketServiceService } from '../../service/web-socket-service.service';
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
+import { WebSocketCommunicationDataMap } from 'src/app/ClassModel/MapObject/WebSocketCommunicationDataMap';
 
 
 @Component({
@@ -20,6 +23,14 @@ export class NavbarComponent implements OnInit {
     earlyNotification:NotificationDataMap[]=[];
     isNewNotification=false;
     isEarlyNotification=false;
+    isNotificationBadgeOn=true;
+
+    //WebSocket
+    webSocketEndPoint: string = 'http://localhost:8080/ws';
+    topic: string = "/topic/greetings";
+    stompClient: any;
+    webSocketService;
+ 
 
     private listTitles: any[];
     location: Location;
@@ -29,10 +40,12 @@ export class NavbarComponent implements OnInit {
 
     public isCollapsed = true;
 
+    
     constructor(location: Location,  private element: ElementRef, private router: Router,private notificationService:NotificationServisceService) {
       this.location = location;
-          this.sidebarVisible = false;
+      this.sidebarVisible = false;
     }
+   
 
     ngOnInit(){
       this.listTitles = ROUTES.filter(listTitle => listTitle);
@@ -50,6 +63,10 @@ export class NavbarComponent implements OnInit {
      this.userId=sessionStorage.getItem("userId");
      this.userRole=sessionStorage.getItem("userRole");
      this.getNotification();
+
+     if(this.userRole==4 || this.userRole==5){
+       this._connect();
+     } 
     }
 
     collapse(){
@@ -169,6 +186,7 @@ export class NavbarComponent implements OnInit {
     }
 
     logOut(){
+      this._disconnect();
       sessionStorage.removeItem('userId');
       sessionStorage.removeItem('userRole');
       this.router.navigate(['']);
@@ -190,6 +208,9 @@ export class NavbarComponent implements OnInit {
     }
 
     getNotification(){
+      
+      this.newNotificationList=[];
+      this.earlyNotification=[];
 
        //get unread notification
        this.notificationService.getNotification(this.userId,this.userRole,0).subscribe(
@@ -217,4 +238,68 @@ export class NavbarComponent implements OnInit {
         }
       );
   }
+
+  updateNotification(){
+    this.notificationService.updateNotification(this.userRole,this.newNotificationList).subscribe(
+      response => {
+        console.log("Update Notifications");
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
+  notificationBadge(){
+    this.isNotificationBadgeOn=false;
+    this.updateNotification();
+  }
+
+  //WebSocket Configuration
+  _connect() {
+    console.log("Initialize WebSocket Connection");
+    let ws = new SockJS(this.webSocketEndPoint);
+    this.stompClient = Stomp.over(ws);
+    const _this = this;
+    _this.stompClient.connect({}, function (frame) {
+        _this.stompClient.subscribe(_this.topic, function (sdkEvent) {
+            _this.onMessageReceived(JSON.parse(sdkEvent.body)); 
+        });
+        //_this.stompClient.reconnect_delay = 2000;
+    }, this.errorCallBack);
+  };
+
+    _disconnect() {
+      if (this.stompClient !== null) {
+          this.stompClient.disconnect();
+      }
+      console.log("Disconnected");
+  }
+
+  // on error, schedule a reconnection attempt
+  errorCallBack(error) {
+      console.log("errorCallBack -> " + error)
+      setTimeout(() => {
+          this._connect();
+      }, 5000);
+  }
+
+  /**
+  * Send message to sever via web socket
+  * @param {*} message 
+  */
+  _send(message) {
+      console.log("calling logout api via web socket");
+      this.stompClient.send("/app/hello", {}, JSON.stringify(message));
+  }
+
+  onMessageReceived(message:WebSocketCommunicationDataMap) {
+      console.log("Message Recieved from Server :: " + message);
+      if(message.role[3]==1 || message.role[4]==1){
+        this.getNotification();
+      }
+  }
+
 }
+
+

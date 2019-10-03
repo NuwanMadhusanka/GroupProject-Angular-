@@ -1,3 +1,4 @@
+
 .notification {
     color: white;
     text-decoration: none;
@@ -84,7 +85,14 @@
   hyphens: auto;
 }
 
+#msg {
+  word-wrap: break-word;
+  width: 100px;
+}
 
+.pointer {
+  cursor: pointer;
+}
 
 
 

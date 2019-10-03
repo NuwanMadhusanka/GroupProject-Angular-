@@ -24,6 +24,7 @@ import { PackageAnalysisComponent } from '../../timeTable/package-analysis/packa
 import { InstructorTimeTableComponent } from '../../instructor/instructor-time-table/instructor-time-table.component';
 import { LessonAssignStudentComponent } from '../../instructor/lesson-assign-student/lesson-assign-student.component';
 import { PractricalLessonChartStudentComponent } from '../../instructor/practrical-lesson-chart-student/practrical-lesson-chart-student.component';
+import { StudentPaymentCheckComponent } from '../../student/student-payment-check/student-payment-check.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -32,6 +33,7 @@ export const AdminLayoutRoutes: Routes = [
     {path:'package-list',     component:PackageListComponent},
     {path:'report-list',     component:ReportListComponent},
     {path:'vehicle-list',     component:VehicleListComponent},
+   
     {path:'student-list',     component:StudentListComponent},
     {path:'student-add',     component:StudentAddComponent},
     {path:'student-package-add/:id',     component:StudentPackageAddComponent},
@@ -39,6 +41,7 @@ export const AdminLayoutRoutes: Routes = [
     {path:'student-more-details/:id',   component:StudentMoreDetailsComponent},
     {path:'admin-staff-student-dash-board',   component:AdminStaffStudentDashBoardComponent},
     {path:'student-exam-result-add',     component:StudentExamResultAddComponent},
+    {path:'student-payment-check',     component:StudentPaymentCheckComponent},
     
     {path:'time-table',     component:TimeTableComponent},
     {path:'lesson-add',     component:LessonAddComponent},

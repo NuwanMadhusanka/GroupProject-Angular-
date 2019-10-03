@@ -10,6 +10,10 @@ import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpError } from '../../Shared/httpError/HttpError';
 import { LessonModel } from '../../ClassModel/LessonModel';
+import { WebSocketServiceService } from '../../service/web-socket-service.service';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { WebSocketCommunicationDataMap } from '../../ClassModel/MapObject/WebSocketCommunicationDataMap';
+import { NotificationServisceService } from '../../service/notification/notification-service.service';
 
 /*
 If changing lesson's day is equal to today then changing is 
@@ -66,6 +70,8 @@ export class LessonUpdateComponent implements OnInit {
   
   isdisableInstructor=true;
 
+  webSocketService:WebSocketServiceService;
+
   constructor(
     private router:Router,
     private timeTableService:TimeTableServiceService,
@@ -73,6 +79,9 @@ export class LessonUpdateComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.webSocketService = new WebSocketServiceService();
+    this.webSocketService._connect();//connect to the webSocket
+
     this.lessonId=this.route.snapshot.params['id'];//get lesson id by url
     this.type=this.route.snapshot.params['type'];//0:From Deactivate Component / 1:From Update Component
     
@@ -191,7 +200,20 @@ export class LessonUpdateComponent implements OnInit {
     if(!errorFlag){
       this.timeTableService.updateLesson(this.lessonData.lessonId,this.type,this.updateDay,this.updateTimeSlot.timeSlotId,this.updatePath.pathId,this.updateInstructor.instructorId,this.updateNumStudent).subscribe(
        response => {
-        Swal.fire("Update Completed.");
+        
+        //change inform to notificationSerivce
+        let object = new WebSocketCommunicationDataMap(1,[0,0,0,1,1],[0,0]);
+        this.webSocketService._send(object);
+        this.webSocketService._disconnect();
+
+        Swal.fire({
+          position: 'center',
+          type: 'success',
+          title: 'Update Successful',
+          showConfirmButton: false,
+          timer: 3000
+        });
+
         this.router.navigate(['time-table'])
        },
        error => {

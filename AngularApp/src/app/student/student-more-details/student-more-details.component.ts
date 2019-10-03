@@ -17,6 +17,7 @@ import { EncryptDecryptServiceService } from '../../service/encrypt-decrypt-serv
   styleUrls: ['./student-more-details.component.scss']
 })
 export class StudentMoreDetailsComponent implements OnInit {
+  
   studentId;
   isUpdateVariable=false;
   selectOption;//updated variable Name(number)
@@ -28,8 +29,7 @@ export class StudentMoreDetailsComponent implements OnInit {
 
   errorMessage;
   errorUpdateMessage="";
-  httpError=new HttpError();
-
+  
   userValidation=new UserValidation();
 
   studentData:StudentModel=new StudentModel(1,'Nuwan','0773015590','980150429v',new Date(),new Date(),'No 20 Homagama',new UserModel(1,'nuwan@gmail.com','1234',new Date(),1,1));
@@ -50,8 +50,8 @@ export class StudentMoreDetailsComponent implements OnInit {
     
     if( (option === 1)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Email";  this.updateName="Email"; this.updateVariable=this.studentData.userId.email;}
     if( (option === 2)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Password";  this.updateName="Password"; this.updateVariable=this.studentData.userId.password;}
-    if( (option === 3)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Exam Date"; this.updateName="Exam Date"; this.updateVariable=this.studentData.examDate;}
-    if( (option === 4)){ this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Trial Date"; this.updateName="Trial Date"; this.updateVariable=this.studentData.trialDate;}
+    if( (option === 3)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="Exam Date(2015-01-10)"; this.updateName="Exam Date"; this.updateVariable=this.studentData.examDate;}
+    if( (option === 4)){ this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="Trial Date(2015-01-10)"; this.updateName="Trial Date"; this.updateVariable=this.studentData.trialDate;}
   }
 
   update(){
@@ -81,12 +81,11 @@ export class StudentMoreDetailsComponent implements OnInit {
     }
 
     //Exam Date
-    if(this.selectOption==3){
-     
-      if( (this.updateVariable == "")){
+    if(this.selectOption==3 && this.studentData.trialDate==null){
+      if( (this.updateVariable == null || !this.userValidation.isValidDate(this.updateVariable)) ){
         this.errorUpdateMessage="Insert Valid Exam Date.";
-      }else if( !(this.userValidation.isValidDate(this.updateVariable,this.studentData.trialDate))){
-        this.errorUpdateMessage="Exam Date must be future Date & Exam should be held before Trial Date";
+      }else if( !(this.userValidation.isFutureDate(this.updateVariable))){
+        this.errorUpdateMessage="Exam Date must be future Date";
       }else{
         this.studentData.examDate=this.updateVariable;
         this.errorUpdateMessage="";
@@ -96,11 +95,12 @@ export class StudentMoreDetailsComponent implements OnInit {
     }
 
     //Trial Date
-    if(this.selectOption==4){
-      if( (this.updateVariable == "")){
+    if(this.selectOption==4 && this.studentData.examDate==null){
+      console.log("Hello")
+      if( (this.updateVariable == null || !this.userValidation.isValidDate(this.updateVariable))){
         this.errorUpdateMessage="Insert Valid Trial Date.";
-      }else if(!(this.userValidation.isValidDate(this.studentData.examDate,this.updateVariable))){
-        this.errorUpdateMessage="Trial Date must be future Date & Trial should be held after Exam Date"
+      }else if(!(this.userValidation.isFutureDate(this.updateVariable))){
+        this.errorUpdateMessage="Trial Date must be future Date";
       }else{
         this.studentData.trialDate=this.updateVariable;
         this.errorUpdateMessage="";
@@ -109,7 +109,57 @@ export class StudentMoreDetailsComponent implements OnInit {
       }
     }
 
+    //check both data
+    if(this.selectOption==3 || this.selectOption==4){
+      if( (this.selectOption==3 && this.studentData.trialDate!=null) || (this.selectOption==4 && this.studentData.examDate!=null) ){
+        let examDate = (this.selectOption==3 ? this.updateVariable : this.studentData.examDate);
+        let trialDate = (this.selectOption==4 ? this.updateVariable : this.studentData.trialDate);
+        
+        if(this.selectOption==3){
+          if(this.updateVariable!=null && this.userValidation.isValidDate(this.updateVariable)){
+            if(this.userValidation.isFutureDate(this.updateVariable)){
+              if(this.userValidation.isValidExamDateTrialDate(examDate,trialDate)){
+                this.studentData.examDate=this.updateVariable;
+                this.errorUpdateMessage="";
+                this.isUpdateVariable=false;
+                this.confirmUpdate=true;
+              }else{
+                this.errorUpdateMessage="Exam Date must not be beyond the trial date";
+              }
+            }else{
+              this.errorUpdateMessage="Exam Date must be future Date";
+            }
+          }else{
+            this.errorUpdateMessage="Insert Valid Exam Date"
+          }
+         
+        }
 
+
+
+        if(this.selectOption==4){
+          if(this.updateVariable!=null && this.userValidation.isValidDate(this.updateVariable)){
+            if(this.userValidation.isFutureDate(this.updateVariable)){
+              if(this.userValidation.isValidExamDateTrialDate(examDate,trialDate)){
+                this.studentData.trialDate=this.updateVariable;
+                this.errorUpdateMessage="";
+                this.isUpdateVariable=false;
+                this.confirmUpdate=true;
+              }else{
+                this.errorUpdateMessage ="Trial Date must be over the exam date";
+              }
+            }else{
+              this.errorUpdateMessage="Trial Date must be future Date";
+            }
+          }else{
+            this.errorUpdateMessage="Insert Valid Trial Date"
+          }
+         
+        }
+
+        
+      }
+    }
    
   }
 
@@ -139,20 +189,28 @@ export class StudentMoreDetailsComponent implements OnInit {
     this.studentData.userId.password=this.encoder.encrypt(this.studentData.userId.password);
     this.studentService.studentUpdate(this.studentData).subscribe(
       response => {
-        Swal.fire('Update is Completed.')
+          //register success
+          Swal.fire({
+            position: 'top-end',
+            type: 'success',
+            title: 'Update Successful.',
+            showConfirmButton: false,
+            timer: 1500
+          });
         this.confirmUpdate=false;
         this.studentData=response;
         this.studentData.userId.password=this.encoder.decrypt(this.studentData.userId.password);
       },
       error => {
-        console.log(error);
+        //console.log(error);
         this.handleErrorResponse(error);
         Swal.fire({
+          position: 'center',
           type: 'error',
-          title: 'Oops...',
-          text: 'Update is not Successful!',
-          footer: 'Something bad happened, please try again later.'
-        })
+          title: 'Update not Successful!',
+          showConfirmButton: false,
+          timer: 2000
+        });
       }
        
     )
@@ -161,8 +219,8 @@ export class StudentMoreDetailsComponent implements OnInit {
 
   //error handling
   private handleErrorResponse(error: HttpErrorResponse) {
-    this.errorMessage=this.httpError.ErrorResponse(error);
-    console.log(this.errorMessage);
+    let httpError=new HttpError();
+    httpError.ErrorResponse(error);
   };
 
   closeError(){

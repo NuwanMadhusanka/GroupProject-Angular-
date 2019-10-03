@@ -4,13 +4,14 @@ import { HttpClient } from '@angular/common/http';
 import { API_URL } from '../../app.constants';
 import { NotificationDataMap } from '../../ClassModel/MapObject/NotificationDataMap';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationServisceService {
 
   constructor(
-    private http : HttpClient
+    private http : HttpClient, 
   ) { }
 
   getNotification(userId,role,notificationType){
@@ -18,7 +19,7 @@ export class NotificationServisceService {
   }
 
   //Mark Notification as read
-  updateNotification(userId,role,notificationList){
-    return this.http.put<any>(`${API_URL}/notification/${userId}/${role}`,notificationList);
+  updateNotification(role,notificationList){
+    return this.http.put<any>(`${API_URL}/notification/${role}`,notificationList);
   }
 }

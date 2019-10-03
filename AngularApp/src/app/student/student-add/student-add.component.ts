@@ -35,7 +35,8 @@ export class StudentAddComponent implements OnInit {
   errorEmail;
   errorPassword;
   errorExamDate;
-  errorTrialExamDate;  
+  errorTrialExamDate;
+  errorMessageDate;  
 
   errorMessage:String;
   regexp:any;//Regular Expression for NIC
@@ -105,24 +106,22 @@ export class StudentAddComponent implements OnInit {
 
     //valid Exam Date
     if( this.examDate != null && this.trialDate==null){
-      if(!this.userValidation.isValidExamDate(new Date(this.examDate))){
+      if(!this.userValidation.isFutureDate(new Date(this.examDate))){
         this.errorExamDate="Wriiten Exam date should be future date.";
       }
     }
 
     //Valid Trial Date
     if(this.trialDate != null && this.examDate==null){
-      if(!this.userValidation.isValidTrialDate(new Date(this.trialDate))){
+      if(!this.userValidation.isFutureDate(new Date(this.trialDate))){
         this.errorTrialExamDate="Trial Exam date should be future date.";
       }
     } 
 
-    //valid Trial Date
-    // if(!this.isDateFuture(this.trialDate)){
-    //   this.errorMessage+="Enter Valid Trial Date(future) / "
-    // }else if(this.examDate>this.trialDate){
-    //   this.errorMessage+="Enter Correct Exam date and Trial date / "
-    // }
+    //valid Trial Date & Exam Date
+   if(this.trialDate!=null && this.examDate!=null){
+     this.errorMessageDate="Canno't insert both date";
+   }
 
 
     //Save to the DB
@@ -147,8 +146,8 @@ export class StudentAddComponent implements OnInit {
                   type: 'success',
                   title: 'Registration Successful.',
                   showConfirmButton: false,
-                  timer: 1500
-                })
+                  timer: 2000
+                });
                 this.router.navigate(['student-list'])
 
               }else{
