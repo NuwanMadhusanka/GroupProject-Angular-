@@ -19,7 +19,7 @@
                     <div class="card-header">
                       <p class="card-title">Update Drivo Lesson</p>
                     </div>
-                    <div class="card-body">
+                    <div *ngIf="isShowLessonSet" class="card-body">
                         <div class="row">
                           
                           
@@ -27,7 +27,7 @@
                          <div class="col-sm-8 col-lg-6">
                             <div>
                                 <label for="sel1">Select Day:</label>
-                                <select class="form-control" name="day" [(ngModel)]="updateDay">
+                                <select class="form-control" name="day" [(ngModel)]="updateDay" [disabled]="true">
                                   <option [ngValue]="selectDay" (click)="showInstructor()" selected >{{selectDayName}}</option>
                                   <option (click)="showInstructor()" *ngFor="let day of dayListData"  [ngValue]="day.id" >{{day.name}}</option>
                                 </select>

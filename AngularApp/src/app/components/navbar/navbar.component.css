@@ -85,16 +85,16 @@
   hyphens: auto;
 }
 
-#msg {
-  word-wrap: break-word;
-  width: 100px;
+.notification-item p {
+    margin: 0;
+    padding:0;
+    width:100%;
+    position: relative; word-break: break-all;
 }
 
 .pointer {
   cursor: pointer;
 }
-
-
 
 
 

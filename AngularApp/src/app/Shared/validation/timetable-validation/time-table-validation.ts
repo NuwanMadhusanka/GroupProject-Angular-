@@ -17,6 +17,17 @@ export class TimeTableValidation {
        return false;
     }
 
+
+    isToday(day){
+      let currentDate = new Date();
+      let currentDay = currentDate.getDay();
+      console.log(day);
+      console.log(currentDay);
+      if(day == currentDay){
+         return true;
+      }
+      return false;
+    }
   
   }
   

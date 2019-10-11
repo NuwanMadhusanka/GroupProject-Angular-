@@ -10,6 +10,7 @@ declare interface RouteInfo {
 export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Dashboard',  icon: 'design_app', class: ''},
     { path: '/staff-list', title: 'Staff List',  icon:'design_bullet-list-67', class: '' },
+    { path: '/staff-salary', title: 'Salary',  icon:'design_bullet-list-67', class: '' },
     { path: '/package-list', title: 'Package',  icon:'design_bullet-list-67', class: '' },
     { path: '/vehicle-list', title: 'Vehicle',  icon:'design_bullet-list-67', class: '' },
     { path: '/student-list', title: 'Student',  icon:'design_bullet-list-67', class: '' },
@@ -50,23 +51,26 @@ export class SidebarComponent implements OnInit {
     ];
 
     this.adminStaffInstructor=[
-      { path: '/time-table', title: 'Time Table',  icon:'design_bullet-list-67', class: '' },
-      { path: '/vehicle-list', title: 'Vehicle(AI)',  icon:'design_bullet-list-67', class: '' }
+      { path: '/time-table', title: 'Time Table',  icon:'files_paper', class: '' },
+      { path: '/vehicle-list', title: 'Vehicle(AI)',  icon:'design_bullet-list-67', class: '' },
+      { path: '/staff-salary', title: 'Salary',  icon:'design_bullet-list-67', class: '' }
     ];
 
     this.adminStaffStudent=[
-      { path: '/admin-staff-student-dash-board', title: 'Dashboard',  icon:'design_bullet-list-67', class: '' },
-      { path: '/student-list', title: 'Student',  icon:'design_bullet-list-67', class: '' }
+      { path: '/admin-staff-student-dash-board', title: 'Dashboard',  icon:'design_app', class: '' },
+      { path: '/student-list', title: 'Student',  icon:'design_bullet-list-67', class: '' },
+      { path: '/staff-salary', title: 'Salary',  icon:'design_bullet-list-67', class: '' },
     ];
 
     this.instructor=[
-      { path: '/instructor-time-table', title: 'Time Table',  icon:'design_bullet-list-67', class: '' }
+      { path: '/instructor-time-table', title: 'Time Table',  icon:'files_paper', class: '' },
+      { path: '/staff-salary', title: 'Salary',  icon:'design_bullet-list-67', class: '' },
     ];
 
     this.student=[
-      { path: '/time-table', title: 'Time Table',  icon:'education_paper', class: '' },
+      { path: '/time-table', title: 'Time Table',  icon:'files_paper', class: '' },
       { path: '/trial-lesson-list/ / ', title: 'Trial Lesson',  icon:'design_bullet-list-67', class: '' },
-      { path: '/student-payment/'+sessionStorage.getItem("userId"), title: 'Payment',  icon:'business_money-coins', class: '' }
+      { path: '/student-payment/'+sessionStorage.getItem("userId")+'/ ', title: 'Payment',  icon:'business_money-coins', class: '' }
     ];
     
   }

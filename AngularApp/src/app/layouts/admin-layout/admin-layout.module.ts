@@ -31,6 +31,12 @@ import { InstructorTimeTableComponent } from '../../instructor/instructor-time-t
 import { LessonAssignStudentComponent } from '../../instructor/lesson-assign-student/lesson-assign-student.component';
 import { PractricalLessonChartStudentComponent } from '../../instructor/practrical-lesson-chart-student/practrical-lesson-chart-student.component';
 import { StudentPaymentCheckComponent } from '../../student/student-payment-check/student-payment-check.component';
+import { TrialLessonDayFeedbackComponent } from '../../LessonBooking/trial-lesson-day-feedback/trial-lesson-day-feedback.component';
+import { TrialLessonDayFeedbackChartComponent } from '../../LessonBooking/trial-lesson-day-feedback-chart/trial-lesson-day-feedback-chart.component';
+import { StaffSalaryComponent } from '../../staff/staff-salary/staff-salary.component';
+import { LoadingSpinnerComponent } from '../../Shared/loading-spinner/loading-spinner.component';
+import { StudentDeactivateComponent } from '../../student/student-deactivate/student-deactivate.component';
+
 
 
 
@@ -46,10 +52,14 @@ import { StudentPaymentCheckComponent } from '../../student/student-payment-chec
   declarations: [
     DashboardComponent,
     AdminStaffStudentDashBoardComponent,
+    
     StaffListComponent,
+    StaffSalaryComponent,
+
     PackageListComponent,
     ReportListComponent,
     VehicleListComponent,
+ 
     
     StudentListComponent,
     StudentAddComponent,
@@ -58,6 +68,7 @@ import { StudentPaymentCheckComponent } from '../../student/student-payment-chec
     StudentMoreDetailsComponent,  
     StudentExamResultAddComponent,
     StudentPaymentCheckComponent,
+    StudentDeactivateComponent,
 
     TimeTableComponent,
     LessonAddComponent,
@@ -68,12 +79,16 @@ import { StudentPaymentCheckComponent } from '../../student/student-payment-chec
     
     TrialLessonBookComponent,
     TrialLessonListComponent,
+    TrialLessonDayFeedbackComponent,
+    TrialLessonDayFeedbackChartComponent,
 
     StudentProfileComponent,
 
     InstructorTimeTableComponent,
     LessonAssignStudentComponent,
-    PractricalLessonChartStudentComponent
+    PractricalLessonChartStudentComponent,
+
+    LoadingSpinnerComponent
   ]
 })
 

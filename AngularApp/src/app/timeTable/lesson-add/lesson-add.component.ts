@@ -9,6 +9,9 @@ import { PackageModel } from '../../ClassModel/PackageModel';
 import { Path } from '../../ClassModel/PathModel';
 import { InstructorMap } from '../../ClassModel/MapObject/InstructorMap';
 import Swal from 'sweetalert2';
+import { WebSocketServiceService } from '../../service/web-socket-service.service';
+import { WebSocketCommunicationDataMap } from '../../ClassModel/MapObject/WebSocketCommunicationDataMap';
+import { NotificationServisceService } from '../../service/notification/notification-service.service';
 
 
 
@@ -56,14 +59,19 @@ export class LessonAddComponent implements OnInit {
 
   isTransmissionSelect;
   isdisableInstructor=true;
+
+  webSocketService:WebSocketServiceService;
   
   constructor(
     private router:Router,
     private timeTableService:TimeTableServiceService,
     private packageService:PackageServiceService,
+    private notificationService:NotificationServisceService
   ) { }
 
   ngOnInit() {
+    this.webSocketService = new WebSocketServiceService();
+
     this.timeSlotList();
     this.packageList();
     this.pathList();
@@ -149,8 +157,18 @@ export class LessonAddComponent implements OnInit {
     if(!errorFlag){
       this.timeTableService.addLesson(this.selectDay,this.selectTimeSlot.timeSlotId,this.selectPath.pathId,this.selectPackage.packageId,this.selectInstructor.instructorId,this.numStudent,this.selectTransmission).subscribe(
        response => {
-        Swal.fire("Save Completed.");
-        this.router.navigate(['time-table'])
+         //change inform to notificationSerivce
+         let data = new WebSocketCommunicationDataMap([0,0,0,1,1]);
+         this.notificationService.notifyChange(data); 
+
+         Swal.fire({
+          position: 'top-end',
+          type: 'success',
+          title: 'Save Successful.',
+          showConfirmButton: false,
+          timer: 1500
+          });
+          this.router.navigate(['time-table'])
        },
        error => {
         console.log(error);

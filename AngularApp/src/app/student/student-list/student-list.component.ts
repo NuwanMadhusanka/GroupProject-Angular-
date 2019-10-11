@@ -4,6 +4,7 @@ import { StudentServiceService } from '../../service/student/student-service.ser
 import { StudentModel } from '../../ClassModel/StudentModel';
 import Swal from 'sweetalert2';
 import { HttpError } from '../../Shared/httpError/HttpError';
+import { UserValidation } from '../../Shared/validation/user-validation/user-validation';
 
 @Component({
   selector: 'app-student-list',
@@ -15,6 +16,30 @@ export class StudentListComponent implements OnInit {
   errorMessage="";
 
   students: StudentModel[] = [];
+ 
+
+  validation:UserValidation = new UserValidation();
+
+  //Filter Option Implement
+  filteredStudent: StudentModel[] = [];
+  private _searchTerm:string;
+  get searchTerm(): string{
+    return this._searchTerm;
+  }
+  set searchTerm(value:string){
+    this._searchTerm=value;
+    this.filteredStudent = this.filterStudent(value);
+  }
+
+  filterStudent(searchString:string){
+     if(this.validation.isDigitContain(searchString)){
+      return this.students.filter(student => 
+        student.nic.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
+     }
+     return this.students.filter(student => 
+        student.name.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
+  }
+  //Finish filter option implementation
 
   constructor(
     private router:Router,
@@ -27,14 +52,15 @@ export class StudentListComponent implements OnInit {
 
   //get Student List
   studentList(){
-    this.studentService.studentList().subscribe(
+    this.studentService.studentList(1).subscribe(
       response => {
         this.students=response;
+        this.filteredStudent=this.students;
       },
       error => {
         this.handleErrorResponse(1,error);
       }
-    )
+    );
   }
 
   //navigate to studentRegister Page
@@ -85,14 +111,14 @@ export class StudentListComponent implements OnInit {
 
 
   //navigate to student-package
-  addPackage(studentId:Number){
+  addPackage(studentId,studentName){
     console.log(studentId);
-    this.router.navigate(['student-package-add',studentId])
+    this.router.navigate(['student-package-add',studentId,studentName]);
   }
 
   //navigate to student-payment 
-  addPayment(studentId){
-    this.router.navigate(['student-payment',studentId])
+  addPayment(studentId,studentName){
+    this.router.navigate(['student-payment',studentId,studentName]);
   }
 
   //navigate to more details page
@@ -106,6 +132,10 @@ export class StudentListComponent implements OnInit {
 
   studentPaymentCheck(){
     this.router.navigate(['student-payment-check']);
+  }
+
+  studentDeactivate(){
+    this.router.navigate(['student-deactivate']);
   }
 
   /*

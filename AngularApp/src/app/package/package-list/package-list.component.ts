@@ -12,4 +12,8 @@ export class PackageListComponent implements OnInit {
   ngOnInit() {
   }
 
+  getPackageList(){
+    
+  }
+
 }

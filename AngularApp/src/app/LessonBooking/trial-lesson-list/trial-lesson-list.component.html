@@ -31,7 +31,8 @@
             </div>
           </div>
           <!-- Drop Down Finish -->
-
+          <a  *ngIf ="isSelectPackage" (click)="trialLessonDayFeedback()"><button class="btn btn-secondary btn-sm"> <i class="fas fa-question" title="{{titleOfSelectPackage}}'s favourite lesson days'"></i> </button></a>
+          <a *ngIf="isSelectPackage" (click)="trialLessonBook()"><button type="button" class="btn btn-primary btn-round">Reserve Lesson</button></a>
           <div class="card" *ngIf="isBookLeeson">
             <div class="card-body">
               <pre>Package Name     :{{selectPackageTitle}}({{transmission}})</pre>

@@ -11,6 +11,13 @@ import { TimeTableDataList } from '../../ClassModel/MapObject/TimeTableDataList'
 import { PackageAnalysisData } from '../../ClassModel/MapObject/PackageAnalysisData';
 import { TimeSlotModel } from '../../ClassModel/TimeSlotModel';
 import { StudentAttendanceWeeksMap } from '../../ClassModel/MapObject/StudentAttendanceWeeksMap';
+import Swal from 'sweetalert2';
+import { NotificationServisceService } from '../../service/notification/notification-service.service';
+import { WebSocketCommunicationDataMap } from '../../ClassModel/MapObject/WebSocketCommunicationDataMap';
+import { TimeTableValidation } from '../../Shared/validation/timetable-validation/time-table-validation';
+import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TrialLessonDayFeedbackChartComponent } from '../../LessonBooking/trial-lesson-day-feedback-chart/trial-lesson-day-feedback-chart.component';
 
 @Component({
   selector: 'app-package-analysis',
@@ -79,7 +86,12 @@ export class PackageAnalysisComponent implements OnInit {
   lessonPublishDateManual;
   lessonPublishDateAuto;
  
- 
+  deactivateLesson:LessonModel;
+  updateLesson:LessonModel;
+  timeValidation;
+
+  isSelectPackage=false;
+
   public canvas : any;
   public ctx;
   public gradientFill;
@@ -135,10 +147,16 @@ export class PackageAnalysisComponent implements OnInit {
 
   constructor(
     private packageService:PackageServiceService,
-    private timeTableService:TimeTableServiceService
+    private timeTableService:TimeTableServiceService,
+    private notificationService:NotificationServisceService,
+    private router:Router,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
+
+    this.timeValidation = new TimeTableValidation();
+
     this.getpackageList();
     this.chartColor = "#FFFFFF";
     //options
@@ -434,6 +452,7 @@ export class PackageAnalysisComponent implements OnInit {
       this.errorMsgManual="";
   
       this.selectPackage=selectpackage;
+      this.isSelectPackage=true;
   
       if(selectpackage.manualLes>0){
         this.getTotalStudentOfPackage(1);
@@ -494,7 +513,7 @@ export class PackageAnalysisComponent implements OnInit {
         this.timeTableService.getLessonTimeSlotByPackageId(this.selectPackage.packageId,transmission).subscribe(
           response => {
             (transmission==1 ? this.timeSlotIdManual=response : this.timeSlotIdAuto=response);
-            (transmission==2 ? this.isManualTableActive=true  :  this.isAutoTableActive=true);          
+            (transmission==1 ? this.isManualTableActive=true  :  this.isAutoTableActive=true);          
           },
           error => {
             console.log(error);
@@ -592,11 +611,15 @@ export class PackageAnalysisComponent implements OnInit {
         let totalStudent;
        
         if(transmission == 1){
+          this.errorMsgStudentTimePeriodManual=false;
+          this.errorMsgLessonTimePeriodManual=false;
           this.isManualLessonAnalysisActive=false;
           lessonTimePeriod=this.lessonTimePeriodManual;
           studentTimePeriod=this.studentTimePeriodManual;
           totalStudent=this.manualTotalStudent;
         }else{
+          this.errorMsgStudentTimePeriodAuto=false;
+          this.errorMsgLessonTimePeriodAuto=false;
           this.isAutoLessonAnalysisActive=false;
           lessonTimePeriod=this.lessonTimePeriodAuto;
           studentTimePeriod=this.studentTimePeriodAuto;
@@ -810,6 +833,111 @@ export class PackageAnalysisComponent implements OnInit {
     }
   }
 
+  lessonDeactivate(transmission){
+    let lessonId ;
+    (transmission==1 ? lessonId=this.studentAttendanceLessonIdManual : lessonId=this.studentAttendanceLessonIdAuto);
+    this.getLesson(2,lessonId);
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Lesson Is Deactivated.",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Deactivate!'
+    }).then((result) => {
+      if (result.value) {
+
+        //check Deactivate Lesson's Day is not today
+        if(!this.timeValidation.isToday(this.deactivateLesson.day)){
+            this.timeTableService.lessonDeactivate(lessonId).subscribe(
+              response => {
+              this.getLessonTimeTable(transmission);
+              this.getLessonDistributionDetails(transmission);
+              (transmission==1 ? this.isManualLesson=false : this.isAutoLesson=false);
+    
+              this.notificationService.notifyChange(new WebSocketCommunicationDataMap([0,0,0,1,1]));
+    
+              Swal.fire({
+                position: 'center',
+                type: 'success',
+                title: 'Lesson deactivate successful',
+                showConfirmButton: false,
+                timer: 1500
+              });
+              },
+              error => {
+                console.log(error);
+    
+                Swal.fire({
+                  position: 'center',
+                  type: 'error',
+                  title: 'Lesson deactivate not successful',
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+    
+                this.handleErrorResponse(error);
+              }
+            );
+        }else{
+          Swal.fire({
+            type: 'info',
+            title: 'Cannot deactivate today lesson',
+            text: 'Lesson deactivate process cannot perform',
+          });
+        }
+      }
+    });
+  }
+
+  getLesson(type,lessonId){
+    this.timeTableService.getLesson(lessonId).subscribe(
+      response => {
+        (type==1 ? this.updateLesson=response : this.deactivateLesson = response);
+      },
+      error => {
+        console.log(error);
+        this.handleErrorResponse(error);
+      }
+    );
+  }
+
+  lessonUpdate(transmission){
+    let lessonId ;
+    (transmission==1 ? lessonId=this.studentAttendanceLessonIdManual : lessonId=this.studentAttendanceLessonIdAuto);
+    this.getLesson(1,lessonId);
+    this.delayLessonUpdate(1500,lessonId);
+  }
+
+  async delayLessonUpdate(ms: number,lessonId:Number) {
+    await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>{  
+      if(!this.timeValidation.isToday(this.updateLesson.day)){
+        this.router.navigate(['lesson-update',lessonId,1]);
+      }else{
+        Swal.fire({
+          type: 'info',
+          title: 'Cannot update today lesson',
+          text: 'Lesson update process cannot perform',
+        });
+      }
+      
+    }
+    );
+  }
+
+  trialLessonDayFeedbackChart(transmission){
+    const modalRef = this.modalService.open(TrialLessonDayFeedbackChartComponent,{ centered: true });
+    modalRef.componentInstance.packageId = this.selectPackage.packageId;
+    modalRef.componentInstance.packageTitle = this.selectPackage.title;
+    modalRef.componentInstance.transmission = transmission;
+  }
+
+
+  addLesson(){
+    this.router.navigate(['lesson-add']);
+  }
 
  //error handling
  private handleErrorResponse(error: HttpErrorResponse) {

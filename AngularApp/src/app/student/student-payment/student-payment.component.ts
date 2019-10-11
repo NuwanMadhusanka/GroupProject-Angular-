@@ -29,6 +29,7 @@ export class StudentPaymentComponent implements OnInit {
   ) { }
 
   studentId:Number;
+  studentName;
   studentPackages:PackageModel[]=[];//student follwing packages
   errorMessage;
   isSelectPackage:Boolean=false;
@@ -54,9 +55,15 @@ export class StudentPaymentComponent implements OnInit {
   userId;
 
   loader=false;
+  showSpinner:Boolean = false;
 
   ngOnInit() {
     let id=this.route.snapshot.params['id'];//get student id by url
+    this.studentName=this.route.snapshot.params['name'];
+    if(this.studentName != ' '){
+      this.studentName+="'s";
+    }
+
 
     if(sessionStorage.getItem("userId")===id){//when student visit to the page
 
@@ -103,15 +110,15 @@ export class StudentPaymentComponent implements OnInit {
       response => {
           this.studentPackages=response;
           if(this.studentPackages.length <= 0){
-            console.log("No any Packages")
-            this.errorMessage="Student Not Following Any Packages"
+            //console.log("No any Packages");
+            this.errorMessage="Not following any packages yet"
           }       
       },
       error =>{
         console.log(error);
         this.handleErrorResponse(error);
       }
-    )
+    );
   }
 
   //show payment details
@@ -192,15 +199,18 @@ export class StudentPaymentComponent implements OnInit {
                 //console.log(packageId+" "+this.studentId+" "+this.newPayment+" "+this.getStudentPackageId())
                 let course=new CourseFee(-1,this.newPayment,new Date(),1,null);
                
+                this.showSpinner=true;
                 this.studentService.studentCourseFeeAdd(course,this.studentId,packageId).subscribe(
                   response => {
-                    console.log("Hello");
-                    this.loader=false;
-                    console.log("Payment reply ");
-                    console.log(response);
-                    Swal.fire(
-                      'Payment Succeed!'
-                    )
+                    this.showSpinner=false;
+
+                    Swal.fire({
+                      position: 'top-end',
+                      type: 'success',
+                      title: 'Payment Successed.',
+                      showConfirmButton: false,
+                      timer: 2000
+                    });
                     
                     this.isPayment=false;
 
@@ -211,7 +221,7 @@ export class StudentPaymentComponent implements OnInit {
                     
                   }, 
                   error =>{
-                    this.loader=false;
+                    this.showSpinner=false;
                     console.log(error);
                     this.handleErrorResponse(error);
         
@@ -234,7 +244,7 @@ export class StudentPaymentComponent implements OnInit {
 
    isValidCash(){
     if(this.newPayment != null){
-      this.regexp = new RegExp('\\d');
+      this.regexp = new RegExp('^\\\d+(\\\.\\\d{1,2})?$');
       let test = this.regexp.test(this.newPayment);
       if(test){
         if(this.newPayment>0){
@@ -254,8 +264,10 @@ export class StudentPaymentComponent implements OnInit {
       }else{
         this.errorPaymentMessage="";
         
+        this.showSpinner=true;
         this.studentService.exchngeRate().subscribe(
           response => {
+            this.showSpinner=false;
             let exchngeRate:ExchangeRate=response;
             let LKRExchangeRate=exchngeRate.rates['LKR'];
             let USDPayment=this.newPayment/LKRExchangeRate;
@@ -269,12 +281,14 @@ export class StudentPaymentComponent implements OnInit {
                   window.open(""+response.redirect_url);   
               },
               error =>{
+                this.showSpinner=false;
                 console.log(error);
                 
               }
             );
           },
           error => {
+            this.showSpinner=false;
             console.log(error);
           }
         )
@@ -283,10 +297,10 @@ export class StudentPaymentComponent implements OnInit {
   }
 
   completePayPalPayment(paymentId,payerId){
-    this.loader=true;
+    this.showSpinner=true;
     this.studentService.completePayment(paymentId,payerId,sessionStorage.getItem('userId'),sessionStorage.getItem('payPalPaymentSelectPackageId'),sessionStorage.getItem('payPalAmount')).subscribe(
       response => {
-        this.loader=false;
+        this.showSpinner=false;
         console.log("Payment reply ");
         console.log(response);
         this.paymentDetails(sessionStorage.getItem('payPalPaymentSelectPackageId'));
@@ -299,7 +313,7 @@ export class StudentPaymentComponent implements OnInit {
         });
       },
       error => {
-        this.loader=false;
+        this.showSpinner=false;
         Swal.fire({
           position: 'top-end',
           type: 'error',

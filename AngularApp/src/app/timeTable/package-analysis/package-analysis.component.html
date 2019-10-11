@@ -59,12 +59,14 @@
           <!-- End Package Details -->
 
           <hr>
-
+          
           <!-- Manual Lesson  -->
           <div *ngIf="selectPackage && isManual" class="card">
               <div class="card-header">
                   <h4 class="card-title">{{selectPackage.title}}(Manual)</h4>
-              </div>
+                  <a  *ngIf ="isSelectPackage" (click)="trialLessonDayFeedbackChart(1)"><button class="btn btn-primary btn-sm"> <i class="fas fa-question" title="{{titleOfSelectPackage}}'s favourite lesson days'"></i> </button></a>
+                  <a  *ngIf ="isSelectPackage"  (click)=addLesson()><button type="button" class="btn btn-success btn-sm" title="Add New Lesson"><i class="fas fa-plus"></i></button></a>
+                </div>
 
               <div class="card">
                   
@@ -199,8 +201,11 @@
                         <div class="card-header">
                             <h6 class="card-category">
                                 Student Attendance({{manualLessonDay}} Lesson : {{manualLessonTimeSlot.startTime | slice:0:5}} - {{manualLessonTimeSlot.finishTime | slice:0:5}})
-                                <button (click)="studentAttendanceChangeButton(1,2)" *ngIf="isPastStudentAttendanceManual" type="button" class="btn btn-primary btn-round btn-sm"><i class="fas fa-forward" title='Future'></i></button>
-                                <button (click)="studentAttendanceChangeButton(1,1)" *ngIf="isFutureStudentAttendanceManual" type="button" class="btn btn-primary btn-round btn-sm"><i class="fas fa-backward" title='Past'></i></button>
+                                <button (click)="studentAttendanceChangeButton(1,2)" *ngIf="isPastStudentAttendanceManual" type="button" class="btn btn-info btn-round btn-sm"><i class="fas fa-forward" title='Future'></i></button>
+                                <button (click)="studentAttendanceChangeButton(1,1)" *ngIf="isFutureStudentAttendanceManual" type="button" class="btn btn-info btn-round btn-sm"><i class="fas fa-backward" title='Past'></i></button>
+
+                                <button (click)="lessonUpdate(1)" type="button" class="btn btn-primary btn-sm float-right"><i class="fas fa-edit" title="Edit Lesson"></i></button>
+                                <button (click)="lessonDeactivate(1)" type="button" class="btn btn-secondary btn-sm float-right"><i class="fas fa-window-close" title="Deactivate Lesson"></i></button>
                             </h6>
                         </div>
                         <div class="card-body">
@@ -233,9 +238,12 @@
              <!-- Manual Lesson Finish -->
 
         <!-- Auto Lesson  -->
+        
           <div *ngIf="selectPackage && isAuto" class="card">
                 <div class="card-header">
                     <h4 class="card-title">{{selectPackage.title}}(Auto)</h4>
+                    <a  *ngIf ="isSelectPackage" (click)="trialLessonDayFeedbackChart(2)"><button class="btn btn-primary btn-sm"> <i class="fas fa-question" title="{{titleOfSelectPackage}}'s favourite lesson days'"></i> </button></a>
+                    <a  *ngIf ="isSelectPackage"  (click)=addLesson()><button type="button" class="btn btn-success btn-sm" title="Add New Lesson"><i class="fas fa-plus"></i></button></a>
                 </div>
   
                 <div class="card">
@@ -369,6 +377,9 @@
                                 Student Attendance({{autoLessonDay}} Lesson : {{autoLessonTimeSlot.startTime | slice:0:5}} - {{autoLessonTimeSlot.finishTime | slice:0:5}})
                                 <button (click)="studentAttendanceChangeButton(2,2)" *ngIf="isPastStudentAttendanceAuto" type="button" class="btn btn-primary btn-round btn-sm"><i class="fas fa-forward" title='Future'></i></button>
                                 <button (click)="studentAttendanceChangeButton(2,1)" *ngIf="isFutureStudentAttendanceAuto" type="button" class="btn btn-primary btn-round btn-sm"><i class="fas fa-backward" title='Past'></i></button>
+
+                                <button (click)="lessonUpdate(2)" type="button" class="btn btn-primary btn-sm float-right"><i class="fas fa-edit" title="Edit Lesson"></i></button>
+                                <button (click)="lessonDeactivate(2)" type="button" class="btn btn-secondary btn-sm float-right"><i class="fas fa-window-close" title="Deactivate Lesson"></i></button>
                             </h6>
                         </div>
                         <div class="card-body">

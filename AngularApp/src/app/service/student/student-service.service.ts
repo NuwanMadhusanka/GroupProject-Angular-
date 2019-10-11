@@ -30,8 +30,8 @@ export class StudentServiceService {
   }
 
   //get StudentList
-  studentList(){
-      return this.http.get<StudentModel[]>(`${API_URL}/students`);
+  studentList(status){
+      return this.http.get<StudentModel[]>(`${API_URL}/students/${status}`);
   }
 
   //getStudent following package's Id(Response is integer list)
@@ -41,7 +41,7 @@ export class StudentServiceService {
 
   //getStudent following package's(Response is packageModel(list))
   studentPackages(id:Number){
-    return this.http.get<PackageModel[]>(`${API_URL}/student/package/list/${id}`)
+    return this.http.get<PackageModel[]>(`${API_URL}/student/package/list/${id}`);
   }
 
 
@@ -122,6 +122,18 @@ export class StudentServiceService {
 
   submitTrialExamResult(date,countPass,countFail){
     return this.http.post<any>(`${API_URL}/student/trialexam/result?date=`+date+"&countPass="+countPass+"&countFail="+countFail,{});
+  }
+
+  activateStudentAccount(studentId){
+    return this.http.put<Number>(`${API_URL}/student/activate/account/${studentId}`,{});
+  }
+
+  clearStudentPreviousPayment(studentId){
+    return this.http.delete<any>(`${API_URL}/student/clear/payment/${studentId}`,{});
+  }
+
+  getpaymentNotCompleteStudent(){
+    return this.http.get<StudentModel[]>(`${API_URL}/student/payment/notcomplete`);
   }
   
 }

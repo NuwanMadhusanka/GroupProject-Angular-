@@ -25,23 +25,33 @@ import { InstructorTimeTableComponent } from '../../instructor/instructor-time-t
 import { LessonAssignStudentComponent } from '../../instructor/lesson-assign-student/lesson-assign-student.component';
 import { PractricalLessonChartStudentComponent } from '../../instructor/practrical-lesson-chart-student/practrical-lesson-chart-student.component';
 import { StudentPaymentCheckComponent } from '../../student/student-payment-check/student-payment-check.component';
+import { TrialLessonDayFeedbackComponent } from '../../LessonBooking/trial-lesson-day-feedback/trial-lesson-day-feedback.component';
+import { TrialLessonDayFeedbackChartComponent } from '../../LessonBooking/trial-lesson-day-feedback-chart/trial-lesson-day-feedback-chart.component';
+import { StaffSalaryComponent } from '../../staff/staff-salary/staff-salary.component';
+import { LoadingSpinnerComponent } from '../../Shared/loading-spinner/loading-spinner.component';
+import { StudentDeactivateComponent } from '../../student/student-deactivate/student-deactivate.component';
+
 
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
+    
     {path:'staff-list',       component:StaffListComponent},
+    {path:'staff-salary',   component:StaffSalaryComponent},
+
     {path:'package-list',     component:PackageListComponent},
     {path:'report-list',     component:ReportListComponent},
     {path:'vehicle-list',     component:VehicleListComponent},
    
     {path:'student-list',     component:StudentListComponent},
     {path:'student-add',     component:StudentAddComponent},
-    {path:'student-package-add/:id',     component:StudentPackageAddComponent},
-    {path:'student-payment/:id',     component:StudentPaymentComponent},
+    {path:'student-package-add/:id/:name',     component:StudentPackageAddComponent},
+    {path:'student-payment/:id/:name',     component:StudentPaymentComponent},
     {path:'student-more-details/:id',   component:StudentMoreDetailsComponent},
     {path:'admin-staff-student-dash-board',   component:AdminStaffStudentDashBoardComponent},
     {path:'student-exam-result-add',     component:StudentExamResultAddComponent},
     {path:'student-payment-check',     component:StudentPaymentCheckComponent},
+    {path:'student-deactivate',     component:StudentDeactivateComponent},
     
     {path:'time-table',     component:TimeTableComponent},
     {path:'lesson-add',     component:LessonAddComponent},
@@ -49,13 +59,18 @@ export const AdminLayoutRoutes: Routes = [
     {path:'time-slot',     component:TimeSlotComponent},
     {path:'path-map', component:PathMapComponent},
     {path:'package-analysis'    ,component:PackageAnalysisComponent},
+   
 
     {path:'trial-lesson-book',  component:TrialLessonBookComponent},
     {path:'trial-lesson-list/:package/:title',  component:TrialLessonListComponent},
+    {path:'trial-lesson-day-feedback/:userId/:packageId/:packageTitle',  component:TrialLessonDayFeedbackComponent},
+    {path:'trial-lesson-day-feedback-chart',    component:TrialLessonDayFeedbackChartComponent},
 
     {path:'student-profile' ,component:StudentProfileComponent},
 
     {path:'instructor-time-table', component:InstructorTimeTableComponent},
     {path:'lesson-assign-student/:lessonId/:day/:timeSlot', component:LessonAssignStudentComponent},
-    {path:'practrical-lesson-chart-student', component:PractricalLessonChartStudentComponent}
+    {path:'practrical-lesson-chart-student', component:PractricalLessonChartStudentComponent},
+
+    {path:'load-spinner',   component:LoadingSpinnerComponent}
 ];

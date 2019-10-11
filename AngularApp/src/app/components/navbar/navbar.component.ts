@@ -4,10 +4,10 @@ import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common'
 import { Router } from '@angular/router';
 import { NotificationDataMap } from '../../ClassModel/MapObject/NotificationDataMap';
 import { NotificationServisceService } from '../../service/notification/notification-service.service';
-import { WebSocketServiceService } from '../../service/web-socket-service.service';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
-import { WebSocketCommunicationDataMap } from 'src/app/ClassModel/MapObject/WebSocketCommunicationDataMap';
+import { WebSocketCommunicationDataMap } from '../../ClassModel/MapObject/WebSocketCommunicationDataMap';
+import { API_URL, WEBSOCKETENDPOINT, WEBSOCKETTOPIC } from '../../app.constants';
 
 
 @Component({
@@ -26,8 +26,6 @@ export class NavbarComponent implements OnInit {
     isNotificationBadgeOn=true;
 
     //WebSocket
-    webSocketEndPoint: string = 'http://localhost:8080/ws';
-    topic: string = "/topic/greetings";
     stompClient: any;
     webSocketService;
  
@@ -208,13 +206,14 @@ export class NavbarComponent implements OnInit {
     }
 
     getNotification(){
-      
+      console.log("Call");
       this.newNotificationList=[];
       this.earlyNotification=[];
 
        //get unread notification
        this.notificationService.getNotification(this.userId,this.userRole,0).subscribe(
          response => {
+           console.log(response)
             this.newNotificationList=response;
             if(this.newNotificationList.length>0){
               this.isNewNotification=true;
@@ -258,11 +257,11 @@ export class NavbarComponent implements OnInit {
   //WebSocket Configuration
   _connect() {
     console.log("Initialize WebSocket Connection");
-    let ws = new SockJS(this.webSocketEndPoint);
+    let ws = new SockJS(WEBSOCKETENDPOINT);
     this.stompClient = Stomp.over(ws);
     const _this = this;
     _this.stompClient.connect({}, function (frame) {
-        _this.stompClient.subscribe(_this.topic, function (sdkEvent) {
+        _this.stompClient.subscribe(WEBSOCKETTOPIC, function (sdkEvent) {
             _this.onMessageReceived(JSON.parse(sdkEvent.body)); 
         });
         //_this.stompClient.reconnect_delay = 2000;
@@ -284,18 +283,11 @@ export class NavbarComponent implements OnInit {
       }, 5000);
   }
 
-  /**
-  * Send message to sever via web socket
-  * @param {*} message 
-  */
-  _send(message) {
-      console.log("calling logout api via web socket");
-      this.stompClient.send("/app/hello", {}, JSON.stringify(message));
-  }
-
   onMessageReceived(message:WebSocketCommunicationDataMap) {
       console.log("Message Recieved from Server :: " + message);
-      if(message.role[3]==1 || message.role[4]==1){
+      console.log(message);
+      if((message.role[3]==1 || message.role[4]==1)){
+        console.log("Hello");
         this.getNotification();
       }
   }

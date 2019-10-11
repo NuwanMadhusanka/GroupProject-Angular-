@@ -6,6 +6,8 @@ import { forEach } from '@angular/router/src/utils/collection';
 import Swal from 'sweetalert2';
 import { HttpError } from '../../Shared/httpError/HttpError';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LessonModel } from '../../ClassModel/LessonModel';
+import { TimeTableValidation } from '../../Shared/validation/timetable-validation/time-table-validation';
 
 
 @Component({
@@ -23,11 +25,15 @@ export class TimeTableComponent implements OnInit {
   isDeactiveLesson=false;
   deactivateLessonList:TimeTableDataList[]=[];
   deacivateRowSpanLength=[];
+  
+  deactivateLesson:LessonModel;
+  updateLesson:LessonModel;
 
   successMsg="";
   errorMsg="";
 
   httpError:HttpError
+  timeValidation;
 
   constructor(
     private router:Router,
@@ -35,6 +41,7 @@ export class TimeTableComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.timeValidation = new TimeTableValidation();
 
     this.userRole=sessionStorage.getItem('userRole');
     console.log(this.userRole);
@@ -82,9 +89,23 @@ export class TimeTableComponent implements OnInit {
         this.timeTableService.deleteLesson(lessonId).subscribe(
           response => {
             if(response == 0){//delete success
-              this.successMsg="Delete Successful."
+              //this.successMsg="Delete Successful."
+              Swal.fire({
+                position: 'center',
+                type: 'success',
+                title: 'Delete successful',
+                showConfirmButton: false,
+                timer: 3000
+              });
               this.getTimeTableList();
             }else if(response == 1){//foreign key constrains 
+              Swal.fire({
+                position: 'center',
+                type: 'error',
+                title: 'Delete not successful',
+                showConfirmButton: false,
+                timer: 3000
+              });
               this.errorMsg="Delete Not Successful.(Solution:Instead of delete can change the status of the lesson)";
             }
           },
@@ -98,7 +119,8 @@ export class TimeTableComponent implements OnInit {
     });
   }
 
-  lessonDeactivate(lessonId){   
+  lessonDeactivate(lessonId){ 
+    this.getLesson(2,lessonId);  
     Swal.fire({
       title: 'Are you sure?',
       text: "Lesson Is Deactivated.",
@@ -109,18 +131,54 @@ export class TimeTableComponent implements OnInit {
       confirmButtonText: 'Yes, Deactivate!'
     }).then((result) => {
       if (result.value) {
-        this.timeTableService.lessonDeactivate(lessonId).subscribe(
-          response => {
-            this.successMsg="Lesson Deactivated Successful.";
-            this.getTimeTableList();
-            this.getDeactivateLessonList();
-          },
-          error => {
-            this.errorMsg="Lesson Deactivated Not Successful.";
-          }
-        )
+        if(!this.timeValidation.isToday(this.deactivateLesson.day)){
+          this.timeTableService.lessonDeactivate(lessonId).subscribe(
+            response => {
+              Swal.fire({
+                position: 'center',
+                type: 'success',
+                title: 'Lesson deactivate successful',
+                showConfirmButton: false,
+                timer: 1500
+              });
+              this.getTimeTableList();
+              this.getDeactivateLessonList();
+            },
+            error => {
+              Swal.fire({
+                position: 'center',
+                type: 'error',
+                title: 'Lesson deactivate not successful',
+                showConfirmButton: false,
+                timer: 1500
+              });
+            }
+          );
+        }else{
+          Swal.fire({
+            type: 'info',
+            title: 'Cannot deactivate today lesson',
+            text: 'Lesson deactivate process cannot perform',
+          });
+        }
       }
-    })
+    });
+  }
+
+  /*
+  type : 1 -> Update Lesson
+         2 -> Deactivate Lesson
+  */
+  getLesson(type,lessonId){ 
+    this.timeTableService.getLesson(lessonId).subscribe(
+      response => {
+        (type==1 ? this.updateLesson=response : this.deactivateLesson=response);
+      },
+      error => {
+        console.log(error);
+        this.handleErrorResponse(error);
+      }
+    );
   }
 
  
@@ -192,7 +250,24 @@ export class TimeTableComponent implements OnInit {
   }
 
   lessonUpdate(lessonId){
-    this.router.navigate(['lesson-update',lessonId,1]);
+    this.getLesson(1,lessonId);
+    this.delayLessonUpdate(1500,lessonId);
+  }
+
+  async delayLessonUpdate(ms: number,lessonId:Number) {
+    await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>{  
+      if(!this.timeValidation.isToday(this.updateLesson.day)){
+        this.router.navigate(['lesson-update',lessonId,1]);
+      }else{
+        Swal.fire({
+          type: 'info',
+          title: 'Cannot update today lesson',
+          text: 'Lesson update process cannot perform',
+        });
+      }
+      
+    }
+    );
   }
 
   closeMsg(type){

@@ -456,7 +456,8 @@ export class AdminStaffStudentDashBoardComponent implements OnInit {
   }
 
   studentExamList(){
-    let localdate=this.datePipe.transform(new Date(), 'yyyy-MM-dd')
+    let localdate=this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    let res = localdate.replace("IST", "SLST");
     this.studentService.studentExamList(localdate).subscribe(
       response => {
          this.examStudents=response;
@@ -472,12 +473,13 @@ export class AdminStaffStudentDashBoardComponent implements OnInit {
   }
 
   generatePdf(title){
-    var doc = new jsPDF('p', 'pt');
+
+    var doc = new jsPDF('p','pt');
 
     doc.rect(20, 20, doc.internal.pageSize.width - 40, doc.internal.pageSize.height - 40, 'S');//page Border
     doc.setFontType("bold");
-    doc.text("Sagarika Learners",250,40);
-
+    doc.text("Drivo Learners",250,40);
+ 
     
     var res = doc.autoTableHtmlToJson(document.getElementById("trial-table"));
     
@@ -502,12 +504,12 @@ export class AdminStaffStudentDashBoardComponent implements OnInit {
     };
     
     doc.autoTable(res.columns, res.data, options);
-    doc.text("Date:"+year+"/"+month+"/"+date,30,doc.internal.pageSize.height-50)
-
-    
-    doc.text("Signature",480,doc.internal.pageSize.height-50)
+    doc.text("Date:"+year+"/"+month+"/"+date,30,doc.internal.pageSize.height-50);
+    doc.text("Signature",480,doc.internal.pageSize.height-50);
   
-    doc.save("Table.pdf");
+    let localdate=this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    let saveFileName=title+' '+localdate+' .pdf'
+    doc.save(saveFileName);
   }
 
   //line chart data

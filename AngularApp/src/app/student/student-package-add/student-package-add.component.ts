@@ -23,6 +23,7 @@ export class StudentPackage{
 export class StudentPackageAddComponent implements OnInit {
 
   studentId:Number;//get student id by the
+  studentName:string;
   errorMessage:String;
   
   packages: PackageModel[] = [];//get package List
@@ -48,6 +49,7 @@ export class StudentPackageAddComponent implements OnInit {
 
   ngOnInit() {
     this.studentId=this.route.snapshot.params['id'];//get student id by url
+    this.studentName=this.route.snapshot.params['name'];
     this.packageList();
   }
 

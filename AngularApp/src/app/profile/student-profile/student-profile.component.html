@@ -102,6 +102,9 @@
             <br> Know the Rules
             <br>Pass the Test"
           </p>
+          <hr>
+          <p *ngIf="studentData.exmaDate!=''" align='right'>WrittenExamination Date : <b>{{studentData.examDate}}</b></p>
+          <p *ngIf="studentData.trialDate!=''" align='right'>TrialExamination Date : <b>{{studentData.trialDate}}</b></p>
         </div>
         <hr>
         <div class="button-container">

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentPackageModel } from '../../ClassModel/StudentPackageModel';
 import { StudentServiceService } from '../../service/student/student-service.service';
-import { LesonBookingService } from '../../service/LessonBooking/leson-booking.service';
+import { LessonBookingService } from '../../service/LessonBooking/lesson-booking.service';
 import { Router } from '@angular/router';
 import { TimeSlotModel } from '../../ClassModel/TimeSlotModel';
 import { TimeTableServiceService } from '../../service/TimeTable/time-table-service.service';
@@ -46,7 +46,7 @@ export class TrialLessonBookComponent implements OnInit {
   availableLesson:LessonModel=null;
 
   constructor(
-    private lessonBookingService:LesonBookingService,
+    private lessonBookingService:LessonBookingService,
     private timeTableService:TimeTableServiceService,
     private pathMap:PathMapComponent,
     private router:Router,
@@ -58,7 +58,7 @@ export class TrialLessonBookComponent implements OnInit {
 
     this.getStudentPackageData();
     this.gettimeSlotData();
-    this.getTrialDate();
+    this.getTrialDate(); 
   }
 
   //get Student following package data
@@ -71,7 +71,7 @@ export class TrialLessonBookComponent implements OnInit {
         console.log(error);
         this.handleErrorResponse(error);
       }
-    )
+    );
   }
 
   //get time Slot Details

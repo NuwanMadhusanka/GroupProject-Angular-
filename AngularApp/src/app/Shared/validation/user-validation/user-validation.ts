@@ -71,4 +71,13 @@ export class UserValidation {
     return false;
   }
 
+  isDigitContain(value){
+    this.regExp=new RegExp('[0-9]');
+    this.test=this.regExp.test(value);
+    if(this.test){
+      return true;
+    }
+    return false;
+  }
+
 }

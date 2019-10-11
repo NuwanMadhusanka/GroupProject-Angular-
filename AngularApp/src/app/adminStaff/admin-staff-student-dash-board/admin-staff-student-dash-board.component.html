@@ -129,12 +129,14 @@
             <table *ngIf="isExamStudent" class="table" id="trial-table">
               <thead class=" text-primary">
                 <tr>
+                  <th></th>
                   <th>Name</th>
                   <th>NIC</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let examStudent of examStudents">
+                <tr *ngFor="let examStudent of examStudents; let i =index">
+                  <td>{{i+1}})</td>
                   <td>{{examStudent.name}}</td>
                   <td>{{examStudent.nic}}</td>
                 </tr>
@@ -167,12 +169,14 @@
             <table *ngIf="isTrialStudent" class="table" id="trial-table">
               <thead class=" text-primary">
                 <tr>
+                  <th></th>
                   <th>Name</th>
                   <th>NIC</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let trialStudent of trialStudents">
+                <tr *ngFor="let trialStudent of trialStudents; let i = index">
+                  <td>{{i+1}})</td>
                   <td>{{trialStudent.name}}</td>
                   <td>{{trialStudent.nic}}</td>
                 </tr>

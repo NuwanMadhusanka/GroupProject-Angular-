@@ -5,25 +5,29 @@ import { UserModel } from '../ClassModel/UserModel';
 import * as Stomp from 'stompjs';
 import { WebSocketCommunicationDataMap } from '../ClassModel/MapObject/WebSocketCommunicationDataMap';
 import { NotificationServisceService } from './notification/notification-service.service';
+import { API_URL, SPRING_SECURITY_USER_NAME, SPRING_SECURITY_PASSWORD, WEBSOCKETENDPOINT, WEBSOCKETTOPIC } from '../app.constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebSocketServiceService {
 
-  webSocketEndPoint: string = 'http://localhost:8080/ws';
+
     topic: string = "/topic/greetings";
     stompClient: any;
-    constructor(){}
-    
+   
+    constructor(){
+    }
     _connect() {
         console.log("Initialize WebSocket Connection");
-        let ws = new SockJS(this.webSocketEndPoint);
+        // let ws = new SockJS(WEBSOCKETENDPOINT, null, {headers: {'Authorization': 'Basic ' + btoa('user' + ":" + '1234')}});
+    
+        let ws = new SockJS(WEBSOCKETENDPOINT);
         this.stompClient = Stomp.over(ws);
         const _this = this;
         _this.stompClient.connect({}, function (frame) {
-            _this.stompClient.subscribe(_this.topic, function (sdkEvent) {
-                _this.onMessageReceived(sdkEvent); 
+            _this.stompClient.subscribe(WEBSOCKETTOPIC, function (sdkEvent) {
+                _this.onMessageReceived(sdkEvent);
             });
             //_this.stompClient.reconnect_delay = 2000;
         }, this.errorCallBack);
@@ -50,10 +54,11 @@ export class WebSocketServiceService {
   */
     _send(message) {
         console.log("calling logout api via web socket");
-        this.stompClient.send("/app/hello", {}, JSON.stringify(message));
+        this.stompClient.send("/app/hello", JSON.stringify(message));
     }
 
-    onMessageReceived(message:WebSocketCommunicationDataMap) {
+    onMessageReceived(message) {
         console.log("Message Recieved from Server :: " + message);
     }
 }
+//SockJS(url, null, {transports: ['xhr-streaming'], headers: {'Authorization': 'Basic ' + btoa('user' + ":" + '1234')}})

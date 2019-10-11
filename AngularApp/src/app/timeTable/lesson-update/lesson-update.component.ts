@@ -15,9 +15,9 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { WebSocketCommunicationDataMap } from '../../ClassModel/MapObject/WebSocketCommunicationDataMap';
 import { NotificationServisceService } from '../../service/notification/notification-service.service';
 
+
 /*
-If changing lesson's day is equal to today then changing is 
-not apply for today lessons and it's apply nextweek and upto lessons.
+If changing lesson's day is equal to today then changing is cannot be done
 */
 
 @Component({
@@ -69,18 +69,16 @@ export class LessonUpdateComponent implements OnInit {
   lessonData:LessonModel;
   
   isdisableInstructor=true;
-
-  webSocketService:WebSocketServiceService;
+  isShowLessonSet=false;
 
   constructor(
     private router:Router,
     private timeTableService:TimeTableServiceService,
-    private route:ActivatedRoute
+    private route:ActivatedRoute,
+    private notificationService:NotificationServisceService
   ) { }
 
   ngOnInit() {
-    this.webSocketService = new WebSocketServiceService();
-    this.webSocketService._connect();//connect to the webSocket
 
     this.lessonId=this.route.snapshot.params['id'];//get lesson id by url
     this.type=this.route.snapshot.params['type'];//0:From Deactivate Component / 1:From Update Component
@@ -118,6 +116,8 @@ export class LessonUpdateComponent implements OnInit {
 
           this.timeSlotList();
           this.pathList();
+
+          this.isShowLessonSet=true;
          
       },
       error => {
@@ -202,9 +202,9 @@ export class LessonUpdateComponent implements OnInit {
        response => {
         
         //change inform to notificationSerivce
-        let object = new WebSocketCommunicationDataMap(1,[0,0,0,1,1],[0,0]);
-        this.webSocketService._send(object);
-        this.webSocketService._disconnect();
+        let data = new WebSocketCommunicationDataMap([0,0,0,1,1]);
+        this.notificationService.notifyChange(data);
+        
 
         Swal.fire({
           position: 'center',

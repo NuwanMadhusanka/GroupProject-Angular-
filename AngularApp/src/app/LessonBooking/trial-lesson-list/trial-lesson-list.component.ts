@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { PackageModel } from '../../ClassModel/PackageModel';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpError } from '../../Shared/httpError/HttpError';
-import { LesonBookingService } from '../../service/LessonBooking/leson-booking.service';
+import { LessonBookingService } from '../../service/LessonBooking/lesson-booking.service';
 import { StudentLessonModel } from '../../ClassModel/StudentLessonModel';
 import { PathMapComponent } from '../../timeTable/path-map/path-map.component';
 import Swal from 'sweetalert2';
@@ -49,9 +49,10 @@ export class TrialLessonListComponent implements OnInit {
 
   isFutureLesson=false;
   isPreviousLesson=false;
+  isSelectPackage=false;
 
   constructor(
-    private lessonBookService:LesonBookingService,
+    private lessonBookService:LessonBookingService,
     private pathMap:PathMapComponent,
     private router:Router,
     private route:ActivatedRoute,
@@ -64,9 +65,10 @@ export class TrialLessonListComponent implements OnInit {
         this.router.navigate(['/']);
     }
 
-    this.idOfSelectPackage=this.route.snapshot.params['package'];;
+    this.idOfSelectPackage=this.route.snapshot.params['package'];
     this.titleOfSelectPackage=this.route.snapshot.params['title'];
-    if(this.idOfSelectPackage != null && this.titleOfSelectPackage){
+  
+    if(this.idOfSelectPackage != " " && this.titleOfSelectPackage!=" "){
       this.bookLessonDetails(this.idOfSelectPackage,this.titleOfSelectPackage);
     }
 
@@ -80,7 +82,7 @@ export class TrialLessonListComponent implements OnInit {
       response => {
           this.studentPackages=response;
           if(this.studentPackages.length < 1){
-            this.errorMessage="Student Not Following Any Packages";
+            this.errorMessage="You're are not following any Packages yet.";
           }       
       },
       error =>{
@@ -91,10 +93,11 @@ export class TrialLessonListComponent implements OnInit {
   }
 
   bookLessonDetails(selectPackageId,title){
-
+   
     this.idOfSelectPackage=selectPackageId;
     this.titleOfSelectPackage=title;
 
+    this.isSelectPackage=true;
     this.isBookLeeson=false;
     this.previousLesson=[];
     this.futureLesson=[];
@@ -258,6 +261,14 @@ export class TrialLessonListComponent implements OnInit {
 
   googleMap(path){
     this.pathMap.googleMap(path,1);
+  }
+
+  trialLessonDayFeedback(){
+    this.router.navigate(['trial-lesson-day-feedback',this.userId,this.idOfSelectPackage,this.titleOfSelectPackage]);
+  }
+
+  trialLessonBook(){
+    this.router.navigate(['trial-lesson-book']);
   }
 
   private handleErrorResponse(error: HttpErrorResponse) {
