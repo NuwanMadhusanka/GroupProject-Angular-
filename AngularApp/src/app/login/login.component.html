@@ -51,7 +51,7 @@
 
      
 
-      <form [formGroup]="loginForm" (ngSubmit)="handleLogin()"  class="login100-form validate-form">
+      <form [formGroup]="loginForm" (ngSubmit)="handleJWTTokeLogin()"  class="login100-form validate-form">
         <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
           <span class="label-input100">Email</span>
           <input [class.is-invalid]="loginForm.get('email').invalid && loginForm.get('email').touched" formControlName="email" class="input100" type="text" name="username" placeholder="Enter email">
@@ -81,4 +81,8 @@
       </form>
     </div>
   </div>
+</div>
+
+<div *ngIf="showSpinner" class="spinner-border text-secondary" role="status" id="loader">
+  <span class="sr-only">Loading...</span>
 </div>

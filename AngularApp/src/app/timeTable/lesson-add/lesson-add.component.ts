@@ -70,7 +70,7 @@ export class LessonAddComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.webSocketService = new WebSocketServiceService();
+    //this.webSocketService = new WebSocketServiceService();
 
     this.timeSlotList();
     this.packageList();

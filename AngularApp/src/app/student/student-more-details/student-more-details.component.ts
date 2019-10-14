@@ -29,6 +29,9 @@ export class StudentMoreDetailsComponent implements OnInit {
 
   errorMessage;
   errorUpdateMessage="";
+
+  encryptedPassword;
+  isPasswordChange;
   
   userValidation=new UserValidation();
 
@@ -55,6 +58,8 @@ export class StudentMoreDetailsComponent implements OnInit {
   }
 
   update(){
+
+    this.errorUpdateMessage="";
     
     //email 
     if(this.selectOption==1) {
@@ -73,6 +78,7 @@ export class StudentMoreDetailsComponent implements OnInit {
       if( (this.updateVariable == "")){
           this.errorUpdateMessage="Insert Valid Password.";
       }else{
+          this.isPasswordChange=true;
           this.studentData.userId.password=this.updateVariable;
           this.errorUpdateMessage="";
           this.isUpdateVariable=false;
@@ -96,7 +102,6 @@ export class StudentMoreDetailsComponent implements OnInit {
 
     //Trial Date
     if(this.selectOption==4 && this.studentData.examDate==null){
-      console.log("Hello")
       if( (this.updateVariable == null || !this.userValidation.isValidDate(this.updateVariable))){
         this.errorUpdateMessage="Insert Valid Trial Date.";
       }else if(!(this.userValidation.isFutureDate(this.updateVariable))){
@@ -174,7 +179,8 @@ export class StudentMoreDetailsComponent implements OnInit {
     this.studentService.studentGet(this.studentId).subscribe(
       response => {
           this.studentData=response;
-          this.studentData.userId.password=this.encoder.decrypt(this.studentData.userId.password);
+          this.encryptedPassword=this.studentData.userId.password;
+          this.studentData.userId.password="";
       },
       error =>{
         console.log(error);
@@ -186,9 +192,15 @@ export class StudentMoreDetailsComponent implements OnInit {
   //save updates
   saveUpdate(){
     //Save Update data(API)
-    this.studentData.userId.password=this.encoder.encrypt(this.studentData.userId.password);
+    if(!this.isPasswordChange){
+        this.studentData.userId.password=this.encryptedPassword;
+        this.isPasswordChange=false;
+    }
+    
     this.studentService.studentUpdate(this.studentData).subscribe(
-      response => {
+      response => {  
+        this.confirmUpdate=false;
+        if(response==1){
           //register success
           Swal.fire({
             position: 'top-end',
@@ -197,9 +209,18 @@ export class StudentMoreDetailsComponent implements OnInit {
             showConfirmButton: false,
             timer: 1500
           });
-        this.confirmUpdate=false;
-        this.studentData=response;
-        this.studentData.userId.password=this.encoder.decrypt(this.studentData.userId.password);
+        }
+        if(response==2){
+          this.errorMessage="Updated email already exist.";
+          Swal.fire({
+            position: 'center',
+            type: 'error',
+            title: 'Update not Successful.',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+        this.studentDetails();
       },
       error => {
         //console.log(error);

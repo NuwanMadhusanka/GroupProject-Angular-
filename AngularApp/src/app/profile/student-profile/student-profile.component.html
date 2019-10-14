@@ -1,6 +1,6 @@
 <div class="panel-header panel-header-sm">
 </div>
-<div class="main-content">
+<div *ngIf="isStudentDataLoad" class="main-content">
   <div class="row">
     <div class="col-md-8">
       <div class="card">
@@ -103,8 +103,8 @@
             <br>Pass the Test"
           </p>
           <hr>
-          <p *ngIf="studentData.exmaDate!=''" align='right'>WrittenExamination Date : <b>{{studentData.examDate}}</b></p>
-          <p *ngIf="studentData.trialDate!=''" align='right'>TrialExamination Date : <b>{{studentData.trialDate}}</b></p>
+          <p *ngIf="(studentData.examDate != null)" align='right'>WrittenExamination Date : <b>{{studentData.examDate}}</b></p>
+          <p *ngIf="(studentData.trialDate != null)" align='right'>TrialExamination Date : <b>{{studentData.trialDate}}</b></p>
         </div>
         <hr>
         <div class="button-container">

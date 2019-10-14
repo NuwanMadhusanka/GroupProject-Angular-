@@ -5,6 +5,7 @@ import { API_URL } from '../../app.constants';
 import { NotificationDataMap } from '../../ClassModel/MapObject/NotificationDataMap';
 import { WebSocketServiceService } from '../web-socket-service.service';
 import { WebSocketCommunicationDataMap } from '../../ClassModel/MapObject/WebSocketCommunicationDataMap';
+import { UserAuthenticationServiceService } from '../user-authentication-service.service';
 
 
 @Injectable({
@@ -13,7 +14,7 @@ import { WebSocketCommunicationDataMap } from '../../ClassModel/MapObject/WebSoc
 export class NotificationServisceService {
 
   constructor(
-    private http : HttpClient, 
+    private http : HttpClient 
   ) { }
 
   getNotification(userId,role,notificationType){
@@ -29,8 +30,8 @@ export class NotificationServisceService {
   notifyChange(data:WebSocketCommunicationDataMap){
     let webSocketService = new WebSocketServiceService();
     webSocketService._connect();//connect to the webSocket
-    this.connectWait(3000,webSocketService,data);
-    this.disConnectWait(10000,webSocketService);
+    this.connectWait(10000,webSocketService,data);
+    this.disConnectWait(25000,webSocketService);
   }
 
   async connectWait(ms: number,webSocketService:WebSocketServiceService,data:WebSocketCommunicationDataMap) {

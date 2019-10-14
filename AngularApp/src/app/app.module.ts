@@ -41,7 +41,7 @@ import { HttpIntercepterBasicAuthService } from './service/http/http-intercepter
   ],
   providers: [
     DatePipe,
-    // {provide:HTTP_INTERCEPTORS, useClass:HttpIntercepterBasicAuthService,multi:true}
+    {provide:HTTP_INTERCEPTORS, useClass:HttpIntercepterBasicAuthService,multi:true}
   ],
   bootstrap: [AppComponent]
 })

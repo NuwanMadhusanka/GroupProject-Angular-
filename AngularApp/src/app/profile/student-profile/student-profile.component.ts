@@ -17,6 +17,10 @@ export class StudentProfileComponent implements OnInit {
   studentName;
 
  studentData:StudentModel;
+ isStudentDataLoad=false;
+ isPasswordChange=false;
+
+ encryptedPassword;
 
  errorName;
  errorAddress;
@@ -42,6 +46,11 @@ export class StudentProfileComponent implements OnInit {
       response => {
         this.studentData=response;
         this.studentName=this.studentData.name;
+        
+        this.encryptedPassword=this.studentData.userId.password;
+        this.studentData.userId.password="000000";
+
+        this.isStudentDataLoad=true;
       },
       error => {
         console.log(error);
@@ -90,12 +99,20 @@ export class StudentProfileComponent implements OnInit {
     }
 
     //password
+    console.log(this.studentData.userId.password)
     if( this.studentData.userId.password === ""){
       this.errorPassword="Password is mandatory";
     }  
 
     if(this.errorName=="" && this.errorNic=="" && this.errorTel=="" && this.errorAddress=="" && this.errorEmail=="" && this.errorPassword==""){
-       this.studentService.studentUpdate(this.studentData).subscribe(
+       
+      //check password change or not
+      if( (this.studentData.userId.password == "000000") ){//password not Change
+        this.studentData.userId.password=this.encryptedPassword;
+        console.log("Hello")
+      }
+
+      this.studentService.studentUpdate(this.studentData).subscribe(
          response => {
           this.studentName=this.studentData.name;
           Swal.fire({

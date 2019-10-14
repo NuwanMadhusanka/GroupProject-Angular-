@@ -66,6 +66,9 @@ export class TrialLessonBookComponent implements OnInit {
     this.lessonBookingService.getStudentPackageData(this.userId).subscribe(
       response => {
         this.studentPackageList=response;
+        if(this.studentPackageList.length < 1){
+          this.errorMessage="You're are not following any Packages yet.";
+        }
       },
       error => {
         console.log(error);

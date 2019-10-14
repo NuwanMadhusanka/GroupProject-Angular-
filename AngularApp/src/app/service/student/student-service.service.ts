@@ -72,7 +72,7 @@ export class StudentServiceService {
 
   //Update Student Data
   studentUpdate(student:StudentModel){
-    return this.http.put<StudentModel>(`${API_URL}/student/update`,student);
+    return this.http.put<number>(`${API_URL}/student/update`,student);
   }
 
   //getStudent data using userId

@@ -97,15 +97,14 @@ export class StudentDeactivateComponent implements OnInit {
   }
 
     //navigate to student-payment 
-    addPayment(studentId){
-      this.router.navigate(['student-payment',studentId]);
+    addPayment(studentId,studentName){
+      this.router.navigate(['student-payment',studentId,studentName]);
     }
 
     //clear student's previous payment details
     clearStudentPreviousPayment(studentId,studentName){
       this.studentService.clearStudentPreviousPayment(studentId).subscribe(
         response => {
-          console.log(response);
           Swal.fire({
             position: 'center',
             type: 'success',

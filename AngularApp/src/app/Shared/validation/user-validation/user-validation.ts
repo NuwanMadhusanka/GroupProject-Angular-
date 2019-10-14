@@ -20,6 +20,7 @@ export class UserValidation {
   public isFutureDate(date){
     let currentDate = new Date();
     let futureDate = new Date(date);
+    
     if(futureDate>currentDate){
       return true;
     }
@@ -64,7 +65,6 @@ export class UserValidation {
   isValidExamDateTrialDate(examDate,trialDate){
     let e=new Date(examDate);
     let t=new Date(trialDate);
-
     if(e<t){
       return true;
     }

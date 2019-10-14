@@ -8,6 +8,7 @@ import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { WebSocketCommunicationDataMap } from '../../ClassModel/MapObject/WebSocketCommunicationDataMap';
 import { API_URL, WEBSOCKETENDPOINT, WEBSOCKETTOPIC } from '../../app.constants';
+import { UserAuthenticationServiceService } from '../../service/user-authentication-service.service';
 
 
 @Component({
@@ -39,7 +40,7 @@ export class NavbarComponent implements OnInit {
     public isCollapsed = true;
 
     
-    constructor(location: Location,  private element: ElementRef, private router: Router,private notificationService:NotificationServisceService) {
+    constructor(location: Location,  private element: ElementRef, private router: Router,private notificationService:NotificationServisceService,private userAuthenticationService:UserAuthenticationServiceService) {
       this.location = location;
       this.sidebarVisible = false;
     }
@@ -184,9 +185,8 @@ export class NavbarComponent implements OnInit {
     }
 
     logOut(){
+      this.userAuthenticationService.logout();
       this._disconnect();
-      sessionStorage.removeItem('userId');
-      sessionStorage.removeItem('userRole');
       this.router.navigate(['']);
     }
 
@@ -206,17 +206,19 @@ export class NavbarComponent implements OnInit {
     }
 
     getNotification(){
-      console.log("Call");
       this.newNotificationList=[];
       this.earlyNotification=[];
+
+      this.isNewNotification=false;
 
        //get unread notification
        this.notificationService.getNotification(this.userId,this.userRole,0).subscribe(
          response => {
-           console.log(response)
             this.newNotificationList=response;
+            console.log(this.newNotificationList);
             if(this.newNotificationList.length>0){
               this.isNewNotification=true;
+              this.isNotificationBadgeOn=true;
             }
          },
          error => {
@@ -285,9 +287,7 @@ export class NavbarComponent implements OnInit {
 
   onMessageReceived(message:WebSocketCommunicationDataMap) {
       console.log("Message Recieved from Server :: " + message);
-      console.log(message);
       if((message.role[3]==1 || message.role[4]==1)){
-        console.log("Hello");
         this.getNotification();
       }
   }

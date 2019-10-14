@@ -6,6 +6,7 @@ import { throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpError } from '../Shared/httpError/HttpError';
 import { EncryptDecryptServiceService } from '../service/encrypt-decrypt-service.service';
+import { UserServiceService } from '../service/user/user-service.service';
 
 
 @Component({
@@ -32,48 +33,69 @@ export class LoginComponent implements OnInit {
   }
 
   errorMessage;
-
+  showSpinner=false;
 
   constructor(
     private router:Router,
     private userAuthenticationService:UserAuthenticationServiceService,
     private fb:FormBuilder,
-    private encoder : EncryptDecryptServiceService
+    private encoder : EncryptDecryptServiceService,
+    private userService : UserServiceService
   ) { }
 
   ngOnInit(
   
-  ) {
-    
-  }
+  ) {}
 
-  handleLogin(){
+  // handleLogin(){
 
-    if(this.loginForm.valid){
-        //2) get the relevant data by userAuthentication Service(Call to API)
+  //   if(this.loginForm.valid){
+  //       //2) get the relevant data by userAuthentication Service(Call to API)
         
-        this.userAuthenticationService.authenticate(this.emailField.value).subscribe(
-          response => {
-            if(this.passwordField.value == this.encoder.decrypt(response.password)){
-              this.handleSuccessfulResponse(response);
-            }else{
-              this.errorMessage="Incorrect Password";
-            }
+  //       this.userAuthenticationService.authenticate(this.emailField.value).subscribe(
+  //         response => {
+  //           if(this.passwordField.value == this.encoder.decrypt(response.password)){
+  //             this.handleSuccessfulResponse(response);
+  //           }else{
+  //             this.errorMessage="Incorrect Password";
+  //           }
             
+  //         },
+  //         error => {
+  //           this.errorMessage="Login Denied.";
+  //           this.handleErrorResponse(error);
+  //         }
+  //       )
+  //   }else{
+  //       this.errorMessage="Insert Valid Inputs";
+  //   } 
+
+  // }
+
+  handleJWTTokeLogin(){
+    this.showSpinner=true;   
+    this.userAuthenticationService.executeJWTAuthenticationService(this.emailField.value,this.passwordField.value).subscribe(
+          response => {
+            this.userService.getUser(this.emailField.value).subscribe(
+              response => {
+                this.handleSuccessfulResponse(response);
+              },
+              error =>{
+                console.log(error);
+              }
+            );
           },
           error => {
-            this.errorMessage="Login Denied.";
+            this.showSpinner=false;
+            this.errorMessage="INVALID CREDENTIALS.";
             this.handleErrorResponse(error);
           }
-        )
-    }else{
-        this.errorMessage="Insert Valid Inputs";
-    } 
-
-  }
+        );
+   }
 
   //3)Valid User
   handleSuccessfulResponse(response){
+    
     if(response.userId != null){
       if(response.userId > 0 && response.status==1){
 
@@ -92,13 +114,15 @@ export class LoginComponent implements OnInit {
         }else{
           this.router.navigate(['dashboard']);
         }
-      }else if(response.status == 0){
-        this.errorMessage="Account Deactivate.Please Inform to the administrator";
-      }else{
-        //
       }
+      // else if(response.status == 0){
+      //   this.errorMessage="Account Deactivate.Please Inform to the administrator";
+      // }else{
+        
+      // }
     
     }
+    this.showSpinner=false;
   }
 
   //Invalid User

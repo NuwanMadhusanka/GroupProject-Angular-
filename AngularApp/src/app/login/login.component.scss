@@ -496,9 +496,17 @@
   
   #loginButton{
       margin-top: 10px;
+      margin-left: 60px;
   }
 
   #loginHead{
       background-image: url('../../assets/img/loginImge.jpg');
   }
   
+
+  #loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 10000;
+  }

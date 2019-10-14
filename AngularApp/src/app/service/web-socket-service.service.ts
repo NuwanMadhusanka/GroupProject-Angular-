@@ -6,23 +6,22 @@ import * as Stomp from 'stompjs';
 import { WebSocketCommunicationDataMap } from '../ClassModel/MapObject/WebSocketCommunicationDataMap';
 import { NotificationServisceService } from './notification/notification-service.service';
 import { API_URL, SPRING_SECURITY_USER_NAME, SPRING_SECURITY_PASSWORD, WEBSOCKETENDPOINT, WEBSOCKETTOPIC } from '../app.constants';
+import { UserAuthenticationServiceService } from './user-authentication-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebSocketServiceService {
 
-
-    topic: string = "/topic/greetings";
     stompClient: any;
    
     constructor(){
     }
     _connect() {
         console.log("Initialize WebSocket Connection");
-        // let ws = new SockJS(WEBSOCKETENDPOINT, null, {headers: {'Authorization': 'Basic ' + btoa('user' + ":" + '1234')}});
-    
         let ws = new SockJS(WEBSOCKETENDPOINT);
+    
+        //let ws = new SockJS(WEBSOCKETENDPOINT);
         this.stompClient = Stomp.over(ws);
         const _this = this;
         _this.stompClient.connect({}, function (frame) {
@@ -54,11 +53,10 @@ export class WebSocketServiceService {
   */
     _send(message) {
         console.log("calling logout api via web socket");
-        this.stompClient.send("/app/hello", JSON.stringify(message));
+        this.stompClient.send("/app/hello",{'Authorization': sessionStorage.getItem('TOKEN')}, JSON.stringify(message));
     }
 
     onMessageReceived(message) {
         console.log("Message Recieved from Server :: " + message);
     }
 }
-//SockJS(url, null, {transports: ['xhr-streaming'], headers: {'Authorization': 'Basic ' + btoa('user' + ":" + '1234')}})
