@@ -301,7 +301,7 @@ export class StudentPaymentComponent implements OnInit {
     this.studentService.completePayment(paymentId,payerId,sessionStorage.getItem('userId'),sessionStorage.getItem('payPalPaymentSelectPackageId'),sessionStorage.getItem('payPalAmount')).subscribe(
       response => {
         this.showSpinner=false;
-        console.log("Payment reply ");
+        console.log("Payment reply");
         console.log(response);
         this.paymentDetails(sessionStorage.getItem('payPalPaymentSelectPackageId'));
         Swal.fire({

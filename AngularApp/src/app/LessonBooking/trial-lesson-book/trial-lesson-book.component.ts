@@ -29,6 +29,7 @@ export class TrialLessonBookComponent implements OnInit {
 
   trialDate:Date;
   isAbleToBook=false;
+  isCoursePaymentDone=true;
 
   errorMessage;
 
@@ -92,8 +93,11 @@ export class TrialLessonBookComponent implements OnInit {
 
   //get Available lesson
   getLesson(){
+    
     this.isAvailableLesson=false;
     this.errorMessage="";
+    this.checkCoursePayment();
+
     if(this.validInput()){
         this.lessonBookingService.getAvailableLesson(this.selectDay,this.selectStudentPackage.studentPackageId,this.selectTimeSlot.timeSlotId).subscribe(
           response => {
@@ -106,7 +110,6 @@ export class TrialLessonBookComponent implements OnInit {
             }else{
               this.errorMessage="No any available opertunity for this lesson."
             }
-            console.log(this.availableLesson)
           },
           error => {
             console.log(error);
@@ -300,6 +303,29 @@ export class TrialLessonBookComponent implements OnInit {
     )
   }
 
+
+  checkCoursePayment(){
+    this.isCoursePaymentDone=true;
+    this.lessonBookingService.checkCoursePayment(this.selectStudentPackage.studentPackageId).subscribe(
+      response => {
+      
+        if(response==0 || response==-1){
+          this.errorMessage = "You have to pay half of the course payment before booking lessons.";
+        } 
+        if(response == -2){
+          this.errorMessage = "You have to pay remaining course fee before booking remaining lessons"
+        }
+
+        if(response != 1){
+            this.isCoursePaymentDone=false;
+        }
+      },
+      error => {
+        console.log(error);
+        this.handleErrorResponse(error);
+      }
+    );
+  }
 
   googleMap(path){
     this.pathMap.googleMap(path,1);

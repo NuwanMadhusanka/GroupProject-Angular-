@@ -5,6 +5,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { StudentModel } from '../../ClassModel/StudentModel';
 import { UserValidation } from '../../Shared/validation/user-validation/user-validation';
 import Swal from 'sweetalert2';
+import { ProfileImage } from '../profile-image/profile-image';
+import { FileUploadServiceService } from '../../service/file-upload/file-upload-service.service';
+import { API_URL } from '../../app.constants';
+
 
 @Component({
   selector: 'app-student-profile',
@@ -13,8 +17,10 @@ import Swal from 'sweetalert2';
 })
 export class StudentProfileComponent implements OnInit {
 
-  userId;
-  studentName;
+ userId;
+ studentName;
+
+ apiUrl = API_URL;
 
  studentData:StudentModel;
  isStudentDataLoad=false;
@@ -24,16 +30,22 @@ export class StudentProfileComponent implements OnInit {
 
  errorName;
  errorAddress;
- errorNic;
+ //errorNic;
  errorTel;
  errorEmail;
  errorPassword;
 
+ errorMessage;
+
  //user Validation Instance
  userValidation = new UserValidation();
 
+ selectedFiles;
+ showSpinner=false;
+ 
   constructor(
-    private studentService :StudentServiceService
+    private studentService :StudentServiceService,
+    private fileUploadService :FileUploadServiceService
   ) { }
 
   ngOnInit() {
@@ -61,7 +73,7 @@ export class StudentProfileComponent implements OnInit {
   save(){
   
     this.errorName="";
-    this.errorNic="";
+    //this.errorNic="";
     this.errorTel="";
     this.errorAddress="";
     this.errorEmail="";
@@ -73,11 +85,11 @@ export class StudentProfileComponent implements OnInit {
     }
 
     //validate NIC
-    if(this.studentData.nic === ""){
-      this.errorNic="NIC number is mandatory ";
-    }else if( !this.userValidation.isValidNicNumber(this.studentData.nic) ){
-      this.errorNic="Enter Valid NIC Number";
-    }
+    // if(this.studentData.nic === ""){
+    //   this.errorNic="NIC number is mandatory ";
+    // }else if( !this.userValidation.isValidNicNumber(this.studentData.nic) ){
+    //   this.errorNic="Enter Valid NIC Number";
+    // }
 
     //Valid Number
     if(this.studentData.tel===""){
@@ -99,40 +111,98 @@ export class StudentProfileComponent implements OnInit {
     }
 
     //password
-    console.log(this.studentData.userId.password)
     if( this.studentData.userId.password === ""){
       this.errorPassword="Password is mandatory";
-    }  
+    }
+  
 
-    if(this.errorName=="" && this.errorNic=="" && this.errorTel=="" && this.errorAddress=="" && this.errorEmail=="" && this.errorPassword==""){
+    if(this.errorName=="" && this.errorTel=="" && this.errorAddress=="" && this.errorEmail=="" && this.errorPassword==""){
        
       //check password change or not
       if( (this.studentData.userId.password == "000000") ){//password not Change
         this.studentData.userId.password=this.encryptedPassword;
-        console.log("Hello")
       }
-
+      
+      this.showSpinner=true;
       this.studentService.studentUpdate(this.studentData).subscribe(
          response => {
           this.studentName=this.studentData.name;
-          Swal.fire({
-            position: 'top-end',
-            type: 'success',
-            title: 'Update Succesfull',
-            showConfirmButton: false,
-            timer: 1000
-          })
+          
+          if(response==1){
+            //register success
+            Swal.fire({
+              position: 'top-end',
+              type: 'success',
+              title: 'Update Successful.',
+              showConfirmButton: false,
+              timer: 1500
+            });
+          }
+          if(response==2){
+            this.errorMessage="Updated email already exist.";
+            Swal.fire({
+              position: 'center',
+              type: 'error',
+              title: 'Update not Successful.',
+              showConfirmButton: false,
+              timer: 1500
+            });
+          }
+          this.getStudent();
+          this.showSpinner=false;
          },
          error => {
           Swal.fire({
+            position: 'center',
             type: 'error',
-            title: 'Oops...',
-            text: 'Update Not Successful.',
-            footer: 'Please Try Again Later.'
-          })
+            title: 'Update not Successful.',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.showSpinner=false;
          }
-       )
+       );
     }
+  }
+
+  //upload user image
+  selectFile(event) {
+    this.showSpinner=true;
+    this.selectedFiles = event.target.files;
+    this.fileUploadService.pushFileToStorage(this.selectedFiles.item(0),this.userId).subscribe(
+      response => {
+        if(response == 0){
+          this.errorMessage="File size should be less than 8MB";
+        }else if(response==1){
+          this.userId=sessionStorage.getItem('userId');
+          Swal.fire({
+            position: 'center',
+            type: 'success',
+            title: 'Update Successful.',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }else{
+          Swal.fire({
+            position: 'center',
+            type: 'error',
+            title: 'Update not Successful.',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+        this.showSpinner=false;
+        this.selectedFiles = undefined;
+      },
+      error => {
+        this.showSpinner=false;
+        console.log(error);
+      }
+    );
+   }
+
+  closeError(){
+    this.errorMessage="";
   }
 
   handleErrorResponse(error: HttpErrorResponse) {

@@ -34,7 +34,7 @@
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR-KEY-HERE"></script> -->
 
     <script>
@@ -42,23 +42,11 @@
         var global = window;
       }
     </script>
-
-    <script>
-      $(document).ready(function(){
-        $("#searchBox").on("keyup", function() {
-          var value = $(this).val().toLowerCase();
-          $("#mytable tr").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-          });
-        });
-      });
-    </script>
-
 </head>
 <body>
   <app-root>
   </app-root>
-  <script src="./assets/js/jquery-3.4.1.min.js"></script>
+  <!-- <script src="./assets/js/jquery-3.4.1.min.js"></script> -->
 </body>
 
 

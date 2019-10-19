@@ -34,7 +34,6 @@ import { StudentPaymentCheckComponent } from '../../student/student-payment-chec
 import { TrialLessonDayFeedbackComponent } from '../../LessonBooking/trial-lesson-day-feedback/trial-lesson-day-feedback.component';
 import { TrialLessonDayFeedbackChartComponent } from '../../LessonBooking/trial-lesson-day-feedback-chart/trial-lesson-day-feedback-chart.component';
 import { StaffSalaryComponent } from '../../staff/staff-salary/staff-salary.component';
-import { LoadingSpinnerComponent } from '../../Shared/loading-spinner/loading-spinner.component';
 import { StudentDeactivateComponent } from '../../student/student-deactivate/student-deactivate.component';
 
 
@@ -86,9 +85,9 @@ import { StudentDeactivateComponent } from '../../student/student-deactivate/stu
 
     InstructorTimeTableComponent,
     LessonAssignStudentComponent,
-    PractricalLessonChartStudentComponent,
+    PractricalLessonChartStudentComponent
 
-    LoadingSpinnerComponent
+ 
   ]
 })
 

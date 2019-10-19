@@ -1,6 +1,14 @@
 <div class="panel-header panel-header-sm">
 </div>
 <div *ngIf="isStudentDataLoad" class="main-content">
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+        <button (click)=closeError() type="button" aria-hidden="true" class="close">
+          <i class="now-ui-icons ui-1_simple-remove"></i>
+        </button>
+        <span>{{errorMessage}}</span>
+  </div>
+
   <div class="row">
     <div class="col-md-8">
       <div class="card">
@@ -40,7 +48,7 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label>NIC</label>
-                  <input [(ngModel)]="studentData.nic" type="text" class="form-control" placeholder="National ID" name="nic">
+                  <input [(ngModel)]="studentData.nic" type="text" class="form-control" placeholder="National ID" name="nic" disabled>
                   <small *ngIf="errorNic" class="text-danger">{{errorNic}}</small>
                 </div>
               </div>
@@ -89,7 +97,12 @@
         <div class="card-body">
           <div class="author">
             <a>
-              <img class="avatar border-gray" src="../assets/img/user.png" alt="...">
+              <img class="avatar border-gray" src="{{apiUrl}}/api/file/{{userId}}" alt="...">
+             
+              <br>
+              <label for="upload-photo">Edit Image</label>
+              <input type="file" name="photo" id="upload-photo" (change)="selectFile($event)"/>
+              
               <h5 class="title text-primary">{{studentName}}</h5>
             </a>
             <p class="description">
@@ -115,3 +128,6 @@
   </div>
 </div>
 
+<div *ngIf="showSpinner" class="spinner-border text-secondary" role="status" id="loader">
+  <span class="sr-only">Loading...</span>
+</div>

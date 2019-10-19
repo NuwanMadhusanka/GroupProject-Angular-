@@ -28,49 +28,49 @@ import { StudentPaymentCheckComponent } from '../../student/student-payment-chec
 import { TrialLessonDayFeedbackComponent } from '../../LessonBooking/trial-lesson-day-feedback/trial-lesson-day-feedback.component';
 import { TrialLessonDayFeedbackChartComponent } from '../../LessonBooking/trial-lesson-day-feedback-chart/trial-lesson-day-feedback-chart.component';
 import { StaffSalaryComponent } from '../../staff/staff-salary/staff-salary.component';
-import { LoadingSpinnerComponent } from '../../Shared/loading-spinner/loading-spinner.component';
 import { StudentDeactivateComponent } from '../../student/student-deactivate/student-deactivate.component';
+import { RouteGuardServiceService } from '../../service/RouteGurd/route-guard-service.service';
 
 
 
 export const AdminLayoutRoutes: Routes = [
-    { path: 'dashboard',      component: DashboardComponent },
+    { path: 'dashboard',  component: DashboardComponent, canActivate:[RouteGuardServiceService]},
     
-    {path:'staff-list',       component:StaffListComponent},
-    {path:'staff-salary',   component:StaffSalaryComponent},
+    {path:'staff-list', component:StaffListComponent, canActivate:[RouteGuardServiceService]},
+    {path:'staff-salary', component:StaffSalaryComponent, canActivate:[RouteGuardServiceService]},
 
-    {path:'package-list',     component:PackageListComponent},
-    {path:'report-list',     component:ReportListComponent},
-    {path:'vehicle-list',     component:VehicleListComponent},
+    {path:'package-list', component:PackageListComponent, canActivate:[RouteGuardServiceService]},
+    {path:'report-list', component:ReportListComponent, canActivate:[RouteGuardServiceService]},
+    {path:'vehicle-list', component:VehicleListComponent, canActivate:[RouteGuardServiceService]},
    
-    {path:'student-list',     component:StudentListComponent},
-    {path:'student-add',     component:StudentAddComponent},
-    {path:'student-package-add/:id/:name',     component:StudentPackageAddComponent},
-    {path:'student-payment/:id/:name',     component:StudentPaymentComponent},
-    {path:'student-more-details/:id',   component:StudentMoreDetailsComponent},
-    {path:'admin-staff-student-dash-board',   component:AdminStaffStudentDashBoardComponent},
-    {path:'student-exam-result-add',     component:StudentExamResultAddComponent},
-    {path:'student-payment-check',     component:StudentPaymentCheckComponent},
-    {path:'student-deactivate',     component:StudentDeactivateComponent},
+    {path:'student-list', component:StudentListComponent, canActivate:[RouteGuardServiceService]},
+    {path:'student-add', component:StudentAddComponent, canActivate:[RouteGuardServiceService]},
+    {path:'student-package-add/:id/:name', component:StudentPackageAddComponent, canActivate:[RouteGuardServiceService]},
+    {path:'student-payment/:id/:name', component:StudentPaymentComponent, canActivate:[RouteGuardServiceService]},
+    {path:'student-more-details/:id', component:StudentMoreDetailsComponent, canActivate:[RouteGuardServiceService]},
+    {path:'admin-staff-student-dash-board', component:AdminStaffStudentDashBoardComponent, canActivate:[RouteGuardServiceService]},
+    {path:'student-exam-result-add', component:StudentExamResultAddComponent, canActivate:[RouteGuardServiceService]},
+    {path:'student-payment-check', component:StudentPaymentCheckComponent, canActivate:[RouteGuardServiceService]},
+    {path:'student-deactivate',  component:StudentDeactivateComponent, canActivate:[RouteGuardServiceService]},
     
-    {path:'time-table',     component:TimeTableComponent},
-    {path:'lesson-add',     component:LessonAddComponent},
-    {path:'lesson-update/:id/:type',   component:LessonUpdateComponent},
-    {path:'time-slot',     component:TimeSlotComponent},
-    {path:'path-map', component:PathMapComponent},
-    {path:'package-analysis'    ,component:PackageAnalysisComponent},
+    {path:'time-table', component:TimeTableComponent, canActivate:[RouteGuardServiceService]},
+    {path:'lesson-add', component:LessonAddComponent, canActivate:[RouteGuardServiceService]},
+    {path:'lesson-update/:id/:type', component:LessonUpdateComponent, canActivate:[RouteGuardServiceService]},
+    {path:'time-slot', component:TimeSlotComponent, canActivate:[RouteGuardServiceService]},
+    {path:'path-map', component:PathMapComponent, canActivate:[RouteGuardServiceService]},
+    {path:'package-analysis', component:PackageAnalysisComponent, canActivate:[RouteGuardServiceService]},
    
 
-    {path:'trial-lesson-book',  component:TrialLessonBookComponent},
-    {path:'trial-lesson-list/:package/:title',  component:TrialLessonListComponent},
-    {path:'trial-lesson-day-feedback/:userId/:packageId/:packageTitle',  component:TrialLessonDayFeedbackComponent},
-    {path:'trial-lesson-day-feedback-chart',    component:TrialLessonDayFeedbackChartComponent},
+    {path:'trial-lesson-book', component:TrialLessonBookComponent, canActivate:[RouteGuardServiceService]},
+    {path:'trial-lesson-list/:package/:title', component:TrialLessonListComponent, canActivate:[RouteGuardServiceService]},
+    {path:'trial-lesson-day-feedback/:userId/:packageId/:packageTitle', component:TrialLessonDayFeedbackComponent, canActivate:[RouteGuardServiceService]},
+    {path:'trial-lesson-day-feedback-chart',  component:TrialLessonDayFeedbackChartComponent, canActivate:[RouteGuardServiceService]},
 
-    {path:'student-profile' ,component:StudentProfileComponent},
+    {path:'student-profile' , component:StudentProfileComponent, canActivate:[RouteGuardServiceService]},
 
-    {path:'instructor-time-table', component:InstructorTimeTableComponent},
-    {path:'lesson-assign-student/:lessonId/:day/:timeSlot', component:LessonAssignStudentComponent},
-    {path:'practrical-lesson-chart-student', component:PractricalLessonChartStudentComponent},
+    {path:'instructor-time-table', component:InstructorTimeTableComponent, canActivate:[RouteGuardServiceService]},
+    {path:'lesson-assign-student/:lessonId/:day/:timeSlot', component:LessonAssignStudentComponent, canActivate:[RouteGuardServiceService]},
+    {path:'practrical-lesson-chart-student', component:PractricalLessonChartStudentComponent, canActivate:[RouteGuardServiceService]}
 
-    {path:'load-spinner',   component:LoadingSpinnerComponent}
+
 ];

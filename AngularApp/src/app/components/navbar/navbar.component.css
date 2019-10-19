@@ -75,26 +75,20 @@
  border-radius:10px;
  }
 
-
-.ow-anywhere { 
-  position: inherit;
-  color: black;
-  width: 360px;
-  word-wrap: break-word; /* old name */
-  overflow-wrap: break-word;
-  hyphens: auto;
-}
-
-.notification-item p {
-    margin: 0;
-    padding:0;
-    width:100%;
-    position: relative; word-break: break-all;
-}
-
 .pointer {
   cursor: pointer;
 }
+
+.container{
+  width: 20px;
+}
+
+#pcontent{
+  width: 5px !important;  
+  word-wrap: break-word !important;
+}
+
+
 
 
 

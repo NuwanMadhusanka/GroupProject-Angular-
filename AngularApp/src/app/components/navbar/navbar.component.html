@@ -38,6 +38,14 @@
             </li>
              <!-- Profile -->
 
+              <!-- Message -->
+            <li class="nav-item">
+                <a (click)="profile()" class="nav-link">
+                  <i class="now-ui-icons ui-1_email-85" title="Message" ></i>
+                </a>
+              </li>
+               <!-- Message -->
+
             <!-- Notification Button -->
             
               <li  class="nav-item" ngbDropdown>
@@ -59,7 +67,9 @@
                           <a  *ngFor="let notification of newNotificationList" class="content dropdown-item pointer">
                               <div class="notification-item">
                                 <h6 class="item-title">{{notification.title}}</h6>
-                                <p id="msg">{{notification.message}}</p><br>
+                                <div class="container" id="pcontent">
+                                  <p>{{notification.message}}</p><br>
+                                </div>
                                 <small style="color: blue;">{{notification.dateDiff}}</small>
                               </div>  
                           </a>

@@ -51,6 +51,7 @@ export class StudentMoreDetailsComponent implements OnInit {
   isUpdate(option){
     this.errorUpdateMessage="";
     
+    if( (option === 0)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New NIC";  this.updateName="NIC"; this.updateVariable=this.studentData.nic;}
     if( (option === 1)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Email";  this.updateName="Email"; this.updateVariable=this.studentData.userId.email;}
     if( (option === 2)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Password";  this.updateName="Password"; this.updateVariable=this.studentData.userId.password;}
     if( (option === 3)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="Exam Date(2015-01-10)"; this.updateName="Exam Date"; this.updateVariable=this.studentData.examDate;}
@@ -60,6 +61,18 @@ export class StudentMoreDetailsComponent implements OnInit {
   update(){
 
     this.errorUpdateMessage="";
+
+    //nic
+    if(this.selectOption==0) {
+      if( (this.updateVariable == "") || !this.userValidation.isValidNicNumber(this.updateVariable)){
+          this.errorUpdateMessage="Insert Valid NIC.";
+      }else{
+          this.studentData.nic=this.updateVariable;
+          this.errorUpdateMessage="";
+          this.isUpdateVariable=false;
+          this.confirmUpdate=true;
+      }
+    }
     
     //email 
     if(this.selectOption==1) {
@@ -210,8 +223,8 @@ export class StudentMoreDetailsComponent implements OnInit {
             timer: 1500
           });
         }
-        if(response==2){
-          this.errorMessage="Updated email already exist.";
+        if(response==2 || response==3){
+          this.errorMessage=(response==2 ? "Updated email already exist." : "Update NIC number already exist");
           Swal.fire({
             position: 'center',
             type: 'error',
@@ -220,6 +233,7 @@ export class StudentMoreDetailsComponent implements OnInit {
             timer: 1500
           });
         }
+    
         this.studentDetails();
       },
       error => {

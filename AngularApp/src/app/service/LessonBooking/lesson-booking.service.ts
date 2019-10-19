@@ -55,4 +55,8 @@ export class LessonBookingService {
   lessonFeedbackChartData(packageId,transmission,time){
     return this.http.get<LessonDayFeedbackChartDataMap[]>(`${API_URL}/lessonbooking/lessonday/feedback/chart/${packageId}/${transmission}/${time}`);
   }
+
+  checkCoursePayment(studentPackageId){
+    return this.http.get<Number>(`${API_URL}/lessonbooking/course/payment/${studentPackageId}`);
+  }
 }
