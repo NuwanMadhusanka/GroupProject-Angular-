@@ -10,17 +10,17 @@ export class ProfileImage{
     private uploadService :FileUploadServiceService
   ){}
 
-  upload(selectedFiles,userId) {   
-    this.currentFileUpload = selectedFiles.item(0);
-    this.uploadService.pushFileToStorage(this.currentFileUpload,userId).subscribe(
-      response => {
-          return response;
-      },
-      error => {
-        console.log(error);
-      }
-    );  
-    return -1;
-  }
+  // upload(selectedFiles,userId) {   
+  //   this.currentFileUpload = selectedFiles.item(0);
+  //   this.uploadService.pushFileToStorage(this.currentFileUpload,userId).subscribe(
+  //     response => {
+  //         return response;
+  //     },
+  //     error => {
+  //       console.log(error);
+  //     }
+  //   );  
+  //   return -1;
+  // }
   
 }

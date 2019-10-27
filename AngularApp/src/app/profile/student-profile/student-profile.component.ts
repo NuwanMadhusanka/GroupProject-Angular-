@@ -10,6 +10,7 @@ import { FileUploadServiceService } from '../../service/file-upload/file-upload-
 import { API_URL } from '../../app.constants';
 
 
+
 @Component({
   selector: 'app-student-profile',
   templateUrl: './student-profile.component.html',
@@ -169,12 +170,12 @@ export class StudentProfileComponent implements OnInit {
   selectFile(event) {
     this.showSpinner=true;
     this.selectedFiles = event.target.files;
-    this.fileUploadService.pushFileToStorage(this.selectedFiles.item(0),this.userId).subscribe(
+    this.fileUploadService.fileUpload(this.selectedFiles.item(0),this.userId,1).subscribe(
       response => {
         if(response == 0){
-          this.errorMessage="File size should be less than 8MB";
+          this.errorMessage="File size should be less than 9MB";
         }else if(response==1){
-          this.userId=sessionStorage.getItem('userId');
+          window.location.reload();
           Swal.fire({
             position: 'center',
             type: 'success',

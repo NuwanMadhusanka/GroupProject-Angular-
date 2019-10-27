@@ -5,6 +5,7 @@ export class UserModel{
       public password:String,
       public regDate:Date,
       public status:Number,
-      public role:Number
+      public role:Number,
+      public profileImage:Number
     ){}
 }

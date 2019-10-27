@@ -44,27 +44,27 @@ export class SidebarComponent implements OnInit {
     this.admin=[
       { path: '/dashboard', title: 'Dashboard',  icon: 'design_app', class: ''},
       { path: '/staff-list', title: 'Staff',  icon:'design_bullet-list-67', class: '' },
-      { path: '/package-list', title: 'Package',  icon:'design_bullet-list-67', class: '' },
-      { path: '/report-list', title: 'Report',  icon:'design_bullet-list-67', class: '' },
-      { path: '/vehicle-list', title: 'Vehicle',  icon:'design_bullet-list-67', class: '' },
-      { path: '/student-list', title: 'Student',  icon:'design_bullet-list-67', class: '' }
+      { path: '/package-list', title: 'Package',  icon:'education_agenda-bookmark', class: '' },
+      { path: '/report-list', title: 'Report',  icon:'files_single-copy-04', class: '' },
+      { path: '/vehicle-list', title: 'Vehicle',  icon:'transportation_bus-front-12', class: '' },
+      { path: '/student-list', title: 'Student',  icon:'education_hat', class: '' }
     ];
 
     this.adminStaffInstructor=[
       { path: '/time-table', title: 'Time Table',  icon:'files_paper', class: '' },
-      { path: '/vehicle-list', title: 'Vehicle(AI)',  icon:'design_bullet-list-67', class: '' },
-      { path: '/staff-salary', title: 'Salary',  icon:'design_bullet-list-67', class: '' }
+      { path: '/vehicle-list', title: 'Vehicle(AI)',  icon:'transportation_bus-front-12', class: '' },
+      { path: '/staff-salary', title: 'Salary',  icon:'business_money-coins', class: '' }
     ];
 
     this.adminStaffStudent=[
       { path: '/admin-staff-student-dash-board', title: 'Dashboard',  icon:'design_app', class: '' },
-      { path: '/student-list', title: 'Student',  icon:'design_bullet-list-67', class: '' },
-      { path: '/staff-salary', title: 'Salary',  icon:'design_bullet-list-67', class: '' },
+      { path: '/student-list', title: 'Student',  icon:'education_hat', class: '' },
+      { path: '/staff-salary', title: 'Salary',  icon:'business_money-coins', class: '' },
     ];
 
     this.instructor=[
       { path: '/instructor-time-table', title: 'Time Table',  icon:'files_paper', class: '' },
-      { path: '/staff-salary', title: 'Salary',  icon:'design_bullet-list-67', class: '' },
+      { path: '/staff-salary', title: 'Salary',  icon:'business_money-coins', class: '' },
     ];
 
     this.student=[

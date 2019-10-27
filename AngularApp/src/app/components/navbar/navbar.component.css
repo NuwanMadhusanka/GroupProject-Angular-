@@ -1,4 +1,8 @@
 
+#user{
+  color: white;
+}
+
 .notification {
     color: white;
     text-decoration: none;
@@ -26,7 +30,6 @@
      height: 40px; 
   }
 
-
   .notifications {
     max-width:420px; 
     }
@@ -41,51 +44,31 @@
      color:#ff7788;
      font-size:1.5rem;
       display:inline-block;
-      } 
+  } 
+
+  .content{
+    width: 400px;
+  }
+
+  .content:hover {background-color: #ddd;}
    
  .notification-heading, .notification-footer  {
- 	padding:2px 10px;
+ 	  padding:2px 10px;
   }
       
-        
-.dropdown-menu.divider {
-  margin:5px 0;          
-  }
-
-.item-title {
- color:#000;
-    
-}
-
-.notifications a.content {
- position: relative;
- width:380px;
- text-decoration:none;
- background:#ccc;
- border-radius:5px;
- padding:10px;
- margin:5px;
+ .item-title {
+  color:#000;     
  }
 
- .dropdown-menu a:hover {background-color: #ddd;}
-    
-.notification-item {
- padding:10px;
- margin:5px;
- border-radius:10px;
+ .pointer {
+   cursor: pointer;
  }
 
-.pointer {
-  cursor: pointer;
-}
 
-.container{
-  width: 20px;
-}
-
-#pcontent{
-  width: 5px !important;  
-  word-wrap: break-word !important;
+img{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
 }
 
 

@@ -20,6 +20,7 @@ export class NavbarComponent implements OnInit {
 
     userId;
     userRole;
+    userRoleName;
     newNotificationList:NotificationDataMap[]=[];
     earlyNotification:NotificationDataMap[]=[];
     isNewNotification=false;
@@ -29,6 +30,8 @@ export class NavbarComponent implements OnInit {
     //WebSocket
     stompClient: any;
     webSocketService;
+
+    apiUrl=API_URL;
  
 
     private listTitles: any[];
@@ -62,6 +65,7 @@ export class NavbarComponent implements OnInit {
      this.userId=sessionStorage.getItem("userId");
      this.userRole=sessionStorage.getItem("userRole");
      this.getNotification();
+     this.getRoleName();
 
      if(this.userRole==4 || this.userRole==5){
        this._connect();
@@ -186,7 +190,9 @@ export class NavbarComponent implements OnInit {
 
     logOut(){
       this.userAuthenticationService.logout();
-      this._disconnect();
+      if(this.userRole==4 || this.userRole==5){
+        this._disconnect();
+      }
       this.router.navigate(['']);
     }
 
@@ -254,6 +260,26 @@ export class NavbarComponent implements OnInit {
   notificationBadge(){
     this.isNotificationBadgeOn=false;
     this.updateNotification();
+  }
+
+  getRoleName(){
+    if(this.userRole==1){
+      this.userRoleName="Admin";
+    }else if(this.userRole==2){
+      this.userRoleName="AdministrativeStaff-Student";
+    }else if(this.userRole==3){
+      this.userRoleName="AdministrativeStaff-Instructor";
+    }else if(this.userRole==4){
+      this.userRoleName="Instructor";
+    }else{
+      this.userRoleName="Student";
+    }
+  }
+
+  staff(type){
+    if(type==1){
+      this.router.navigate(['staff-salary-information-list']);
+    }
   }
 
   //WebSocket Configuration

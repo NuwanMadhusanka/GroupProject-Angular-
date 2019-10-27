@@ -7,6 +7,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { HttpError } from '../Shared/httpError/HttpError';
 import { EncryptDecryptServiceService } from '../service/encrypt-decrypt-service.service';
 import { UserServiceService } from '../service/user/user-service.service';
+import { StudentServiceService } from '../service/student/student-service.service';
+import { InstructorServiceService } from '../service/instructor/instructor-service.service';
 
 
 @Component({
@@ -104,6 +106,7 @@ export class LoginComponent implements OnInit {
 
         // should check status backendside
         if(response.role === 2){
+
           this.router.navigate(['admin-staff-student-dash-board'])
         }else if( response.role == 3 ){
           this.router.navigate(['time-table']);

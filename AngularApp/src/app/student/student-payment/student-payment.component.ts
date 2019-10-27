@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { CourseFee } from '../../ClassModel/CourseFeeModel';
 import { HttpError } from '../../Shared/httpError/HttpError';
 import { ExchangeRate } from '../../ClassModel/MapObject/ExchangeRate';
+import { PaymentValidation } from '../../Shared/validation/payment-validation/payment-validation';
 
 export class PayPal{
   constructor(
@@ -47,8 +48,6 @@ export class StudentPaymentComponent implements OnInit {
   courseFee:number=0.00;//course fee
   balance:number=0.00;//balnace=coursefee-payment
   payment:number=0.00;
-
-  regexp:any;//Regular Expression for new Payment
 
   paymentId;
   payerId;
@@ -175,7 +174,7 @@ export class StudentPaymentComponent implements OnInit {
  
    doPayment(packageId){
      
-      if(this.isValidCash()){
+      if(this.isValidCash(this.newPayment)){
           if(this.newPayment>this.balance){
               this.errorPaymentMessage="can't pay more than Rs: "+this.balance;
           }else{
@@ -242,23 +241,18 @@ export class StudentPaymentComponent implements OnInit {
       }
    }
 
-   isValidCash(){
-    if(this.newPayment != null){
-      this.regexp = new RegExp('^\\\d+(\\\.\\\d{1,2})?$');
-      let test = this.regexp.test(this.newPayment);
-      if(test){
-        if(this.newPayment>0){
-            return true;
-        }
-      }
-      
+   isValidCash(newPayment){
+    let paymentValidation = new PaymentValidation();
+    if(paymentValidation.isValidCash(newPayment)){
+      return true;
+    }else{
+      this.errorPaymentMessage="Insert Valid Payment."
     }
-    this.errorPaymentMessage="Insert Valid Payment."
     return false;
   }
 
   doPayPalPayment(packageId){
-    if(this.isValidCash()){
+    if(this.isValidCash(this.newPayment)){
       if(this.newPayment>this.balance){
           this.errorPaymentMessage="can't pay more than Rs: "+this.balance;
       }else{

@@ -26,5 +26,5 @@ export class UserServiceService {
   getUser(email){
     return this.http.get<UserModel>(`${API_URL}/user/details/${email}`);
   }
-  
+
 }

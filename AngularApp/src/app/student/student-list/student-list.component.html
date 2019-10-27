@@ -22,8 +22,8 @@
             <div class="col-md-9">
                 <h4 class="card-title"> Student List</h4>
                 <a (click)=addStudent()><button type="button" class="btn btn-success btn-sm" title="Add Student"><i class="fas fa-plus"></i></button></a>
-                <a (click)=studentPaymentCheck()><button type="button" class="btn btn-secondary btn-sm" title="Student Payment Check"><i class="fas fa-list-alt"></i></button></a>
-                <a (click)=studentDeactivate()><button type="button" class="btn btn-primary btn-sm" title="Deactivate Student Accounts"><i class="fas fa-times"></i></button></a>
+                <a (click)=studentPaymentCheck()><button type="button" class="btn btn-info btn-sm" title="Student Payment Check"><i class="fas fa-list-alt"></i></button></a>
+                <a (click)=studentDeactivate()><button type="button" class="btn btn-secondary btn-sm" title="Deactivate Student Accounts"><i class="fas fa-times"></i></button></a>
             </div>
             <div class="col-md-3">
                 <form>
@@ -44,7 +44,7 @@
         <div class="card-body">
           <div class="table-responsive">
             <table class="table">
-              <thead class=" text-primary">
+              <thead  class=" text-secondary">
                 <th></th>
                 <th>Name</th>
                 <th>NIC</th>
@@ -61,7 +61,7 @@
                   <td>{{student.address}}</td>
                   <td>  
                     <a  (click)=moreDetails(student.studentId)><button class="btn btn-info btn-sm"><i class="fas fa-eye fa-sm" title="MoreDetails"></i></button></a>
-                    <a  (click)=addPackage(student.studentId,student.name)><button class="btn btn-primary btn-sm"><i class="fas fa-plus fa-sm" title="Add Package"></i></button></a>
+                    <a  (click)=addPackage(student.studentId,student.name)><button class="btn btn-success btn-sm"><i class="fas fa-plus fa-sm" title="Add Package"></i></button></a>
                     <a  (click)=addPayment(student.studentId,student.name)><button class="btn btn-secondary btn-sm"><i class="fas fa-dollar-sign fa-sm" title="Add Payment"></i></button></a>
                     <a  (click)=deleteStudent(student.studentId,student.name)><button class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm" title="Delete Student"></i></button></a>
                   </td>

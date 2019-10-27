@@ -30,25 +30,25 @@
           </form> -->
           <ul class="navbar-nav">
 
-            <!-- Profile -->
             <li class="nav-item">
-              <a (click)="profile()" class="nav-link">
-                <i class="now-ui-icons users_single-02" title="Profile" ></i>
-              </a>
+              <p id="user" class="nav-link">Loged in as:  <b>{{userRoleName}}</b></p>
             </li>
-             <!-- Profile -->
-
-              <!-- Message -->
-            <li class="nav-item">
-                <a (click)="profile()" class="nav-link">
-                  <i class="now-ui-icons ui-1_email-85" title="Message" ></i>
-                </a>
-              </li>
-               <!-- Message -->
+          
+            <!-- Message -->
+            <li class="nav-item pointer" ngbDropdown>
+              <a  class="nav-link" id="dropdownBasic1" ngbDropdownToggle>
+                <i class="now-ui-icons ui-1_email-85" title="Message" ></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <a  class="dropdown-item pointer" (click)="profile()">Profile</a>
+                <a  class="dropdown-item pointer" (click)=logOut()>LogOut</a>
+              </div>
+            </li>
+            <!-- Message -->
 
             <!-- Notification Button -->
             
-              <li  class="nav-item" ngbDropdown>
+              <li  class="nav-item pointer" ngbDropdown>
                 <a (click)="notificationBadge()" title="Notifications" class="nav-link notification" id="dropdownBasic1" ngbDropdownToggle>
                   <span data-notify="icon" class="now-ui-icons ui-1_bell-53"><span *ngIf="isNewNotification && isNotificationBadgeOn" class="badge">{{newNotificationList.length}}</span></span>
                 </a>
@@ -58,34 +58,32 @@
                     <div class="notification-heading">
                       <p class="menu-title">Notifications</p>
                     </div>
-                    <li class="divider"></li>
                   
                     <div class="notifications-wrapper">
                     
-                      <div *ngIf="isNewNotification" id="mainbox">
+                      <div *ngIf="isNewNotification">
                           <small style="color: coral;margin: 10px;">New</small>
-                          <a  *ngFor="let notification of newNotificationList" class="content dropdown-item pointer">
-                              <div class="notification-item">
+                          <div class="card" *ngFor="let notification of newNotificationList">
+                            <div class="card-body content" >
                                 <h6 class="item-title">{{notification.title}}</h6>
-                                <div class="container" id="pcontent">
-                                  <p>{{notification.message}}</p><br>
-                                </div>
+                                <p >{{notification.message}}</p><br>
                                 <small style="color: blue;">{{notification.dateDiff}}</small>
-                              </div>  
-                          </a>
+                            </div>
+                          </div>
                       </div>
 
+                      
                       <div *ngIf="isEarlyNotification">
                           <small style="color: coral;margin: 10px;">Early</small>
-                          <a *ngFor="let notification of earlyNotification" class="content dropdown-item pointer">
-                              <div class="notification-item">
+                          <div class="card" *ngFor="let notification of earlyNotification">
+                            <div class="card-body content" >
                                 <h6 class="item-title">{{notification.title}}</h6>
-                                <p class="ow-anywhere">{{notification.message}}</p><br>
+                                <p >{{notification.message}}</p><br>
                                 <small style="color: blue;">{{notification.dateDiff}}</small>
-                              </div>  
-                          </a>
+                            </div>
+                          </div>
                       </div>
-
+                      
                     </div>
                       
                   </ul>
@@ -93,14 +91,31 @@
             
             <!-- Finish Notification -->
 
-            <!-- Logout Button -->
-            <li class="nav-item">
-              <a (click)=logOut()  title="LogOut" class="nav-link" href="#">
-                <i class="fas fa-sign-out-alt"></i>
+             <!-- Setting -->
+             <li *ngIf="userRole==1" class="nav-item pointer" ngbDropdown>
+              <a  class="nav-link" id="dropdownBasic1" ngbDropdownToggle>
+                <i class="now-ui-icons ui-1_settings-gear-63" title="Setting" ></i>
               </a>
+              <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <a  class="dropdown-item pointer" (click)="staff(1)">Staff Salary</a>
+                <a  class="dropdown-item pointer" (click)=staff(2)>Staff Work Time</a>
+                <a  class="dropdown-item pointer" (click)=staff(3)>Staff Leave</a>
+              </div>
             </li>
-            <!-- Finish LogOut -->
+            <!-- Setting -->
 
+            <!-- Profile -->
+            <li class="nav-item pointer" ngbDropdown>
+                <a  class="nav-link" id="dropdownBasic1" ngbDropdownToggle>
+                  <img  class="avatar border-gray" src="{{apiUrl}}/api/file/{{userId}}/1" alt="...">
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <a  class="dropdown-item pointer" (click)="profile()">Profile</a>
+                  <a  class="dropdown-item pointer" (click)=logOut()>LogOut</a>
+                </div>
+            </li>
+            <!-- Profile -->
+          
           </ul>
         </div>
     </div>

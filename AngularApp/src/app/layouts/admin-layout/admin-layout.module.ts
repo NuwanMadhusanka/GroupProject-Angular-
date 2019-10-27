@@ -35,6 +35,10 @@ import { TrialLessonDayFeedbackComponent } from '../../LessonBooking/trial-lesso
 import { TrialLessonDayFeedbackChartComponent } from '../../LessonBooking/trial-lesson-day-feedback-chart/trial-lesson-day-feedback-chart.component';
 import { StaffSalaryComponent } from '../../staff/staff-salary/staff-salary.component';
 import { StudentDeactivateComponent } from '../../student/student-deactivate/student-deactivate.component';
+import { PackageAddComponent } from '../../package/package-add/package-add.component';
+import { StaffSalaryInformationListComponent } from '../../staff/StaffSalaryInformation/staff-salary-information-list/staff-salary-information-list.component';
+import { StaffSalaryInformationAddComponent } from '../../staff/StaffSalaryInformation/staff-salary-information-add/staff-salary-information-add.component';
+
 
 
 
@@ -54,8 +58,12 @@ import { StudentDeactivateComponent } from '../../student/student-deactivate/stu
     
     StaffListComponent,
     StaffSalaryComponent,
+    StaffSalaryInformationListComponent,
+    StaffSalaryInformationAddComponent,
 
     PackageListComponent,
+    PackageAddComponent,
+
     ReportListComponent,
     VehicleListComponent,
  
