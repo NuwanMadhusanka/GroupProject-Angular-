@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { SalaryInformationModel } from '../../ClassModel/SalaryInformationModel';
 import { API_URL } from '../../app.constants';
 import { StaffRole } from '../../ClassModel/MapObject/StaffRole';
+import { WorkTimeModel } from '../../ClassModel/WorkTimeModel';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,14 @@ export class StaffServiceService {
 
   deleteStaffSalaryInfromation(salaryInformationId:Number){
     return this.http.delete<any>(`${API_URL}/staff/salary/information/${salaryInformationId}`);
+  }
+
+  getStaffWorkTime(){
+    return this.http.get<WorkTimeModel>(`${API_URL}/staff/work/time`);
+  }
+
+  updateStaffWorkTime(updateWorkTime:WorkTimeModel){
+    return this.http.put<any>(`${API_URL}/staff/work/time/${updateWorkTime.fullDay}/${updateWorkTime.halfDay}`,{});
   }
 
 }

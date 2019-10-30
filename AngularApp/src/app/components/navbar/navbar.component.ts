@@ -279,6 +279,10 @@ export class NavbarComponent implements OnInit {
   staff(type){
     if(type==1){
       this.router.navigate(['staff-salary-information-list']);
+    }else if(type==2){
+      this.router.navigate(['staff-work-time']);
+    }else{//type==3
+      this.router.navigate(['']);
     }
   }
 

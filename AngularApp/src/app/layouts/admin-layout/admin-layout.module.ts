@@ -38,6 +38,7 @@ import { StudentDeactivateComponent } from '../../student/student-deactivate/stu
 import { PackageAddComponent } from '../../package/package-add/package-add.component';
 import { StaffSalaryInformationListComponent } from '../../staff/StaffSalaryInformation/staff-salary-information-list/staff-salary-information-list.component';
 import { StaffSalaryInformationAddComponent } from '../../staff/StaffSalaryInformation/staff-salary-information-add/staff-salary-information-add.component';
+import { StaffWorkTimeComponent } from '../../staff/StaffWorkTime/staff-work-time/staff-work-time.component';
 
 
 
@@ -60,6 +61,7 @@ import { StaffSalaryInformationAddComponent } from '../../staff/StaffSalaryInfor
     StaffSalaryComponent,
     StaffSalaryInformationListComponent,
     StaffSalaryInformationAddComponent,
+    StaffWorkTimeComponent,
 
     PackageListComponent,
     PackageAddComponent,
