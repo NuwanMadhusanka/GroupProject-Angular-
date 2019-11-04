@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SalaryInformationModel } from '../../ClassModel/SalaryInformationModel';
 import { API_URL } from '../../app.constants';
-import { StaffRole } from '../../ClassModel/MapObject/StaffRole';
 import { WorkTimeModel } from '../../ClassModel/WorkTimeModel';
+import { SalaryModel } from '../../ClassModel/SalaryModel';
+import { StaffWorkDaysDataMap } from '../../ClassModel/MapObject/StaffWorkDaysDataMap';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,22 @@ export class StaffServiceService {
 
   updateStaffWorkTime(updateWorkTime:WorkTimeModel){
     return this.http.put<any>(`${API_URL}/staff/work/time/${updateWorkTime.fullDay}/${updateWorkTime.halfDay}`,{});
+  }
+
+  getStaffSalaryDetails(month:number){
+    return this.http.get<SalaryModel[]>(`${API_URL}/staff/salary/${month}`);
+  }
+
+  getStaffSalaryData(staffId:Number,month:number){
+    return this.http.get<SalaryModel>(`${API_URL}/staff/salary/data/${staffId}/${month}`);
+  }
+
+  payStaffSalary(payment:SalaryModel){
+    return this.http.put<any>(`${API_URL}/staff/pay/salary`,payment);
+  }
+
+  getStaffWorkDays(staffId:Number,month:number){
+    return this.http.get<StaffWorkDaysDataMap>(`${API_URL}/staff/work/days/${staffId}/${month}`);
   }
 
 }

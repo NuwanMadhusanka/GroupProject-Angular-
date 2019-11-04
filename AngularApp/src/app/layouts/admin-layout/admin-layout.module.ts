@@ -39,6 +39,8 @@ import { PackageAddComponent } from '../../package/package-add/package-add.compo
 import { StaffSalaryInformationListComponent } from '../../staff/StaffSalaryInformation/staff-salary-information-list/staff-salary-information-list.component';
 import { StaffSalaryInformationAddComponent } from '../../staff/StaffSalaryInformation/staff-salary-information-add/staff-salary-information-add.component';
 import { StaffWorkTimeComponent } from '../../staff/StaffWorkTime/staff-work-time/staff-work-time.component';
+import { StaffSalaryListComponent } from '../../staff/staff-salary-list/staff-salary-list.component';
+import { StaffSalaryPayComponent } from '../../staff/staff-salary-pay/staff-salary-pay.component';
 
 
 
@@ -62,6 +64,8 @@ import { StaffWorkTimeComponent } from '../../staff/StaffWorkTime/staff-work-tim
     StaffSalaryInformationListComponent,
     StaffSalaryInformationAddComponent,
     StaffWorkTimeComponent,
+    StaffSalaryListComponent,
+    StaffSalaryPayComponent,
 
     PackageListComponent,
     PackageAddComponent,

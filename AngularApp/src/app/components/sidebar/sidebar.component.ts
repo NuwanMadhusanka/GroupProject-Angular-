@@ -44,6 +44,7 @@ export class SidebarComponent implements OnInit {
     this.admin=[
       { path: '/dashboard', title: 'Dashboard',  icon: 'design_app', class: ''},
       { path: '/staff-list', title: 'Staff',  icon:'design_bullet-list-67', class: '' },
+      { path: '/staff-salary-list', title: 'Salary',  icon:'business_money-coins', class: '' },
       { path: '/package-list', title: 'Package',  icon:'education_agenda-bookmark', class: '' },
       { path: '/report-list', title: 'Report',  icon:'files_single-copy-04', class: '' },
       { path: '/vehicle-list', title: 'Vehicle',  icon:'transportation_bus-front-12', class: '' },

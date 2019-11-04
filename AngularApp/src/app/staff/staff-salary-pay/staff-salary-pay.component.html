@@ -1,0 +1,93 @@
+<div class="panel-header panel-header-sm" >
+</div>
+
+<div class="main-content">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">{{staffMemberName}}'s {{monthNames[month-1]}} Month Salary Details</h5>
+      <small *ngIf="staffSalaryData.staffId.userId.role==2">Staff Category: Administarive Staff-Student</small>
+      <small *ngIf="staffSalaryData.staffId.userId.role==3">Staff Category: Administarive Staff-Instructor</small>
+      <small *ngIf="staffSalaryData.staffId.userId.role==4">Staff Category: Instructor</small>
+    </div>
+    <div class="card-body">
+        <div class="row">
+          
+          <div class="col-md-12">
+              <div class="card">
+                <div class="card-body">
+                  
+                  <div *ngIf="isStaffSalaryDataLoad" class="row">
+                   
+                    <div class="col-md-6">
+                        <table class="table">
+                            <tr>
+                              <td>Total Salary</td>
+                              <td>: {{staffSalaryData.totalPayment | number : '1.2-2'}}</td>
+                            </tr>
+                            <tr>
+                              <td>NoPay</td>
+                              <td>: {{staffSalaryData.nopay | number : '1.2-2'}}</td>
+                            </tr>
+                            <tr>
+                              <td>Payed</td>
+                              <td>: {{staffSalaryData.payed | number : '1.2-2'}}</td>
+                            </tr>
+                            <tr bgcolor="#d3d3d3">
+                              <td>Net Salary</td>
+                              <td>: {{netSalary | number : '1.2-2'}}</td>
+                            </tr>
+                        </table>
+                        <button (click)="payStaffSalary(netSalary)" type="submit" class="btn btn-secondary btn-round" [attr.disabled] = " (isSelectPay || netSalary<=0)  ? 'disabled' : null">Pay Salary</button>
+                        
+                        <hr>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input (click)="selectPayFunction()" class="form-check-input" type="checkbox" value="" [attr.disabled] = " (netSalary<=0)  ? 'disabled' : null">
+                                Pay specific Payment
+                                <span class="form-check-sign"></span>
+                            </label>
+                        </div>
+                        <br>
+                        <div class="col-sm-8 col-lg-6">
+                            <div class="form-group">
+                              <label>Payment</label>
+                                <input [(ngModel)]="payment" type="number" name="payment" placeholder="Rs" class="form-control" [attr.disabled] = " !isSelectPay ? 'disabled' : null"/>
+                                <small *ngIf="errorPayment" class="text-danger">{{errorPayment}}</small>
+                              </div>
+                        </div>
+                        <button (click)="validPayment()" type="submit" class="btn btn-secondary btn-round" [attr.disabled] = " !isSelectPay ? 'disabled' : null">Pay</button>
+                    </div>
+
+                    <div class="col-md-6">
+                      <p class="title">Working Details</p> 
+                      <table class="table">
+                          <tr>
+                            <td>Full Days</td>
+                            <td>: {{staffWorkDays.fullDays}}</td>
+                          </tr>
+                          <tr>
+                            <td>Half Days</td>
+                            <td>: {{staffWorkDays.halfDays}}</td>
+                          </tr>
+                          <tr>
+                            <td>Not Complete Days</td>
+                            <td>: {{staffWorkDays.notCompleteDays}}</td>
+                          </tr>
+                          <tr>
+                            <td>Leave Days</td>
+                            <td>: {{staffWorkDays.leaveDays}}</td>
+                          </tr>
+                      </table>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+

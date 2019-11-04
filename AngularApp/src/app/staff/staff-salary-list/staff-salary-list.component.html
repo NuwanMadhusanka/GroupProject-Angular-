@@ -1,0 +1,81 @@
+<div class="panel-header panel-header-sm" >
+</div>
+
+<div class="main-content">
+
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        <button (click)=closeError() type="button" aria-hidden="true" class="close">
+          <i class="now-ui-icons ui-1_simple-remove"></i>
+        </button>
+        <span>{{errorMessage}}</span>
+      </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h6 class="card-subtitle mb-2 text-muted">Staff Salary Details</h6>
+        </div>
+        <div class="card-body">
+         
+          <h6>Month</h6>
+
+          <!-- Drop down -->
+          <div ngbDropdown class="dropdown" placement="bottom-left">
+              <button class="btn btn-info dropdown-toggle" ngbDropdownToggle>Select Month</button>
+              <div ngbDropdownMenu>
+                  <div *ngFor="let month of monthNames; let i =index;">
+                    <a (click)="selectMonths(i)" class="dropdown-item" >{{month}}</a>
+                  </div>
+              </div>
+          </div>
+            <!-- Drop Down Finish -->
+
+          <hr>
+          <h4 class="card-title">{{monthNames[selectMonth]}} Payments</h4>    
+          
+          <!-- Table Start -->
+          <div class="table-responsive">
+              <table class="table table-striped table-bordered">
+                <thead class=" text-primary thead-dark">
+                  <th></th>
+                  <th>Name</th>
+                  <th>NIC</th>
+                  <th>Total Salary</th>
+                  <th>Net Salary(Rs)</th>
+                  <th>Status</th>
+                  <th>Option</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let salary of staffSalaryList; let i=index;">
+                    <td>{{i+1}})</td>
+
+                    <td *ngIf="salary.staffId.userId.role==2">{{salary.staffId.name}} <small>(AS-S)</small></td>
+                    <td *ngIf="salary.staffId.userId.role==3">{{salary.staffId.name}} <small>(AS-I)</small></td>
+                    <td *ngIf="salary.staffId.userId.role==4">{{salary.staffId.name}} <small>(I)</small></td>
+
+                    <td>{{salary.staffId.nic}}</td>
+                    <td>{{salary.totalPayment | number : '1.2-2'}}</td>
+
+                    <td *ngIf="salary.complete==0">{{salary.totalPayment-salary.nopay-salary.payed | number : '1.2-2'}}</td>
+                    <td *ngIf="salary.complete==1">-</td>
+                    
+                    <td *ngIf="salary.complete==0"><span class="badge badge-danger">Not Payed</span></td>
+                    <td *ngIf="salary.complete==1"><span class="badge badge-success">Payed</span></td>
+                    
+                    <td>
+                      <a (click)=staffSalaryPay(salary.staffId.staffId)><button type="button" class="btn btn-info btn-sm" title="More"><i class="fas fa-eye"></i></button></a>
+                    </td>
+                  </tr>
+                </tbody>
+                </table>
+          </div>
+          <!-- Table Finish -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

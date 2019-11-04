@@ -39,8 +39,7 @@ import { HttpIntercepterBasicAuthService } from './service/http/http-intercepter
     AppComponent,
     AdminLayoutComponent,
     LoginComponent
-   
-     
+      
   ],
   providers: [
     DatePipe,

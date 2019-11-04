@@ -34,6 +34,8 @@ import { PackageAddComponent } from '../../package/package-add/package-add.compo
 import { StaffSalaryInformationListComponent } from '../../staff/StaffSalaryInformation/staff-salary-information-list/staff-salary-information-list.component';
 import { StaffSalaryInformationAddComponent } from '../../staff/StaffSalaryInformation/staff-salary-information-add/staff-salary-information-add.component';
 import { StaffWorkTimeComponent } from '../../staff/StaffWorkTime/staff-work-time/staff-work-time.component';
+import { StaffSalaryListComponent } from '../../staff/staff-salary-list/staff-salary-list.component';
+import { StaffSalaryPayComponent } from '../../staff/staff-salary-pay/staff-salary-pay.component';
 
 
 
@@ -46,6 +48,9 @@ export const AdminLayoutRoutes: Routes = [
     {path:'staff-salary-information-list', component:StaffSalaryInformationListComponent, canActivate:[RouteGuardServiceService]},
     {path:'staff-salary-information-add/:type/:id', component:StaffSalaryInformationAddComponent, canActivate:[RouteGuardServiceService]},
     {path:'staff-work-time', component:StaffWorkTimeComponent, canActivate:[RouteGuardServiceService]},
+    {path:'staff-salary-list', component:StaffSalaryListComponent, canActivate:[RouteGuardServiceService]},
+    {path:'staff-salary-pay/:id/:month', component:StaffSalaryPayComponent, canActivate:[RouteGuardServiceService]},
+
 
     {path:'package-list', component:PackageListComponent, canActivate:[RouteGuardServiceService]},
     {path:'package-add', component:PackageAddComponent, canActivate:[RouteGuardServiceService]},
