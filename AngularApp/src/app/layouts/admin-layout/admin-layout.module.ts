@@ -41,7 +41,9 @@ import { StaffSalaryInformationAddComponent } from '../../staff/StaffSalaryInfor
 import { StaffWorkTimeComponent } from '../../staff/StaffWorkTime/staff-work-time/staff-work-time.component';
 import { StaffSalaryListComponent } from '../../staff/staff-salary-list/staff-salary-list.component';
 import { StaffSalaryPayComponent } from '../../staff/staff-salary-pay/staff-salary-pay.component';
-
+import { PdfListComponent } from '../../pdf/pdf-list/pdf-list.component';
+import { PdfMoreDetailsComponent } from '../../pdf/pdf-more-details/pdf-more-details.component';
+import { PdfAddComponent } from '../../pdf/pdf-add/pdf-add.component';
 
 
 
@@ -99,7 +101,11 @@ import { StaffSalaryPayComponent } from '../../staff/staff-salary-pay/staff-sala
 
     InstructorTimeTableComponent,
     LessonAssignStudentComponent,
-    PractricalLessonChartStudentComponent
+    PractricalLessonChartStudentComponent,
+
+    PdfListComponent,
+    PdfMoreDetailsComponent,
+    PdfAddComponent,
 
  
   ]
