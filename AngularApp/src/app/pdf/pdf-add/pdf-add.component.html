@@ -1,0 +1,83 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+
+<!-- Error Message -->
+<div *ngIf="errorMessage" class="row">
+<div class="card">
+    <div class="card-body">
+        <div class="alert alert-danger">
+            <button (click)=closeError() type="button" aria-hidden="true" class="close">
+              <i class="now-ui-icons ui-1_simple-remove"></i>
+            </button>
+            <span>{{errorMessage}}</span>
+          </div>
+    </div>
+</div>
+</div>
+<div>
+  
+<!-- Error Message End -->
+
+<div class="row">
+<!-- First Column -->
+<div class="col-md-1"></div>
+
+<!-- Second Coulmn -->
+<div class="col-md-10">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="title">Add Pdf</h5>
+    </div>
+    <div class="card-body">
+      <form  (ngSubmit)="addPdf()">
+        
+        
+
+        <!-- Secon Row -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Description</label>
+              <input [(ngModel)]="description" type="text" class="form-control" placeholder="Description" name="description">
+              <small *ngIf="errorDescription" class="text-danger">{{errorDescription}}</small>
+            </div>
+          </div>
+        </div>
+        <!-- End Second Row -->
+
+        
+        <!-- Third Row -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Resource</label>
+              <input [(ngModel)]="resource" type="text" class="form-control" placeholder="Resource" name="resource">
+              <small *ngIf="errorResource" class="text-danger">{{errorResource}}</small>
+            </div>
+          </div>  
+        </div>
+        <!-- End Third Row -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Tags</label>
+              <input [(ngModel)]="tags" type="text" class="form-control" placeholder="Tags" name="tags">
+              <small *ngIf="errorTags" class="text-danger">{{errorTags}}</small>
+            </div>
+          </div>
+        </div>
+        
+        
+         <button  type="submit" class="btn btn-primary">Submit</button>
+      <!-- </form>
+    </div>-->
+<!--    </div>
+</div>
+
+Third Column 
+<div class="col-md-2"></div>-->
+
+<!-- </div>-->
+  </form>
+</div>

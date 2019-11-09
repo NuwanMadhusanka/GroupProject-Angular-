@@ -36,7 +36,9 @@ import { StaffSalaryInformationAddComponent } from '../../staff/StaffSalaryInfor
 import { StaffWorkTimeComponent } from '../../staff/StaffWorkTime/staff-work-time/staff-work-time.component';
 import { StaffSalaryListComponent } from '../../staff/staff-salary-list/staff-salary-list.component';
 import { StaffSalaryPayComponent } from '../../staff/staff-salary-pay/staff-salary-pay.component';
-
+import { PdfListComponent } from '../../pdf/pdf-list/pdf-list.component';
+import { PdfMoreDetailsComponent } from '../../pdf/pdf-more-details/pdf-more-details.component';
+import { PdfAddComponent } from '../../pdf/pdf-add/pdf-add.component';
 
 
 
@@ -85,7 +87,10 @@ export const AdminLayoutRoutes: Routes = [
 
     {path:'instructor-time-table', component:InstructorTimeTableComponent, canActivate:[RouteGuardServiceService]},
     {path:'lesson-assign-student/:lessonId/:day/:timeSlot', component:LessonAssignStudentComponent, canActivate:[RouteGuardServiceService]},
-    {path:'practrical-lesson-chart-student', component:PractricalLessonChartStudentComponent, canActivate:[RouteGuardServiceService]}
+    {path:'practrical-lesson-chart-student', component:PractricalLessonChartStudentComponent, canActivate:[RouteGuardServiceService]},
 
+    {path:'pdf-list',     component:PdfListComponent},
+    {path:'pdf-more-details/:id',   component:PdfMoreDetailsComponent},
+    {path:'pdf-add',   component:PdfAddComponent}
 
 ];
