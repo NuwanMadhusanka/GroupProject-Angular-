@@ -200,7 +200,7 @@
                     <div *ngIf="isManualLesson" class="card">
                         <div class="card-header">
                             <h6 class="card-category">
-                                Student Attendance({{manualLessonDay}} Lesson : {{manualLessonTimeSlot.startTime | slice:0:5}} - {{manualLessonTimeSlot.finishTime | slice:0:5}})
+                                Student Lesson Booking({{manualLessonDay}} Lesson : {{manualLessonTimeSlot.startTime | slice:0:5}} - {{manualLessonTimeSlot.finishTime | slice:0:5}})
                                 <button (click)="studentAttendanceChangeButton(1,2)" *ngIf="isPastStudentAttendanceManual" type="button" class="btn btn-info btn-round btn-sm"><i class="fas fa-forward" title='Future'></i></button>
                                 <button (click)="studentAttendanceChangeButton(1,1)" *ngIf="isFutureStudentAttendanceManual" type="button" class="btn btn-info btn-round btn-sm"><i class="fas fa-backward" title='Past'></i></button>
 
@@ -374,7 +374,7 @@
                     <div *ngIf="isAutoLesson" class="card">
                         <div class="card-header">
                             <h6 class="card-category">
-                                Student Attendance({{autoLessonDay}} Lesson : {{autoLessonTimeSlot.startTime | slice:0:5}} - {{autoLessonTimeSlot.finishTime | slice:0:5}})
+                                Student Lesson Booking({{autoLessonDay}} Lesson : {{autoLessonTimeSlot.startTime | slice:0:5}} - {{autoLessonTimeSlot.finishTime | slice:0:5}})
                                 <button (click)="studentAttendanceChangeButton(2,2)" *ngIf="isPastStudentAttendanceAuto" type="button" class="btn btn-primary btn-round btn-sm"><i class="fas fa-forward" title='Future'></i></button>
                                 <button (click)="studentAttendanceChangeButton(2,1)" *ngIf="isFutureStudentAttendanceAuto" type="button" class="btn btn-primary btn-round btn-sm"><i class="fas fa-backward" title='Past'></i></button>
 

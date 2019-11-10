@@ -48,6 +48,7 @@ import { PdfAddComponent } from '../../pdf/pdf-add/pdf-add.component';
 
 
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -106,8 +107,6 @@ import { PdfAddComponent } from '../../pdf/pdf-add/pdf-add.component';
     PdfListComponent,
     PdfMoreDetailsComponent,
     PdfAddComponent,
-
- 
   ]
 })
 

@@ -51,6 +51,7 @@ export class StaffSalaryListComponent implements OnInit {
   }
 
   selectMonths(index:number){
+    this.errorMessage="";
     if(index<=this.currentMonth){
       this.selectMonth=index;
       this.getStaffSalaryDetails();

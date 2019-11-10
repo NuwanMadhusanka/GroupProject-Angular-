@@ -1,3 +1,127 @@
-<p>
-  staff-salary works!
-</p>
+<div class="panel-header panel-header-sm" >
+</div>
+
+<div class="main-content">
+
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        <button (click)=closeError() type="button" aria-hidden="true" class="close">
+          <i class="now-ui-icons ui-1_simple-remove"></i>
+        </button>
+        <span>{{errorMessage}}</span>
+      </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h6 class="card-subtitle mb-2 text-muted">Salary Details</h6>
+        </div>
+        <div class="card-body">
+         
+          <h6>Month</h6>
+
+          <!-- Drop down -->
+          <div ngbDropdown class="dropdown" placement="bottom-left">
+              <button class="btn btn-info dropdown-toggle" ngbDropdownToggle>Select Month</button>
+              <div ngbDropdownMenu>
+                  <div *ngFor="let month of monthNames; let i =index;">
+                    <a (click)="selectMonths(i)" class="dropdown-item" >{{month}}</a>
+                  </div>
+              </div>
+          </div>
+            <!-- Drop Down Finish -->
+
+          <hr>
+          <h4 class="card-title">{{monthNames[selectMonth]}} Payments</h4>    
+          
+          <div *ngIf="isSalaryPayedByAdmin" class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="card-title">Drivo Learners</h6>
+                        <p class="card-title">PaySlip For The Month of {{monthNames[selectMonth]}} 2019</p>
+                        <hr>
+                        <p>Employee Name  :</p>
+                        <p>Category       :</p>
+                        <hr>
+                    </div>
+                    <div  class="card-body">
+                        
+                           
+                           
+                              <p class="title">Working Details</p> 
+                              <table *ngIf="isStaffSalaryInformationLoad" class="table">
+                                  <tr>
+                                      <td></td>
+                                      <td>NumDays</td>
+                                      <td></td>
+                                      <td>Amount</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Full Days</td>
+                                    <td>{{staffWorkDays.fullDays}}</td>
+                                    <td>{{staffWorkDays.fullDays}}*{{staffSalaryInformation.fullDaySalary}}</td>
+                                    <td>= {{staffSalaryInformation.fullDaySalary * staffWorkDays.fullDays | number : '1.2-2'}}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Half Days</td>
+                                    <td>{{staffWorkDays.halfDays}}</td>
+                                    <td>{{staffWorkDays.halfDays}}*{{staffSalaryInformation.halfDaySalary}}</td>
+                                    <td>= {{staffWorkDays.halfDays*staffSalaryInformation.halfDaySalary |  number : '1.2-2'}}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Not Complete Days</td>
+                                    <td>{{staffWorkDays.notCompleteDays}}</td>
+                                    <td>-</td>
+                                    <td>= 0</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Leave Days</td>
+                                    <td>{{staffWorkDays.leaveDays}}</td>
+                                    <td>{{staffWorkDays.leaveDays}}*{{staffSalaryInformation.fullDaySalary}}</td>
+                                    <td>= {{staffWorkDays.leaveDays*staffSalaryInformation.fullDaySalary |  number : '1.2-2'}}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>NoPay Days</td>
+                                    <td>{{staffWorkDays.noPayDays}}</td>
+                                    <td>{{staffWorkDays.noPayDays}}*-{{staffSalaryInformation.nopay}}</td>
+                                    <td>= -{{staffWorkDays.noPayDays*staffSalaryInformation.nopay |  number : '1.2-2'}}</td>
+                                  </tr>
+                              </table>
+                           </div>
+                        
+                           <hr>
+                           <hr>
+                          <div class="row">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <table *ngIf="isStaffSalaryDataLoad" class="table">
+                                    <tr>
+                                      <td>Total Salary</td>
+                                      <td>= {{staffSalaryData.totalPayment | number : '1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                      <td>NoPay</td>
+                                      <td>= {{staffSalaryData.nopay | number : '1.2-2'}}</td>
+                                    </tr>
+                                    <tr bgcolor="#d3d3d3">
+                                      <td>Net Salary</td>
+                                      <td>= {{this.staffSalaryData.totalPayment-this.staffSalaryData.nopay | number : '1.2-2'}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                          </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

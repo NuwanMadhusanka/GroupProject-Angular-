@@ -17,7 +17,7 @@
                     <thead class=" text-primary thead-dark">
                       <th></th>
                       <th>Staff-Role</th>
-                      <th>Day Salary(Rs.)</th>
+                      <th>FullDay Salary(Rs.)</th>
                       <th>Half Day Salary(Rs.)</th>
                       <th>Nopay(Rs.)</th>
                       <th>Option</th>
@@ -28,9 +28,9 @@
                         <td *ngIf="salary.staffType==2">AdminStaff-Student</td>
                         <td *ngIf="salary.staffType==3">AdminStaff-Instructor</td>
                         <td *ngIf="salary.staffType==4">Instructor</td>
-                        <td>{{salary.fullDaySalary}}</td>
-                        <td>{{salary.halfDaySalary}}</td>
-                        <td>{{salary.nopay}}</td>
+                        <td>{{salary.fullDaySalary | number : '1.2-2'}}</td>
+                        <td>{{salary.halfDaySalary | number : '1.2-2'}}</td>
+                        <td>{{salary.nopay | number : '1.2-2'}}</td>
                         <td>
                           <a (click)=staffSalary(2,salary.salaryInformationId)><button type="button" class="btn btn-secondary btn-sm" title="Update"><i class="fas fa-edit"></i></button></a>
                           <a (click)=deleteStaffSalary(salary.salaryInformationId)><button type="button" class="btn btn-danger btn-sm" title="Delete"><i class="fas fa-trash"></i></button></a>

@@ -3,6 +3,7 @@ export class StaffWorkDaysDataMap{
         public fullDays:Number,
         public halfDays:Number,
         public notCompleteDays:Number,
-        public leaveDays:Number
+        public leaveDays:Number,
+        public noPayDays:Number
     ){}
 }
