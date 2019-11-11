@@ -3,7 +3,7 @@
 
 <div class="main-content">
   <div class="card">
-    <div class="card-header">
+    <div *ngIf="isStaffSalaryDataLoad" class="card-header">
       <h5 class="card-title">{{staffMemberName}}'s {{monthNames[month-1]}} Month Salary Details</h5>
       <small *ngIf="staffSalaryData.staffId.userId.role==2">Staff Category: Administarive Staff-Student</small>
       <small *ngIf="staffSalaryData.staffId.userId.role==3">Staff Category: Administarive Staff-Instructor</small>
@@ -58,24 +58,44 @@
                         <button (click)="validPayment()" type="submit" class="btn btn-secondary btn-round" [attr.disabled] = " !isSelectPay ? 'disabled' : null">Pay</button>
                     </div>
 
-                    <div class="col-md-6">
+                    <div *ngIf="isStaffSalaryInformationLoad" class="col-md-6">
                       <p class="title">Working Details</p> 
                       <table class="table">
                           <tr>
+                              <td></td>
+                              <td>NumDays</td>
+                              <td></td>
+                              <td>Amount</td>
+                          </tr>
+                          <tr>
                             <td>Full Days</td>
-                            <td>: {{staffWorkDays.fullDays}}</td>
+                            <td>{{staffWorkDays.fullDays}}</td>
+                            <td>{{staffWorkDays.fullDays}}*{{staffSalaryInformation.fullDaySalary}}</td>
+                            <td>= {{staffSalaryInformation.fullDaySalary * staffWorkDays.fullDays | number : '1.2-2'}}</td>
                           </tr>
                           <tr>
                             <td>Half Days</td>
-                            <td>: {{staffWorkDays.halfDays}}</td>
+                            <td>{{staffWorkDays.halfDays}}</td>
+                            <td>{{staffWorkDays.halfDays}}*{{staffSalaryInformation.halfDaySalary}}</td>
+                            <td>= {{staffWorkDays.halfDays*staffSalaryInformation.halfDaySalary |  number : '1.2-2'}}</td>
                           </tr>
                           <tr>
                             <td>Not Complete Days</td>
-                            <td>: {{staffWorkDays.notCompleteDays}}</td>
+                            <td>{{staffWorkDays.notCompleteDays}}</td>
+                            <td>-</td>
+                            <td>= 0</td>
                           </tr>
                           <tr>
                             <td>Leave Days</td>
-                            <td>: {{staffWorkDays.leaveDays}}</td>
+                            <td>{{staffWorkDays.leaveDays}}</td>
+                            <td>{{staffWorkDays.leaveDays}}*{{staffSalaryInformation.fullDaySalary}}</td>
+                            <td>= {{staffWorkDays.leaveDays*staffSalaryInformation.fullDaySalary |  number : '1.2-2'}}</td>
+                          </tr>
+                          <tr>
+                            <td>NoPay Days</td>
+                            <td>{{staffWorkDays.noPayDays}}</td>
+                            <td>{{staffWorkDays.noPayDays}}*-{{staffSalaryInformation.nopay}}</td>
+                            <td>= -{{staffWorkDays.noPayDays*staffSalaryInformation.nopay |  number : '1.2-2'}}</td>
                           </tr>
                       </table>
                     </div>

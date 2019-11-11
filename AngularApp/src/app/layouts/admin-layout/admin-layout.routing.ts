@@ -42,6 +42,7 @@ import { PdfAddComponent } from '../../pdf/pdf-add/pdf-add.component';
 
 
 
+
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',  component: DashboardComponent, canActivate:[RouteGuardServiceService]},
     
@@ -92,5 +93,6 @@ export const AdminLayoutRoutes: Routes = [
     {path:'pdf-list',     component:PdfListComponent},
     {path:'pdf-more-details/:id',   component:PdfMoreDetailsComponent},
     {path:'pdf-add',   component:PdfAddComponent}
+
 
 ];

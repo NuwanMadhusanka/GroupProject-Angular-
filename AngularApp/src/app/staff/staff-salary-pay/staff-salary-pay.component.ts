@@ -7,6 +7,7 @@ import { HttpError } from '../../Shared/httpError/HttpError';
 import Swal from 'sweetalert2';
 import { PaymentValidation } from '../../Shared/validation/payment-validation/payment-validation';
 import { StaffWorkDaysDataMap } from '../../ClassModel/MapObject/StaffWorkDaysDataMap';
+import { SalaryInformationModel } from '../../ClassModel/SalaryInformationModel';
 
 
 
@@ -20,12 +21,15 @@ export class StaffSalaryPayComponent implements OnInit {
                 "July", "August", "September", "October", "November", "December"];
 
   staffId:Number;
-  staffWorkDays:StaffWorkDaysDataMap=new StaffWorkDaysDataMap(0,0,0,0);
+  staffWorkDays:StaffWorkDaysDataMap=new StaffWorkDaysDataMap(0,0,0,0,0);
   staffSalaryData:SalaryModel;
   isStaffSalaryDataLoad=false;
   staffMemberName:String="";
   netSalary:number=0;
   month:number;
+
+  staffSalaryInformation:SalaryInformationModel;
+  isStaffSalaryInformationLoad=false;
 
   isSelectPay=false;
   selectPay=0;
@@ -46,6 +50,7 @@ export class StaffSalaryPayComponent implements OnInit {
         this.router.navigate(['/']);
     }
     this.getStaffSalaryData();
+    this.getStaffSalaryInformation();
   }
 
   selectPayFunction(){
@@ -131,10 +136,22 @@ export class StaffSalaryPayComponent implements OnInit {
   }
 
   getStaffWorkDays(){
-    console.log("--------------")
     this.staffService.getStaffWorkDays(this.staffSalaryData.staffId.staffId,this.month).subscribe(
       response => {
         this.staffWorkDays = response;
+      },
+      error => {
+        console.log(error);
+        this.handleErrorResponse(error);
+      }
+    );
+  }
+
+  getStaffSalaryInformation(){
+    this.staffService.getStaffRoleSalaryInformation(this.staffId).subscribe(
+      response => {
+        this.staffSalaryInformation=response;
+        this.isStaffSalaryInformationLoad=true;
       },
       error => {
         console.log(error);

@@ -5,6 +5,8 @@ import { API_URL } from '../../app.constants';
 import { WorkTimeModel } from '../../ClassModel/WorkTimeModel';
 import { SalaryModel } from '../../ClassModel/SalaryModel';
 import { StaffWorkDaysDataMap } from '../../ClassModel/MapObject/StaffWorkDaysDataMap';
+import { StaffModel } from '../../ClassModel/StaffModel';
+import { AttendanceModel } from '../../ClassModel/MapObject/AttendanceModel';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +31,10 @@ export class StaffServiceService {
 
   updateStaffSalaryInformation(salaryInformation:SalaryInformationModel){
     return this.http.put<any>(`${API_URL}/staff/salary/information`,salaryInformation);
+  }
+
+  getStaffRoleSalaryInformation(staffId:Number){
+    return this.http.get<SalaryInformationModel>(`${API_URL}/staff/role/salary/information/${staffId}`);
   }
 
   deleteStaffSalaryInfromation(salaryInformationId:Number){
@@ -57,6 +63,14 @@ export class StaffServiceService {
 
   getStaffWorkDays(staffId:Number,month:number){
     return this.http.get<StaffWorkDaysDataMap>(`${API_URL}/staff/work/days/${staffId}/${month}`);
+  }
+
+  getStaffAttendance(staffId:Number,month:Number){
+    return this.http.get<AttendanceModel[]>(`${API_URL}/staff/attendance/${staffId}/${month}`);
+  }
+
+  getStaffData(userId:Number){
+    return this.http.get<StaffModel>(`${API_URL}/staff/data/${userId}`);
   }
 
 }
