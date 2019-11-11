@@ -16,7 +16,7 @@ export class UserServiceService {
   
 
   userRegister(user:UserModel){
-      return this.http.post<UserModel>(`${API_URL}/user/register`,user);
+    return this.http.post<UserModel>(`${API_URL}/user/register`,user);
   }
 
   userDelete(userId:Number){

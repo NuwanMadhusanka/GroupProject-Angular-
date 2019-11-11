@@ -37,10 +37,10 @@ export class StudentDeactivateComponent implements OnInit {
    filterStudent(searchString:string){
       if(this.validation.isDigitContain(searchString)){
        return this.deactivateStudents.filter(student => 
-         student.nic.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
+         student.userId.nic.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
       }
       return this.deactivateStudents.filter(student => 
-         student.name.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
+         student.userId.firstName.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
    }
    //Finish filter option implementation
 

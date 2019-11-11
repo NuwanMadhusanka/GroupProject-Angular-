@@ -67,7 +67,7 @@ export class StaffSalaryPayComponent implements OnInit {
     this.staffService.getStaffSalaryData(this.staffId,this.month).subscribe(
       response => {
         this.staffSalaryData=response;
-        this.staffMemberName=this.staffSalaryData.staffId.name;
+        this.staffMemberName=this.staffSalaryData.staffId.userId.firstName+' '+this.staffSalaryData.staffId.userId.lastName;
         this.netSalary = this.staffSalaryData.totalPayment-this.staffSalaryData.nopay-this.staffSalaryData.payed;
         this.getStaffWorkDays();
         this.isStaffSalaryDataLoad=true;
@@ -96,7 +96,7 @@ export class StaffSalaryPayComponent implements OnInit {
   payStaffSalary(payment:number){
     Swal.fire({
       title: 'Are you sure?',
-      text: "You will pay Rs:"+payment+" for "+this.staffSalaryData.staffId.name,
+      text: "You will pay Rs:"+payment+" for "+this.staffSalaryData.staffId.userId.firstName+" "+this.staffSalaryData.staffId.userId.lastName,
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

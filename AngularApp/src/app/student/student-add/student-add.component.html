@@ -33,12 +33,19 @@
             
             <!-- First Row -->
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-6">
                 <div class="form-group">
-                  <label>Name</label>
-                  <input type="text"  class="form-control" placeholder="Full Name"  name="name"   [(ngModel)]="name">
-                  <small *ngIf="errorName" class="text-danger">{{errorName}}</small>
+                  <label>First Name</label>
+                  <input type="text"  class="form-control" placeholder="First Name"  name="firstName"   [(ngModel)]="firstName">
+                  <small *ngIf="errorFirstName" class="text-danger">{{errorFirstName}}</small>
                 </div>
+              </div> 
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text"  class="form-control" placeholder="Last Name"  name="lastName"   [(ngModel)]="lastName">
+                    <small *ngIf="errorLastName" class="text-danger">{{errorLastName}}</small>
+                  </div>
               </div> 
             </div>
             <!-- End First Row -->

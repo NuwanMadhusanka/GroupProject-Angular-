@@ -29,7 +29,8 @@ export class StudentProfileComponent implements OnInit {
 
  encryptedPassword;
 
- errorName;
+ errorFirstName;
+ errorLastName;
  errorAddress;
  //errorNic;
  errorTel;
@@ -58,7 +59,7 @@ export class StudentProfileComponent implements OnInit {
     this.studentService.getStudentData(this.userId).subscribe(
       response => {
         this.studentData=response;
-        this.studentName=this.studentData.name;
+        this.studentName=this.studentData.userId.firstName+' '+this.studentData.userId.lastName;
         
         this.encryptedPassword=this.studentData.userId.password;
         this.studentData.userId.password="000000";
@@ -73,7 +74,8 @@ export class StudentProfileComponent implements OnInit {
 
   save(){
   
-    this.errorName="";
+    this.errorFirstName="";
+    this.errorLastName="";
     //this.errorNic="";
     this.errorTel="";
     this.errorAddress="";
@@ -81,8 +83,11 @@ export class StudentProfileComponent implements OnInit {
     this.errorPassword="";
 
     //validate name
-    if(this.studentData.name === ""){
-      this.errorName="Name is mandatory";
+    if(this.studentData.userId.firstName === ""){
+      this.errorFirstName="First Name is mandatory";
+    }
+    if(this.studentData.userId.lastName === ""){
+      this.errorLastName="First Name is mandatory";
     }
 
     //validate NIC
@@ -93,14 +98,14 @@ export class StudentProfileComponent implements OnInit {
     // }
 
     //Valid Number
-    if(this.studentData.tel===""){
+    if(this.studentData.userId.tel===""){
       this.errorTel="Telephone number is mandatory";
-    }else if( !this.userValidation.isValidTelNumber(this.studentData.tel) ){
+    }else if( !this.userValidation.isValidTelNumber(this.studentData.userId.tel) ){
       this.errorTel="Enter Valid Telephone Number ";
     }
 
     //valid address
-    if( this.studentData.address === "" ){
+    if( this.studentData.userId.address === "" ){
       this.errorAddress="Address is mandatory ";
     }
 
@@ -117,7 +122,7 @@ export class StudentProfileComponent implements OnInit {
     }
   
 
-    if(this.errorName=="" && this.errorTel=="" && this.errorAddress=="" && this.errorEmail=="" && this.errorPassword==""){
+    if(this.errorFirstName=="" && this.errorLastName=="" && this.errorTel=="" && this.errorAddress=="" && this.errorEmail=="" && this.errorPassword==""){
        
       //check password change or not
       if( (this.studentData.userId.password == "000000") ){//password not Change
@@ -127,7 +132,7 @@ export class StudentProfileComponent implements OnInit {
       this.showSpinner=true;
       this.studentService.studentUpdate(this.studentData).subscribe(
          response => {
-          this.studentName=this.studentData.name;
+          this.studentName=this.studentData.userId.firstName+' '+this.studentData.userId.lastName;
           
           if(response==1){
             //register success

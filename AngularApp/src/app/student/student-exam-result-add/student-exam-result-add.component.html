@@ -49,12 +49,12 @@
                             </thead>
                             <tbody>
                               <tr *ngFor="let student of writtenExamList">
-                                <td>{{student.name}}</td>
-                                <td>{{student.nic}}</td>
+                                <td>{{student.userId.firstName}} {{student.userId.lastName}}</td>
+                                <td>{{student.userId.nic}}</td>
                                 <td>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input  (click)="countCheckWrittenExam(student.nic)" class="form-check-input" type="checkbox"  name="writtenExamChecked"  checked> 
+                                            <input  (click)="countCheckWrittenExam(student.userId.nic)" class="form-check-input" type="checkbox"  name="writtenExamChecked"  checked> 
                                             <span class="form-check-sign"></span>
                                         </label>
                                     </div>

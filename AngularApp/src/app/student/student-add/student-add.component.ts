@@ -18,7 +18,8 @@ import Swal from 'sweetalert2';
 export class StudentAddComponent implements OnInit {
 
   //form variables
-  name:String="";
+  firstName:String="";
+  lastName:String="";
   nic:String="";
   tel:String="";
   address:String="";
@@ -28,7 +29,8 @@ export class StudentAddComponent implements OnInit {
   trialDate:Date;
 
   //form error messages variables
-  errorName;
+  errorFirstName;
+  errorLastName;
   errorNic;
   errorTel;
   errorAddress;
@@ -60,7 +62,8 @@ export class StudentAddComponent implements OnInit {
   //Student Registration Funtion
   registerStudent(){
     
-    this.errorName="";
+    this.errorFirstName="";
+    this.errorLastName=""
     this.errorNic="";
     this.errorTel="";
     this.errorEmail="";
@@ -69,8 +72,11 @@ export class StudentAddComponent implements OnInit {
     this.errorAddress="";
 
     //validate name
-    if(this.name===""){
-      this.errorName="Name is mandatory";
+    if(this.firstName===""){
+      this.errorFirstName="First Name is mandatory";
+    }
+    if(this.lastName===""){
+      this.errorLastName="Last Name is mandatory";
     }
 
     //validate NIC
@@ -125,17 +131,17 @@ export class StudentAddComponent implements OnInit {
 
 
     //Save to the DB
-    if(this.errorName=="" && this.errorNic=="" && this.errorTel=="" && this.errorAddress=="" && this.errorEmail=="" && this.errorPassword=="" && this.errorExamDate==""){
-      console.log("ok");
+    if(this.errorFirstName=="" && this.errorLastName=="" && this.errorNic=="" && this.errorTel=="" && this.errorAddress=="" && this.errorEmail=="" && this.errorPassword=="" && this.errorExamDate==""){
+     
       //work with backend service
 
       //1)Save User relevant Data
-      this.userService.userRegister(new UserModel(-1,this.email,this.password,new Date(),1,5,0)).subscribe(
+      this.userService.userRegister(new UserModel(-1,this.firstName,this.lastName,this.tel,this.nic,this.address,this.email,this.password,new Date(),1,5,0)).subscribe(
         response => {
           var userId=response.userId
-
+         
           //Save Student relevant Data
-          this.studentService.studentRegister(new StudentModel(-1,this.name,this.tel,this.nic,this.examDate,this.trialDate,this.address,response)).subscribe(
+          this.studentService.studentRegister(new StudentModel(-1,this.examDate,this.trialDate,response)).subscribe(
             response => {
              
               if(response == 1){
@@ -176,7 +182,12 @@ export class StudentAddComponent implements OnInit {
                 title: 'Oops...',
                 text: 'Student Registration Not Successful!.',
                 footer: 'Please Try Again Later'
-              })
+              });
+
+              this.userService.userDelete(userId).subscribe(
+                response => {console.log("user delete success")},
+                error => {console.log("User delete not success")}
+              );
 
               console.log(error);
               this.handleErrorResponse(error);
