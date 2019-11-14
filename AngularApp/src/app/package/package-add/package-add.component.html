@@ -49,7 +49,7 @@
                       <option [ngValue]="undefined" selected disabled>Select a Vehicle Category</option>
                       <option (click)="showTransmission(vehicleCategory)" *ngFor="let vehicleCategory of vehicleCategoryListData"  [ngValue]="vehicleCategory" >{{vehicleCategory.category}}</option>
                     </select>
-                    <small *ngIf="errorSelectPackage" class="text-danger">{{errorSelectPackage}}</small>
+                    <small *ngIf="errorVehicleCategory" class="text-danger">{{errorVehicleCategory}}</small>
               </div>
            </div>
 
@@ -78,7 +78,7 @@
                 <div class="form-group">
                   <label>Manual Lessons</label>
                   <input type="number"  class="form-control" placeholder="Number of manual lessons"  name="title"   [(ngModel)]="manualLesson" [attr.disabled] = " isDisableManualLesson ? 'disabled' : null">
-                  <small *ngIf="errorManualLesson" class="text-danger">{{errorManualLesson}}</small>
+                  <small *ngIf="errorManualLesson && selectManualTransmission" class="text-danger">{{errorManualLesson}}</small>
                 </div>
             </div> 
 
@@ -86,7 +86,7 @@
                 <div class="form-group">
                   <label>Auto Lessons</label>
                   <input type="number"  class="form-control" placeholder="Number of auto lessons"  name="title"   [(ngModel)]="autoLesson" [attr.disabled] = " isDisableAutoLesson ? 'disabled' : null">
-                  <small *ngIf="errorAutoLesson" class="text-danger">{{errorAutoLesson}}</small>
+                  <small *ngIf="errorAutoLesson && selectAutoTransmission" class="text-danger">{{errorAutoLesson}}</small>
                 </div>
             </div> 
             <!-- Finish number of lesson -->
@@ -113,7 +113,8 @@
             <div class="col-sm-2 col-lg-4">
               <div class="form-group">
                 <label>Description</label>
-                <textarea class="form-control" name="name" rows="4" cols="600" placeholder="Write details of the package....."></textarea>
+                <textarea class="form-control" name="name" rows="4" cols="600" placeholder="Write details of the package....."  [(ngModel)]="description"></textarea>
+                <small *ngIf="errorDescription" class="text-danger">{{errorDescription}}</small>
               </div>
             </div> 
             <!-- Description -->

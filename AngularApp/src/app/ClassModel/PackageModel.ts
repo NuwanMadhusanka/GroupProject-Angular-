@@ -5,11 +5,12 @@ export class PackageModel{
     public packageId:Number,
     public title:String,
     public description:String,
-    public url:String,
+    public packageImage:Number,
     public price:number,
     public status:Number,
     public manualLes:Number,
     public autoLes:Number,
+    public basicPayment:Number,
     public vehicleCategoryId:VehicleCategoryModel
   ){}
   }

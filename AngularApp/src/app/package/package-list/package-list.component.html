@@ -7,7 +7,39 @@
       <h4 class="card-title">Package List</h4>
     </div>
     <div class="card-body">
+     
       <a (click)=addPackage()><button type="button" class="btn btn-success btn-sm" title="Add Package"><i class="fas fa-plus"></i></button></a>
+      <a (click)=packageAnalysis()><button type="button" class="btn btn-secondary btn-sm" title="Package Analysis"><i class="fas fa-chart-bar"></i></button></a>
+
+      <div class="table-responsive">
+          <table class="table table-striped table-bordered">
+            <thead  class="text-primary thead-dark">
+              <th></th>
+              <th>Title</th>
+              <th>Vehicle Type</th>
+              <th>Status</th>
+              <th>Options</th>
+            </thead>
+            <tbody id="mytable">
+              <tr *ngFor="let package of packageList; let i = index">
+                <td>{{i+1}})</td>
+                <td>{{package.title}}</td>
+                <td>{{package.vehicleCategoryId.category}}</td>
+                
+                <td *ngIf="package.status==1"><span class="badge badge-success">A</span></td>
+                <td *ngIf="package.status==0"><span class="badge badge-danger">NA</span></td>
+
+                <td>  
+                  <a  (click)=moreDetails()><button class="btn btn-info btn-sm"><i class="fas fa-eye fa-sm" title="MoreDetails"></i></button></a>
+                  <a  *ngIf="package.status==1" (click)=addPayment()><button class="btn btn-secondary btn-sm"><i class="fas fa-times fa-sm" title="Deactivate"></i></button></a>
+                  <a  *ngIf="package.status==0" (click)=addPayment()><button class="btn btn-secondary btn-sm"><i class="fas fa-check fa-sm" title="Active"></i></button></a>
+                  <!-- <a  (click)=deleteStudent()><button class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm" title="Delete Student"></i></button></a> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+
     </div>
   </div>
 </div>
