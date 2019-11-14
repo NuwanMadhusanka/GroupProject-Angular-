@@ -1,69 +1,69 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { StudentServiceService } from '../../service/student/student-service.service';
-import { StudentModel } from '../../ClassModel/StudentModel';
+import { InstructorServiceService } from '../../service/instructor/instructor-service.service';
+import { InstructorModel } from '../../ClassModel/InstructorModel';
 import Swal from 'sweetalert2';
 import { HttpError } from '../../Shared/httpError/HttpError';
 import { UserValidation } from '../../Shared/validation/user-validation/user-validation';
 
+
 @Component({
-  selector: 'app-student-list',
-  templateUrl: './student-list.component.html',
-  styleUrls: ['./student-list.component.scss']
+  selector: 'app-instructor-list',
+  templateUrl: './instructor-list.component.html',
+  styleUrls: ['./instructor-list.component.scss']
 })
-export class StudentListComponent implements OnInit {
+export class InstructorListComponent implements OnInit {
 
   errorMessage="";
 
-  students: StudentModel[] = [];
- 
-
+  instructors:  InstructorModel[] = [];
   validation:UserValidation = new UserValidation();
 
   //Filter Option Implement
-  filteredStudent: StudentModel[] = [];
+  filteredInstructors: InstructorModel[] = [];
   private _searchTerm:string;
   get searchTerm(): string{
     return this._searchTerm;
   }
   set searchTerm(value:string){
     this._searchTerm=value;
-    this.filteredStudent = this.filterStudent(value);
+    this.filteredInstructors = this.filterStudent(value);
   }
 
-  filterStudent(searchString:string){
+  filterStudent(searchString:String){    // should change this code
      if(this.validation.isDigitContain(searchString)){
-      return this.students.filter(student => 
-        student.nic.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
+      return this.instructors.filter(instructor => 
+        instructor.licence.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
      }
-     return this.students.filter(student => 
-        student.name.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
+     return this.instructors.filter(instructor => 
+        instructor.licence.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
+        
   }
   //Finish filter option implementation
 
   constructor(
     private router:Router,
-    private studentService:StudentServiceService
+    private instructorService:InstructorServiceService
   ) { }
 
   ngOnInit() {
-    this.studentList();
+    this.instructorList();
   }
 
-  //get Student List
-  studentList(){
-    this.studentService.studentList(1).subscribe(
+  //get Instructor List
+  instructorList(){
+    this.instructorService.instructorList().subscribe(
       response => {
-        this.students=response;
-        this.filteredStudent=this.students;
+        this.instructors=response;
+        this.filteredInstructors=this.instructors;
+        console.log(response);
       },
       error => {
-        console.log("In StuList ts ER");
         this.handleErrorResponse(1,error);
       }
     );
   }
-
+/*
   //navigate to studentRegister Page
   addStudent(){
     this.router.navigate(['student-add'])
@@ -127,10 +127,6 @@ export class StudentListComponent implements OnInit {
     this.router.navigate(['student-more-details',studentId]);
   }
 
-  closeError(){
-    this.errorMessage="";
-  }
-
   studentPaymentCheck(){
     this.router.navigate(['student-payment-check']);
   }
@@ -149,6 +145,9 @@ export class StudentListComponent implements OnInit {
     }
     let httpError = new HttpError();
     httpError.ErrorResponse(error);
+  }
+   closeError(){
+    this.errorMessage="";
   }
 
 }

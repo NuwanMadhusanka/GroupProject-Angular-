@@ -42,6 +42,8 @@ import { PdfAddComponent } from '../../pdf/pdf-add/pdf-add.component';
 import { VideoListComponent } from '../../video/video-list/video-list.component';
 import { VideoMoreDetailsComponent } from '../../video/video-more-details/video-more-details.component';
 import { VideoAddComponent } from '../../video/video-add/video-add.component';
+import { InstructorListComponent } from '../../instructor/instructor-list/instructor-list.component';
+import { InstructorAddComponent } from '../../instructor/instructor-add/instructor-add.component';
 
 
 
@@ -99,7 +101,8 @@ export const AdminLayoutRoutes: Routes = [
     
      {path:'video-list',     component:VideoListComponent},
      {path:'video-more-details/:id',   component:VideoMoreDetailsComponent},
-    {path:'video-add',   component:VideoAddComponent},
-
+     {path:'video-add',   component:VideoAddComponent},
+     {path:'instructor-list',     component:InstructorListComponent},
+     {path:'instructor-add',   component:InstructorAddComponent},
 
 ];

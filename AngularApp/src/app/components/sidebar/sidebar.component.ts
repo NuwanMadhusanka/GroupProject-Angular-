@@ -54,14 +54,16 @@ export class SidebarComponent implements OnInit {
     this.adminStaffInstructor=[
       { path: '/time-table', title: 'Time Table',  icon:'files_paper', class: '' },
       { path: '/vehicle-list', title: 'Vehicle(AI)',  icon:'transportation_bus-front-12', class: '' },
-      { path: '/staff-salary', title: 'Salary',  icon:'business_money-coins', class: '' }
+      { path: '/staff-salary', title: 'Salary',  icon:'business_money-coins', class: '' },
+      { path: '/instructor-list', title: 'Instructor',  icon:'business_badge', class: '' }
+
     ];
 
     this.adminStaffStudent=[
       { path: '/admin-staff-student-dash-board', title: 'Dashboard',  icon:'design_app', class: '' },
       { path: '/student-list', title: 'Student',  icon:'education_hat', class: '' },
       { path: '/staff-salary', title: 'Salary',  icon:'business_money-coins', class: '' },
-      { path: '/pdf-list', title: 'Pdf',  icon:'design_bullet-list-67', class: '' },
+      { path: '/pdf-list', title: 'Pdf',  icon:'files_single-copy-04', class: '' },
       { path: '/video-list', title: 'Video',  icon:'design_bullet-list-67', class: '' }
 
     ];

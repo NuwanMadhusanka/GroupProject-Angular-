@@ -47,7 +47,8 @@ import { PdfAddComponent } from '../../pdf/pdf-add/pdf-add.component';
 import { VideoListComponent } from '../../video/video-list/video-list.component';
 import { VideoMoreDetailsComponent } from '../../video/video-more-details/video-more-details.component';
 import { VideoAddComponent } from '../../video/video-add/video-add.component';
-
+import { InstructorListComponent } from '../../instructor/instructor-list/instructor-list.component';
+import { InstructorAddComponent } from '../../instructor/instructor-add/instructor-add.component';
 
 
 
@@ -112,6 +113,9 @@ import { VideoAddComponent } from '../../video/video-add/video-add.component';
        VideoListComponent,
     VideoMoreDetailsComponent,
     VideoAddComponent,
+    InstructorListComponent,
+    InstructorAddComponent,
+
   ]
 })
 
