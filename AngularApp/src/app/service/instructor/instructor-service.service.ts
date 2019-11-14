@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_URL } from '../../app.constants';
 import { TimeTableDataList } from '../../ClassModel/MapObject/TimeTableDataList';
+import { InstructorModel } from '../../ClassModel/InstructorModel';
 import { LessonAssingStudentMap } from '../../ClassModel/MapObject/LessonAssignStudentMap';
 import { StudentPractricalChartDataMap } from '../../ClassModel/MapObject/StudentPractricalChartDataMap';
 
@@ -32,5 +33,10 @@ export class InstructorServiceService {
 
   getPractricalLessonChartStudentData(studentLessonId){
     return this.http.get<StudentPractricalChartDataMap>(`${API_URL}/instructor/student/practrical/lesson/${studentLessonId}`);
+  }
+  //get Instructor List
+  instructorList(){
+      console.log("ins serv ts");
+      return this.http.get<InstructorModel[]>(`${API_URL}/instructors`);
   }
 }

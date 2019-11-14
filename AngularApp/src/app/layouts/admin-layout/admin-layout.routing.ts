@@ -39,6 +39,11 @@ import { StaffSalaryPayComponent } from '../../staff/staff-salary-pay/staff-sala
 import { PdfListComponent } from '../../pdf/pdf-list/pdf-list.component';
 import { PdfMoreDetailsComponent } from '../../pdf/pdf-more-details/pdf-more-details.component';
 import { PdfAddComponent } from '../../pdf/pdf-add/pdf-add.component';
+import { VideoListComponent } from '../../video/video-list/video-list.component';
+import { VideoMoreDetailsComponent } from '../../video/video-more-details/video-more-details.component';
+import { VideoAddComponent } from '../../video/video-add/video-add.component';
+import { InstructorListComponent } from '../../instructor/instructor-list/instructor-list.component';
+import { InstructorAddComponent } from '../../instructor/instructor-add/instructor-add.component';
 
 
 
@@ -92,7 +97,12 @@ export const AdminLayoutRoutes: Routes = [
 
     {path:'pdf-list',     component:PdfListComponent},
     {path:'pdf-more-details/:id',   component:PdfMoreDetailsComponent},
-    {path:'pdf-add',   component:PdfAddComponent}
-
+    {path:'pdf-add',   component:PdfAddComponent},
+    
+     {path:'video-list',     component:VideoListComponent},
+     {path:'video-more-details/:id',   component:VideoMoreDetailsComponent},
+     {path:'video-add',   component:VideoAddComponent},
+     {path:'instructor-list',     component:InstructorListComponent},
+     {path:'instructor-add',   component:InstructorAddComponent},
 
 ];
