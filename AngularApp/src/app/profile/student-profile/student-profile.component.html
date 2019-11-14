@@ -20,14 +20,21 @@
             
             <!-- First Row -->
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-6">
                 <div class="form-group">
-                  <label>Name</label>
-                  <input type="text"  class="form-control" placeholder="Full Name"  name="name"   [(ngModel)]="studentData.name">
-                  <small *ngIf="errorName" class="text-danger">{{errorName}}</small>
+                  <label>FirstName</label>
+                  <input type="text"  class="form-control" placeholder="First Name"  name="firstName"   [(ngModel)]="studentData.userId.firstName">
+                  <small *ngIf="errorName" class="text-danger">{{errorFirstName}}</small>
                 </div>
               </div> 
-            </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <label>LastName</label>
+                    <input type="text"  class="form-control" placeholder="Full Name"  name="lastName"   [(ngModel)]="studentData.userId.lastName">
+                    <small *ngIf="errorName" class="text-danger">{{errorLastName}}</small>
+                  </div>
+              </div> 
+            </div>  
             <!-- End First Row -->
 
             <!-- Second Row -->
@@ -35,7 +42,7 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label>Address</label>
-                  <input [(ngModel)]="studentData.address" type="text" class="form-control" placeholder="Home Address" name="address">
+                  <input [(ngModel)]="studentData.userId.address" type="text" class="form-control" placeholder="Home Address" name="address">
                   <small *ngIf="errorAddress" class="text-danger">{{errorAddress}}</small>
                 </div>
               </div>
@@ -48,14 +55,14 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label>NIC</label>
-                  <input [(ngModel)]="studentData.nic" type="text" class="form-control" placeholder="National ID" name="nic" disabled>
+                  <input [(ngModel)]="studentData.userId.nic" type="text" class="form-control" placeholder="National ID" name="nic" disabled>
                   <small *ngIf="errorNic" class="text-danger">{{errorNic}}</small>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Tel</label>
-                  <input [(ngModel)]="studentData.tel" type="text" class="form-control" placeholder="Telephone Number" name="tel">
+                  <input [(ngModel)]="studentData.userId.tel" type="text" class="form-control" placeholder="Telephone Number" name="tel">
                   <small *ngIf="errorTel" class="text-danger">{{errorTel}}</small>
                 </div>
               </div>

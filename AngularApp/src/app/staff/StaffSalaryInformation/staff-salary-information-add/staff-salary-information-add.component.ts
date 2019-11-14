@@ -119,7 +119,7 @@ export class StaffSalaryInformationAddComponent implements OnInit {
       let salaryInformation = new SalaryInformationModel(0,this.selectRoleId,this.fullDayaSalary,this.halfDayaSalary,this.noPay,null);
       
       if(this.type==1){
-        let adminId = new AdminModel(0,"",new UserModel(+sessionStorage.getItem("userId"),"","","","","","","",new Date(),1,1,0));
+        let adminId = new AdminModel(0,"",new UserModel(+sessionStorage.getItem("userId"),'','','','','','','',new Date(),1,1,0));
         salaryInformation.adminId=adminId;
         this.staffService.addStaffSalaryInformation(salaryInformation).subscribe(
           response => {

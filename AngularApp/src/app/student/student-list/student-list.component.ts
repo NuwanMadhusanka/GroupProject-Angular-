@@ -34,10 +34,10 @@ export class StudentListComponent implements OnInit {
   filterStudent(searchString:string){
      if(this.validation.isDigitContain(searchString)){
       return this.students.filter(student => 
-        student.nic.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
+        student.userId.nic.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
      }
      return this.students.filter(student => 
-        student.name.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
+        student.userId.firstName.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
   }
   //Finish filter option implementation
 

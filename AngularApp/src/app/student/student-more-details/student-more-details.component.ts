@@ -35,7 +35,7 @@ export class StudentMoreDetailsComponent implements OnInit {
   
   userValidation=new UserValidation();
 
-  studentData:StudentModel=new StudentModel(1,'Nuwan','0773015590','980150429v',new Date(),new Date(),'No 20 Homagama',new UserModel(1,'','','','','','nuwan@gmail.com','1234',new Date(),1,1,0));
+  studentData:StudentModel=new StudentModel(0,new Date(),new Date(),new UserModel(0,'','','','','','','',new Date(),0,0,0));
 
   constructor(
     private route:ActivatedRoute,
@@ -51,7 +51,7 @@ export class StudentMoreDetailsComponent implements OnInit {
   isUpdate(option){
     this.errorUpdateMessage="";
     
-    if( (option === 0)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New NIC";  this.updateName="NIC"; this.updateVariable=this.studentData.nic;}
+    if( (option === 0)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New NIC";  this.updateName="NIC"; this.updateVariable=this.studentData.userId.nic;}
     if( (option === 1)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Email";  this.updateName="Email"; this.updateVariable=this.studentData.userId.email;}
     if( (option === 2)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Password";  this.updateName="Password"; this.updateVariable=this.studentData.userId.password;}
     if( (option === 3)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="Exam Date(2015-01-10)"; this.updateName="Exam Date"; this.updateVariable=this.studentData.examDate;}
@@ -67,7 +67,7 @@ export class StudentMoreDetailsComponent implements OnInit {
       if( (this.updateVariable == "") || !this.userValidation.isValidNicNumber(this.updateVariable)){
           this.errorUpdateMessage="Insert Valid NIC.";
       }else{
-          this.studentData.nic=this.updateVariable;
+          this.studentData.userId.nic=this.updateVariable;
           this.errorUpdateMessage="";
           this.isUpdateVariable=false;
           this.confirmUpdate=true;

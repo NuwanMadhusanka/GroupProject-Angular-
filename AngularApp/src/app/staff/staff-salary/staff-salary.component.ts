@@ -78,6 +78,7 @@ export class StaffSalaryComponent implements OnInit {
         }
       },
       error =>{
+        this.errorMessage="Salary not process.Please inform to administrator";
         console.log(error);
         this.handleErrorResponse(error);
       }

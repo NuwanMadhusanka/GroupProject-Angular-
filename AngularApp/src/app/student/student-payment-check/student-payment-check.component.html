@@ -36,8 +36,8 @@
           <tbody id="mytable">
             <tr *ngFor="let student of filteredStudent; let i = index">
               <td>{{i+1}})</td>
-              <td>{{student.nic}}</td>
-              <td>{{student.name}}</td>
+              <td>{{student.userId.nic}}</td>
+              <td>{{student.userId.firstName}} {{student.userId.lastName}}</td>
               <td>{{student.trialDate}}</td>
               <td>  
                 <a  (click)=addPayment(student.studentId)><button class="btn btn-secondary btn-sm"><i class="fas fa-dollar-sign fa-sm" title="Add Payment"></i></button></a>

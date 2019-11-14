@@ -14,7 +14,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
-              <h4 class="card-title">{{studentData.name}}'s Details</h4>
+              <h4 class="card-title">{{studentData.userId.firstName}} {{studentData.userId.lastName}}'s Details</h4>
           </div>
           <div class="card-body">
            
@@ -28,19 +28,19 @@
                 <tbody>
                   <tr>
                     <th>Name:</th>
-                    <td>{{studentData.name}}</td>
+                    <td>{{studentData.userId.firstName}} {{studentData.userId.lastName}} </td>
                   </tr>
                   <tr>
                      <th>Address:</th>
-                     <td>{{studentData.address}}</td>
+                     <td>{{studentData.userId.address}}</td>
                   </tr>
                   <tr>
                      <th>Telephone:</th>
-                     <td>{{studentData.tel}}</td>
+                     <td>{{studentData.userId.tel}}</td>
                   </tr>
                   <tr>
                      <th>NIC:</th>
-                     <td>{{studentData.nic}}</td>
+                     <td>{{studentData.userId.nic}}</td>
                      <td><a  (click)=isUpdate(0)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update NIC"></i></button></a></td>
                      <td></td>
                      <td></td>
