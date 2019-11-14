@@ -35,8 +35,8 @@ export class VideoMoreDetailsComponent implements OnInit {
   httpError=new HttpError();
 
   userValidation=new UserValidation();
-  user:UserModel=new UserModel(0,'','',new Date(),0,0,0);
-  staff:StaffModel=new StaffModel(1,'q','q','q','q',this.user);
+  user:UserModel=new UserModel(0,'','','','','','','',new Date(),0,0,0);
+  staff:StaffModel=new StaffModel(1,this.user);
   adminStaff:AdminStaffModel=new AdminStaffModel(1,'q',1,this.staff);
   adminStaffId;
   systemDate;

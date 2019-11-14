@@ -130,7 +130,7 @@ export class StudentAddComponent implements OnInit {
       //work with backend service
 
       //1)Save User relevant Data
-      this.userService.userRegister(new UserModel(-1,this.email,this.password,new Date(),1,5,0)).subscribe(
+      this.userService.userRegister(new UserModel(-1,"","","","","",this.email,this.password,new Date(),1,5,0)).subscribe(
         response => {
           var userId=response.userId
 

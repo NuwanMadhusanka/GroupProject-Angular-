@@ -35,7 +35,7 @@ export class StudentMoreDetailsComponent implements OnInit {
   
   userValidation=new UserValidation();
 
-  studentData:StudentModel=new StudentModel(1,'Nuwan','0773015590','980150429v',new Date(),new Date(),'No 20 Homagama',new UserModel(1,'nuwan@gmail.com','1234',new Date(),1,1,0));
+  studentData:StudentModel=new StudentModel(1,'Nuwan','0773015590','980150429v',new Date(),new Date(),'No 20 Homagama',new UserModel(1,'','','','','','nuwan@gmail.com','1234',new Date(),1,1,0));
 
   constructor(
     private route:ActivatedRoute,

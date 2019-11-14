@@ -109,7 +109,7 @@ export class LessonUpdateComponent implements OnInit {
           this.updateNumStudent=this.lessonData.numStu;
 
           if(this.type==1){
-            this.selectInstructor=new InstructorMap(this.lessonData.instructorId.instructorId,this.lessonData.instructorId.staffId.name)
+            this.selectInstructor=new InstructorMap(this.lessonData.instructorId.instructorId,this.lessonData.instructorId.staffId.userId.firstName)
             this.updateInstructor=this.selectInstructor;
           }
           this.showInstructor();
