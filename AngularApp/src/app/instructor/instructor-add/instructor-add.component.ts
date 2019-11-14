@@ -135,7 +135,7 @@ export class InstructorAddComponent implements OnInit {
           var userId=response.userId
 
           //Save Student relevant Data
-          this.studentService.studentRegister(new StudentModel(-1,this.name,this.tel,this.nic,this.examDate,this.trialDate,this.address,response)).subscribe(
+          this.studentService.studentRegister(new StudentModel(-1,this.examDate,this.trialDate,response)).subscribe(
             response => {
              
               if(response == 1){
