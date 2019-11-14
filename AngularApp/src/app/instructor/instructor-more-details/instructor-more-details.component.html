@@ -1,0 +1,153 @@
+<div class="panel-header panel-header-sm">
+</div>
+
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Instructor Details</h4>
+
+
+          <div class="table-responsive">
+            <table class="table">
+              <!-- <thead class=" text-primary">
+                  <th>Name</th>
+                  <th>Course</th>
+                  <th>Option</th>
+                </thead> -->
+              <tbody>
+                <tr>
+                  <th>Instructor ID:</th>
+                  <td>{{pdfData.pdfId}}</td>
+
+                </tr>
+                <tr>
+                  <th>First Name:</th>
+                  <td>{{pdfData.description}}</td>
+                  <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
+                  <th></th>
+                  <th>Last Name:</th>
+                  <td>{{pdfData.description}}</td>
+                  <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
+
+                </tr>
+
+                <tr>
+                  <th>NIC</th>
+                  <td>{{pdfData.tags}}</td>
+                  <td><a (click)=isUpdate(3)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Tags"></i></button></a></td>
+                </tr>
+
+                <tr>
+                  <th>License:</th>
+                  <td>Id-&nbsp;{{pdfData.adminStaffId.adminStaffId}}&nbsp;&nbsp;&nbsp;Name-&nbsp;{{pdfData.adminStaffId.staffId.userId.firstName}}&nbsp;{{pdfData.adminStaffId.staffId.userId.lastName}}</td>
+                  <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
+
+                </tr>
+                <tr>
+                  <th>Tel no:</th>
+                  <td>{{pdfData.description}}</td>
+                  <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
+                  <th></th>
+                  <th>E-mail:</th>
+                  <td>{{pdfData.description}}</td>
+                  <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
+
+                </tr>
+
+                <tr>
+                  <th>Address:</th>
+                  <td>{{pdfData.addedDate}}</td>
+                  <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
+
+                </tr>
+                <tr>
+                  <th>Staff Id:</th>
+                  <td>{{pdfData.addedDate}}</td>
+                  <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
+
+                </tr>
+                <tr>
+                  <th>User Id:</th>
+                  <td>{{pdfData.addedDate}}</td>
+                </tr>
+                <tr>
+                  <th>Reg Date:</th>
+                  <td>{{pdfData.addedDate}}</td>
+                </tr>
+                <tr>
+                  <th></th>
+
+
+
+
+                  <!--<tr>
+                      <th>Email:</th>
+                      <td>{{pdfData.userId.email}}</td>
+                      <td><a  (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Email"></i></button></a></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                  </tr>
+                  <tr>
+                      <th>Password</th>
+                      <td>........</td>
+                      <td><a  (click)=isUpdate(2)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Password"></i></button></a></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                  </tr>
+                  
+                  <tr>
+                      <th>ExamDate:</th>
+                      <td>{{pdfData.examDate}}</td>
+                      <td><a  (click)=isUpdate(3)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Exam Date"></i></button></a></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                  </tr>
+                  <tr>
+                      <th>Trial Date</th>
+                      <td>{{pdfData.trialDate}}</td>
+                      <td><a  (click)=isUpdate(4)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Trial Date"></i></button></a></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                  </tr>-->
+              </tbody>
+            </table>
+          </div>
+
+
+          <!-- Update -->
+
+          <div *ngIf="isUpdateVariable" class="card">
+            <div class="card-header">
+              <button (click)=close() type="button" aria-hidden="true" class="close">
+                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                      </button>
+            </div>
+            <div class="card-body">
+              <div class="col-sm-8 col-lg-6">
+                <div class="form-group">
+                  <label>{{updateName}}:</label>
+                  <input type="text" value="" placeholder="{{placeHolder}}" class="form-control" name="password" [(ngModel)]="updateVariable"
+                  />
+                  <small *ngIf="errorUpdateMessage && isUpdate" class="text-danger">{{errorUpdateMessage}}</small>
+                </div>
+              </div>
+              <button (click)="update()" type="button" class="btn btn-secondary btn-round">Update</button>
+            </div>
+          </div>
+          <!-- Update -->
+
+          <!-- Confirm All update -->
+
+          <button *ngIf="confirmUpdate" (click)="saveUpdate()" type="button" class="btn btn-primary  btn-round">Confirm All Updates</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
