@@ -19,102 +19,65 @@
               <tbody>
                 <tr>
                   <th>Instructor ID:</th>
-                  <td>{{pdfData.pdfId}}</td>
+                  <td>{{instructorData.licence}}</td>
 
                 </tr>
                 <tr>
                   <th>First Name:</th>
-                  <td>{{pdfData.description}}</td>
+                  <td>{{instructorData.staffId.userId.firstName}}</td>
                   <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
                   <th></th>
                   <th>Last Name:</th>
-                  <td>{{pdfData.description}}</td>
+                  <td>{{instructorData.staffId.userId.lastName}}</td>
                   <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
 
                 </tr>
 
                 <tr>
                   <th>NIC</th>
-                  <td>{{pdfData.tags}}</td>
+                  <td>{{instructorData.staffId.userId.nic}}</td>
                   <td><a (click)=isUpdate(3)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Tags"></i></button></a></td>
-                </tr>
-
-                <tr>
+                <th> </th>
                   <th>License:</th>
-                  <td>Id-&nbsp;{{pdfData.adminStaffId.adminStaffId}}&nbsp;&nbsp;&nbsp;Name-&nbsp;{{pdfData.adminStaffId.staffId.userId.firstName}}&nbsp;{{pdfData.adminStaffId.staffId.userId.lastName}}</td>
+                  <td>{{instructorData.licence}}</td>
                   <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
 
                 </tr>
                 <tr>
                   <th>Tel no:</th>
-                  <td>{{pdfData.description}}</td>
+                  <td>{{instructorData.staffId.userId.tel}}</td>
                   <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
                   <th></th>
                   <th>E-mail:</th>
-                  <td>{{pdfData.description}}</td>
+                  <td>{{instructorData.staffId.userId.email}}</td>
                   <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
 
                 </tr>
 
                 <tr>
                   <th>Address:</th>
-                  <td>{{pdfData.addedDate}}</td>
+                  <td>{{instructorData.staffId.userId.address}}</td>
                   <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
 
                 </tr>
                 <tr>
                   <th>Staff Id:</th>
-                  <td>{{pdfData.addedDate}}</td>
+                  <td>{{instructorData.staffId.staffId}}</td>
                   <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
 
                 </tr>
                 <tr>
                   <th>User Id:</th>
-                  <td>{{pdfData.addedDate}}</td>
+                  <td>{{instructorData.staffId.userId.userId}}</td>
+                  <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
+
                 </tr>
                 <tr>
                   <th>Reg Date:</th>
-                  <td>{{pdfData.addedDate}}</td>
+                  <td>{{instructorData.staffId.userId.regDate}}</td>
                 </tr>
                 <tr>
                   <th></th>
-
-
-
-
-                  <!--<tr>
-                      <th>Email:</th>
-                      <td>{{pdfData.userId.email}}</td>
-                      <td><a  (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Email"></i></button></a></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                  </tr>
-                  <tr>
-                      <th>Password</th>
-                      <td>........</td>
-                      <td><a  (click)=isUpdate(2)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Password"></i></button></a></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                  </tr>
-                  
-                  <tr>
-                      <th>ExamDate:</th>
-                      <td>{{pdfData.examDate}}</td>
-                      <td><a  (click)=isUpdate(3)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Exam Date"></i></button></a></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                  </tr>
-                  <tr>
-                      <th>Trial Date</th>
-                      <td>{{pdfData.trialDate}}</td>
-                      <td><a  (click)=isUpdate(4)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Trial Date"></i></button></a></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                  </tr>-->
               </tbody>
             </table>
           </div>

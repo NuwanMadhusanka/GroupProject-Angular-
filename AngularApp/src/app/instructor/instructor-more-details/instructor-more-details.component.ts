@@ -29,6 +29,7 @@ export class InstructorMoreDetailsComponent implements OnInit {
   placeHolder;
   updateName;//update variable Name
   confirmUpdate = false;
+  
 
   adminStaffId;
   //userId;
@@ -59,7 +60,7 @@ export class InstructorMoreDetailsComponent implements OnInit {
     //this.setAdminStaffAndAdminStaffId();
   }
 
-  //get Pdf Details from the API
+  //get instructor Details from the API
   instructorDetails() {
     console.log("in instructorMOREcomTS1");
     this.instructorService.getInstructorbyID(this.instructorId).subscribe(
