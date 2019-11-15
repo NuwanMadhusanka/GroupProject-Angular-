@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { HttpError } from '../../Shared/httpError/HttpError';
 import {formatDate} from '@angular/common';
 import { DatePipe } from '@angular/common';
+import { UserValidation } from '../../Shared/validation/user-validation/user-validation';
 
 @Component({
   selector: 'app-video-list',
@@ -17,6 +18,31 @@ export class VideoListComponent implements OnInit {
   errorMessage="";
 
   videos: VideoModel[] = [];
+
+  validation: UserValidation = new UserValidation();
+
+    //Filter Option Implement
+  filteredVideos: VideoModel[] = [];
+  private _searchTerm: string;
+  get searchTerm(): string {
+    return this._searchTerm;
+  }
+  set searchTerm(value: string) {
+    this._searchTerm = value;
+    this.filteredVideos = this.filterVideo(value);
+  }
+
+  //Filtering method
+  filterVideo(searchString: string) {
+    if (this.validation.isDigitContain(searchString)) {
+      return this.videos.filter(video =>
+        video.videoId.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1);
+    }
+    return this.videos.filter(video =>
+      video.description.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1);
+
+  }
+  
 
   constructor(
     private router:Router,
@@ -33,6 +59,7 @@ export class VideoListComponent implements OnInit {
     this.videoService.videoList().subscribe(
       response => {
         this.videos=response;
+        this.filteredVideos=this.videos;
         console.log(response);
       },
       error => {

@@ -40,8 +40,7 @@ export class PdfListComponent implements OnInit {
       pdf.description.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1);
 
   }
-  //Finish filter option implementation
-
+  
   constructor(
     private router: Router,
     private pdfService: PdfServiceService,

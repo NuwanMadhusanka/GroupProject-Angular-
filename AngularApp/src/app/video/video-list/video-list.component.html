@@ -4,53 +4,75 @@
 
   <!-- Error Message -->
   <div *ngIf="errorMessage">
-      <div class="alert alert-danger">
-          <button (click)=closeError() type="button" aria-hidden="true" class="close">
+    <div class="alert alert-danger">
+      <button (click)=closeError() type="button" aria-hidden="true" class="close">
             <i class="now-ui-icons ui-1_simple-remove"></i>
           </button>
-          <span>{{errorMessage}}</span>
-      </div>
-    </div> 
-    <!-- Error Message End -->
+      <span>{{errorMessage}}</span>
+    </div>
+  </div>
+  <!-- Error Message End -->
 
   <div class="row">
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title"> Video List</h4>
-          <a (click)=addVideo()><button type="button" class="btn btn-success" title="Add Student"><i class="fas fa-plus"></i></button></a>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table">
-              <thead class=" text-primary">
-                <th>Video Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>URL</th>
-                <th>Added Date</th>
-              </thead>
-              <tbody>
-                <tr *ngFor="let video of videos">
-                  <td>{{video.videoId}}</td>  
-                  <td>{{video.title}}</td>  
-                  <td>{{video.description}}</td>
-                  <td>{{video.url}}</td>
-                  <td>{{video.addedDate}}</td>
-                  <td>  
-                   <a  (click)=moreDetails(video.videoId)><button class="btn btn-info btn-sm"><i class="fas fa-eye fa-sm" title="Video MoreDetails"></i></button></a>
-                 <a  (click)=deleteVideo(video.videoId)><button class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm" title="Delete Video"></i></button></a>
-                 
-                  <!--   <a  (click)=addPackage(student.studentId)><button class="btn btn-primary btn-sm"><i class="fas fa-plus fa-sm" title="Add Package"></i></button></a>
+          <div class="row">
+            <div class="col-md-9">
+              <h4 class="card-title"> Video List</h4>
+              <a (click)=addVideo()><button type="button" class="btn btn-success btn-sm" title="Add Video"><i class="fas fa-plus"></i></button></a>
+            </div>
+
+            <div class="col-md-3">
+              <form>
+                <div class="card">
+                  <div class="card-body">
+                    No of Video : {{videos.length}}
+                  </div>
+                </div>
+                <div class="input-group no-border">
+                  <input type="text" [(ngModel)]="searchTerm" name="search" class="form-control" placeholder="Search..." id="searchBox">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <i class="now-ui-icons ui-1_zoom-bold"></i>
+                    </div>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class=" text-primary">
+                  <th>Video Id</th>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>URL</th>
+                  <th>Added Date</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let video of filteredVideos">
+                    <td>{{video.videoId}}</td>
+                    <td>{{video.title}}</td>
+                    <td>{{video.description}}</td>
+                    <td>{{video.url}}</td>
+                    <td>{{video.addedDate}}</td>
+                    <td>
+                      <a (click)=moreDetails(video.videoId)><button class="btn btn-info btn-sm"><i class="fas fa-eye fa-sm" title="Video MoreDetails"></i></button></a>
+                      <a (click)=deleteVideo(video.videoId)><button class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm" title="Delete Video"></i></button></a>
+
+                      <!--   <a  (click)=addPackage(student.studentId)><button class="btn btn-primary btn-sm"><i class="fas fa-plus fa-sm" title="Add Package"></i></button></a>
                     <a  (click)=addPayment(student.studentId)><button class="btn btn-secondary btn-sm"><i class="fas fa-dollar-sign fa-sm" title="Add Payment"></i></button></a>
-                     --> </td>
-                </tr>
-              </tbody>
-            </table>
+                     --></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
+
     </div>
-   
   </div>
-</div>
