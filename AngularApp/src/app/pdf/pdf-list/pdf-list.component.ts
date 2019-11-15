@@ -32,15 +32,16 @@ export class PdfListComponent implements OnInit {
 
   //Filtering method
   filterPdf(searchString: string) {
-    if (this.validation.isDigitContain(searchString)) {
-      return this.pdfs.filter(pdf =>
-        pdf.pdfId.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1);
-    }
     return this.pdfs.filter(pdf =>
-      pdf.description.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1);
-
+      pdf.pdfId.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      pdf.title.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      pdf.description.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      pdf.adminStaffId.adminStaffId.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      pdf.addedDate.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1
+    );
+   
   }
-  
+
   constructor(
     private router: Router,
     private pdfService: PdfServiceService,
