@@ -30,11 +30,20 @@
       <h5 class="title">Add Pdf</h5>
     </div>
     <div class="card-body">
-      <form  (ngSubmit)="addPdf()">
-        
-        
 
-        <!-- Secon Row -->
+
+      <form  (ngSubmit)="addPdf()">
+        <!-- End Third Row -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Title</label>
+              <input [(ngModel)]="title" type="text" class="form-control" placeholder="Title" name="title">
+              <small *ngIf="errorTags" class="text-danger">{{errorTags}}</small>
+            </div>
+          </div>
+        </div>
+        
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
@@ -44,10 +53,7 @@
             </div>
           </div>
         </div>
-        <!-- End Second Row -->
-
         
-        <!-- Third Row -->
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
@@ -56,16 +62,6 @@
               <small *ngIf="errorResource" class="text-danger">{{errorResource}}</small>
             </div>
           </div>  
-        </div>
-        <!-- End Third Row -->
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <label>Tags</label>
-              <input [(ngModel)]="tags" type="text" class="form-control" placeholder="Tags" name="tags">
-              <small *ngIf="errorTags" class="text-danger">{{errorTags}}</small>
-            </div>
-          </div>
         </div>
         
         

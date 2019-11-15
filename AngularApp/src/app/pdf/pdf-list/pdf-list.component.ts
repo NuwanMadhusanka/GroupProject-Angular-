@@ -4,6 +4,8 @@ import { PdfServiceService } from '../../service/learning-material/pdf/pdf-servi
 import { PdfModel } from '../../ClassModel/PdfModel';
 import Swal from 'sweetalert2';
 import { HttpError } from '../../Shared/httpError/HttpError';
+import { UserValidation } from '../../Shared/validation/user-validation/user-validation';
+
 
 @Component({
   selector: 'app-pdf-list',
@@ -12,16 +14,40 @@ import { HttpError } from '../../Shared/httpError/HttpError';
 })
 export class PdfListComponent implements OnInit {
 
-  errorMessage="";
+  errorMessage = "";
   pdfs: PdfModel[] = [];
-  
+
+  validation: UserValidation = new UserValidation();
+
+  //Filter Option Implement
+  filteredPdf: PdfModel[] = [];
+  private _searchTerm: string;
+  get searchTerm(): string {
+    return this._searchTerm;
+  }
+  set searchTerm(value: string) {
+    this._searchTerm = value;
+    this.filteredPdf = this.filterPdf(value);
+  }
+
+  //Filtering method
+  filterPdf(searchString: string) {
+    if (this.validation.isDigitContain(searchString)) {
+      return this.pdfs.filter(pdf =>
+        pdf.pdfId.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1);
+    }
+    return this.pdfs.filter(pdf =>
+      pdf.description.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1);
+
+  }
+  //Finish filter option implementation
 
   constructor(
-    private router:Router,
-    private pdfService:PdfServiceService,
-    
-    
-    
+    private router: Router,
+    private pdfService: PdfServiceService,
+
+
+
   ) { }
 
   ngOnInit() {
@@ -29,15 +55,16 @@ export class PdfListComponent implements OnInit {
   }
 
   //to get the list of Pdfs
-   pdfList(){
-     
+  pdfList() {
+
     this.pdfService.pdfList().subscribe(
       response => {
-        this.pdfs=response;
-         //for(let pdf of this.pdfs){
-              console.log(this.pdfs);
-     // }
-      // this.handleErrorResponse(this.pdfs[0].adminStaff==null);
+        this.pdfs = response;
+        this.filteredPdf = this.pdfs;
+        //for(let pdf of this.pdfs){
+        console.log(this.pdfs);
+        // }
+        // this.handleErrorResponse(this.pdfs[0].adminStaff==null);
       },
       error => {
         //this.errorMessage=response;
@@ -45,31 +72,31 @@ export class PdfListComponent implements OnInit {
       }
     )
   }
-   handleErrorResponse(error){
-    this.errorMessage=error;
+  handleErrorResponse(error) {
+    this.errorMessage = error;
     let httpError = new HttpError();
     httpError.ErrorResponse(error);
   }
-  closeError(){
+  closeError() {
 
-    this.errorMessage="";
+    this.errorMessage = "";
   }
 
-//navigate to more details page of pdf
-  moreDetails(pdfId){
-    console.log("in pdflistcomTS "+pdfId);
-    this.router.navigate(['pdf-more-details',pdfId]);
-   // console.log(this.router.navigate(['pdf-more-details',pdfId]));
+  //navigate to more details page of pdf
+  moreDetails(pdfId) {
+    console.log("in pdflistcomTS " + pdfId);
+    this.router.navigate(['pdf-more-details', pdfId]);
+    // console.log(this.router.navigate(['pdf-more-details',pdfId]));
   }
 
-  addPdf(){
-      console.log("In pdflist com ts 1");
-      this.router.navigate(['pdf-add']);
-      console.log("In pdflist com ts 2");
+  addPdf() {
+    console.log("In pdflist com ts 1");
+    this.router.navigate(['pdf-add']);
+    console.log("In pdflist com ts 2");
   }
 
- //delete Student
-  deletePdf(pdfId:Number){
+  //delete Student
+  deletePdf(pdfId: Number) {
     console.log("INpdfDelinCOMTS");
     Swal.fire({
       title: 'Are you sure?',
@@ -104,7 +131,7 @@ export class PdfListComponent implements OnInit {
               footer: 'Something bad happened, please try again later.'
             })
           }
-           
+
         )
       }
     })
@@ -112,34 +139,34 @@ export class PdfListComponent implements OnInit {
 
 
 
-/*
-  //navigate to studentRegister Page
-  addStudent(){
-      this.router.navigate(['student-add'])
-  }
-
- 
-
-  //navigate to student-package
-  addPackage(studentId:Number){
-    console.log(studentId);
-    this.router.navigate(['student-package-add',studentId])
-  }
-
-  //navigate to student-payment 
-  addPayment(studentId){
-    this.router.navigate(['student-payment',studentId])
-  }
-
-  //navigate to more details page
+  /*
+    //navigate to studentRegister Page
+    addStudent(){
+        this.router.navigate(['student-add'])
+    }
   
-
+   
   
-
-  handleErrorResponse(error){
-    this.errorMessage="There is a problem with the service. please try again later.";
-    let httpError = new HttpError();
-    httpError.ErrorResponse(error);
-  }
-*/
+    //navigate to student-package
+    addPackage(studentId:Number){
+      console.log(studentId);
+      this.router.navigate(['student-package-add',studentId])
+    }
+  
+    //navigate to student-payment 
+    addPayment(studentId){
+      this.router.navigate(['student-payment',studentId])
+    }
+  
+    //navigate to more details page
+    
+  
+    
+  
+    handleErrorResponse(error){
+      this.errorMessage="There is a problem with the service. please try again later.";
+      let httpError = new HttpError();
+      httpError.ErrorResponse(error);
+    }
+  */
 }
