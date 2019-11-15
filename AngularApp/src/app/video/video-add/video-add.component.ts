@@ -16,10 +16,12 @@ import { DatePipe } from '@angular/common';
 export class VideoAddComponent implements OnInit {
 
   //form variables
+  title:String="";
   description:String="";
   url:String="";
 
   //form error messages variables
+  errorTitle;
   errorDescription;
   errorUrl;
 
@@ -72,9 +74,11 @@ setAdminStaffAndAdminStaffId(){
     var datePipe = new DatePipe('en-US');
     this.addedDate = new Date(); 
 
-    //validate description  
-    if(this.description===""){
-      this.errorDescription="Description is mandatory";
+
+
+    //validate title  
+    if(this.title===""){
+      this.errorTitle="Title is mandatory";
     }
 
     //validate url 
@@ -88,7 +92,7 @@ setAdminStaffAndAdminStaffId(){
       //work with backend service
           //Save Video relevant Data
                                                             
-          this.videoService.saveVideo(new VideoModel(-1,this.url,this.description,this.adminStaff,this.addedDate)).subscribe(
+          this.videoService.saveVideo(new VideoModel(-1,this.title,this.url,this.description,this.adminStaff,this.addedDate)).subscribe(
             response => {
               console.log(response);
               this.router.navigate(['video-list'])}, 

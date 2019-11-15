@@ -6,7 +6,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
-              <h4 class="card-title">{{videoData.videoId}}'s Details</h4>
+              <h4 class="card-title">Video Details</h4>
           </div>
           <div class="card-body">
            
@@ -22,6 +22,11 @@
                   <tr>
                     <th>Video ID:</th>
                     <td>{{videoData.videoId}}</td>
+                  </tr>
+                   <tr>
+                     <th>Title:</th>
+                     <td>{{videoData.title}}</td> 
+                     <td><a  (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
                   </tr>
                  
                   <tr>

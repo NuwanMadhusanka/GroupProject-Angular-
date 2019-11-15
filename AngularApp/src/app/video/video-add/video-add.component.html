@@ -30,8 +30,19 @@
         </div>
         <div class="card-body">
           <form  (ngSubmit)="addVideo()"> 
-            
             <!-- First Row -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Title</label>
+                  <input type="text"  class="form-control" placeholder="Title"  name="title"   [(ngModel)]="title">
+                  <small *ngIf="errorName" class="text-danger">{{errorTitle}}</small>
+                </div>
+              </div> 
+            </div>
+            <!-- End First Row -->
+            
+            <!-- Second Row -->
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
@@ -41,9 +52,9 @@
                 </div>
               </div> 
             </div>
-            <!-- End First Row -->
+            <!-- End Row -->
 
-            <!-- Secon Row -->
+            <!-- Third Row -->
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
@@ -53,7 +64,7 @@
                 </div>
               </div> 
             </div>
-            <!-- End Second Row -->
+            <!-- End Third Row -->
 
               <button  type="submit" class="btn btn-primary">Submit</button>
           </form>

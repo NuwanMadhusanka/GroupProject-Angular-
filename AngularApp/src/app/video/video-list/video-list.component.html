@@ -25,6 +25,7 @@
             <table class="table">
               <thead class=" text-primary">
                 <th>Video Id</th>
+                <th>Title</th>
                 <th>Description</th>
                 <th>URL</th>
                 <th>Added Date</th>
@@ -32,6 +33,7 @@
               <tbody>
                 <tr *ngFor="let video of videos">
                   <td>{{video.videoId}}</td>  
+                  <td>{{video.title}}</td>  
                   <td>{{video.description}}</td>
                   <td>{{video.url}}</td>
                   <td>{{video.addedDate}}</td>
