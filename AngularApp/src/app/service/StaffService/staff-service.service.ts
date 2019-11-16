@@ -17,6 +17,10 @@ export class StaffServiceService {
     private http : HttpClient
   ) { }
 
+  getStaffList(){
+    return this.http.get<StaffModel[]>(`${API_URL}/staff`);
+  }
+
   getStaffSalaryInformationList(){
     return this.http.get<SalaryInformationModel[]>(`${API_URL}/staff/salary/information`);
   }
