@@ -34,4 +34,9 @@ export class PackageServiceService {
   getVehcleCategoryTransmission(vehicleCategoryId){
     return this.http.get<Number>(`${API_URL}/package/vehicle/transmission/${vehicleCategoryId}`);
   }
+
+  registerPackage(packageData:PackageModel){
+    console.log(packageData);
+    return this.http.post<PackageModel>(`${API_URL}/package/register`,packageData);
+  }
 }
