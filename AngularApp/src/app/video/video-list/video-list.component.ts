@@ -34,7 +34,8 @@ export class VideoListComponent implements OnInit {
 
   //Filtering method
   filterVideo(searchString: string) {
-   return this.videos.filter(video =>
+
+    return this.videos.filter(video =>
       video.videoId.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
       video.title.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
       video.description.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
