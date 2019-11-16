@@ -20,27 +20,23 @@
                    <tr>
                     <th>PDF ID:</th>
                     <td>{{pdfData.pdfId}}</td>
-                   
-
+                  </tr>
+                  <tr>
+                     <th>Title:</th>
+                     <td>{{pdfData.title}}</td>
+                     <td><a  (click)=isUpdate(3)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Title"></i></button></a></td>
                   </tr>
                    <tr>
                      <th>Description:</th>
                      <td>{{pdfData.description}}</td>
                      <td><a  (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
-
                   </tr>
                   <tr>
                     <th>Resource:</th>
                     <td><a href={{pdfData.resource}} target="_blank">{{pdfData.resource}} </a></td>
                      <td><a  (click)=isUpdate(2)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Resource"></i></button></a></td>
-
                   </tr>
-                 
-                  <tr>
-                     <th>Tags:</th>
-                     <td>{{pdfData.tags}}</td>
-                     <td><a  (click)=isUpdate(3)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Tags"></i></button></a></td>
-                  </tr>
+                
                    <tr>
                      <th>Added by Admin Staff:</th>
                      <td>Id-&nbsp;{{pdfData.adminStaffId.adminStaffId}}&nbsp;&nbsp;&nbsp;Name-&nbsp;{{pdfData.adminStaffId.staffId.userId.firstName}}&nbsp;{{pdfData.adminStaffId.staffId.userId.lastName}}</td>

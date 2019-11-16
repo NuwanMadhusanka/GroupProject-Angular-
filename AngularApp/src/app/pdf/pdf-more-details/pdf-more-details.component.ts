@@ -85,7 +85,7 @@ export class PdfMoreDetailsComponent implements OnInit {
     console.log(option);    //sjould implement them 
     if( (option === 1)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Description";  this.updateName="Description"; this.updateVariable=this.pdfData.description;}
     if( (option === 2)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Resource";  this.updateName="Resource"; this.updateVariable=this.pdfData.resource;}
-    if( (option === 3)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Tags"; this.updateName="Tags"; this.updateVariable=this.pdfData.tags;}
+    if( (option === 3)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Title"; this.updateName="Title"; this.updateVariable=this.pdfData.title;}
     
   }
 
@@ -123,10 +123,10 @@ export class PdfMoreDetailsComponent implements OnInit {
       }
     }
 
-    //tags
+    //title
     if(this.selectOption==3) {
     
-          this.pdfData.tags=this.updateVariable;
+          this.pdfData.title=this.updateVariable;
           this.errorUpdateMessage="";
           this.isUpdateVariable=false;
           this.confirmUpdate=true;

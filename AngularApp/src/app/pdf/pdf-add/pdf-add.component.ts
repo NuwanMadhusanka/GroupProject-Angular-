@@ -22,7 +22,7 @@ export class PdfAddComponent implements OnInit {
 pdfId:Number=-1;
 description:String="";
 resource:String="";
-tags:String="";
+title:String="";
 adminStaff;
 adminStaffId:Number=-1;   
 addedDate:Date=null;
@@ -136,7 +136,7 @@ addPdf(){
   //Save to the DB
   if(this.errorMessage==null){
     console.log(this.errorMessage);
-    this.pdfService.addPdf(new PdfModel(-1,this.resource,this.description,this.tags,this.adminStaff,this.addedDate)).subscribe(
+    this.pdfService.addPdf(new PdfModel(-1,this.resource,this.description,this.title,this.adminStaff,this.addedDate)).subscribe(
           response => {
             console.log(response);
             this.router.navigate(['pdf-list'])},

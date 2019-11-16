@@ -39,4 +39,10 @@ export class InstructorServiceService {
       console.log("ins serv ts");
       return this.http.get<InstructorModel[]>(`${API_URL}/instructors`);
   }
+   //Get Specific Instructor Details
+  getInstructorbyID(instructorId){
+    console.log("In service get Instructor");
+    return this.http.get<InstructorModel>(`${API_URL}/instructor/${instructorId}`);
+
+  }
 }

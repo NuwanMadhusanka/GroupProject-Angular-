@@ -63,6 +63,11 @@ export class InstructorListComponent implements OnInit {
       }
     );
   }
+
+  //navigate to more details page
+  moreDetails(instructorId){
+    this.router.navigate(['instructor-more-details',instructorId]);
+  }
 /*
   //navigate to studentRegister Page
   addStudent(){
@@ -122,10 +127,7 @@ export class InstructorListComponent implements OnInit {
     this.router.navigate(['student-payment',studentId,studentName]);
   }
 
-  //navigate to more details page
-  moreDetails(studentId){
-    this.router.navigate(['student-more-details',studentId]);
-  }
+  
 
   studentPaymentCheck(){
     this.router.navigate(['student-payment-check']);
