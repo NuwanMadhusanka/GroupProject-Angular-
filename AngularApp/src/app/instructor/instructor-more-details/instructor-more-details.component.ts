@@ -78,74 +78,111 @@ export class InstructorMoreDetailsComponent implements OnInit {
   }
 
  
-/*
   isUpdate(option) {
-    console.log(this.pdfData);
     this.errorUpdateMessage = "";
-    console.log(option);    //sjould implement them 
-    if ((option === 1)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New Description"; this.updateName = "Description"; this.updateVariable = this.pdfData.description; }
-    if ((option === 2)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New Resource"; this.updateName = "Resource"; this.updateVariable = this.pdfData.resource; }
-    if ((option === 3)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New Tags"; this.updateName = "Tags"; this.updateVariable = this.pdfData.tags; }
-
+    if ((option === 1)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New First Name"; this.updateName = "First Name"; this.updateVariable = this.instructorData.staffId.userId.firstName; }
+    if ((option === 2)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New Last Name"; this.updateName = "Last Name"; this.updateVariable = this.instructorData.staffId.userId.lastName; }
+    if ((option === 3)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New NIC"; this.updateName = "NIC"; this.updateVariable = this.instructorData.staffId.userId.nic; }
+    if ((option === 4)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New License"; this.updateName = "License"; this.updateVariable = this.instructorData.licence; }
+    if ((option === 5)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New Tell No"; this.updateName = "Tell No"; this.updateVariable = this.instructorData.staffId.userId.tel; }
+    if ((option === 6)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New E-Mail"; this.updateName = "E-Mail"; this.updateVariable = this.instructorData.staffId.userId.email; }
+    if ((option === 7)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New Address"; this.updateName = "Address"; this.updateVariable = this.instructorData.staffId.userId.address; }
   }
 
   update() {
-    this.setAdminStaffAndAdminStaffId();
-    //description 
 
+    // first name 
     if (this.selectOption == 1) {
-      console.log("inUpdate in description");
       if (this.updateVariable == "") {
-        this.errorUpdateMessage = "You must insert Description";
+        this.errorUpdateMessage = "You must insert First Name.";
       } else {
-        this.pdfData.description = this.updateVariable;
+        this.instructorData.staffId.userId.firstName= this.updateVariable;
         this.errorUpdateMessage = "";
         this.isUpdateVariable = false;
         this.confirmUpdate = true;
-        console.log("inUpdate in description data set");
       }
     }
 
-    //resource
+    //last name
     if (this.selectOption == 2) {
       if ((this.updateVariable == "")) {
-        this.errorUpdateMessage = "You must insert Resource.";
+        this.errorUpdateMessage = "You must insert Last Name.";
       } else {
-        this.pdfData.resource = this.updateVariable;
-        this.pdfData.adminStaffId = this.adminStaff;
-        var datePipe = new DatePipe('en-US');
-        this.systemDate = new Date();
-        this.pdfData.addedDate = this.systemDate;
-        console.log(this.pdfData.adminStaffId);
+        this.instructorData.staffId.userId.lastName= this.updateVariable;
         this.errorUpdateMessage = "";
         this.isUpdateVariable = false;
         this.confirmUpdate = true;
       }
     }
 
-    //tags
+     //nic
     if (this.selectOption == 3) {
+      if (this.updateVariable == "") {
+        this.errorUpdateMessage = "You must insert NIC.";
+      } else {
+        this.instructorData.staffId.userId.nic= this.updateVariable;
+        this.errorUpdateMessage = "";
+        this.isUpdateVariable = false;
+        this.confirmUpdate = true;
+      }
+    }
 
-      this.pdfData.tags = this.updateVariable;
-      this.errorUpdateMessage = "";
-      this.isUpdateVariable = false;
-      this.confirmUpdate = true;
-
+     //license
+    if (this.selectOption == 4) {
+      if (this.updateVariable == "") {
+        this.errorUpdateMessage = "You must insert Licence.";
+      } else {
+        this.instructorData.licence= this.updateVariable;
+        this.errorUpdateMessage = "";
+        this.isUpdateVariable = false;
+        this.confirmUpdate = true;
+      }
+    }
+     //tell no
+    if (this.selectOption == 5) {
+      if (this.updateVariable == "") {
+        this.errorUpdateMessage = "You must insert Tell No.";
+      } else {
+        this.instructorData.staffId.userId.tel= this.updateVariable;
+        this.errorUpdateMessage = "";
+        this.isUpdateVariable = false;
+        this.confirmUpdate = true;
+      }
+    }
+       //update email
+    if (this.selectOption == 6) {
+      if (this.updateVariable == "") {
+        this.errorUpdateMessage = "You must insert E-Mail.";
+      } else {
+        this.instructorData.staffId.userId.address= this.updateVariable;
+        this.errorUpdateMessage = "";
+        this.isUpdateVariable = false;
+        this.confirmUpdate = true;
+      }
+    }
+     //address 
+    if (this.selectOption == 7) {
+      if (this.updateVariable == "") {
+        this.errorUpdateMessage = "You must insert Address.";
+      } else {
+        this.instructorData.staffId.userId.address= this.updateVariable;
+        this.errorUpdateMessage = "";
+        this.isUpdateVariable = false;
+        this.confirmUpdate = true;
+      }
     }
 
   }
-
-*/
 
   close() {
     this.isUpdateVariable = false;
   }
-/*
+
   //save updates
   saveUpdate() {
 
     //Save Update data(API)
-    this.pdfService.updatePdf(this.pdfData).subscribe(
+    this.instructorService.updateInstructor(this.instructorData).subscribe(
 
       response => {
         console.log("In saving Update");
@@ -153,7 +190,7 @@ export class InstructorMoreDetailsComponent implements OnInit {
 
         Swal.fire('Update is Completed.');
         this.confirmUpdate = false;
-        this.pdfData = response;
+        this.instructorData = response;
 
       },
       error => {
@@ -169,25 +206,7 @@ export class InstructorMoreDetailsComponent implements OnInit {
 
     )
   }
-  setAdminStaffAndAdminStaffId() {
-    this.adminStaffService.getAdminStaffFromUserID(this.userId).subscribe(
-      response => {
-        this.adminStaff = response;
-        console.log("Setting adminstaff Id");
-        this.adminStaffId = response.adminStaffId;
-        console.log("in sub");
-        console.log(this.adminStaffId);
-        console.log("p0");
-      },
-      error => {
-        console.log(error);
-        this.handleErrorResponse(error);
-
-      }
-    )
-  }*/
-
-
+  
   //error handling
   private handleErrorResponse(error: HttpErrorResponse) {
     this.errorMessage = this.httpError.ErrorResponse(error);

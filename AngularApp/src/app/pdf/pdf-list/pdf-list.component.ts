@@ -39,7 +39,7 @@ export class PdfListComponent implements OnInit {
       pdf.adminStaffId.adminStaffId.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
       pdf.addedDate.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1
     );
-   
+
   }
 
   constructor(
@@ -95,7 +95,7 @@ export class PdfListComponent implements OnInit {
     console.log("In pdflist com ts 2");
   }
 
-  //delete Student
+  //delete Pdf
   deletePdf(pdfId: Number) {
     console.log("INpdfDelinCOMTS");
     Swal.fire({
@@ -113,23 +113,25 @@ export class PdfListComponent implements OnInit {
         this.pdfService.deletePdf(pdfId).subscribe(
           response => {
             this.pdfList();
-            Swal.fire(
-              'Deleted!',
-              'Pdf details Record has been deleted.',
-              'success'
-            )
+            Swal.fire({
+              position: 'center',
+              type: 'success',
+              title: 'PDf id :' + pdfId + ' record was successfuly deldeted',
+              showConfirmButton: false,
+              timer: 3000
+            });
           },
           error => {
             console.log("error");
             console.log(error);
-            console.log("error");
             this.handleErrorResponse(error);
             Swal.fire({
+              position: 'center',
               type: 'error',
-              title: 'Oops...',
-              text: 'Delete Is Not Successful!',
-              footer: 'Something bad happened, please try again later.'
-            })
+              title: 'PDf id :' +pdfId + '\'s record was not successfuly deleted',
+              showConfirmButton: false,
+              timer: 3000
+            });
           }
 
         )

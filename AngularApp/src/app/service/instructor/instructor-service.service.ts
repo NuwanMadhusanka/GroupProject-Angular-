@@ -43,6 +43,10 @@ export class InstructorServiceService {
   getInstructorbyID(instructorId){
     console.log("In service get Instructor");
     return this.http.get<InstructorModel>(`${API_URL}/instructor/${instructorId}`);
+  }
 
+   //Update Instructor Data
+  updateInstructor(instructor:InstructorModel){
+    return this.http.put<InstructorModel>(`${API_URL}/instructor/update`,instructor);
   }
 }
