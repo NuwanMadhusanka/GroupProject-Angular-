@@ -70,6 +70,8 @@ export class InstructorMoreDetailsComponent implements OnInit {
         this.instructorData = response;
         console.log("in pdflistMoRETS2");
         console.log(this.instructorData);
+        this.encryptedPassword = this.instructorData.staffId.userId.password;
+        this.instructorData.staffId.userId.password = "";
       },
       error => {
         console.log(error);
@@ -81,6 +83,7 @@ export class InstructorMoreDetailsComponent implements OnInit {
 
 
   isUpdate(option) {
+
     this.errorUpdateMessage = "";
     if ((option === 1)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New First Name"; this.updateName = "First Name"; this.updateVariable = this.instructorData.staffId.userId.firstName; }
     if ((option === 2)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New Last Name"; this.updateName = "Last Name"; this.updateVariable = this.instructorData.staffId.userId.lastName; }

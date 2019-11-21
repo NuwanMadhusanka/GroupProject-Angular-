@@ -47,6 +47,7 @@ export class InstructorServiceService {
 
    //Update Instructor Data
   updateInstructor(instructor:InstructorModel){
+    console.log(instructor);
     return this.http.put<number>(`${API_URL}/instructor/update`,instructor);
   }
 }
