@@ -124,8 +124,8 @@ export class InstructorMoreDetailsComponent implements OnInit {
 
     //nic
     if (this.selectOption == 3) {
-      if (this.updateVariable == "") {
-        this.errorUpdateMessage = "You must insert NIC.";
+      if ((this.updateVariable == "") || !this.userValidation.isValidNicNumber(this.updateVariable)) {
+        this.errorUpdateMessage = "You must insert Valid NIC.";
       } else {
         this.instructorData.staffId.userId.nic = this.updateVariable;
         this.errorUpdateMessage = "";
@@ -173,7 +173,7 @@ export class InstructorMoreDetailsComponent implements OnInit {
       if ((this.updateVariable == "") || !this.userValidation.isValidEmail(this.updateVariable)) {
         this.errorUpdateMessage = "You must insert valid E-Mail.";
       } else {
-        this.instructorData.staffId.userId.address = this.updateVariable;
+        this.instructorData.staffId.userId.email = this.updateVariable;
         this.errorUpdateMessage = "";
         this.isUpdateVariable = false;
         this.confirmUpdate = true;
