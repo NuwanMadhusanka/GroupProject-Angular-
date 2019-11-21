@@ -29,20 +29,22 @@ export class InstructorMoreDetailsComponent implements OnInit {
   placeHolder;
   updateName;//update variable Name
   confirmUpdate = false;
-  
+
 
   adminStaffId;
   //userId;
   systemDate;
-
   errorMessage;
   errorUpdateMessage = "";
+    encryptedPassword;
+  isPasswordChange;
   httpError = new HttpError();
 
   userValidation = new UserValidation(); // is this needed ??
   user: UserModel = new UserModel(0, '', '', '', '', '', '', '', new Date(), 0, 0, 0);
   staff: StaffModel = new StaffModel(1, this.user);
   instructorData: InstructorModel = new InstructorModel(0, 'q', this.staff);
+
   //pdfSrc: string = '/pdf-test.pdf';
   constructor(
 
@@ -77,7 +79,7 @@ export class InstructorMoreDetailsComponent implements OnInit {
 
   }
 
- 
+
   isUpdate(option) {
     this.errorUpdateMessage = "";
     if ((option === 1)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New First Name"; this.updateName = "First Name"; this.updateVariable = this.instructorData.staffId.userId.firstName; }
@@ -85,8 +87,10 @@ export class InstructorMoreDetailsComponent implements OnInit {
     if ((option === 3)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New NIC"; this.updateName = "NIC"; this.updateVariable = this.instructorData.staffId.userId.nic; }
     if ((option === 4)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New License"; this.updateName = "License"; this.updateVariable = this.instructorData.licence; }
     if ((option === 5)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New Tell No"; this.updateName = "Tell No"; this.updateVariable = this.instructorData.staffId.userId.tel; }
-    if ((option === 6)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New E-Mail"; this.updateName = "E-Mail"; this.updateVariable = this.instructorData.staffId.userId.email; }
-    if ((option === 7)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New Address"; this.updateName = "Address"; this.updateVariable = this.instructorData.staffId.userId.address; }
+    if ((option === 6)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New Address"; this.updateName = "Address"; this.updateVariable = this.instructorData.staffId.userId.address; }
+    if ((option === 7)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New E-Mail"; this.updateName = "E-Mail"; this.updateVariable = this.instructorData.staffId.userId.email; }
+    if ((option === 8)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New Password"; this.updateName = "Password"; this.updateVariable = ""; }
+
   }
 
   update() {
@@ -96,7 +100,7 @@ export class InstructorMoreDetailsComponent implements OnInit {
       if (this.updateVariable == "") {
         this.errorUpdateMessage = "You must insert First Name.";
       } else {
-        this.instructorData.staffId.userId.firstName= this.updateVariable;
+        this.instructorData.staffId.userId.firstName = this.updateVariable;
         this.errorUpdateMessage = "";
         this.isUpdateVariable = false;
         this.confirmUpdate = true;
@@ -108,66 +112,80 @@ export class InstructorMoreDetailsComponent implements OnInit {
       if ((this.updateVariable == "")) {
         this.errorUpdateMessage = "You must insert Last Name.";
       } else {
-        this.instructorData.staffId.userId.lastName= this.updateVariable;
+        this.instructorData.staffId.userId.lastName = this.updateVariable;
         this.errorUpdateMessage = "";
         this.isUpdateVariable = false;
         this.confirmUpdate = true;
       }
     }
 
-     //nic
+    //nic
     if (this.selectOption == 3) {
       if (this.updateVariable == "") {
         this.errorUpdateMessage = "You must insert NIC.";
       } else {
-        this.instructorData.staffId.userId.nic= this.updateVariable;
+        this.instructorData.staffId.userId.nic = this.updateVariable;
         this.errorUpdateMessage = "";
         this.isUpdateVariable = false;
         this.confirmUpdate = true;
       }
     }
 
-     //license
+    //license
     if (this.selectOption == 4) {
       if (this.updateVariable == "") {
         this.errorUpdateMessage = "You must insert Licence.";
       } else {
-        this.instructorData.licence= this.updateVariable;
+        this.instructorData.licence = this.updateVariable;
         this.errorUpdateMessage = "";
         this.isUpdateVariable = false;
         this.confirmUpdate = true;
       }
     }
-     //tell no
+    //tell no
     if (this.selectOption == 5) {
       if (this.updateVariable == "") {
         this.errorUpdateMessage = "You must insert Tell No.";
       } else {
-        this.instructorData.staffId.userId.tel= this.updateVariable;
+        this.instructorData.staffId.userId.tel = this.updateVariable;
         this.errorUpdateMessage = "";
         this.isUpdateVariable = false;
         this.confirmUpdate = true;
       }
     }
-       //update email
+    //address 
     if (this.selectOption == 6) {
-      if (this.updateVariable == "") {
-        this.errorUpdateMessage = "You must insert E-Mail.";
-      } else {
-        this.instructorData.staffId.userId.address= this.updateVariable;
-        this.errorUpdateMessage = "";
-        this.isUpdateVariable = false;
-        this.confirmUpdate = true;
-      }
-    }
-     //address 
-    if (this.selectOption == 7) {
       if (this.updateVariable == "") {
         this.errorUpdateMessage = "You must insert Address.";
       } else {
-        this.instructorData.staffId.userId.address= this.updateVariable;
+        this.instructorData.staffId.userId.address = this.updateVariable;
         this.errorUpdateMessage = "";
         this.isUpdateVariable = false;
+        this.confirmUpdate = true;
+      }
+    }
+
+    //update email
+    if (this.selectOption == 7) {
+      if ((this.updateVariable == "") || !this.userValidation.isValidEmail(this.updateVariable)) {
+        this.errorUpdateMessage = "You must insert valid E-Mail.";
+      } else {
+        this.instructorData.staffId.userId.address = this.updateVariable;
+        this.errorUpdateMessage = "";
+        this.isUpdateVariable = false;
+        this.confirmUpdate = true;
+      }
+    }
+
+    //update password
+    if (this.selectOption == 8) {
+      if ((this.updateVariable == "")) {
+        this.errorUpdateMessage = "You must insert valid password.";
+      } else {
+        this.instructorData.staffId.userId.password = this.updateVariable;
+        this.errorUpdateMessage = "";
+        this.isUpdateVariable = false;
+        this.isPasswordChange=true;
         this.confirmUpdate = true;
       }
     }
@@ -179,34 +197,54 @@ export class InstructorMoreDetailsComponent implements OnInit {
   }
 
   //save updates
-  saveUpdate() {
-
+  saveUpdate(){
     //Save Update data(API)
+    if(!this.isPasswordChange){
+        this.instructorData.staffId.userId.password=this.encryptedPassword;
+        this.isPasswordChange=false;
+    }
+    
     this.instructorService.updateInstructor(this.instructorData).subscribe(
-
-      response => {
-        console.log("In saving Update");
-        console.log(response);
-
-        Swal.fire('Update is Completed.');
-        this.confirmUpdate = false;
-        this.instructorData = response;
-
+      response => {  
+        this.confirmUpdate=false;
+        if(response==1){
+          //update success
+          Swal.fire({
+            position: 'top-end',
+            type: 'success',
+            title: 'Update Successful.',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+        if(response==2 || response==3){
+          this.errorMessage=(response==2 ? "Updated email already exist." : "Updated NIC number already exist");
+          Swal.fire({
+            position: 'center',
+            type: 'error',
+            title: 'Update not Successful.',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+    
+        this.instructorDetails();
       },
       error => {
-        console.log(error);
+        //console.log(error);
         this.handleErrorResponse(error);
         Swal.fire({
+          position: 'center',
           type: 'error',
-          title: 'Oops...',
-          text: 'Update is not Successful!',
-          footer: 'Something bad happened, please try again later.'
-        })
+          title: 'Update not Successful!',
+          showConfirmButton: false,
+          timer: 2000
+        });
       }
-
+       
     )
   }
-  
+
   //error handling
   private handleErrorResponse(error: HttpErrorResponse) {
     this.errorMessage = this.httpError.ErrorResponse(error);
