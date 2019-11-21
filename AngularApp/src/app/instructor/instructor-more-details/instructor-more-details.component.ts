@@ -36,7 +36,7 @@ export class InstructorMoreDetailsComponent implements OnInit {
   systemDate;
   errorMessage;
   errorUpdateMessage = "";
-    encryptedPassword;
+  encryptedPassword;
   isPasswordChange;
   httpError = new HttpError();
 
@@ -185,7 +185,7 @@ export class InstructorMoreDetailsComponent implements OnInit {
         this.instructorData.staffId.userId.password = this.updateVariable;
         this.errorUpdateMessage = "";
         this.isUpdateVariable = false;
-        this.isPasswordChange=true;
+        this.isPasswordChange = true;
         this.confirmUpdate = true;
       }
     }
@@ -197,17 +197,17 @@ export class InstructorMoreDetailsComponent implements OnInit {
   }
 
   //save updates
-  saveUpdate(){
+  saveUpdate() {
     //Save Update data(API)
-    if(!this.isPasswordChange){
-        this.instructorData.staffId.userId.password=this.encryptedPassword;
-        this.isPasswordChange=false;
+    if (!this.isPasswordChange) {
+      this.instructorData.staffId.userId.password = this.encryptedPassword;
+      this.isPasswordChange = false;
     }
-    
+
     this.instructorService.updateInstructor(this.instructorData).subscribe(
-      response => {  
-        this.confirmUpdate=false;
-        if(response==1){
+      response => {
+        this.confirmUpdate = false;
+        if (response == 1) {
           //update success
           Swal.fire({
             position: 'top-end',
@@ -217,8 +217,8 @@ export class InstructorMoreDetailsComponent implements OnInit {
             timer: 1500
           });
         }
-        if(response==2 || response==3){
-          this.errorMessage=(response==2 ? "Updated email already exist." : "Updated NIC number already exist");
+        if (response == 2 || response == 3) {
+          this.errorMessage = (response == 2 ? "Updated email already exist." : "Updated NIC number already exist");
           Swal.fire({
             position: 'center',
             type: 'error',
@@ -227,7 +227,7 @@ export class InstructorMoreDetailsComponent implements OnInit {
             timer: 1500
           });
         }
-    
+
         this.instructorDetails();
       },
       error => {
@@ -241,7 +241,7 @@ export class InstructorMoreDetailsComponent implements OnInit {
           timer: 2000
         });
       }
-       
+
     )
   }
 
