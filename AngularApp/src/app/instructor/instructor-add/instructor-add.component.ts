@@ -58,7 +58,7 @@ export class InstructorAddComponent implements OnInit {
   }
 
   //Student Registration Funtion
-  registerStudent(){
+  registerInstructor(){
     
     this.errorName="";
     this.errorNic="";

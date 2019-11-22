@@ -53,6 +53,11 @@ export class InstructorListComponent implements OnInit {
     this.instructorList();
   }
 
+  //navigate to Instructor Register Page
+  addInstructor() {
+    this.router.navigate(['instructor-add'])
+  }
+
   //get Instructor List
   instructorList(){
     this.instructorService.instructorList().subscribe(
