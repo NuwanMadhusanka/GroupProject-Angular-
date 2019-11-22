@@ -14,6 +14,9 @@ import Swal from 'sweetalert2';
 import { HttpError } from '../../Shared/httpError/HttpError';
 import { formatDate } from '@angular/common';
 import { DatePipe } from '@angular/common';
+import { ProfileImage } from '../../profile/profile-image/profile-image';
+import { FileUploadServiceService } from '../../service/file-upload/file-upload-service.service';
+import { API_URL } from '../../app.constants';
 
 
 @Component({
@@ -32,7 +35,7 @@ export class InstructorMoreDetailsComponent implements OnInit {
 
 
   adminStaffId;
-  //userId;
+  instructorUserId;
   systemDate;
   errorMessage;
   errorUpdateMessage = "";
@@ -40,16 +43,22 @@ export class InstructorMoreDetailsComponent implements OnInit {
   isPasswordChange;
   httpError = new HttpError();
 
+  selectedFiles;
+  showSpinner = false;
+
   userValidation = new UserValidation(); // is this needed ??
   user: UserModel = new UserModel(0, '', '', '', '', '', '', '', new Date(), 0, 0, 0);
   staff: StaffModel = new StaffModel(1, this.user);
   instructorData: InstructorModel = new InstructorModel(0, 'q', this.staff);
+
+  apiUrl = API_URL;
 
   //pdfSrc: string = '/pdf-test.pdf';
   constructor(
 
     private route: ActivatedRoute,
     private instructorService: InstructorServiceService,
+    private fileUploadService :FileUploadServiceService,
     //private adminStaffService:AdminStaffServiceService,
 
   ) { }
@@ -70,6 +79,7 @@ export class InstructorMoreDetailsComponent implements OnInit {
         this.instructorData = response;
         console.log("in pdflistMoRETS2");
         console.log(this.instructorData);
+        this.instructorUserId=this.instructorData.staffId.userId.userId;
         this.encryptedPassword = this.instructorData.staffId.userId.password;
         this.instructorData.staffId.userId.password = "";
       },
@@ -247,6 +257,43 @@ export class InstructorMoreDetailsComponent implements OnInit {
 
     )
   }
+
+  //upload user image
+  selectFile(event) {
+    this.showSpinner = true;
+    this.selectedFiles = event.target.files;
+    this.fileUploadService.fileUpload(this.selectedFiles.item(0), this.instructorData.staffId.userId.userId, 1).subscribe(
+      response => {
+        if (response == 0) {
+          this.errorMessage = "File size should be less than 9MB";
+        } else if (response == 1) {
+          window.location.reload();
+          Swal.fire({
+            position: 'center',
+            type: 'success',
+            title: 'Update Successful.',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        } else {
+          Swal.fire({
+            position: 'center',
+            type: 'error',
+            title: 'Update not Successful.',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+        this.showSpinner = false;
+        this.selectedFiles = undefined;
+      },
+      error => {
+        this.showSpinner = false;
+        console.log(error);
+      }
+    );
+  }
+
 
   //error handling
   private handleErrorResponse(error: HttpErrorResponse) {
