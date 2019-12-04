@@ -39,6 +39,7 @@ export class InstructorServiceService {
     console.log("ins serv ts");
     return this.http.get<InstructorModel[]>(`${API_URL}/instructors`);
   }
+
   //Get Specific Instructor Details
   getInstructorbyID(instructorId) {
     console.log("In service get Instructor");
@@ -54,5 +55,11 @@ export class InstructorServiceService {
   //Register Instructor
   instructorRegister(instructor: InstructorModel) {
     return this.http.post<number>(`${API_URL}/instructor/register`, instructor);
+  }
+
+  //Get Specific Instructor Details using NIC no
+  getInstructorbyEmail(email) {
+    console.log("In service get Instructor");
+    return this.http.get<InstructorModel>(`${API_URL}/instructor/getbyEmail/${email}`);
   }
 }

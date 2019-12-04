@@ -52,6 +52,7 @@ export class InstructorAddComponent implements OnInit {
 
   user: UserModel;
   staff: StaffModel = new StaffModel(1, this.user);
+  instructor: any;
 
   constructor(
     private router: Router,
@@ -143,8 +144,14 @@ export class InstructorAddComponent implements OnInit {
               showConfirmButton: false,
               timer: 2000
             });
-            this.router.navigate(['instructor-list'])
-
+            
+             this.instructorService.getInstructorbyEmail(this.email).subscribe(
+              response=>{
+                this.instructor=response;
+              }
+             ) ;        
+             console.log(response);
+              this.router.navigate(['instructor-more-details', this.instructor.instructorId]);
           } else {    //Instructor not registered 
 
             if (response == 2) {    // error in saving staff relavant data
@@ -155,16 +162,8 @@ export class InstructorAddComponent implements OnInit {
                 footer: 'Error in saving Staff Relavant data'
               })
             }
-            if (response == 3) {    // error in saving user relavant data
-              Swal.fire({
-                type: 'error',
-                title: 'Oops...',
-                text: 'Instructor Registration Not Successful!.',
-                footer: 'Error in saving User Relavant data'
-              })
-            }
 
-            if (response == 4) {    // error in saving instructor relavant data
+            if (response == 3) {    // error in saving instructor relavant data
               Swal.fire({
                 type: 'error',
                 title: 'Oops...',
