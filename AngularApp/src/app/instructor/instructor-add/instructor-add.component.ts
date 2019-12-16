@@ -127,8 +127,8 @@ export class InstructorAddComponent implements OnInit {
       console.log("ok");
       var datePipe = new DatePipe('en-US');
       this.date = new Date();
-      this.user = new UserModel(1, this.firstName, this.lastName, this.tel, this.nic, this.address, this.email, this.password, this.date, 1, 5, 0);
-      this.staff = new StaffModel(1, this.user);
+      this.user = new UserModel(-1, this.firstName, this.lastName, this.tel, this.nic, this.address, this.email, this.password, this.date, 1, 4, 0);
+      this.staff = new StaffModel(-1, this.user);
 
       //Save Instructor relevant Data
       this.instructorService.instructorRegister(new InstructorModel(-1, this.licence, this.staff)).subscribe(
@@ -144,14 +144,16 @@ export class InstructorAddComponent implements OnInit {
               showConfirmButton: false,
               timer: 2000
             });
-            
+             console.log(this.email);
              this.instructorService.getInstructorbyEmail(this.email).subscribe(
               response=>{
                 this.instructor=response;
+                console.log(this.instructor.instructorId);
+                this.router.navigate(['instructor-more-details', this.instructor.instructorId]);
+
               }
              ) ;        
-             console.log(response);
-              this.router.navigate(['instructor-more-details', this.instructor.instructorId]);
+             
           } else {    //Instructor not registered 
 
             if (response == 2) {    // error in saving staff relavant data
