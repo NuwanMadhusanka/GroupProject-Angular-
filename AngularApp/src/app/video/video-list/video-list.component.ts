@@ -102,21 +102,24 @@ export class VideoListComponent implements OnInit {
         this.videoService.deleteVideo(videoId).subscribe(
           response => {
             this.videoList(); 
-            Swal.fire(
-              'Deleted!',
-              'Student Record has been deleted.',
-              'success'
-            )
+              Swal.fire({
+              position: 'center',
+              type: 'success',
+              title:'Video Id:'+ videoId + '\'s record was deleted successful',
+              showConfirmButton: false,
+              timer: 3000
+            });
           },
           error => {
             console.log(error);
             this.handleErrorResponse(error);
-            Swal.fire({
+             Swal.fire({
+              position: 'center',
               type: 'error',
-              title: 'Oops...',
-              text: 'Delete Is Not Successful!',
-              footer: 'Something bad happened, please try again later.'
-            })
+              title: 'Video Id:'+ videoId +  '\'s record was deleted not successful',
+              showConfirmButton: false,
+              timer: 3000
+            });
           }
            
         )
