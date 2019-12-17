@@ -76,33 +76,28 @@ export class InstructorListComponent implements OnInit {
   moreDetails(instructorId){
     this.router.navigate(['instructor-more-details',instructorId]);
   }
-/*
-  //navigate to studentRegister Page
-  addStudent(){
-    this.router.navigate(['student-add'])
-  }
 
-  //delete Student
-  deleteStudent(studentId,studentName){
+  //deactivate Instructor
+  deactivateInstructor(instructorId){
     Swal.fire({
       title: 'Are you sure?',
-      text: "Is delete "+studentName +"'s record?",//" student's details,payemnt details and all other relevant information.Can't revert the data!",
+      text: "Deactivate instructor "+instructorId +"'s record?",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Yes, deactivate!'
     }).then((result) => {
       if (result.value) {
         
         //Call to API
-        this.studentService.studentDelete(studentId).subscribe(
+        this.instructorService.instructorDeactivate(instructorId).subscribe(
           response => {
-            this.studentList();
+            this.instructorList();
             Swal.fire({
               position: 'center',
               type: 'success',
-              title: studentName+'\'s record was deleted successful',
+              title: 'Instructor ID :'+instructorId+'\'s profile deactivated Succesfully',
               showConfirmButton: false,
               timer: 3000
             });
@@ -112,7 +107,7 @@ export class InstructorListComponent implements OnInit {
             Swal.fire({
               position: 'center',
               type: 'error',
-              title: studentName+'\'s record was deleted not successful',
+              title:'InstructorID '+instructorId+'\'s profile was not deleted not successfully',
               showConfirmButton: false,
               timer: 3000
             });
@@ -123,7 +118,13 @@ export class InstructorListComponent implements OnInit {
     })
   }
 
+/*
+  //navigate to studentRegister Page
+  addStudent(){
+    this.router.navigate(['student-add'])
+  }
 
+  
   //navigate to student-package
   addPackage(studentId,studentName){
     console.log(studentId);

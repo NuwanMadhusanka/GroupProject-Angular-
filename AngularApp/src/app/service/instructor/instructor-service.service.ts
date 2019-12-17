@@ -62,4 +62,10 @@ export class InstructorServiceService {
     console.log("In service get Instructor");
     return this.http.get<InstructorModel>(`${API_URL}/instructor/getbyEmail/${email}`);
   }
+
+  //Deactivate Instructor
+  instructorDeactivate(instructorId) {
+    console.log(instructorId);
+    return this.http.put<number>(`${API_URL}/instructor/deactivate`, instructorId);
+  }
 }
