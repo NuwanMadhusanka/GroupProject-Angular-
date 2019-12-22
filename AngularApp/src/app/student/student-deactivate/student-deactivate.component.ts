@@ -68,7 +68,7 @@ export class StudentDeactivateComponent implements OnInit {
           Swal.fire({
             position: 'center',
             type: 'success',
-            title: studentName+'\'s account activated.',
+            title: studentName+'\'s account activated as new account.',
             showConfirmButton: false,
             timer: 2000
           });
@@ -94,6 +94,42 @@ export class StudentDeactivateComponent implements OnInit {
          this.handleErrorResponse(error);
        }
      );
+  }
+
+  continueStudentAccount(studentId,studentName){
+    Swal.fire({
+      title: 'Is '+studentName+'\'s Account Continue?',
+      html: "",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'YES'
+    }).then((result) => {
+      if (result.value) {
+        this.studentService.continueStudentAccount(studentId).subscribe(
+            response => {
+              Swal.fire({
+                position: 'center',
+                type: 'success',
+                title: studentName+'\'s account continued.',
+                showConfirmButton: false,
+                timer: 2000
+              });
+              this.router.navigate(['student-list']);
+            },
+            error => {
+              Swal.fire({
+                position: 'center',
+                type: 'error',
+                title: studentName+'\'s account not continued.',
+                showConfirmButton: false,
+                timer: 2000
+              });
+            }
+        );
+      }
+    });
   }
 
     //navigate to student-payment 

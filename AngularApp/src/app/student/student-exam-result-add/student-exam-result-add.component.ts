@@ -172,7 +172,7 @@ export class StudentExamResultAddComponent implements OnInit {
     this.studentService.submitTrialExamResult(this.trialDate,this.trialExamListCount,notPassStudent).subscribe(
       response =>{
           //console.log(response);
-          Swal.fire('Submission is Successful')
+          Swal.fire('Submission is Successful');
       },
       error =>{
           console.log(error);

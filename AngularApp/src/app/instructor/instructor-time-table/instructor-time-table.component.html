@@ -16,7 +16,7 @@
                 <th>Time</th>
                 <th>Package</th>
                 <th>Path</th>
-                <th>NumStu</th>
+                <!-- <th>NumStu</th> -->
                 <th>Option</th>
               </thead>
               <tbody id="mytable">
@@ -29,7 +29,7 @@
                         <td>{{data.packageData[0][0]}}</td>
                         <td>{{data.pathData[0][0]}}</td>
 
-                        <td *ngIf="data.numStuData[0][0] != 0">{{data.numStuData[0][0]}}</td>
+                        <!-- <td *ngIf="data.numStuData[0][0] != 0">{{data.numStuData[0][0]}}</td> -->
                         <td *ngIf="data.numStuData[0][0] == 0">-</td>
 
                         <td *ngIf="data.numStuData[0][0] != 0">
@@ -43,7 +43,7 @@
                                 <td [attr.rowspan]="data.packageData[i].length">{{data.timeSlotData[i]}}</td>
                                 <td>{{data.packageData[i][0]}}</td>
                                 <td>{{data.pathData[i][0]}}</td>
-                                <td>{{data.numStuData[i][0]}}</td>
+                                <!-- <td>{{data.numStuData[i][0]}}</td> -->
                                 <td>
                                   <button (click)="assignStudent(data.idData[i][0],data.day,data.timeSlotData[i])" type="button" class="btn btn-info btn-sm"><i class="fas fa-users" title="Assign Students"></i></button>
                                 </td>
@@ -54,7 +54,7 @@
                                   <tr *ngIf="k==i && j!=0">
                                       <td>{{data.packageData[i][j]}}</td>
                                       <td>{{data.pathData[i][j]}}</td>
-                                      <td>{{data.numStuData[i][j]}}</td>
+                                      <!-- <td>{{data.numStuData[i][j]}}</td> -->
                                       <td>
                                         <button (click)="assignStudent(data.idData[i][j],data.day,data.timeSlotData[i])" type="button" class="btn btn-info btn-sm"><i class="fas fa-users" title="Assign Students"></i></button>
                                       </td>

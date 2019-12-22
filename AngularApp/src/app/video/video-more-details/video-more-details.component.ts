@@ -193,13 +193,7 @@ export class VideoMoreDetailsComponent implements OnInit {
     this.videoService.updateVideo(this.videoData).subscribe(
       response => {
         console.log(response)
-          Swal.fire({
-            position: 'top-end',
-            type: 'success',
-            title: 'Update Successful.',
-            showConfirmButton: false,
-            timer: 1500
-          });
+        Swal.fire('Update is Completed.')
         this.confirmUpdate = false;
         this.videoData = response;
 
@@ -207,13 +201,12 @@ export class VideoMoreDetailsComponent implements OnInit {
       error => {
         console.log(error);
         this.handleErrorResponse(error);
-         Swal.fire({
-            position: 'center',
-            type: 'error',
-            title: 'Update not Successful.',
-            showConfirmButton: false,
-            timer: 1500
-          });
+        Swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: 'Update is not Successful!',
+          footer: 'Something bad happened, please try again later.'
+        })
       }
 
     )
