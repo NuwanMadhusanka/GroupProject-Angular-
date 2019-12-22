@@ -10,11 +10,12 @@ import { StudentPractricalChartDataMap } from '../../ClassModel/MapObject/Studen
   providedIn: 'root'
 })
 export class InstructorServiceService {
-
+  
+  
   constructor(
     private http: HttpClient
   ) { }
-
+ 
   getInstructorLesson(userId) {
     return this.http.get<TimeTableDataList[]>(`${API_URL}/instructor/lesson/${userId}`);
   }
@@ -65,7 +66,7 @@ export class InstructorServiceService {
 
   //Deactivate Instructor
   instructorDeactivate(instructorId) {
-    console.log(instructorId);
-    return this.http.put<number>(`${API_URL}/instructor/deactivate`, instructorId);
+    console.log(instructorId+"insDeactv Servc");
+    return this.http.put<number>(`${API_URL}/instructor/deactivate/${instructorId}`,{});
   }
 }
