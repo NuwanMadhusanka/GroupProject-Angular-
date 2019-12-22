@@ -36,11 +36,11 @@ export class InstructorServiceService {
     return this.http.get<StudentPractricalChartDataMap>(`${API_URL}/instructor/student/practrical/lesson/${studentLessonId}`);
   }
   //get Instructor List
-  instructorList() {
+  instructorList(status) {
     console.log("ins serv ts");
-    return this.http.get<InstructorModel[]>(`${API_URL}/instructors`);
+    return this.http.get<InstructorModel[]>(`${API_URL}/instructors/${status}`);
   }
-
+ 
   //Get Specific Instructor Details
   getInstructorbyID(instructorId) {
     console.log("In service get Instructor");

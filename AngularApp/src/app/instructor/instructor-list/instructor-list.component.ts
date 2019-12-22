@@ -60,7 +60,7 @@ export class InstructorListComponent implements OnInit {
 
   //get Instructor List
   instructorList(){
-    this.instructorService.instructorList().subscribe(
+    this.instructorService.instructorList(1).subscribe(
       response => {
         this.instructors=response;
         this.filteredInstructors=this.instructors;
