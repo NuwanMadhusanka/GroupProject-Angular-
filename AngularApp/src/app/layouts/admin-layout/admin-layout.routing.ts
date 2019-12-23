@@ -45,6 +45,7 @@ import { VideoAddComponent } from '../../video/video-add/video-add.component';
 import { InstructorListComponent } from '../../instructor/instructor-list/instructor-list.component';
 import { InstructorAddComponent } from '../../instructor/instructor-add/instructor-add.component';
 import { InstructorMoreDetailsComponent } from '../../instructor/instructor-more-details/instructor-more-details.component';
+import { InstructorDeactivatedListComponent } from '../../instructor/instructor-deactivated-list/instructor-deactivated-list.component';
 
 
 
@@ -106,6 +107,8 @@ export const AdminLayoutRoutes: Routes = [
      {path:'instructor-list',     component:InstructorListComponent},
      {path:'instructor-add',   component:InstructorAddComponent},
      {path:'instructor-more-details/:id',   component:InstructorMoreDetailsComponent},
+     {path:'instructor-deactivated-list',   component:InstructorDeactivatedListComponent},
+
 
 
 ];

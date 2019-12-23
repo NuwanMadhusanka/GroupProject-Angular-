@@ -117,6 +117,11 @@ export class InstructorListComponent implements OnInit {
       }
     })
   }
+  deactivatedInstructorList(){
+    console.log("deactivated InsList");
+    this.router.navigate(['instructor-deactivated-list']);
+
+  }
 
 /*
   //navigate to studentRegister Page
