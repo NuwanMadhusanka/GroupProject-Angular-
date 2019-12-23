@@ -42,8 +42,9 @@
                   <td>{{instructor.staffId.userId.nic}}</td>
                   <td>{{instructor.staffId.userId.firstName}} {{instructor.staffId.userId.lastName}}</td>
                   <td>  
-                   <!-- <a  (click)=acivateStudentAccount(student.studentId,student.userId.firstName)><button class="btn btn-danger btn-sm"><i class="fas fa-times" title="Active"></i></button></a>
-                    <a  (click)=addPayment(student.studentId,student.userId.firstName)><button class="btn btn-secondary btn-sm"><i class="fas fa-dollar-sign fa-sm" title="Add Payment"></i></button></a>
+                    
+                    <a  (click)=acivateInstructorAccount(instructor.instructorId,instructor.staffId.userId.firstName)><button class="btn btn-info btn-sm"><i class="fa fa-plus-circle" aria-hidden="true"></i></button></a>
+                 <!--   <a  (click)=addPayment(student.studentId,student.userId.firstName)><button class="btn btn-secondary btn-sm"><i class="fas fa-dollar-sign fa-sm" title="Add Payment"></i></button></a>
                  --> </td>
                 </tr>
               </tbody>

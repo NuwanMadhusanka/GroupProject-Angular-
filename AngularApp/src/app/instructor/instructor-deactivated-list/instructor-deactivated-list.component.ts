@@ -58,20 +58,21 @@ export class InstructorDeactivatedListComponent implements OnInit {
       }
     );
   }
-/*
-  acivateStudentAccount(studentId,studentName){
-     this.instructorService.activateStudentAccount(studentId).subscribe(
+
+  acivateInstructorAccount(instructorId,instructorName){
+    console.log("list com ts active Ins");
+     this.instructorService.activateInstructorAccount(instructorId).subscribe(
        response => {
         if(response==1){//Previous payment are completed
           console.log(response)
           Swal.fire({
             position: 'center',
             type: 'success',
-            title: studentName+'\'s account activated.',
+            title: instructorName+'\'s account activated.',
             showConfirmButton: false,
             timer: 2000
           });
-          this.router.navigate(['student-list']);
+          this.router.navigate(['instructor-list']);
         }else{//previous payment are not completed
           Swal.fire({
             title: 'Is Account Activate?',
@@ -83,7 +84,7 @@ export class InstructorDeactivatedListComponent implements OnInit {
             confirmButtonText: 'Activate'
           }).then((result) => {
             if (result.value) {
-              this.clearStudentPreviousPayment(studentId,studentName);
+             // this.clearStudentPreviousPayment(studentId,studentName);
             }
           });
         }
@@ -94,6 +95,8 @@ export class InstructorDeactivatedListComponent implements OnInit {
        }
      );
   }
+/*
+  
 
     //navigate to student-payment 
     addPayment(studentId,studentName){

@@ -69,4 +69,10 @@ export class InstructorServiceService {
     console.log(instructorId+"insDeactv Servc");
     return this.http.put<number>(`${API_URL}/instructor/deactivate/${instructorId}`,{});
   }
+
+//activate Instructor accout
+   activateInstructorAccount(instructorId) {
+     console.log("Ins Activation");
+    return this.http.put<Number>(`${API_URL}/instructor/activate/account/${instructorId}`, {});
+  }
 }
