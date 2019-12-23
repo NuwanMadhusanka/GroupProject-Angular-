@@ -10,12 +10,14 @@ import { InstructorModel } from '../../ClassModel/InstructorModel';
   providedIn: 'root'
 })
 export class InstructorServiceService {
-
+  
+  
   constructor(
     private http:HttpClient
   ) { }
 
-  getInstructorLesson(userId){
+  getInstructorLesson(userId) {
+
     return this.http.get<TimeTableDataList[]>(`${API_URL}/instructor/lesson/${userId}`);
   }
 
@@ -36,12 +38,45 @@ export class InstructorServiceService {
   }
 
   //get Instructor List
-  instructorList(){
-    return this.http.get<InstructorModel[]>(`${API_URL}/instructors`);
+
+  instructorList(status) {
+    console.log("ins serv ts");
+    return this.http.get<InstructorModel[]>(`${API_URL}/instructors/${status}`);
+  }
+ 
+  //Get Specific Instructor Details
+  getInstructorbyID(instructorId) {
+    console.log("In service get Instructor");
+    return this.http.get<InstructorModel>(`${API_URL}/instructor/${instructorId}`);
   }
 
- //Get Specific Instructor Details
- getInstructorbyID(instructorId){
-  return this.http.get<InstructorModel>(`${API_URL}/instructor/${instructorId}`);
- }
+  //Update Instructor Data
+  updateInstructor(instructor: InstructorModel) {
+    console.log(instructor);
+    return this.http.put<number>(`${API_URL}/instructor/update`, instructor);
+  }
+
+  //Register Instructor
+  instructorRegister(instructor: InstructorModel) {
+    return this.http.post<number>(`${API_URL}/instructor/register`, instructor);
+  }
+
+  //Get Specific Instructor Details using NIC no
+  getInstructorbyEmail(email) {
+    console.log("In service get Instructor");
+    return this.http.get<InstructorModel>(`${API_URL}/instructor/getbyEmail/${email}`);
+  }
+
+  //Deactivate Instructor
+  instructorDeactivate(instructorId) {
+    console.log(instructorId+"insDeactv Servc");
+    return this.http.put<number>(`${API_URL}/instructor/deactivate/${instructorId}`,{});
+  }
+
+//activate Instructor accout
+   activateInstructorAccount(instructorId) {
+     console.log("Ins Activation");
+    return this.http.put<Number>(`${API_URL}/instructor/activate/account/${instructorId}`, {});
+  }
+
 }
