@@ -35,13 +35,12 @@ export class InstructorDeactivatedListComponent implements OnInit {
    }
  
    filterInstructors(searchString:string){
-      if(this.validation.isDigitContain(searchString)){
-       return this.deactivatedInstructors.filter(instructor => 
-         instructor.staffId.userId.nic.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
-      }
-      return this.deactivatedInstructors.filter(instructor => 
-         instructor.staffId.userId.firstName.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
-   }
+     return this.deactivatedInstructors.filter(instructor =>
+      instructor.staffId.userId.firstName.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      instructor.staffId.userId.lastName.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      instructor.staffId.userId.nic.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 
+    );
+  }
    //Finish filter option implementation
 
   ngOnInit() {

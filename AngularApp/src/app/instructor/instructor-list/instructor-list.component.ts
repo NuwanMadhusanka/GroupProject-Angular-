@@ -27,10 +27,10 @@ export class InstructorListComponent implements OnInit {
   }
   set searchTerm(value:string){
     this._searchTerm=value;
-    this.filteredInstructors = this.filteredInstructord(value);
+    this.filteredInstructors = this.filtereInstructors(value);
   }
 
-  filteredInstructord(searchString:String){
+  filtereInstructors(searchString:String){
     return this.instructors.filter(instructor =>
       instructor.instructorId.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
       instructor.staffId.userId.firstName.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
