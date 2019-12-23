@@ -89,7 +89,7 @@ export class InstructorListComponent implements OnInit {
       confirmButtonText: 'Yes, deactivate!'
     }).then((result) => {
       if (result.value) {
-        
+        //
         //Call to API
         this.instructorService.instructorDeactivate(instructorId).subscribe(
           response => {
@@ -113,7 +113,7 @@ export class InstructorListComponent implements OnInit {
             });
           }
            
-        );
+        ); //
       }
     })
   }
