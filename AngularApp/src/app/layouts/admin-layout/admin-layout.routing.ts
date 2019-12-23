@@ -43,7 +43,6 @@ import { VideoAddComponent } from '../../video/video-add/video-add.component';
 import { InstructorListComponent } from '../../instructor/instructor-list/instructor-list.component';
 import { InstructorAddComponent } from '../../instructor/instructor-add/instructor-add.component';
 import { InstructorMoreDetailsComponent } from '../../instructor/instructor-more-details/instructor-more-details.component';
-import { InstructorDeactivatedListComponent } from '../../instructor/instructor-deactivated-list/instructor-deactivated-list.component';
 import { VideoListComponent } from '../../video/video-list/video-list.component';
 import { VideoMoreDetailsComponent } from '../../video/video-more-details/video-more-details.component';
 
@@ -100,14 +99,12 @@ export const AdminLayoutRoutes: Routes = [
     {path:'pdf-list',     component:PdfListComponent},
     {path:'pdf-more-details/:id',   component:PdfMoreDetailsComponent},
     {path:'pdf-add',   component:PdfAddComponent},
-
-     {path:'video-list',     component:VideoListComponent},
-     {path:'video-more-details/:id',   component:VideoMoreDetailsComponent},
-     {path:'video-add',   component:VideoAddComponent},
-     {path:'instructor-list',     component:InstructorListComponent},
-     {path:'instructor-add',   component:InstructorAddComponent},
-     {path:'instructor-more-details/:id',   component:InstructorMoreDetailsComponent},
-     {path:'instructor-deactivated-list',   component:InstructorDeactivatedListComponent},
+    {path:'video-list',     component:VideoListComponent},
+    {path:'video-more-details/:id',   component:VideoMoreDetailsComponent},
+    {path:'video-add',   component:VideoAddComponent},
+    {path:'instructor-list',     component:InstructorListComponent},
+    {path:'instructor-add',   component:InstructorAddComponent},
+    {path:'instructor-more-details/:id',   component:InstructorMoreDetailsComponent},
 
 
 
