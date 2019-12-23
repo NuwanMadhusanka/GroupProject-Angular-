@@ -72,25 +72,45 @@ export class TimeSlotComponent implements OnInit {
     this.errorTo="";
     if(this.timeTableValidation.isValidTimeSlot(this.updateTimeSlot.startTime)){ 
       if(this.timeTableValidation.isValidTimeSlot(this.updateTimeSlot.finishTime)){
-        this.timeTableService.updateTimeSlot(this.updateTimeSlot).subscribe(
-          response => {
-              console.log(response);
-              Swal.fire('Update is Completed.');
-              this.timeSlotListData=[];
-              this.timeSlotList();
-              this.isUpdateVariable=false;
-          },
-          error => {
-            console.log(error);
-            Swal.fire({
-              type: 'error',
-              title: 'Oops...',
-              text: 'Update is not Successful!',
-              footer: 'Something bad happened, please try again later.'
-            });
-            this.handleErrorResponse(error);
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "Is update the time slot(This result will effect to whole the lesson's time)",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, update it!'
+        }).then((result) => {
+          if (result.value) {
+            
+            //Call to API
+            this.timeTableService.updateTimeSlot(this.updateTimeSlot).subscribe(
+              response => {
+                  Swal.fire({
+                    position: 'center',
+                    type: 'success',
+                    title: 'Update Completed',
+                    showConfirmButton: false,
+                    timer: 2000
+                  });
+                  this.timeSlotListData=[];
+                  this.timeSlotList();
+                  this.isUpdateVariable=false;
+              },
+              error => {
+                console.log(error);
+                Swal.fire({
+                  position: 'center',
+                  type: 'error',
+                  title: 'Update is not completed',
+                  showConfirmButton: false,
+                  timer: 2000
+                });
+                this.handleErrorResponse(error);
+              }
+            );
           }
-        )
+        });
       }else{
         this.errorTo="Insert Valid Time(To)";
       }
@@ -145,7 +165,7 @@ export class TimeSlotComponent implements OnInit {
   delete(timeSlot:TimeSlotModel){
     Swal.fire({
       title: 'Are you sure?',
-      text: "Delete Time Slot details and Relevant Lesson Details Also Deleted.!",
+      text: "Delete Time Slot of "+timeSlot.startTime+" - "+timeSlot.finishTime,
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -157,25 +177,39 @@ export class TimeSlotComponent implements OnInit {
         //Call to API
         this.timeTableService.deleteTimeSlot(timeSlot.timeSlotId).subscribe(
           response => {
-            this.timeSlotList();
-            Swal.fire(
-              'Deleted!',
-              'Time Slot Record has been deleted.',
-              'success'
-            )
+              if(response==0){//not delete because of foreignkey constrain
+                Swal.fire({
+                  position: 'center',
+                  type: 'error',
+                  title: 'Delete not successful.',
+                  footer:'There is some lessons at this time slot',
+                  showConfirmButton: false,
+                  timer: 3000
+                });
+              }
+              if(response==1){//delete success
+                Swal.fire({
+                  position: 'center',
+                  type: 'success',
+                  title: 'Delete Successful.',
+                  showConfirmButton: false,
+                  timer: 2000
+                });
+              }
           },
           error => {
             console.log(error);
             this.handleErrorResponse(error);
             Swal.fire({
+              position: 'center',
               type: 'error',
-              title: 'Oops...',
-              text: 'Delete is not Successfull!',
-              footer: 'Something bad happened, please try again later.'
-            })
+              title: 'Delete not successful.',
+              showConfirmButton: false,
+              timer: 2000
+            });
           }
            
-        )
+        );
       }
     })
   }
