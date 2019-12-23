@@ -39,7 +39,7 @@ export class TimeTableServiceService {
   }
 
   deleteTimeSlot(timeSlotId){
-    return this.http.delete(`${API_URL}/timetable/timeslot/${timeSlotId}`);
+    return this.http.delete<Number>(`${API_URL}/timetable/timeslot/${timeSlotId}`);
   }
 
 
@@ -141,6 +141,10 @@ export class TimeTableServiceService {
   //get Lesson Publish Date
   getLessonPublishDate(lessonId){
     return this.http.get<Date>(`${API_URL}/timetable/lesson/date/${lessonId}`);
+  }
+
+  getTimeSlotListAccordingToDateAndPackage(packageId:Number,transmission:Number,day:Date){
+    return this.http.get<TimeSlotModel[]>(`${API_URL}/timetable/timeslot/date/${packageId}/${transmission}/${day}`);
   }
 
 }

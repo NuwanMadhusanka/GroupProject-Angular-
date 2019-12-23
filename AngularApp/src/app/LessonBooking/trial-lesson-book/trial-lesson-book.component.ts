@@ -22,6 +22,7 @@ export class TrialLessonBookComponent implements OnInit {
   userId;
   studentPackageList:StudentPackageModel[];
   timeSlotList:TimeSlotModel[]=[];
+  isAnyTimeSlot=false;
 
   selectStudentPackage:StudentPackageModel;
   selectTimeSlot:TimeSlotModel;
@@ -45,6 +46,7 @@ export class TrialLessonBookComponent implements OnInit {
 
   isAvailableLesson:boolean=false;
   availableLesson:LessonModel=null;
+  
 
   constructor(
     private lessonBookingService:LessonBookingService,
@@ -58,7 +60,7 @@ export class TrialLessonBookComponent implements OnInit {
     (this.userId==null ? this.router.navigate(['/']) : "");
 
     this.getStudentPackageData();
-    this.gettimeSlotData();
+    //this.gettimeSlotData();
     this.getTrialDate(); 
   }
 
@@ -80,9 +82,14 @@ export class TrialLessonBookComponent implements OnInit {
 
   //get time Slot Details
   gettimeSlotData(){
-    this.timeTableService.getTimeSlotList().subscribe(
+    this.isAnyTimeSlot=false;
+    this.timeTableService.getTimeSlotListAccordingToDateAndPackage(this.selectStudentPackage.packageId.packageId,this.selectStudentPackage.transmission,this.selectDay).subscribe(
       response => {
+          console.log(response);
           this.timeSlotList=response;
+          if(this.timeSlotList.length>0){
+            this.isAnyTimeSlot=true;
+          }
       },
       error => {
           console.log(error);
@@ -308,9 +315,11 @@ export class TrialLessonBookComponent implements OnInit {
     this.isCoursePaymentDone=true;
     this.lessonBookingService.checkCoursePayment(this.selectStudentPackage.studentPackageId).subscribe(
       response => {
+        console.log(response);
+        let basicPaymentPercentage = this.selectStudentPackage.packageId.basicPayment;
       
         if(response==0 || response==-1){
-          this.errorMessage = "You have to pay half of the course payment before booking lessons.";
+          this.errorMessage = "You have to pay "+basicPaymentPercentage+"% of the course payment before booking lessons.";
         } 
         if(response == -2){
           this.errorMessage = "You have to pay remaining course fee before booking remaining lessons"

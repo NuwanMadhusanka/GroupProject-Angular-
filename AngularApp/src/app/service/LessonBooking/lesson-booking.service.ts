@@ -6,6 +6,7 @@ import { LessonModel } from '../../ClassModel/LessonModel';
 import { PackageModel } from '../../ClassModel/PackageModel';
 import { StudentLessonModel } from '../../ClassModel/StudentLessonModel';
 import { LessonDayFeedbackChartDataMap } from '../../ClassModel/MapObject/LessonDayFeedbackChartDataMap';
+import { TimeSlotModel } from '../../ClassModel/TimeSlotModel';
 
 @Injectable({
   providedIn: 'root'
@@ -44,16 +45,15 @@ export class LessonBookingService {
   }
 
   cancelBooking(studentLessonId){
-    console.log(studentLessonId)
     return this.http.delete(`${API_URL}/lessonbooking/cancelbooking/${studentLessonId}`);
   }
 
   lessonDayFeedback(userId,packageId,day1,time1,day2,time2){
-    return this.http.post<any>(`${API_URL}/lessonbooking/lessonday/feedback/${userId}/${packageId}/${day1}/${time1}/${day2}/${time2}`,{});
+    return this.http.post<Number[]>(`${API_URL}/lessonbooking/lessonday/feedback/${userId}/${packageId}/${day1}/${time1}/${day2}/${time2}`,{});
   }
 
-  lessonFeedbackChartData(packageId,transmission,time){
-    return this.http.get<LessonDayFeedbackChartDataMap[]>(`${API_URL}/lessonbooking/lessonday/feedback/chart/${packageId}/${transmission}/${time}`);
+  lessonFeedbackChartData(packageId,transmission){
+    return this.http.get<LessonDayFeedbackChartDataMap[]>(`${API_URL}/lessonbooking/lessonday/feedback/chart/${packageId}/${transmission}`);
   }
 
   checkCoursePayment(studentPackageId){

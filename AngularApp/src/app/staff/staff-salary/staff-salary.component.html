@@ -38,12 +38,14 @@
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">
+                    <div *ngIf="isStaffDataLoad" class="card-header">
                         <h6 class="card-title">Drivo Learners</h6>
                         <p class="card-title">PaySlip For The Month of {{monthNames[selectMonth]}} 2019</p>
                         <hr>
-                        <p>Employee Name  :</p>
-                        <p>Category       :</p>
+                        <p>Employee Name  :<b>{{staffData.userId.firstName}}  {{staffData.userId.lastName}}</b></p>
+                        <p *ngIf="staffData.userId.role==2">Category       :<b>AdminStaff-Student</b></p>
+                        <p *ngIf="staffData.userId.role==3">Category       :<b>AdminStaff-Instructor</b></p>
+                        <p *ngIf="staffData.userId.role==4">Category       :<b>Instructor</b></p>
                         <hr>
                     </div>
                     <div  class="card-body">

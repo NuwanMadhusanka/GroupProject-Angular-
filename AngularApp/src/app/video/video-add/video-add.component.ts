@@ -7,8 +7,6 @@ import { VideoModel } from '../../ClassModel/VideoModel';
 import { HttpError } from '../../Shared/httpError/HttpError';
 import {formatDate} from '@angular/common';
 import { DatePipe } from '@angular/common';
-import Swal from 'sweetalert2';
-
 
 @Component({
   selector: 'app-video-add',
@@ -97,24 +95,11 @@ setAdminStaffAndAdminStaffId(){
           this.videoService.saveVideo(new VideoModel(-1,this.title,this.url,this.description,this.adminStaff,this.addedDate)).subscribe(
             response => {
               console.log(response);
-               Swal.fire({
-                  position: 'top-end',
-                  type: 'success',
-                  title: 'Video Sucessfully Saved.',
-                  showConfirmButton: false,
-                  timer: 2000
-                });
               this.router.navigate(['video-list'])}, 
             error => {
               //If some error occurs it is handled using handleErrorResponse method
               console.log(error);
-               Swal.fire({
-                type: 'error',
-                title: 'Oops...',
-                text: 'Video is not saved!.',
-                footer: 'Please Try Again Later'
-              });
-             this.handleErrorResponse(error);
+              this.handleErrorResponse(error);
             }
           ) 
       
