@@ -45,6 +45,10 @@ import { InstructorAddComponent } from '../../instructor/instructor-add/instruct
 import { InstructorMoreDetailsComponent } from '../../instructor/instructor-more-details/instructor-more-details.component';
 import { VideoListComponent } from '../../video/video-list/video-list.component';
 import { VideoMoreDetailsComponent } from '../../video/video-more-details/video-more-details.component';
+import { StaffLeaveComponent } from '../../staff/staff-leave/staff-leave.component';
+import { VehicleInsuranceComponent } from '../../vehicle/vehicle-insurance/vehicle-insurance.component';
+import { VehicleInsuranceAddComponent } from '../../vehicle/vehicle-insurance-add/vehicle-insurance-add.component';
+import { VehicleFuelComponent } from '../../vehicle/vehicle-fuel/vehicle-fuel.component';
 
 
 
@@ -59,6 +63,7 @@ export const AdminLayoutRoutes: Routes = [
     {path:'staff-work-time', component:StaffWorkTimeComponent, canActivate:[RouteGuardServiceService]},
     {path:'staff-salary-list', component:StaffSalaryListComponent, canActivate:[RouteGuardServiceService]},
     {path:'staff-salary-pay/:id/:month', component:StaffSalaryPayComponent, canActivate:[RouteGuardServiceService]},
+    {path:'staff-leave', component:StaffLeaveComponent , canActivate:[RouteGuardServiceService]},
 
 
     {path:'package-list', component:PackageListComponent, canActivate:[RouteGuardServiceService]},
@@ -66,6 +71,9 @@ export const AdminLayoutRoutes: Routes = [
 
     {path:'report-list', component:ReportListComponent, canActivate:[RouteGuardServiceService]},
     {path:'vehicle-list', component:VehicleListComponent, canActivate:[RouteGuardServiceService]},
+    {path:'vehicle-insurance/:id/:vehName/:vehNumber', component:VehicleInsuranceComponent, canActivate:[RouteGuardServiceService]},
+    {path:'vehicle-insurance-add/:id/:vehName/:vehNumber', component:VehicleInsuranceAddComponent, canActivate:[RouteGuardServiceService]},
+    {path:'vehicle-fuel', component:VehicleFuelComponent, canActivate:[RouteGuardServiceService]},
    
     {path:'student-list', component:StudentListComponent, canActivate:[RouteGuardServiceService]},
     {path:'student-add', component:StudentAddComponent, canActivate:[RouteGuardServiceService]},

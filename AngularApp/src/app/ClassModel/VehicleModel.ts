@@ -10,6 +10,7 @@ export class VehicleModel{
         public documentLic:String,
         public instructorId:InstructorModel,
         public status:Number,
+        public number:String,
         public insurancePeriod:Number,
         public vehicleCategoryId:VehicleCategoryModel
     ){}

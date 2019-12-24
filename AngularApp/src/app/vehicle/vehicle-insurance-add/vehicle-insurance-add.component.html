@@ -1,0 +1,97 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="row">
+    <div class="card">
+        <div class="card-body">
+            <div class="alert alert-danger">
+                <button (click)=closeError() type="button" aria-hidden="true" class="close">
+                  <i class="now-ui-icons ui-1_simple-remove"></i>
+                </button>
+                <span>{{errorMessage}}</span>
+              </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Error Message End -->
+
+  <div class="row">
+  
+    <!-- Second Coulmn -->
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Add Insurance Details of {{vehicleName}} (No:{{vehicleNumber}})</h4>
+        </div>
+        <div class="card-body">
+          
+            
+              <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+
+                  <div class="card">
+                    <div class="card-body">
+                      <form  (ngSubmit)="registerInsuranceData()">
+
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label>Year</label>
+                              <input [(ngModel)]="year" type="number" class="form-control" placeholder="year" name="year">
+                              <small *ngIf="errorYear" class="text-danger">{{errorYear}}</small>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label>Amount(Rs)</label>
+                              <input [(ngModel)]="amount" type="number" class="form-control" placeholder="Amount(Rs)" name="amount">
+                              <small *ngIf="errorAmount" class="text-danger">{{errorAmount}}</small>
+                            </div>
+                          </div>
+                        </div>
+
+                        Insurance Valid Time Period:
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label>From</label>
+                              <input [(ngModel)]="from" type="date" class="form-control" placeholder="From" name="from">
+                              <small *ngIf="errorFrom" class="text-danger">{{errorFrom}}</small>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label>To</label>
+                              <input [(ngModel)]="to" type="date" class="form-control" placeholder="To" name="to">
+                              <small *ngIf="errorTo" class="text-danger">{{errorTo}}</small>
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <button  type="submit" class="btn btn-secondary btn-round">Submit</button>
+                      </form>
+                    </div>
+                  </div>
+                  
+                </div>
+                <div class="col-md-3"></div>
+              </div>
+        
+         
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

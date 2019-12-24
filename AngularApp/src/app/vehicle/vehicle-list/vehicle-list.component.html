@@ -24,7 +24,8 @@
                 <a (click)=addVehicle()><button type="button" class="btn btn-success btn-sm" title="Add Student"><i class="fas fa-plus"></i></button></a>
                 <a (click)=studentPaymentCheck()><button type="button" class="btn btn-info btn-sm" title="Vehicle Payment Check"><i class="fas fa-list-alt"></i></button></a>
                 <a (click)=studentDeactivate()><button type="button" class="btn btn-secondary btn-sm" title="Deactivate Vehicles"><i class="fas fa-times"></i></button></a>
-            </div>
+                <a (click)=vehicleFuelData()><button type="button" class="btn btn-info btn-sm" title="Fuel Data"><i class="fas fa-gas-pump"></i></button></a>
+              </div>
             <div class="col-md-3">
                 <form>
                     <div class="input-group no-border">
@@ -59,8 +60,9 @@
                   <td *ngIf="vehicle.transmission==2">{{vehicle.vehicleCategoryId.category}} (Auto)</td>
                   <td>{{vehicle.number}}</td>
                   <td>  
-                    <a  (click)=moreDetails(student.studentId)><button class="btn btn-info btn-sm"><i class="fas fa-eye fa-sm" title="MoreDetails"></i></button></a>
-                    <a (click)=studentDeactivate()><button type="button" class="btn btn-secondary btn-sm" title="Deactivate Vehicle"><i class="fas fa-times"></i></button></a>
+                    <a  (click)=vehicleRedirect()><button class="btn btn-info btn-sm"><i class="fas fa-eye fa-sm" title="MoreDetails"></i></button></a>
+                    <a (click)=vehicleRedirect()><button type="button" class="btn btn-secondary btn-sm" title="Deactivate Vehicle"><i class="fas fa-times"></i></button></a>
+                    <a (click)=vehicleRedirect(vehicle,3)><button type="button" class="btn btn-success btn-sm" title="Vehicle Insurance"><i class="fas fa-dollar-sign"></i></button></a>
                   </td>
                 </tr>
               </tbody>

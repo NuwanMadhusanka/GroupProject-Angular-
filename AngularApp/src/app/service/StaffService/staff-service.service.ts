@@ -77,4 +77,12 @@ export class StaffServiceService {
     return this.http.get<StaffModel>(`${API_URL}/staff/data/${userId}`);
   }
 
+  getStaffLeave(){
+    return this.http.get<number>(`${API_URL}/staff/leave`);
+  }
+
+  updateStaffLeave(adminId:Number,leaves:Number){
+    return this.http.put<any>(`${API_URL}/staff/leave/${adminId}/${leaves}`,{});
+  }
+
 }

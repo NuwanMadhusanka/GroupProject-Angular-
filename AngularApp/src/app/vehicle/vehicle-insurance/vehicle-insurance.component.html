@@ -1,0 +1,96 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage">
+      <div class="alert alert-danger">
+          <button (click)=closeError() type="button" aria-hidden="true" class="close">
+            <i class="now-ui-icons ui-1_simple-remove"></i>
+          </button>
+          <span>{{errorMessage}}</span>
+      </div>
+    </div> 
+    <!-- Error Message End -->
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+
+
+           <!-- Drop down -->
+           <div *ngIf="isInsurancePayment" ngbDropdown class="dropdown" placement="bottom-left">
+            <button class="btn btn-info dropdown-toggle" ngbDropdownToggle>Select the Year</button>
+            <div ngbDropdownMenu>
+                <div *ngFor="let insurancePayment of vehicleInsurancePayments">
+                  <a (click)="getInsurancePayment(insurancePayment.insurancePaymentId)" class="dropdown-item" >{{insurancePayment.year}}</a>
+                </div>
+            </div>
+          </div>
+          <!-- Drop Down Finish -->  
+
+          <div class="row">
+            <div class="col-md-9">
+                <h4 class="card-title">Insurance Details of {{vehicleName}} (No:{{vehicleNumber}})</h4>
+                <a (click)=addVehicleInsurance()><button type="button" class="btn btn-success btn-sm" title="Add Insurance Payemnt"><i class="fas fa-plus"></i></button></a>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+        <div class="card-body">
+
+          <div *ngIf="isSelectInsurancePayment" class="row">
+            <div class="col-md-3"></div>
+            
+            <div class="col-md-6">
+              
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <tbody>
+                        <tr>
+                          <th>Vehicle</th>
+                          <td>: {{vehicleName}}</td>
+                        </tr>
+                        <tr>
+                          <th>Vehicle Number </th>
+                          <td>: {{vehicleNumber}}</td>
+                        </tr>
+                        <tr>
+                           <th>Year </th>
+                           <td>: {{selectInsurancePayment.year}}</td>
+                        </tr>
+                        <tr>
+                          <th>Amount </th>
+                          <td>: {{selectInsurancePayment.amount}}</td>
+                       </tr>
+                        <tr>
+                           <th>Payment Date</th>
+                           <td>: {{selectInsurancePayment.date}}</td>
+                        </tr>
+                        <tr>
+                           <th>Valid Period</th>
+                           <td>: from <b>{{selectInsurancePayment.startDate}}</b> to <b>{{selectInsurancePayment.endDate}}</b></td>
+                        </tr>
+                      
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-3"></div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+   
+  </div>
+</div>
+
+

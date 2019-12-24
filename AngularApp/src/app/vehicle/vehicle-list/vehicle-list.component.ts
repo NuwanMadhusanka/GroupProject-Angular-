@@ -4,6 +4,7 @@ import { VehicleModel } from '../../ClassModel/VehicleModel';
 import { VehicleServiceService } from '../../service/vehicle/vehicle-service.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpError } from '../../Shared/httpError/HttpError';
+import { Router } from '@angular/router';
 
 
 
@@ -17,7 +18,8 @@ export class VehicleListComponent {
   vehicleList:VehicleModel[]=[];
 
   constructor(
-    private vehicleService :VehicleServiceService
+    private vehicleService :VehicleServiceService,
+    private router :Router
   ) { }
 
   ngOnInit() {
@@ -34,6 +36,17 @@ export class VehicleListComponent {
         this.handleErrorResponse(error);
       }
     );
+  }
+
+  vehicleRedirect(vehicle:VehicleModel,type:Number){
+    if(type==3){
+      let vehName = vehicle.brand+" "+vehicle.model;
+      this.router.navigate(['vehicle-insurance',vehicle.vehicleId,vehName,vehicle.number]);
+    }
+  }
+
+  vehicleFuelData(){
+    this.router.navigate(['vehicle-fuel']);
   }
 
   //error handling

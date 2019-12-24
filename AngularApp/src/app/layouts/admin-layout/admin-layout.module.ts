@@ -50,6 +50,10 @@ import { VideoMoreDetailsComponent } from '../../video/video-more-details/video-
 import { InstructorListComponent } from '../../instructor/instructor-list/instructor-list.component';
 import { InstructorAddComponent } from '../../instructor/instructor-add/instructor-add.component';
 import { InstructorMoreDetailsComponent } from '../../instructor/instructor-more-details/instructor-more-details.component';
+import { StaffLeaveComponent } from '../../staff/staff-leave/staff-leave.component';
+import { VehicleInsuranceComponent } from '../../vehicle/vehicle-insurance/vehicle-insurance.component';
+import { VehicleInsuranceAddComponent } from '../../vehicle/vehicle-insurance-add/vehicle-insurance-add.component';
+import { VehicleFuelComponent } from '../../vehicle/vehicle-fuel/vehicle-fuel.component';
 
 
 
@@ -75,12 +79,16 @@ import { InstructorMoreDetailsComponent } from '../../instructor/instructor-more
     StaffWorkTimeComponent,
     StaffSalaryListComponent,
     StaffSalaryPayComponent,
+    StaffLeaveComponent,
 
     PackageListComponent,
     PackageAddComponent,
 
     ReportListComponent,
     VehicleListComponent,
+    VehicleInsuranceComponent,
+    VehicleInsuranceAddComponent,
+    VehicleFuelComponent,
  
     
     StudentListComponent,

@@ -1,0 +1,54 @@
+<div class="panel-header panel-header-sm" >
+</div>
+  
+<div class="main-content">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">Staff Leave </h5>
+    </div>
+    <div class="card-body">
+
+           <!-- Table Start -->
+           <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+              <thead class=" text-primary thead-dark">
+                <th></th>
+                <th>Number of Leave</th>
+                <th>Option</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1)</td>
+                  <td>{{staffLeaves}}</td>
+                  <td>
+                      <a  (click)=staffLeaveUpdate()><button type="button" class="btn btn-secondary btn-sm" title="Edit"><i class="fas fa-edit"></i></button></a>  
+                    </td>
+                </tr> 
+              </tbody>
+            </table>
+        </div>
+        <!-- Table Finish -->
+
+        <div *ngIf="isUpdate" class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <p>Update Staff Leaves</p>
+            </div>
+          </div>
+          <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Leaves :</label>
+                        <input [(ngModel)]="updateLeaves" type="number" class="form-control" placeholder="" name="updateLeaves">
+                        <small *ngIf="errorUpdateLeave" class="text-danger">{{errorUpdateLeave}}</small>
+                    </div>
+                </div>
+              </div>
+              <button (click)="update()"  type="submit" class="btn btn-secondary btn-round">Submit</button>
+          </div>
+        </div>
+
+    </div>
+  </div>
+</div>
