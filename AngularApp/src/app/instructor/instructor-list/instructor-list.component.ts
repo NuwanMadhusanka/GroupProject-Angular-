@@ -27,17 +27,21 @@ export class InstructorListComponent implements OnInit {
   }
   set searchTerm(value:string){
     this._searchTerm=value;
-    this.filteredInstructors = this.filterStudent(value);
+    this.filteredInstructors = this.filtereInstructors(value);
   }
 
-  filterStudent(searchString:String){    // should change this code
-     if(this.validation.isDigitContain(searchString)){
-      return this.instructors.filter(instructor => 
-        instructor.licence.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
-     }
-     return this.instructors.filter(instructor => 
-        instructor.licence.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
-        
+  filtereInstructors(searchString:String){
+    return this.instructors.filter(instructor =>
+      instructor.instructorId.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      instructor.staffId.userId.firstName.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      instructor.staffId.userId.lastName.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      instructor.staffId.userId.nic.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      instructor.licence.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      instructor.staffId.userId.email.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      instructor.staffId.userId.tel.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1
+    );
+   
+
   }
   //Finish filter option implementation
 
@@ -52,7 +56,7 @@ export class InstructorListComponent implements OnInit {
 
   //get Instructor List
   instructorList(){
-    this.instructorService.instructorList().subscribe(
+    this.instructorService.instructorList(1).subscribe(
       response => {
         this.instructors=response;
         this.filteredInstructors=this.instructors;
@@ -113,6 +117,11 @@ export class InstructorListComponent implements OnInit {
         );
       }
     })
+  }
+  deactivatedInstructorList(){
+    console.log("deactivated InsList");
+    this.router.navigate(['instructor-deactivated-list']);
+
   }
 
 
