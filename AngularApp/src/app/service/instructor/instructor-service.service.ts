@@ -83,6 +83,7 @@ export class InstructorServiceService {
     console.log(instructorId+"insDeactv Servc");
     return this.http.put<number>(`${API_URL}/instructor/deactivate/${instructorId}`,{});
   }
+<<<<<<< HEAD
 
 //activate Instructor accout
    activateInstructorAccount(instructorId) {
@@ -90,4 +91,6 @@ export class InstructorServiceService {
     return this.http.put<Number>(`${API_URL}/instructor/activate/account/${instructorId}`, {});
   }
 >>>>>>> parent of e110ac9... Merge branch 'master' into anupama
+=======
+>>>>>>> parent of ff9e1d3... instructor account activation
 }
