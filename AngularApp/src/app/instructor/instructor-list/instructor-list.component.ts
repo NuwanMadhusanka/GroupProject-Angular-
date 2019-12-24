@@ -93,6 +93,7 @@ export class InstructorListComponent implements OnInit {
         //Call to API
         this.instructorService.instructorDeactivate(instructorId).subscribe(
           response => {
+            console.log("Res"+response);
             this.instructorList();
             Swal.fire({
               position: 'center',

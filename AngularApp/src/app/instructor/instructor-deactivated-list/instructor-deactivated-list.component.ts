@@ -63,7 +63,7 @@ export class InstructorDeactivatedListComponent implements OnInit {
     console.log("list com ts active Ins");
      this.instructorService.activateInstructorAccount(instructorId).subscribe(
        response => {
-        if(response==1){//Previous payment are completed
+        if(response==1){     // account activated
           console.log(response)
           Swal.fire({
             position: 'center',
@@ -73,20 +73,21 @@ export class InstructorDeactivatedListComponent implements OnInit {
             timer: 2000
           });
           this.router.navigate(['instructor-list']);
-        }else{//previous payment are not completed
+        }else{   //error in account activation
           Swal.fire({
-            title: 'Is Account Activate?',
-            html: "<strong>Previous course payments are not completed.</strong>",
+            title: 'Error!!',
+            html: "Problem in activating account. ",
             type: 'warning',
-            showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Activate'
-          }).then((result) => {
+            confirmButtonText: 'OK'
+          });
+         /* .then((result) => {
             if (result.value) {
-             // this.clearStudentPreviousPayment(studentId,studentName);
+             
             }
           });
+          */
         }
        },
        error => {
@@ -94,6 +95,17 @@ export class InstructorDeactivatedListComponent implements OnInit {
          this.handleErrorResponse(error);
        }
      );
+  }
+
+  checkSalaryPayments(instructorId){
+     this.instructorService.checkSalaryPayments(instructorId).subscribe(
+      response => {
+       console.log("Paid");
+      },
+      error => {
+        this.handleErrorResponse(error);
+      }
+    );
   }
 /*
   

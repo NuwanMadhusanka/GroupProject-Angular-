@@ -75,4 +75,9 @@ export class InstructorServiceService {
      console.log("Ins Activation");
     return this.http.put<Number>(`${API_URL}/instructor/activate/account/${instructorId}`, {});
   }
+
+   checkSalaryPayments(instructorId) {
+     console.log("Ins Salary Payment");
+    return this.http.get<Number>(`${API_URL}/instructor/checkSalaryPayments/${instructorId}`);
+  }
 }
