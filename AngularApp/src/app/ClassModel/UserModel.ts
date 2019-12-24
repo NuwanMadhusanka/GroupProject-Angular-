@@ -1,3 +1,4 @@
+
 export class UserModel{
     constructor(
       public userId:Number,
@@ -13,4 +14,5 @@ export class UserModel{
       public role:Number,
       public profileImage:Number
     ){}
+
 }

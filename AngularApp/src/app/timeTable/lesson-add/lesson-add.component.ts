@@ -192,6 +192,14 @@ export class LessonAddComponent implements OnInit {
 };
 
 
+  //button
+  timeSlot(){
+    this.router.navigate(['time-slot']);
+  }
+
+  maps(){
+    this.router.navigate(['path-map']);
+  }
 
   showTransmission(pac:PackageModel){
     this.isTransmissionSelect=false;

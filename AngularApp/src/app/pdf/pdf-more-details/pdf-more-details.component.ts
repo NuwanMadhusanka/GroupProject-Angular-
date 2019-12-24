@@ -151,7 +151,13 @@ export class PdfMoreDetailsComponent implements OnInit {
          console.log("In saving Update");
         console.log(response);
         
-        Swal.fire('Update is Completed.');
+         Swal.fire({
+            position: 'top-end',
+            type: 'success',
+            title: 'Update Successful.',
+            showConfirmButton: false,
+            timer: 1500
+          });
         this.confirmUpdate=false;
         this.pdfData=response;
 
@@ -159,12 +165,13 @@ export class PdfMoreDetailsComponent implements OnInit {
       error => {
         console.log(error);
         this.handleErrorResponse(error);
-        Swal.fire({
-          type: 'error',
-          title: 'Oops...',
-          text: 'Update is not Successful!',
-          footer: 'Something bad happened, please try again later.'
-        })
+         Swal.fire({
+            position: 'center',
+            type: 'error',
+            title: 'Update not Successful.',
+            showConfirmButton: false,
+            timer: 1500
+          });
       }
        
     )

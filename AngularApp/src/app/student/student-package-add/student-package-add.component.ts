@@ -91,13 +91,7 @@ export class StudentPackageAddComponent implements OnInit {
       //Insert student package details to the db
       this.studentService.studentPackegeAdd(studentPackageSelected,this.studentId).subscribe(
         response => {
-          Swal.fire({
-            position: 'center',
-            type: 'success',
-            title: 'Save Completed',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          Swal.fire('Save is Completed!')
           this.isSelectPackageHasTransmission=false;
           this.studentPackages=[];
           this.studentPackageList();
@@ -107,12 +101,11 @@ export class StudentPackageAddComponent implements OnInit {
           //console.log(error);
           this.handleErrorResponse(error);
           Swal.fire({
-            position: 'center',
             type: 'error',
-            title: 'Save not completed!',
-            showConfirmButton: false,
-            timer: 3000
-          });
+            title: 'Oops...',
+            text: 'Submission is not Successful!',
+            footer: 'Something bad happened, please try again later.'
+          })
         }
       )
   }
