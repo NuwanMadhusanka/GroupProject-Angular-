@@ -11,14 +11,8 @@ import { StaffModel } from '../../ClassModel/StaffModel';
 import { HttpError } from '../../Shared/httpError/HttpError';
 import { UserValidation } from '../../Shared/validation/user-validation/user-validation';
 import Swal from 'sweetalert2';
-<<<<<<< HEAD
 import {formatDate} from '@angular/common';
 import {DatePipe} from '@angular/common';
-
-=======
-import { formatDate } from '@angular/common';
-import { DatePipe } from '@angular/common';
->>>>>>> parent of e110ac9... Merge branch 'master' into anupama
 
 @Component({
   selector: 'app-instructor-add',

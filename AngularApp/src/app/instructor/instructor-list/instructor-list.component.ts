@@ -27,9 +27,10 @@ export class InstructorListComponent implements OnInit {
   }
   set searchTerm(value:string){
     this._searchTerm=value;
-    this.filteredInstructors = this.filtereInstructors(value);
+    this.filteredInstructors = this.filterStudent(value);
   }
 
+<<<<<<< HEAD
   filtereInstructors(searchString:String){
     return this.instructors.filter(instructor =>
       instructor.instructorId.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
@@ -41,6 +42,16 @@ export class InstructorListComponent implements OnInit {
       instructor.staffId.userId.tel.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1
     );
    
+=======
+  filterStudent(searchString:String){    // should change this code
+     if(this.validation.isDigitContain(searchString)){
+      return this.instructors.filter(instructor => 
+        instructor.licence.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
+     }
+     return this.instructors.filter(instructor => 
+        instructor.licence.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
+        
+>>>>>>> parent of a300e41... Merge pull request #14 from NuwanMadhusanka/anupama
   }
   //Finish filter option implementation
 
@@ -60,7 +71,7 @@ export class InstructorListComponent implements OnInit {
 
   //get Instructor List
   instructorList(){
-    this.instructorService.instructorList(1).subscribe(
+    this.instructorService.instructorList().subscribe(
       response => {
         this.instructors=response;
         this.filteredInstructors=this.instructors;
@@ -131,6 +142,7 @@ export class InstructorListComponent implements OnInit {
       }
     })
   }
+<<<<<<< HEAD
  
 
 /*
@@ -138,6 +150,8 @@ export class InstructorListComponent implements OnInit {
   addStudent(){
     this.router.navigate(['student-add'])
   }
+=======
+>>>>>>> parent of a300e41... Merge pull request #14 from NuwanMadhusanka/anupama
 
   
   //navigate to student-package
