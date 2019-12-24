@@ -56,6 +56,12 @@ export class StudentPaymentComponent implements OnInit {
   loader=false;
   showSpinner:Boolean = false;
 
+  basicPaymentPercentage:number;
+  numOfLessons:number;
+  basicPaymentsPercentageList:number[]=[];
+  numOfLessonList:number[]=[];
+  isVisitStudent=false;
+
   ngOnInit() {
     let id=this.route.snapshot.params['id'];//get student id by url
     this.studentName=this.route.snapshot.params['name'];
@@ -66,6 +72,7 @@ export class StudentPaymentComponent implements OnInit {
 
     if(sessionStorage.getItem("userId")===id){//when student visit to the page
 
+     this.isVisitStudent=true;
      this.userId=id;
 
      //get the student Id
@@ -97,8 +104,7 @@ export class StudentPaymentComponent implements OnInit {
       this.studentId=id;//whent AdminStaff(Student) visit to the page
       this.studentPackageList();
       this.isAdminStaff=true;
-    }
-    
+    }    
   }
 
   //studentFollow Packages
@@ -122,6 +128,8 @@ export class StudentPaymentComponent implements OnInit {
 
   //show payment details
   paymentDetails(packageId){
+
+    this.paymentInformation(packageId);
    
     //call to the API and get student Payment Details
     this.studentService.studentCourseFees(this.studentId,packageId).subscribe(
@@ -235,7 +243,7 @@ export class StudentPaymentComponent implements OnInit {
                   }
                 )
               }
-            })
+            });
 
           }
       }
@@ -331,6 +339,53 @@ export class StudentPaymentComponent implements OnInit {
         });
     });
     
+  }
+
+  //calculate Payment informations
+  paymentInformation(packageId){
+
+    this.basicPaymentsPercentageList=[];
+    this.numOfLessonList=[];
+    
+    let id=0;
+    if(this.isVisitStudent){
+      id=this.userId;
+    }else{
+      id=+this.studentId;
+    }
+
+    this.studentService.getStudentPackageData(id,+sessionStorage.getItem('userRole'),packageId).subscribe(
+      response => {
+        
+        let basicPaymentPercentage = +response.packageId.basicPayment;
+        let numOfLessons;
+
+        if(response.transmission==1){
+          numOfLessons = response.packageId.manualLes;
+        }else{
+          numOfLessons = response.packageId.autoLes;
+        }
+    
+        let x = Math.ceil(100/basicPaymentPercentage);
+        let lesson = Math.ceil(numOfLessons/x);
+        
+        let i=0;
+        while(i<x){
+          if(i==x-1){
+            this.basicPaymentsPercentageList.push(100-(basicPaymentPercentage*(x-1)));
+            this.numOfLessonList.push(numOfLessons-(lesson*(x-1)));
+          }else{
+            this.basicPaymentsPercentageList.push(basicPaymentPercentage);
+            this.numOfLessonList.push(lesson);
+          }
+          i++;
+        }
+      },
+      error => {
+        console.log(error);
+        this.handleErrorResponse(error);
+      }
+    );
   }
 
   close(){

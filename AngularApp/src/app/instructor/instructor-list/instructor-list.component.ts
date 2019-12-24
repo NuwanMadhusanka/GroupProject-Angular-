@@ -41,6 +41,7 @@ export class InstructorListComponent implements OnInit {
       instructor.staffId.userId.tel.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1
     );
    
+
   }
   //Finish filter option implementation
 
@@ -51,11 +52,6 @@ export class InstructorListComponent implements OnInit {
 
   ngOnInit() {
     this.instructorList();
-  }
-
-  //navigate to Instructor Register Page
-  addInstructor() {
-    this.router.navigate(['instructor-add'])
   }
 
   //get Instructor List
@@ -76,7 +72,6 @@ export class InstructorListComponent implements OnInit {
   moreDetails(instructorId){
     this.router.navigate(['instructor-more-details',instructorId]);
   }
-<<<<<<< HEAD
     deactivatedInstructorList(){
     console.log("deactivated InsList");
     this.router.navigate(['instructor-deactivated-list']);
@@ -88,30 +83,28 @@ export class InstructorListComponent implements OnInit {
   addStudent(){
     this.router.navigate(['student-add'])
   }
-=======
->>>>>>> parent of e110ac9... Merge branch 'master' into anupama
 
-  //deactivate Instructor
-  deactivateInstructor(instructorId){
+  //delete Student
+  deleteStudent(studentId,studentName){
     Swal.fire({
       title: 'Are you sure?',
-      text: "Deactivate instructor "+instructorId +"'s record?",
+      text: "Is delete "+studentName +"'s record?",//" student's details,payemnt details and all other relevant information.Can't revert the data!",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, deactivate!'
+      confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
         //
         //Call to API
-        this.instructorService.instructorDeactivate(instructorId).subscribe(
+        this.studentService.studentDelete(studentId).subscribe(
           response => {
-            this.instructorList();
+            this.studentList();
             Swal.fire({
               position: 'center',
               type: 'success',
-              title: 'Instructor ID :'+instructorId+'\'s profile deactivated Succesfully',
+              title: studentName+'\'s record was deleted successful',
               showConfirmButton: false,
               timer: 3000
             });
@@ -121,7 +114,7 @@ export class InstructorListComponent implements OnInit {
             Swal.fire({
               position: 'center',
               type: 'error',
-              title:'InstructorID '+instructorId+'\'s profile was not deleted not successfully',
+              title: studentName+'\'s record was deleted not successful',
               showConfirmButton: false,
               timer: 3000
             });
@@ -133,13 +126,7 @@ export class InstructorListComponent implements OnInit {
   }
  
 
-/*
-  //navigate to studentRegister Page
-  addStudent(){
-    this.router.navigate(['student-add'])
-  }
 
-  
   //navigate to student-package
   addPackage(studentId,studentName){
     console.log(studentId);

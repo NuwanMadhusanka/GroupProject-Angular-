@@ -44,13 +44,15 @@ import { StaffSalaryPayComponent } from '../../staff/staff-salary-pay/staff-sala
 import { PdfListComponent } from '../../pdf/pdf-list/pdf-list.component';
 import { PdfMoreDetailsComponent } from '../../pdf/pdf-more-details/pdf-more-details.component';
 import { PdfAddComponent } from '../../pdf/pdf-add/pdf-add.component';
+import { VideoAddComponent } from '../../video/video-add/video-add.component';
 import { VideoListComponent } from '../../video/video-list/video-list.component';
 import { VideoMoreDetailsComponent } from '../../video/video-more-details/video-more-details.component';
-import { VideoAddComponent } from '../../video/video-add/video-add.component';
 import { InstructorListComponent } from '../../instructor/instructor-list/instructor-list.component';
 import { InstructorAddComponent } from '../../instructor/instructor-add/instructor-add.component';
 import { InstructorMoreDetailsComponent } from '../../instructor/instructor-more-details/instructor-more-details.component';
 import { InstructorDeactivatedListComponent } from '../../instructor/instructor-deactivated-list/instructor-deactivated-list.component';
+
+
 
 
 
@@ -112,13 +114,14 @@ import { InstructorDeactivatedListComponent } from '../../instructor/instructor-
     PdfListComponent,
     PdfMoreDetailsComponent,
     PdfAddComponent,
+    VideoAddComponent,
     VideoListComponent,
     VideoMoreDetailsComponent,
-    VideoAddComponent,
     InstructorListComponent,
     InstructorAddComponent,
     InstructorMoreDetailsComponent,
     InstructorDeactivatedListComponent,
+    InstructorMoreDetailsComponent
 
   ]
 })

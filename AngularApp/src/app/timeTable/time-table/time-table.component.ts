@@ -44,7 +44,6 @@ export class TimeTableComponent implements OnInit {
     this.timeValidation = new TimeTableValidation();
 
     this.userRole=sessionStorage.getItem('userRole');
-    console.log(this.userRole);
     if(this.userRole == null){
       this.router.navigate(['/']);
     }
@@ -284,6 +283,14 @@ export class TimeTableComponent implements OnInit {
 
   packageAnalysis(){
     this.router.navigate(['package-analysis']);
+  }
+
+  timeSlot(){
+    this.router.navigate(['time-slot']);
+  }
+
+  maps(){
+    this.router.navigate(['path-map']);
   }
 
   //error handling

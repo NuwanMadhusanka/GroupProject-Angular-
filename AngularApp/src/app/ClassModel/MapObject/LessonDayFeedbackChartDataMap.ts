@@ -1,6 +1,10 @@
+import { TimeSlotModel } from '../TimeSlotModel';
+
 export class LessonDayFeedbackChartDataMap{
     constructor(
-        public day,
-        public count
+        public totalRequest:Number[],
+        public handleRequest:Number[],
+        public extraRequest:Number[],
+        public timeSlot:TimeSlotModel
     ){}
 }

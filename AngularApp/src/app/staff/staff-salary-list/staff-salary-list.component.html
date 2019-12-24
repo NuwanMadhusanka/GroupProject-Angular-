@@ -32,7 +32,23 @@
             <!-- Drop Down Finish -->
 
           <hr>
-          <h4 class="card-title">{{monthNames[selectMonth]}} Payments</h4>    
+          <div class="row">
+            <div class="col-md-9">
+              <h4 class="card-title">{{monthNames[selectMonth]}} Payments</h4>    
+            </div>
+            <div class="col-md-3">
+              <form>
+                <div class="input-group no-border">
+                  <input type="text" [(ngModel)]="searchTerm" name="search" class="form-control" placeholder="Search..." id="searchBox">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <i class="now-ui-icons ui-1_zoom-bold"></i>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
           
           <!-- Table Start -->
           <div class="table-responsive">
@@ -47,14 +63,14 @@
                   <th>Option</th>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let salary of staffSalaryList; let i=index;">
+                  <tr *ngFor="let salary of filteredStaffSalaryList; let i=index;">
                     <td>{{i+1}})</td>
 
-                    <td *ngIf="salary.staffId.userId.role==2">{{salary.staffId.name}} <small>(AS-S)</small></td>
-                    <td *ngIf="salary.staffId.userId.role==3">{{salary.staffId.name}} <small>(AS-I)</small></td>
-                    <td *ngIf="salary.staffId.userId.role==4">{{salary.staffId.name}} <small>(I)</small></td>
+                    <td *ngIf="salary.staffId.userId.role==2">{{salary.staffId.userId.firstName}} {{salary.staffId.userId.lastName}} <small>(AS-S)</small></td>
+                    <td *ngIf="salary.staffId.userId.role==3">{{salary.staffId.userId.firstName}} {{salary.staffId.userId.lastName}} <small>(AS-I)</small></td>
+                    <td *ngIf="salary.staffId.userId.role==4">{{salary.staffId.userId.firstName}} {{salary.staffId.userId.lastName}} <small>(I)</small></td>
 
-                    <td>{{salary.staffId.nic}}</td>
+                    <td>{{salary.staffId.userId.nic}}</td>
                     <td>{{salary.totalPayment | number : '1.2-2'}}</td>
 
                     <td *ngIf="salary.complete==0">{{salary.totalPayment-salary.nopay-salary.payed | number : '1.2-2'}}</td>

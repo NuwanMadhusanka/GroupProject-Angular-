@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { StudentPackageAddComponent, StudentPackage } from '../../student/student-package-add/student-package-add.component';
+import { StudentPackageAddComponent,StudentPackage } from '../../student/student-package-add/student-package-add.component';
 import { StudentModel } from '../../ClassModel/StudentModel';
 import { PackageModel } from '../../ClassModel/PackageModel';
 import { CourseFee } from '../../ClassModel/CourseFeeModel';
@@ -21,119 +21,133 @@ import { ExchangeRate } from '../../ClassModel/MapObject/ExchangeRate';
 export class StudentServiceService {
 
   constructor(
-    private http: HttpClient,
+    private http:HttpClient,
   ) { }
 
   //register the new student
-  studentRegister(student: StudentModel) {
-    return this.http.post<any>(`${API_URL}/student/register`, student);
+  studentRegister(student:StudentModel){
+    return this.http.post<any>(`${API_URL}/student/register`,student);
   }
 
   //get StudentList
-  studentList(status) {
-    return this.http.get<StudentModel[]>(`${API_URL}/students/${status}`);
+  studentList(status){
+      return this.http.get<StudentModel[]>(`${API_URL}/students/${status}`);
   }
 
   //getStudent following package's Id(Response is integer list)
-  studentPackagesId(id: Number) {
+  studentPackagesId(id:Number){
     return this.http.get<[]>(`${API_URL}/student/package/${id}`);
   }
 
   //getStudent following package's(Response is packageModel(list))
-  studentPackages(id: Number) {
+  studentPackages(id:Number){
     return this.http.get<PackageModel[]>(`${API_URL}/student/package/list/${id}`);
   }
 
 
   //insert student package details
-  studentPackegeAdd(selectedPackage, id) {
-    return this.http.post<any>(`${API_URL}/student/package/${id}`, selectedPackage);
+  studentPackegeAdd(selectedPackage,id){
+    return this.http.post<any>(`${API_URL}/student/package/${id}`,selectedPackage);
   }
 
   //delete student package details
-  studentPackegeDelete(stuId, pacId) {
+  studentPackegeDelete(stuId,pacId){
     return this.http.delete<any>(`${API_URL}/student/package/${stuId}/${pacId}`);
   }
 
   //get student CourseFee Details
-  studentCourseFees(stuId, pacId) {
+  studentCourseFees(stuId,pacId){
     return this.http.get<[]>(`${API_URL}/student/coursefees/${stuId}/${pacId}`);
   }
 
   // Add Course Fees
-  studentCourseFeeAdd(courseFee: CourseFee, studentPackageId, packageId) {
-    return this.http.post<any>(`${API_URL}/student/coursefee/${studentPackageId}/${packageId}`, courseFee);
+  studentCourseFeeAdd(courseFee:CourseFee,studentPackageId,packageId){
+     return this.http.post<any>(`${API_URL}/student/coursefee/${studentPackageId}/${packageId}`,courseFee);
   }
 
   //Get Specific Student Details
-  studentGet(studentId) {
+  studentGet(studentId){
     return this.http.get<StudentModel>(`${API_URL}/student/${studentId}`);
   }
 
   //Update Student Data
-  studentUpdate(student: StudentModel) {
-    return this.http.put<number>(`${API_URL}/student/update`, student);
+  studentUpdate(student:StudentModel){
+    return this.http.put<number>(`${API_URL}/student/update`,student);
   }
 
   //getStudent data using userId
-  getStudentData(userId) {
+  getStudentData(userId){
     return this.http.get<StudentModel>(`${API_URL}/student/user/${userId}`);
   }
 
   //delete Student Data
-  studentDelete(stuId) {
+  studentDelete(stuId){
     return this.http.delete<any>(`${API_URL}/student/${stuId}`);
   }
 
   //get StudentId
-  getStudentId(userId) {
+  getStudentId(userId){
     return this.http.get<Number>(`${API_URL}/student/id/${userId}`);
   }
 
   //paypal
-  makePayment(sum, userId) {
-    return this.http.post<PayPal>(`${API_URL}/paypal/make/payment/?sum=` + sum + `&userId=` + userId, {});
+  makePayment(sum,userId) {
+    return this.http.post<PayPal>(`${API_URL}/paypal/make/payment/?sum=`+sum+`&userId=`+userId,{});
   }
 
-  completePayment(paymentId, payerId, userId, packageId, payment) {
+  completePayment(paymentId, payerId,userId,packageId,payment) {
     return this.http.post<any>(`${API_URL}/paypal/complete/payment/${paymentId}/${payerId}/${userId}/${packageId}/${payment}`, {});
   }
 
-  exchngeRate() {
+  exchngeRate(){
     return this.http.get<ExchangeRate>(`https://openexchangerates.org/api/latest.json?app_id=${APP_ID_EXCHANGE_RATE}&symbols=LKR`);
   }
 
-  studentTrialList(date) {
-    return this.http.get<ExamList[]>(`${API_URL}/student/trial/list?date=` + date);
+  studentTrialList(date){
+    return this.http.get<ExamList[]>(`${API_URL}/student/trial/list?date=`+date);
   }
 
-  studentExamList(date) {
-    return this.http.get<ExamList[]>(`${API_URL}/student/exam/list?date=` + date);
+  studentExamList(date){
+    return this.http.get<ExamList[]>(`${API_URL}/student/exam/list?date=`+date);
   }
 
   //written Exam Data
-  studentWrittenExamData() {
-    return this.http.get<[]>(`${API_URL}/student/writtenexam/result`);
+  studentExamResult(type:Number){
+    return this.http.get<[]>(`${API_URL}/student/exam/result/${type}`);
   }
 
-  submitWrittenExamResult(date, countPass, countFail) {
-    return this.http.post<any>(`${API_URL}/student/writtenexam/result?date=` + date + "&countPass=" + countPass + "&countFail=" + countFail, {});
+  submitWrittenExamResult(date,countPass,countFail){
+    return this.http.post<any>(`${API_URL}/student/writtenexam/result?date=`+date+"&countPass="+countPass+"&countFail="+countFail,{});
   }
 
-  submitTrialExamResult(date, countPass, countFail) {
-    return this.http.post<any>(`${API_URL}/student/trialexam/result?date=` + date + "&countPass=" + countPass + "&countFail=" + countFail, {});
+  submitTrialExamResult(date,countPass,countFail){
+    return this.http.post<any>(`${API_URL}/student/trialexam/result?date=`+date+"&countPass="+countPass+"&countFail="+countFail,{});
   }
 
-  activateStudentAccount(studentId) {
-    return this.http.put<Number>(`${API_URL}/student/activate/account/${studentId}`, {});
+  activateStudentAccount(studentId){
+    return this.http.put<Number>(`${API_URL}/student/activate/account/${studentId}`,{});
   }
 
-  clearStudentPreviousPayment(studentId) {
-    return this.http.delete<any>(`${API_URL}/student/clear/payment/${studentId}`, {});
+  continueStudentAccount(studentId){
+    return this.http.put<any>(`${API_URL}/student/continue/account/${studentId}`,{});
   }
 
-  getpaymentNotCompleteStudent() {
+  clearStudentPreviousPayment(studentId){
+    return this.http.delete<any>(`${API_URL}/student/clear/payment/${studentId}`,{});
+  }
+
+  getpaymentNotCompleteStudent(){
     return this.http.get<StudentModel[]>(`${API_URL}/student/payment/notcomplete`);
   }
 
+  /*
+  if role == 5
+    then id --> Student's UserId
+  If role == 3
+    then id --> studentId
+  */
+  getStudentPackageData(id:Number,role:Number,packageId:Number){
+    return this.http.get<StudentPackageModel>(`${API_URL}/student/package/data/${id}/${role}/${packageId}`);
+  }
+  
 }

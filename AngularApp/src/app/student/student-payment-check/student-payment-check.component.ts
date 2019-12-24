@@ -56,8 +56,8 @@ export class StudentPaymentCheckComponent implements OnInit {
     );
   }
 
-  addPayment(studentId){
-    this.router.navigate(['student-payment',studentId]);
+  addPayment(studentId,studentName){
+    this.router.navigate(['student-payment',studentId,studentName]);
   }
 
 }
