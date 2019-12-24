@@ -103,9 +103,6 @@ export class LoginComponent implements OnInit {
 
         sessionStorage.setItem('userId',response.userId);
         sessionStorage.setItem('userRole',response.role);
-        
-        let userName = response.firstName+' '+response.lastName;
-        sessionStorage.setItem('userName',userName);
 
         // should check status backendside
         if(response.role === 2){

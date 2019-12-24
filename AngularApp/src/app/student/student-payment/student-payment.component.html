@@ -36,17 +36,8 @@
           <div *ngIf="isSelectPackage">
             <h3>{{selectPackage.title}} Payments</h3>
             <p *ngIf="isStudent"><i class="fas fa-arrow-circle-down fa-1x"></i>  Do Online Payment</p>
-            <a *ngIf="balance>0"  (click)=doPaymentActive()><button class="btn btn-success btn-sm"><i class="fas fa-plus fa-sm" title="Do Payment"></i></button></a>
+            <a *ngIf="balance>0"  (click)=doPaymentActive()><button class="btn btn-primary btn-sm"><i class="fas fa-plus fa-sm" title="Do Payment"></i></button></a>
             
-            <div class="card">
-              <div class="card-body">
-                 <pre><h6>Basic Payment : {{(courseFee*basicPaymentsPercentageList[0])/100 | number : '1.2-2'}} ({{basicPaymentsPercentageList[0]}}%) </h6></pre>
-                 <pre><h6>Lessons :{{numOfLessonList[0]}}</h6></pre>
-                </div>
-            </div>
-           
-            <br><br>
-
             <!-- New Payment Add -->
             
             <div *ngIf="isPayment" class="card">
@@ -72,8 +63,8 @@
 
               <!-- Table -->
               <div class="table-responsive">
-                  <table class="table table-striped table-bordered">
-                    <thead *ngIf="payment>0" class="text-primary thead-dark">
+                  <table class="table">
+                    <thead *ngIf="payment>0" class=" text-primary">
                       <th></th>
                       <th>Date</th>
                       <th>Method</th>
@@ -85,44 +76,37 @@
                         <td>{{courseFee[2]}}</td>
                         <td *ngIf="courseFee[3]==1">Cash</td>
                         <td *ngIf="courseFee[3]==2">Online</td>
-                        <td>{{courseFee[1] |  number : '1.2-2'}}</td>
+                        <td>{{courseFee[1]}}</td>
                       </tr>
-                    
+                      <!-- Course Fee -->
+                      <tr class=" text-info">
+                        <td></td>
+                        <td></td>
+                        <td><h6>Course Fee</h6></td>
+                        <td>{{courseFee.toFixed(2)}}</td>
+                      </tr>
+                      <!-- Course Fee Finish -->
+                      <!-- Course Payment -->
+                      <tr class=" text-info">
+                        <td></td>
+                        <td></td>
+                        <td><h6>Total Payment</h6></td>
+                        <td>{{payment.toFixed(2)}}</td>
+                      </tr>
+                      <!-- Course Payment Finish -->
+                       <!-- Balance Payment -->
+                       <tr class=" text-info">
+                        <td></td>
+                        <td></td>
+                        <td *ngIf="payment != courseFee" ><h6>Balance</h6></td>
+                        <td *ngIf="payment != courseFee" class="text-success"><h6>{{balance.toFixed(2)}}</h6></td>
+                        <td *ngIf="payment == courseFee" class="text-success"><h6><span class="alert alert-primary">Complete Payment</span></h6></td>
+                      </tr>
+                      <!-- Balance Payment Finish -->
                     </tbody>
                   </table>
               </div>
               <!-- Table Finish -->
-
-              <br><br><hr>
-              <!-- Table -->
-              <div class="table-responsive">
-                <table class="table table-striped table-bordered">
-                  <tbody>
-                    <!-- Course Fee -->
-                    <tr class=" text-info">
-                      <td><h6>Course Fee</h6></td>
-                      <td>{{courseFee.toFixed(2)}}</td>
-                    </tr>
-                    <!-- Course Fee Finish -->
-                    <!-- Course Payment -->
-                    <tr class=" text-info">
-                      <td><h6>Total Payment</h6></td>
-                      <td>{{payment.toFixed(2)}}</td>
-                    </tr>
-                    <!-- Course Payment Finish -->
-                     <!-- Balance Payment -->
-                     <tr class=" text-info">
-                      <td *ngIf="payment != courseFee" ><h6>Balance</h6></td>
-                      <td *ngIf="payment != courseFee" class="text-success"><h6>{{balance.toFixed(2)}}</h6></td>
-                      <td *ngIf="payment == courseFee" class="text-success"><h6><span class="alert alert-primary">Complete Payment</span></h6></td>
-                    </tr>
-                    <!-- Balance Payment Finish -->
-                  </tbody>
-                </table>
-            </div>
-            <!-- Table Finish -->
-
-              
 
             </div>
         </div>

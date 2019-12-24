@@ -49,8 +49,8 @@
                 </div>
                 <div class="card-body">
                       <div class="table-responsive">
-                        <table class="table table-striped table-bordered">
-                          <thead class="text-primary thead-dark">
+                        <table class="table">
+                          <thead class=" text-primary">
                             <th></th>
                             <th>Date</th>
                             <th>Time</th>
@@ -65,7 +65,7 @@
                               <td>{{studentLesson.date}}</td>
                               <td>{{studentLesson.lessonId.timeSlotId.startTime | slice:0:5}} - {{studentLesson.lessonId.timeSlotId.finishTime | slice:0:5}}</td>
                               <td>{{studentLesson.lessonId.packageId.vehicleCategoryId.category}}({{transmission}})</td>
-                              <td>{{studentLesson.lessonId.instructorId.staffId.userId.firstName}} {{studentLesson.lessonId.instructorId.staffId.userId.lastName}}</td>
+                              <td>{{studentLesson.lessonId.instructorId.staffId.name}}</td>
                               <td><a  (click)=googleMap(studentLesson.lessonId.pathId,1)><button class="btn btn-info btn-sm"> <i class="fas fa-map" title="Google Map"></i></button></a></td>
                               <td><a  (click)="cacelBooking(studentLesson)"><button class="btn btn-danger btn-sm"> <i class="fas fa-window-close" title="Cancel Lesson"></i></button></a></td>
                             </tr>
@@ -84,8 +84,8 @@
                 <div class="card-body">
 
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered">
-                          <thead class=" text-primary thead-dark">
+                        <table class="table">
+                          <thead class=" text-primary">
                             <th></th>
                             <th>Date</th>
                             <th>State</th>

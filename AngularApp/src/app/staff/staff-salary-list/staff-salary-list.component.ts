@@ -4,7 +4,6 @@ import { StaffServiceService } from '../../service/StaffService/staff-service.se
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpError } from '../../Shared/httpError/HttpError';
 import { Router } from '@angular/router';
-import { UserValidation } from '../../Shared/validation/user-validation/user-validation';
 
 
 @Component({
@@ -23,29 +22,6 @@ export class StaffSalaryListComponent implements OnInit {
   
   errorMessage:String;
 
-  validation:UserValidation = new UserValidation();
-
-  //Filter Option Implement
-  filteredStaffSalaryList: SalaryModel[] = [];
-  private _searchTerm:string;
-  get searchTerm(): string{
-    return this._searchTerm;
-  }
-  set searchTerm(value:string){
-    this._searchTerm=value;
-    this.filteredStaffSalaryList = this.filterSalary(value);
-  }
-
-  filterSalary(searchString:string){
-     if(this.validation.isDigitContain(searchString)){
-      return this.staffSalaryList.filter(salary => 
-        salary.staffId.userId.nic.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
-     }
-     return this.staffSalaryList.filter(salary => 
-        salary.staffId.userId.firstName.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 || salary.staffId.userId.lastName.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
-  }
-  //Finish filter option implementation
-
   constructor(
     private staffService : StaffServiceService,
     private router : Router
@@ -55,13 +31,11 @@ export class StaffSalaryListComponent implements OnInit {
     this.getCurrentMonth();
     this.getStaffSalaryDetails();
   }
-  
 
   getStaffSalaryDetails(){
     this.staffService.getStaffSalaryDetails(this.selectMonth+1).subscribe(
       response => {
         this.staffSalaryList=response;
-        this.filteredStaffSalaryList=response;
       },
       error => {
         console.log(error);

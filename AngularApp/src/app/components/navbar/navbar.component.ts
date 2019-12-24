@@ -18,10 +18,9 @@ import { UserAuthenticationServiceService } from '../../service/user-authenticat
 })
 export class NavbarComponent implements OnInit {
 
-    userId:Number;
-    userRole:Number;
-    userRoleName:String;
-    userName:String;
+    userId;
+    userRole;
+    userRoleName;
     newNotificationList:NotificationDataMap[]=[];
     earlyNotification:NotificationDataMap[]=[];
     isNewNotification=false;
@@ -63,10 +62,8 @@ export class NavbarComponent implements OnInit {
          }
      });
 
-     this.userId=+sessionStorage.getItem("userId");
-     this.userRole=+sessionStorage.getItem("userRole");
-     this.userName=sessionStorage.getItem("userName");
-
+     this.userId=sessionStorage.getItem("userId");
+     this.userRole=sessionStorage.getItem("userRole");
      this.getNotification();
      this.getRoleName();
 
@@ -224,6 +221,7 @@ export class NavbarComponent implements OnInit {
        this.notificationService.getNotification(this.userId,this.userRole,0).subscribe(
          response => {
             this.newNotificationList=response;
+            console.log(this.newNotificationList);
             if(this.newNotificationList.length>0){
               this.isNewNotification=true;
               this.isNotificationBadgeOn=true;

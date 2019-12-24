@@ -31,11 +31,11 @@
           <ul class="navbar-nav">
 
             <li class="nav-item">
-              <p id="user" class="nav-link">Loged in :  <b>{{userName}} ({{userRoleName}})</b></p>
+              <p id="user" class="nav-link">Loged in as:  <b>{{userRoleName}}</b></p>
             </li>
           
             <!-- Message -->
-            <!-- <li class="nav-item pointer" ngbDropdown>
+            <li class="nav-item pointer" ngbDropdown>
               <a  class="nav-link" id="dropdownBasic1" ngbDropdownToggle>
                 <i class="now-ui-icons ui-1_email-85" title="Message" ></i>
               </a>
@@ -43,12 +43,12 @@
                 <a  class="dropdown-item pointer" (click)="profile()">Profile</a>
                 <a  class="dropdown-item pointer" (click)=logOut()>LogOut</a>
               </div>
-            </li> -->
+            </li>
             <!-- Message -->
 
             <!-- Notification Button -->
             
-              <li *ngIf="userRole==4 || userRole==5" class="nav-item pointer" ngbDropdown>
+              <li  class="nav-item pointer" ngbDropdown>
                 <a (click)="notificationBadge()" title="Notifications" class="nav-link notification" id="dropdownBasic1" ngbDropdownToggle>
                   <span data-notify="icon" class="now-ui-icons ui-1_bell-53"><span *ngIf="isNewNotification && isNotificationBadgeOn" class="badge">{{newNotificationList.length}}</span></span>
                 </a>

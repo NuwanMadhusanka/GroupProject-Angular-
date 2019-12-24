@@ -25,8 +25,8 @@
     <div class="card-body">
 
       <div class="row">
-       
-        <div class="col-md-12">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
           
           <div class="table-responsive">
             <table class="table">
@@ -42,9 +42,8 @@
                   <td>{{student.userId.nic}}</td>
                   <td>{{student.userId.firstName}} {{student.userId.lastName}}</td>
                   <td>  
-                    <a  (click)=continueStudentAccount(student.studentId,student.userId.firstName)><button class="btn btn-success btn-sm"><small><b>Continue Account</b></small></button></a>
-                    <a  (click)=acivateStudentAccount(student.studentId,student.userId.firstName)><button class="btn btn-secondary btn-sm"><small><b>Activate As New Account</b></small></button></a>
-                    <a  (click)=addPayment(student.studentId,student.userId.firstName)><button class="btn btn-info btn-sm"><i class="fas fa-dollar-sign fa-sm" title="Add Payment"></i></button></a>
+                    <a  (click)=acivateStudentAccount(student.studentId,student.userId.firstName)><button class="btn btn-danger btn-sm"><i class="fas fa-times" title="Active"></i></button></a>
+                    <a  (click)=addPayment(student.studentId,student.userId.firstName)><button class="btn btn-secondary btn-sm"><i class="fas fa-dollar-sign fa-sm" title="Add Payment"></i></button></a>
                   </td>
                 </tr>
               </tbody>
@@ -52,7 +51,7 @@
           </div>
     
         </div>
-        
+        <div class="col-md-2"></div>
       </div>
       
     </div>

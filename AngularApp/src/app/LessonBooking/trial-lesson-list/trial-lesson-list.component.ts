@@ -271,7 +271,7 @@ export class TrialLessonListComponent implements OnInit {
     this.router.navigate(['trial-lesson-book']);
   }
 
-  handleErrorResponse(error: HttpErrorResponse) {
+  private handleErrorResponse(error: HttpErrorResponse) {
     let httpError = new HttpError();
     httpError.ErrorResponse(error);
     }
