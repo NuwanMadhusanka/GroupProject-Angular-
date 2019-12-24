@@ -50,6 +50,7 @@ import { VideoAddComponent } from '../../video/video-add/video-add.component';
 import { InstructorListComponent } from '../../instructor/instructor-list/instructor-list.component';
 import { InstructorAddComponent } from '../../instructor/instructor-add/instructor-add.component';
 import { InstructorMoreDetailsComponent } from '../../instructor/instructor-more-details/instructor-more-details.component';
+import { InstructorDeactivatedListComponent } from '../../instructor/instructor-deactivated-list/instructor-deactivated-list.component';
 
 
 
@@ -116,13 +117,9 @@ import { InstructorMoreDetailsComponent } from '../../instructor/instructor-more
     VideoAddComponent,
     InstructorListComponent,
     InstructorAddComponent,
-<<<<<<< HEAD
     InstructorMoreDetailsComponent,
     InstructorDeactivatedListComponent,
 
-=======
-    InstructorMoreDetailsComponent
->>>>>>> parent of a300e41... Merge pull request #14 from NuwanMadhusanka/anupama
   ]
 })
 
