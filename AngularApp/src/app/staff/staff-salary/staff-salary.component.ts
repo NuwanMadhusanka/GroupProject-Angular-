@@ -19,7 +19,6 @@ export class StaffSalaryComponent implements OnInit {
 
   userId:Number;
   staffData:StaffModel;
-  isStaffDataLoad=false;
 
   monthNames = ["January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"];
@@ -54,7 +53,6 @@ export class StaffSalaryComponent implements OnInit {
     this.staffService.getStaffData(this.userId).subscribe(
       response => {
         this.staffData = response;
-        this.isStaffDataLoad=true;
         this.getStaffSalaryData();
       },
       error => {

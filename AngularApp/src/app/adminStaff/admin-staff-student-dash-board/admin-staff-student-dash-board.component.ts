@@ -85,13 +85,11 @@ export class AdminStaffStudentDashBoardComponent implements OnInit {
   isExamStudent=false;//written exam
 
   lineChartWrittenExamData=[];
-  lineChartTrialExamData=[];
 
   ngOnInit() {
     this.studentTrialList();
     this.studentExamList();
     this.getlineChartWrittenExamData();
-    this.getlineChartTrialExamData();
 
     this.chartColor = "#FFFFFF";
     this.canvas = document.getElementById("bigDashboardChart");
@@ -292,12 +290,12 @@ export class AdminStaffStudentDashBoardComponent implements OnInit {
     this.ctx = this.canvas.getContext("2d");
 
     this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
-    this.gradientStroke.addColorStop(0, '#18ce0f');
+    this.gradientStroke.addColorStop(0, '#80b6f4');
     this.gradientStroke.addColorStop(1, this.chartColor);
 
     this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
     this.gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
-    this.gradientFill.addColorStop(1,  this.hexToRGB('#18ce0f', 0.4));
+    this.gradientFill.addColorStop(1, "rgba(249, 99, 59, 0.40)");
 
     this.lineChartData = [
         {
@@ -313,14 +311,14 @@ export class AdminStaffStudentDashBoardComponent implements OnInit {
       ];
       this.lineChartColors = [
        {
-         borderColor: "#18ce0f",
+         borderColor: "#f96332",
          pointBorderColor: "#FFF",
-         pointBackgroundColor: "#18ce0f",
+         pointBackgroundColor: "#f96332",
          backgroundColor: this.gradientFill
        }
      ];
     this.lineChartLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    this.lineChartOptions = this.gradientChartOptionsConfigurationWithNumbersAndGrid;
+    this.lineChartOptions = this.gradientChartOptionsConfiguration;
 
     this.lineChartType = 'line';
 
@@ -337,7 +335,7 @@ export class AdminStaffStudentDashBoardComponent implements OnInit {
 
     this.lineChartWithNumbersAndGridData = [
         {
-          label: "Pass Student Rate",
+          label: "Email Stats",
            pointBorderWidth: 2,
            pointHoverRadius: 4,
            pointHoverBorderWidth: 1,
@@ -355,7 +353,7 @@ export class AdminStaffStudentDashBoardComponent implements OnInit {
          backgroundColor: this.gradientFill
        }
      ];
-    this.lineChartWithNumbersAndGridLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    this.lineChartWithNumbersAndGridLabels = ["12pm,", "3pm", "6pm", "9pm", "12am", "3am", "6am", "9am"];
     this.lineChartWithNumbersAndGridOptions = this.gradientChartOptionsConfigurationWithNumbersAndGrid;
 
     this.lineChartWithNumbersAndGridType = 'line';
@@ -471,7 +469,7 @@ export class AdminStaffStudentDashBoardComponent implements OnInit {
         console.log(error);
         this.handleErrorResponse(error);
       }
-    );
+    )
   }
 
   generatePdf(title){
@@ -514,9 +512,9 @@ export class AdminStaffStudentDashBoardComponent implements OnInit {
     doc.save(saveFileName);
   }
 
-  //line chart data wrriten exam result
+  //line chart data
   getlineChartWrittenExamData(){
-    this.studentService.studentExamResult(1).subscribe(
+    this.studentService.studentWrittenExamData().subscribe(
       response => {
         console.log(response)
          this.lineChartWrittenExamData=response;
@@ -527,30 +525,6 @@ export class AdminStaffStudentDashBoardComponent implements OnInit {
                    this.lineChartWrittenExamData[3], this.lineChartWrittenExamData[4], this.lineChartWrittenExamData[5], 
                    this.lineChartWrittenExamData[6], this.lineChartWrittenExamData[7], this.lineChartWrittenExamData[8],
                    this.lineChartWrittenExamData[9], this.lineChartWrittenExamData[10], this.lineChartWrittenExamData[11]]
-          }
-        ];
-      },
-      error =>{
-        console.log(error);
-        this.handleErrorResponse(error);
-      }
-    );
-  }
-
-
-   //line chart data wrriten exam result
-   getlineChartTrialExamData(){
-    this.studentService.studentExamResult(2).subscribe(
-      response => {
-        console.log(response)
-         this.lineChartTrialExamData=response;
-
-         this.lineChartWithNumbersAndGridData = [
-          {
-            data: [this.lineChartTrialExamData[0], this.lineChartTrialExamData[1], this.lineChartTrialExamData[2],  
-                   this.lineChartTrialExamData[3], this.lineChartTrialExamData[4], this.lineChartTrialExamData[5], 
-                   this.lineChartTrialExamData[6], this.lineChartTrialExamData[7], this.lineChartTrialExamData[8],
-                   this.lineChartTrialExamData[9], this.lineChartTrialExamData[10], this.lineChartTrialExamData[11]]
           }
         ];
       },
