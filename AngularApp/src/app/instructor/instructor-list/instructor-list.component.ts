@@ -72,6 +72,12 @@ export class InstructorListComponent implements OnInit {
   moreDetails(instructorId){
     this.router.navigate(['instructor-more-details',instructorId]);
   }
+    deactivatedInstructorList(){
+    console.log("deactivated InsList");
+    this.router.navigate(['instructor-deactivated-list']);
+
+  }
+  
 /*
   //navigate to studentRegister Page
   addStudent(){
@@ -118,11 +124,7 @@ export class InstructorListComponent implements OnInit {
       }
     })
   }
-  deactivatedInstructorList(){
-    console.log("deactivated InsList");
-    this.router.navigate(['instructor-deactivated-list']);
-
-  }
+ 
 
 
   //navigate to student-package
