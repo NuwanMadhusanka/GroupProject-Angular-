@@ -10,17 +10,13 @@ import { StudentPractricalChartDataMap } from '../../ClassModel/MapObject/Studen
   providedIn: 'root'
 })
 export class InstructorServiceService {
-
+  
+  
   constructor(
     private http: HttpClient
   ) { }
-<<<<<<< HEAD
  
   getInstructorLesson(userId) {
-=======
-
-  getInstructorLesson(userId){
->>>>>>> parent of a300e41... Merge pull request #14 from NuwanMadhusanka/anupama
     return this.http.get<TimeTableDataList[]>(`${API_URL}/instructor/lesson/${userId}`);
   }
 
@@ -40,7 +36,6 @@ export class InstructorServiceService {
     return this.http.get<StudentPractricalChartDataMap>(`${API_URL}/instructor/student/practrical/lesson/${studentLessonId}`);
   }
   //get Instructor List
-<<<<<<< HEAD
   instructorList(status) {
     console.log("ins serv ts");
     return this.http.get<InstructorModel[]>(`${API_URL}/instructors/${status}`);
@@ -80,14 +75,4 @@ export class InstructorServiceService {
      console.log("Ins Activation");
     return this.http.put<Number>(`${API_URL}/instructor/activate/account/${instructorId}`, {});
   }
-=======
-  instructorList(){
-    return this.http.get<InstructorModel[]>(`${API_URL}/instructors`);
-  }
-
- //Get Specific Instructor Details
- getInstructorbyID(instructorId){
-  return this.http.get<InstructorModel>(`${API_URL}/instructor/${instructorId}`);
- }
->>>>>>> parent of a300e41... Merge pull request #14 from NuwanMadhusanka/anupama
 }
