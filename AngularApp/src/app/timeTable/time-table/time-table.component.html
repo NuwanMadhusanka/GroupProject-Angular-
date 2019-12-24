@@ -24,10 +24,19 @@
       <div class="card">
         <div class="card-header">
             <h4 class="card-title">Lesson Time Table</h4>
-            <a *ngIf="userRole != 5" (click)=packageAnalysis()><button type="button" class="btn btn-secondary" title="Package Analysis"><i class="fas fa-chart-bar"></i></button></a>
-            <a *ngIf="userRole != 5" (click)=addLesson()><button type="button" class="btn btn-success" title="Add New Lesson"><i class="fas fa-plus"></i></button></a>
-            <a *ngIf="userRole != 5" (click)=activateLesson()><button type="button" class="btn btn-info" title="Active Lesson"><i class="fas fa-check-circle"></i></button></a>
-            <a *ngIf="userRole == 5" (click)="trialLessonBook()"><button type="button" class="btn btn-primary btn-round">Reserve Lesson</button></a>
+
+            <div class="row">
+              <div class="col-md-9">
+                <a *ngIf="userRole != 5" (click)=packageAnalysis()><button type="button" class="btn btn-secondary" title="Package Analysis"><i class="fas fa-chart-bar"></i></button></a>
+                <a *ngIf="userRole != 5" (click)=addLesson()><button type="button" class="btn btn-success" title="Add New Lesson"><i class="fas fa-plus"></i></button></a>
+                <a *ngIf="userRole != 5" (click)=activateLesson()><button type="button" class="btn btn-info" title="Active Lesson"><i class="fas fa-check-circle"></i></button></a>
+                <a *ngIf="userRole == 5" (click)="trialLessonBook()"><button type="button" class="btn btn-primary btn-round">Reserve Lesson</button></a>
+              </div>
+              <div *ngIf="userRole==3" class="col-md-3">
+                <button (click)="timeSlot()" type="button" class="btn btn-secondary btn-round"><i class="fas fa-cog"></i> Time Slot</button>
+                <button (click)="maps()" type="button" class="btn btn-secondary btn-round"><i class="fas fa-cog"></i> Map</button>
+              </div>
+            </div>
         </div>
         <div class="card-body">
          

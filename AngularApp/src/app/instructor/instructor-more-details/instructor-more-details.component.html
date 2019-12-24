@@ -7,110 +7,80 @@
       <div class="card">
         <div class="card-header">
           <h4 class="card-title">Instructor Details</h4>
-          <div class="row">
-            <div class="col-md-9">
-              <div class="table-responsive">
-                <table class="table">
-                  <!-- <thead class=" text-primary">
+
+
+          <div class="table-responsive">
+            <table class="table">
+              <!-- <thead class=" text-primary">
                   <th>Name</th>
                   <th>Course</th>
                   <th>Option</th>
                 </thead> -->
-                  <tbody>
-                    <tr>
-                      <th>Instructor ID:</th>
-                      <td>{{instructorData.licence}}</td>
+              <tbody>
+                <tr>
+                  <th>Instructor ID:</th>
+                  <td>{{instructorData.licence}}</td>
 
-                    </tr>
-                    <tr>
-                      <th>Staff Id:</th>
-                      <td>{{instructorData.staffId.staffId}}</td>
-                      <th></th>
-                      <th></th>
-                      <th>User Id:</th>
-                      <td>{{instructorData.staffId.userId.userId}}</td>
+                </tr>
+                <tr>
+                  <th>First Name:</th>
+                  <td>{{instructorData.staffId.userId.firstName}}</td>
+                  <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
+                  <th></th>
+                  <th>Last Name:</th>
+                  <td>{{instructorData.staffId.userId.lastName}}</td>
+                  <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
 
-                    </tr>
-                    <tr>
-                      <th>First Name:</th>
-                      <td>{{instructorData.staffId.userId.firstName}}</td>
-                      <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update First Name"></i></button></a></td>
-                      <th></th>
-                      <th>Last Name:</th>
-                      <td>{{instructorData.staffId.userId.lastName}}</td>
-                      <td><a (click)=isUpdate(2)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Last Name"></i></button></a></td>
+                </tr>
 
-                    </tr>
+                <tr>
+                  <th>NIC</th>
+                  <td>{{instructorData.staffId.userId.nic}}</td>
+                  <td><a (click)=isUpdate(3)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Tags"></i></button></a></td>
+                <th> </th>
+                  <th>License:</th>
+                  <td>{{instructorData.licence}}</td>
+                  <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
 
-                    <tr>
-                      <th>NIC</th>
-                      <td>{{instructorData.staffId.userId.nic}}</td>
-                      <td><a (click)=isUpdate(3)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update NIC"></i></button></a></td>
-                      <th> </th>
-                      <th>License:</th>
-                      <td>{{instructorData.licence}}</td>
-                      <td><a (click)=isUpdate(4)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update License"></i></button></a></td>
+                </tr>
+                <tr>
+                  <th>Tel no:</th>
+                  <td>{{instructorData.staffId.userId.tel}}</td>
+                  <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
+                  <th></th>
+                  <th>E-mail:</th>
+                  <td>{{instructorData.staffId.userId.email}}</td>
+                  <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
 
-                    </tr>
-                    <tr>
-                      <th>Tel no:</th>
-                      <td>{{instructorData.staffId.userId.tel}}</td>
-                      <td><a (click)=isUpdate(5)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Tell No"></i></button></a></td>
-                      <th></th>
-                      <th>Address:</th>
-                      <td>{{instructorData.staffId.userId.address}}</td>
-                      <td><a (click)=isUpdate(6)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Address"></i></button></a></td>
-                    </tr>
-                    <tr>
-                      <th>E-mail:</th>
-                      <td>{{instructorData.staffId.userId.email}}</td>
-                      <td><a (click)=isUpdate(7)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update E-Mail"></i></button></a></td>
-                      <th></th>
-                      <th>Password:</th>
-                      <td>............</td>
-                      <td><a (click)=isUpdate(8)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Password"></i></button></a></td>
-                    </tr>
-                    <tr>
-                      <th>Reg Date:</th>
-                      <td>{{instructorData.staffId.userId.regDate}}</td>
-                    </tr>
-                    <tr>
-                      <th></th>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="card card-user">
-                <div class="image">
-                  <img src="../assets/img/loginImge.jpg" alt="...">
-                </div>
-                <div class="card-body">
-                  <div class="author">
-                    <br>
-                    <br>
-                    <a>
-                      <img class="avatar border-gray" src="{{apiUrl}}/api/file/{{instructorUserId}}/1" alt="...">
+                </tr>
 
-                      <br>
-                      <label for="upload-photo">Edit Profile Image</label>
-                      <input type="file" name="photo" id="upload-photo" (change)="selectFile($event)" />
+                <tr>
+                  <th>Address:</th>
+                  <td>{{instructorData.staffId.userId.address}}</td>
+                  <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
 
-                    </a>
-                    <br>
+                </tr>
+                <tr>
+                  <th>Staff Id:</th>
+                  <td>{{instructorData.staffId.staffId}}</td>
+                  <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
 
-                  </div>
+                </tr>
+                <tr>
+                  <th>User Id:</th>
+                  <td>{{instructorData.staffId.userId.userId}}</td>
+                  <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
 
-                  <hr>
-                </div>
-                <hr>
-                <div class="button-container">
-
-                </div>
-              </div>
-            </div>
+                </tr>
+                <tr>
+                  <th>Reg Date:</th>
+                  <td>{{instructorData.staffId.userId.regDate}}</td>
+                </tr>
+                <tr>
+                  <th></th>
+              </tbody>
+            </table>
           </div>
-
 
 
           <!-- Update -->

@@ -14,68 +14,67 @@ import { AttendanceModel } from '../../ClassModel/MapObject/AttendanceModel';
 export class StaffServiceService {
 
   constructor(
-    private http: HttpClient
+    private http : HttpClient
   ) { }
 
-  getStaffList() {
+  getStaffList(){
     return this.http.get<StaffModel[]>(`${API_URL}/staff`);
   }
 
-  getStaffSalaryInformationList() {
+  getStaffSalaryInformationList(){
     return this.http.get<SalaryInformationModel[]>(`${API_URL}/staff/salary/information`);
   }
 
-  getStaffSalaryInformation(salaryInformationId: Number) {
+  getStaffSalaryInformation(salaryInformationId:Number){
     return this.http.get<SalaryInformationModel>(`${API_URL}/staff/salary/information/${salaryInformationId}`);
   }
 
-  addStaffSalaryInformation(salaryInformation: SalaryInformationModel) {
-    return this.http.post<any>(`${API_URL}/staff/salary/information`, salaryInformation);
+  addStaffSalaryInformation(salaryInformation:SalaryInformationModel){
+    return this.http.post<any>(`${API_URL}/staff/salary/information`,salaryInformation);
   }
 
-  updateStaffSalaryInformation(salaryInformation: SalaryInformationModel) {
-    return this.http.put<any>(`${API_URL}/staff/salary/information`, salaryInformation);
+  updateStaffSalaryInformation(salaryInformation:SalaryInformationModel){
+    return this.http.put<any>(`${API_URL}/staff/salary/information`,salaryInformation);
   }
 
-  getStaffRoleSalaryInformation(staffId: Number) {
+  getStaffRoleSalaryInformation(staffId:Number){
     return this.http.get<SalaryInformationModel>(`${API_URL}/staff/role/salary/information/${staffId}`);
   }
 
-  deleteStaffSalaryInfromation(salaryInformationId: Number) {
+  deleteStaffSalaryInfromation(salaryInformationId:Number){
     return this.http.delete<any>(`${API_URL}/staff/salary/information/${salaryInformationId}`);
   }
 
-  getStaffWorkTime() {
+  getStaffWorkTime(){
     return this.http.get<WorkTimeModel>(`${API_URL}/staff/work/time`);
   }
 
-  updateStaffWorkTime(updateWorkTime: WorkTimeModel) {
-    return this.http.put<any>(`${API_URL}/staff/work/time/${updateWorkTime.fullDay}/${updateWorkTime.halfDay}`, {});
+  updateStaffWorkTime(updateWorkTime:WorkTimeModel){
+    return this.http.put<any>(`${API_URL}/staff/work/time/${updateWorkTime.fullDay}/${updateWorkTime.halfDay}`,{});
   }
 
-  getStaffSalaryDetails(month: number) {
+  getStaffSalaryDetails(month:number){
     return this.http.get<SalaryModel[]>(`${API_URL}/staff/salary/${month}`);
   }
 
-  getStaffSalaryData(staffId: Number, month: number) {
+  getStaffSalaryData(staffId:Number,month:number){
     return this.http.get<SalaryModel>(`${API_URL}/staff/salary/data/${staffId}/${month}`);
   }
 
-  payStaffSalary(payment: SalaryModel) {
-    return this.http.put<any>(`${API_URL}/staff/pay/salary`, payment);
+  payStaffSalary(payment:SalaryModel){
+    return this.http.put<any>(`${API_URL}/staff/pay/salary`,payment);
   }
 
-  getStaffWorkDays(staffId: Number, month: number) {
+  getStaffWorkDays(staffId:Number,month:number){
     return this.http.get<StaffWorkDaysDataMap>(`${API_URL}/staff/work/days/${staffId}/${month}`);
   }
 
-  getStaffAttendance(staffId: Number, month: Number) {
+  getStaffAttendance(staffId:Number,month:Number){
     return this.http.get<AttendanceModel[]>(`${API_URL}/staff/attendance/${staffId}/${month}`);
   }
 
-  getStaffData(userId: Number) {
+  getStaffData(userId:Number){
     return this.http.get<StaffModel>(`${API_URL}/staff/data/${userId}`);
   }
-
 
 }

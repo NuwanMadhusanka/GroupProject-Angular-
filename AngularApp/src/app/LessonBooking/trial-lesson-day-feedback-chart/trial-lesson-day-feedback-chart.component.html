@@ -6,8 +6,49 @@
     </button>
 </div>
 <div class="modal-body">
-      <div id="chartContainer1" style="height: 360px; width: 480px;"></div><br><hr>
-      <div id="chartContainer2" style="height: 360px; width: 480px;"></div>
+      <!-- <ng-container *ngFor="let chartName of chartNames">
+            <div [id]='chartName' style="height: 360px; width: 480px;"></div><br><hr>
+            <hr><hr>
+      </ng-container> -->
+
+      <div *ngFor="let data of chartData">
+            <h5>Time :{{data.timeSlot.startTime | slice:0:5}} - {{data.timeSlot.finishTime | slice:0:5}}</h5>
+            <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                      <thead  class="text-primary thead-dark">
+                        <th></th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                        <th>Saturday</th>
+                        <th>Sunday</th>
+                      </thead>
+                      <tbody id="mytable">
+                        <tr>
+                            <td>Total Request</td>
+                            <ng-container *ngFor="let count of data.totalRequest">
+                                <td>{{count}}</td>
+                            </ng-container>
+                        </tr>
+                        <tr>
+                            <td>Handle Request</td>
+                            <ng-container *ngFor="let count of data.handleRequest">
+                                <td>{{count}}</td>
+                            </ng-container>
+                        </tr>
+                        <tr bgcolor="#d3d3d3">
+                            <td><b>Extra Request</b></td>
+                            <ng-container *ngFor="let count of data.extraRequest">
+                                <td><b>{{count}}</b></td>
+                            </ng-container>
+                        </tr>
+                      </tbody>
+                    </table>
+            </div>
+            <br><hr><br>
+      </div>
 </div>
 
 

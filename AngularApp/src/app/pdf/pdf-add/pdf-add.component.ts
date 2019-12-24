@@ -10,8 +10,6 @@ import { HttpError } from '../../Shared/httpError/HttpError';
 //import { UserValidation } from '../../Shared/validation/user-validation/user-validation';
 import {formatDate} from '@angular/common';
 import { DatePipe } from '@angular/common';
-import Swal from 'sweetalert2';
-
 
 @Component({
 selector: 'app-pdf-add',
@@ -141,13 +139,6 @@ addPdf(){
     this.pdfService.addPdf(new PdfModel(-1,this.resource,this.description,this.title,this.adminStaff,this.addedDate)).subscribe(
           response => {
             console.log(response);
-            Swal.fire({
-                  position: 'top-end',
-                  type: 'success',
-                  title: 'Pdf Successfuly saved.',
-                  showConfirmButton: false,
-                  timer: 2000
-                });
             this.router.navigate(['pdf-list'])},
           error => {
             
