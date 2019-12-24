@@ -29,22 +29,32 @@
           <h5 class="title">Register Instructor</h5>
         </div>
         <div class="card-body">
+<<<<<<< HEAD
           <form (ngSubmit)="registerInstructor">
+=======
+          <form (ngSubmit)="registerInstructor()">
+>>>>>>> parent of e110ac9... Merge branch 'master' into anupama
 
             <!-- First Row -->
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
                   <label>First Name</label>
+<<<<<<< HEAD
                   <input type="text" class="form-control" placeholder="First Name" name="FirstName" [(ngModel)]="firstName">
                   <small *ngIf="errorFirstName" class="text-danger">{{errorFirstName}}</small>
                 </div>
               </div>
             </div>
             <!-- End First Row -->
+=======
+                  <input [(ngModel)]="firstName" type="text" class="form-control" placeholder="First Name" name="firstName">
+                  <small *ngIf="errorFirstName" class="text-danger">{{errorFirstName}}</small>
+                </div>
+              </div>
 
-            <!-- Secon Row -->
-            <div class="row">
+>>>>>>> parent of e110ac9... Merge branch 'master' into anupama
+
               <div class="col-md-12">
                 <div class="form-group">
                   <label>Last Name</label>
@@ -53,16 +63,19 @@
                 </div>
               </div>
             </div>
-            <!-- End Second Row -->
 
 
+<<<<<<< HEAD
             <!-- Third Row -->
+=======
+            <!-- Second Row -->
+>>>>>>> parent of e110ac9... Merge branch 'master' into anupama
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label>NIC</label>
-                  <input [(ngModel)]="nic" type="text" class="form-control" placeholder="National ID" name="nic">
-                  <small *ngIf="errorNic" class="text-danger">{{errorNic}}</small>
+                  <input [(ngModel)]="nic" type="text" class="form-control" placeholder="NIC" name="nic">
+                  <small *ngIf="errorNIC" class="text-danger">{{errorNIC}}</small>
                 </div>
               </div>
               <div class="col-md-6">
@@ -73,9 +86,15 @@
                 </div>
               </div>
             </div>
+<<<<<<< HEAD
             <!-- End Third Row -->
 
             <!-- Fourth Row -->
+=======
+
+
+            <!-- Third Row -->
+>>>>>>> parent of e110ac9... Merge branch 'master' into anupama
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
@@ -85,13 +104,17 @@
                 </div>
               </div>
             </div>
+<<<<<<< HEAD
             <!-- End Fourth Row -->
+=======
+>>>>>>> parent of e110ac9... Merge branch 'master' into anupama
 
-            <!-- 5 Row -->
+            <!-- Fourth Row -->
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Tel</label>
+<<<<<<< HEAD
                   <input [(ngModel)]="tel" type="text" class="form-control" placeholder="Telephone Number" name="tell">
                   <small *ngIf="errorTel" class="text-danger">{{errorTel}}</small>
                 </div>
@@ -100,27 +123,54 @@
             <!-- End 5 Row -->
 
             <!-- Third Row -->
+=======
+                  <input [(ngModel)]="tel" type="text" class="form-control" placeholder="Telephone Number" name="tel">
+                  <small *ngIf="errorTel" class="text-danger">{{errorTel}}</small>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Fisth Row -->
+>>>>>>> parent of e110ac9... Merge branch 'master' into anupama
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Email</label>
+<<<<<<< HEAD
                   <input [(ngModel)]="email" type="text" class="form-control" placeholder="E-Mail" name="email">
+=======
+                  <input [(ngModel)]="email" type="email" class="form-control" placeholder="Email" name="email">
+>>>>>>> parent of e110ac9... Merge branch 'master' into anupama
                   <small *ngIf="errorEmail" class="text-danger">{{errorEmail}}</small>
                 </div>
               </div>
             </div>
+<<<<<<< HEAD
+=======
+
+            <!-- Sixth Row -->
+>>>>>>> parent of e110ac9... Merge branch 'master' into anupama
             <div class="row">
               <div class="col-md-5">
                 <div class="form-group">
                   <label>Password</label>
+<<<<<<< HEAD
                   <input [(ngModel)]="password" type="texy" class="form-control" placeholder="Password" name="password">
                   <small class="text-info">Insert trial exam date ,If student not face to trial exam yet.</small><br>
+=======
+                  <input [(ngModel)]="password" type="password" class="form-control" placeholder="Password" name="password">
+>>>>>>> parent of e110ac9... Merge branch 'master' into anupama
                   <small *ngIf="errorPassword" class="text-danger">{{errorPassword}}</small>
                 </div>
               </div>
             </div>
+<<<<<<< HEAD
             <!-- End Third Row -->
 
+=======
+           
+>>>>>>> parent of e110ac9... Merge branch 'master' into anupama
             <button type="submit" class="btn btn-secondary btn-round">Submit</button>
           </form>
         </div>
