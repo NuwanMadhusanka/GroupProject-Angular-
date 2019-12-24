@@ -27,6 +27,7 @@ export class InstructorListComponent implements OnInit {
   }
   set searchTerm(value:string){
     this._searchTerm=value;
+<<<<<<< HEAD
     this.filteredInstructors = this.filterStudent(value);
   }
 
@@ -41,6 +42,12 @@ export class InstructorListComponent implements OnInit {
         
 =======
   filtereInstructors(searchString:String){
+=======
+    this.filteredInstructors = this.filteredInstructord(value);
+  }
+
+  filteredInstructord(searchString:String){
+>>>>>>> parent of ba95bc2... deactivated instructorlist
     return this.instructors.filter(instructor =>
       instructor.instructorId.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
       instructor.staffId.userId.firstName.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
