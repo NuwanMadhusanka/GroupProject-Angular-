@@ -72,7 +72,7 @@ export class InstructorDeactivatedListComponent implements OnInit {
             showConfirmButton: false,
             timer: 2000
           });
-          this.router.navigate(['instructor-list']);
+          this.deactivatedInstructorList();
         }else{   //error in account activation
           Swal.fire({
             title: 'Error!!',
@@ -96,9 +96,9 @@ export class InstructorDeactivatedListComponent implements OnInit {
        }
      );
   }
-
+/*
   checkSalaryPayments(instructorId){
-     this.instructorService.checkSalaryPayments(instructorId).subscribe(
+     this.instructorService.checkInstructorSalaryPayments(instructorId).subscribe(
       response => {
        console.log("Paid");
       },
@@ -106,7 +106,7 @@ export class InstructorDeactivatedListComponent implements OnInit {
         this.handleErrorResponse(error);
       }
     );
-  }
+  }*/
 /*
   
 

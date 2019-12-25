@@ -76,7 +76,7 @@ export class InstructorServiceService {
     return this.http.put<Number>(`${API_URL}/instructor/activate/account/${instructorId}`, {});
   }
 
-   checkSalaryPayments(instructorId) {
+   checkInstructorSalaryPayments(instructorId) {
      console.log("Ins Salary Payment");
     return this.http.get<Number>(`${API_URL}/instructor/checkSalaryPayments/${instructorId}`);
   }
