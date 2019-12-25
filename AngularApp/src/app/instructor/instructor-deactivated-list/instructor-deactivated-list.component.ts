@@ -61,6 +61,17 @@ export class InstructorDeactivatedListComponent implements OnInit {
 
   acivateInstructorAccount(instructorId,instructorName){
     console.log("list com ts active Ins");
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Activate instructor " + instructorId + "'s record?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Activate!'
+    }).then((result) => {
+      if (result.value) {
+    
      this.instructorService.activateInstructorAccount(instructorId).subscribe(
        response => {
         if(response==1){     // account activated
@@ -82,19 +93,15 @@ export class InstructorDeactivatedListComponent implements OnInit {
             cancelButtonColor: '#d33',
             confirmButtonText: 'OK'
           });
-         /* .then((result) => {
-            if (result.value) {
-             
-            }
-          });
-          */
+
         }
        },
        error => {
          console.log(error);
          this.handleErrorResponse(error);
        }
-     );
+      
+     );}})
   }
 /*
   checkSalaryPayments(instructorId){
