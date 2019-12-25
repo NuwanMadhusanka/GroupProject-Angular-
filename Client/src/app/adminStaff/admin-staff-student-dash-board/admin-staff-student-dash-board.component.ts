@@ -542,7 +542,7 @@ export class AdminStaffStudentDashBoardComponent implements OnInit {
    getlineChartTrialExamData(){
     this.studentService.studentExamResult(2).subscribe(
       response => {
-        console.log(response)
+        
          this.lineChartTrialExamData=response;
 
          this.lineChartWithNumbersAndGridData = [

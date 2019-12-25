@@ -73,7 +73,7 @@
               <tbody id="mytable">
                 <tr *ngFor="let vehicleFuel of vehicleFuelList; let i = index">
                   <td>{{i+1}})</td>
-                  <td>{{monthNames[vehicleFuel.month]}}</td>
+                  <td>{{monthNames[vehicleFuel.month-1]}}</td>
                   <td>{{vehicleFuel.amount | number : '1.2-2'}}</td>
                 </tr>
               </tbody>

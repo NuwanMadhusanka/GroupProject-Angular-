@@ -72,7 +72,7 @@ export class VehicleFuelComponent implements OnInit {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, Saved!'
       }).then((result) => {
-        this.vehicleService.addVehicleFuelData(+sessionStorage.getItem("userId"),new FuelPaymentModel(-1,this.selectMonth,this.amount,null)).subscribe(
+        this.vehicleService.addVehicleFuelData(+sessionStorage.getItem("userId"),new FuelPaymentModel(-1,+this.selectMonth+1,this.amount,null)).subscribe(
           response => {
             Swal.fire({
               position: 'top-end',
