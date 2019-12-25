@@ -180,6 +180,104 @@ export class InstructorListComponent implements OnInit {
 
   }
 
+   //deactivate Instructor
+  deleteInstructor(instructorId) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Delete instructor " + instructorId + "'s record?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete!'
+    }).then((result) => {
+      if (result.value) {
+
+        //Call to API to check salary payments
+        this.instructorService.checkInstructorSalaryPayments(instructorId).subscribe(
+          response => {
+            if (response == 1) { // salary payments are completed
+              console.log("Res" + response);
+              this.instructorService.instructorDelete(instructorId).subscribe( //deactivate instructor
+                response => {
+                  Swal.fire({
+                    position: 'center',
+                    type: 'success',
+                    title: 'Instructor ID :' + instructorId + '\'s profile deleted Succesfully',
+                    showConfirmButton: false,
+                    timer: 3000
+                  });
+                  this.instructorList();
+                },
+                error => {
+                  Swal.fire({
+                    position: 'center',
+                    type: 'error',
+                    title: ' 113 InstructorID ' + instructorId + '\'s profile was not deleted ',
+                    showConfirmButton: false,
+                    timer: 3000
+                  });
+                }
+              );
+              // 
+              /*
+               */
+            }
+            if (response == 0) { // instructor salary payments are not completed
+              console.log("Error in payments");
+              Swal.fire({
+                position: 'center',
+                type: 'error',
+                title: 'Salary Payments  not Completed',
+                text: 'Instructor' + instructorId + '\'s Salary payments are not completed. Proceed deletion anyway ',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete!',
+              }).then((result) => {
+                if (result.value) {
+                  console.log("line 136");
+                  this.instructorService.instructorDelete(instructorId).subscribe( //delete instructor
+                    response => {
+                      Swal.fire({
+                        position: 'center',
+                        type: 'success',
+                        title: 'Instructor ID :' + instructorId + '\'s profile deleted Succesfully',
+                        showConfirmButton: false,
+                        timer: 3000
+                      });
+                      this.instructorList();
+                    },
+                    error => {
+                      Swal.fire({
+                        position: 'center',
+                        type: 'error',
+                        title: ' 152 InstructorID ' + instructorId + '\'s profile was not deleted ',
+                        showConfirmButton: false,
+                        timer: 3000
+                      });
+                    }
+                  );
+                }
+              })
+            }
+          },
+          error => {
+            this.handleErrorResponse(0, error);
+            Swal.fire({
+              position: 'center',
+              type: 'error',
+              title: '167 InstructorID ' + instructorId + '\'s profile was not deleted ',
+              showConfirmButton: false,
+              timer: 3000
+            });
+          }
+
+        );
+      }
+    })
+  }
+
   /*
     //navigate to studentRegister Page
     addStudent(){

@@ -76,8 +76,17 @@ export class InstructorServiceService {
     return this.http.put<Number>(`${API_URL}/instructor/activate/account/${instructorId}`, {});
   }
 
+//check Salary Payments
    checkInstructorSalaryPayments(instructorId) {
      console.log("Ins Salary Payment");
     return this.http.get<Number>(`${API_URL}/instructor/checkSalaryPayments/${instructorId}`);
   }
+
+  //Delete Instructor
+  instructorDelete(instructorId) {
+    console.log(instructorId+"insDelete Servc");
+    return this.http.put<Number>(`${API_URL}/instructor/delete/${instructorId}`,{});
+  }
 }
+
+

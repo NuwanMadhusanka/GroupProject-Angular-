@@ -4,14 +4,14 @@
 
   <!-- Error Message -->
   <div *ngIf="errorMessage">
-      <div class="alert alert-danger">
-          <button (click)=closeError() type="button" aria-hidden="true" class="close">
+    <div class="alert alert-danger">
+      <button (click)=closeError() type="button" aria-hidden="true" class="close">
             <i class="now-ui-icons ui-1_simple-remove"></i>
           </button>
-          <span>{{errorMessage}}</span>
-      </div>
-    </div> 
-    <!-- Error Message End -->
+      <span>{{errorMessage}}</span>
+    </div>
+  </div>
+  <!-- Error Message End -->
 
   <div class="row">
     <div class="col-md-12">
@@ -20,43 +20,44 @@
 
           <div class="row">
             <div class="col-md-9">
-                <h4 class="card-title"> Instructor List</h4>
-             <a (click)=addInstructor()><button type="button" class="btn btn-success btn-sm" title="Add Instructor"><i class="fas fa-plus"></i></button></a>
-               <!--    <a (click)=studentPaymentCheck()><button type="button" class="btn btn-info btn-sm" title="Student Payment Check"><i class="fas fa-list-alt"></i></button></a>
-               -->  <a (click)=deactivatedInstructorList()><button type="button" class="btn btn-secondary btn-sm" title="Deactivated Instructor Accounts"><i class="fas fa-times"></i></button></a>
-           </div>
+              <h4 class="card-title"> Instructor List</h4>
+              <a (click)=addInstructor()><button type="button" class="btn btn-success btn-sm" title="Add Instructor"><i class="fas fa-plus"></i></button></a>
+              <!--    <a (click)=studentPaymentCheck()><button type="button" class="btn btn-info btn-sm" title="Student Payment Check"><i class="fas fa-list-alt"></i></button></a>
+               --><a (click)=deactivatedInstructorList()><button type="button" class="btn btn-secondary btn-sm" title="Deactivated Instructor Accounts"><i class="fas fa-times"></i></button></a>
+            </div>
             <div class="col-md-3">
-                <form><div class="card">
+              <form>
+                <div class="card">
                   <div class="card-body">
                     No of Instructors : {{instructors.length}}
                   </div>
                 </div>
-                    <div class="input-group no-border">
-                      <input type="text" [(ngModel)]="searchTerm" name="search" class="form-control" placeholder="Search..." id="searchBox">
-                      <div class="input-group-append">
-                        <div class="input-group-text">
-                          <i class="now-ui-icons ui-1_zoom-bold"></i>
-                        </div>
-                      </div>
+                <div class="input-group no-border">
+                  <input type="text" [(ngModel)]="searchTerm" name="search" class="form-control" placeholder="Search..." id="searchBox">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <i class="now-ui-icons ui-1_zoom-bold"></i>
                     </div>
-                </form>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
-       
-          
+
+
         </div>
         <div class="card-body">
           <div class="table-responsive">
             <table class="table">
-              <thead  class=" text-secondary">
-                
+              <thead class=" text-secondary">
+
                 <th>Id</th>
                 <th>Name</th>
                 <th>Nic</th>
                 <th>License</th>
                 <th>Tel</th>
                 <th>E-Mail</th>
-                
+
               </thead>
               <tbody id="mytable">
                 <tr *ngFor="let instrutor of filteredInstructors; let i = index">
@@ -66,12 +67,14 @@
                   <td>{{instrutor.licence}}</td>
                   <td>{{instrutor.staffId.userId.tel}}</td>
                   <td>{{instrutor.staffId.userId.email}}</td>
-                  <td>  
-                    <a  (click)=moreDetails(instrutor.instructorId)><button class="btn btn-info btn-sm"><i class="fas fa-eye fa-sm" title="MoreDetails"></i></button></a>
-                   <!-- <a  (click)=addPackage(student.studentId,student.name)><button class="btn btn-success btn-sm"><i class="fas fa-plus fa-sm" title="Add Package"></i></button></a>
+                  <td>
+                    <a (click)=moreDetails(instrutor.instructorId)><button class="btn btn-info btn-sm"><i class="fas fa-eye fa-sm" title="MoreDetails"></i></button></a>
+                    <!-- <a  (click)=addPackage(student.studentId,student.name)><button class="btn btn-success btn-sm"><i class="fas fa-plus fa-sm" title="Add Package"></i></button></a>
                     <a  (click)=addPayment(student.studentId,student.name)><button class="btn btn-secondary btn-sm"><i class="fas fa-dollar-sign fa-sm" title="Add Payment"></i></button></a>
                     -->
-                    <a  (click)=deactivateInstructor(instrutor.instructorId)><button class="btn btn-primary btn-sm"><i class="fa fa-minus-circle" aria-hidden="true" title="Deactivate Instructor"></i></button></a>
+                    <a (click)=deactivateInstructor(instrutor.instructorId)><button class="btn btn-primary btn-sm"><i class="fa fa-minus-circle" aria-hidden="true" title="Deactivate Instructor"></i></button></a>
+                    <a (click)=deleteInstructor(instrutor.instructorId)><button class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm" title="Delete Instructor"></i></button></a>
+
                   </td>
                 </tr>
               </tbody>
@@ -80,7 +83,6 @@
         </div>
       </div>
     </div>
-   
+
   </div>
 </div>
-
