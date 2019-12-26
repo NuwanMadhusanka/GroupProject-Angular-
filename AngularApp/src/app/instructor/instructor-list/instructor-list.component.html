@@ -27,11 +27,7 @@
             </div>
             <div class="col-md-3">
               <form>
-                <div class="card">
-                  <div class="card-body">
-                    No of Instructors : {{instructors.length}}
-                  </div>
-                </div>
+               
                 <div class="input-group no-border">
                   <input type="text" [(ngModel)]="searchTerm" name="search" class="form-control" placeholder="Search..." id="searchBox">
                   <div class="input-group-append">
@@ -51,7 +47,7 @@
             <table class="table">
               <thead class=" text-secondary">
 
-                <th>Id</th>
+                <th></th>
                 <th>Name</th>
                 <th>Nic</th>
                 <th>License</th>
@@ -61,7 +57,7 @@
               </thead>
               <tbody id="mytable">
                 <tr *ngFor="let instrutor of filteredInstructors; let i = index">
-                  <td>{{instrutor.instructorId}}</td>
+                  <td>{{i+1}}</td>
                   <td>{{instrutor.staffId.userId.firstName}} {{instrutor.staffId.userId.lastName}}</td>
                   <td>{{instrutor.staffId.userId.nic}}</td>
                   <td>{{instrutor.licence}}</td>

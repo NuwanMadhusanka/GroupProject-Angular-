@@ -26,11 +26,7 @@
 
             <div class="col-md-3">
               <form>
-                <div class="card">
-                  <div class="card-body">
-                    No of PDF : {{pdfs.length}}
-                  </div>
-                </div>
+               
                 <div class="input-group no-border">
                   <input type="text" [(ngModel)]="searchTerm" name="search" class="form-control" placeholder="Search..." id="searchBox">
                   <div class="input-group-append">
@@ -49,22 +45,20 @@
           <div class="table-responsive">
             <table class="table">
               <thead class=" text-primary">
-                <th>Pdf ID</th>
+                <th></th>
                 <th>Title</th>
                 <th>Description</th>
                 <th>Resource</th>
-                <th>Admin Staff Id</th>
                 <th>Added Date</th>
 
               </thead>
               <tbody>
-                <tr *ngFor="let pdf of filteredPdf">
+                <tr *ngFor="let pdf of filteredPdf; let i = index">
 
-                  <td>{{pdf.pdfId}}</td>
+                  <td>{{i+1}}</td>
                   <td>{{pdf.title}}</td>
                   <td>{{pdf.description}}</td>
                   <td> <a href="{{pdf.resource}}" target="_blank">{{pdf.resource}}</a>
-                  <td>{{pdf.adminStaffId.adminStaffId}}</td>
                   <td>{{pdf.addedDate}}</td>
                     <td>
                       <a (click)=moreDetails(pdf.pdfId)><button class="btn btn-info btn-sm"><i class="fas fa-eye fa-sm" title="MoreDetails"></i></button></a>
