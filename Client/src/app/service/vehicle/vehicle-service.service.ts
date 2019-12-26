@@ -14,8 +14,20 @@ export class VehicleServiceService {
     private http :HttpClient
   ) { }
 
-  getVehicleList(status:Number){
-    return this.http.get<VehicleModel[]>(`${API_URL}/vehicles/${status}`);
+  // getVehicleList(status:Number){
+  //   return this.http.get<VehicleModel[]>(`${API_URL}/vehicles/${status}`);
+  // }
+
+   // register the new vehicle
+   vehicleAdd(vehicle:VehicleModel){
+    console.log(vehicle);
+    return this.http.post<any>(`${API_URL}/vehicle/add`,vehicle);
+  }
+
+  //get VehicleList
+  vehicleList(){
+    console.log("vhcle list service");
+      return this.http.get<VehicleModel[]>(`${API_URL}/vehicles`);  
   }
 
   getVehicleInsurancePaymentDetails(vehicleId:Number){

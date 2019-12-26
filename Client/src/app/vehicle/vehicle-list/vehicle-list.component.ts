@@ -14,30 +14,59 @@ import { Router } from '@angular/router';
   styleUrls: ['./vehicle-list.component.scss']
 })
 export class VehicleListComponent {
+  errorMessage="";
+  vehicles: VehicleModel[] = [];
 
-  vehicleList:VehicleModel[]=[];
+ 
+
+  //Filter Option Implement
+  filteredVehicles: VehicleModel[];
+  private _searchTerm: string;
+  get searchTerm(): string {
+    return this._searchTerm;
+  }
+  set searchTerm(value: string) {
+    this._searchTerm = value;
+    this.filteredVehicles = this.filterVehicle(value);
+  }
+
+  //Filtering method
+  filterVehicle(searchString: string) {
+
+    return this.vehicles.filter(vehicle =>
+      vehicle.vehicleId.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      vehicle.brand.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      vehicle.model.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      vehicle.number.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      vehicle.transmission.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1
+    );
+  }
+  
+
 
   constructor(
     private vehicleService :VehicleServiceService,
     private router :Router
   ) { }
-
   ngOnInit() {
-    this.getVehicleList(1);
+    console.log("In vehcle List in vhclListCom TS");
+    this.vehicleList();
   }
 
-  getVehicleList(status:Number){
-    this.vehicleService.getVehicleList(status).subscribe(//get active vehicles
+  //get Student List
+ 
+  vehicleList(){
+    this.vehicleService.vehicleList().subscribe(
       response => {
-        this.vehicleList=response;
+        this.vehicles=response;
+        this.filteredVehicles=this.vehicles;
+        console.log(response);
       },
       error => {
-        console.log(error);
-        this.handleErrorResponse(error);
+        this.handleErrorResponse(1,error);
       }
     );
   }
-
   vehicleRedirect(vehicle:VehicleModel,type:Number){
     if(type==3){
       let vehName = vehicle.brand+" "+vehicle.model;
@@ -49,10 +78,29 @@ export class VehicleListComponent {
     this.router.navigate(['vehicle-fuel']);
   }
 
-  //error handling
-  private handleErrorResponse(error: HttpErrorResponse) {
-    let httpError = new HttpError();
-    httpError.ErrorResponse(error);
-  }
+  // //error handling
+  // private handleErrorResponse(error: HttpErrorResponse) {
+  //   let httpError = new HttpError();
+  //   httpError.ErrorResponse(error);
+  // }
+
+    //navigate to studentRegister Page
+    addVehicle(){
+      this.router.navigate(['vehicle-add'])
+    }
+  
+    closeError(){
+      this.errorMessage="";
+    }
+  
+   
+    handleErrorResponse(type,error){
+      if(type==1){
+        this.errorMessage="There is a problem with the service. please try again later.";
+      }
+      let httpError = new HttpError();
+      httpError.ErrorResponse(error);
+    }
+  
 }
 
