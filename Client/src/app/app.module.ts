@@ -17,6 +17,7 @@ import { LoginComponent } from './login/login.component';
 
 import {DatePipe} from '@angular/common';
 import { HttpIntercepterBasicAuthService } from './service/http/http-intercepter-basic-auth.service';
+import { VehicleMoreDetailsComponent } from './vehicle/vehicle-more-details/vehicle-more-details.component';
 
 
 
@@ -41,7 +42,8 @@ import { HttpIntercepterBasicAuthService } from './service/http/http-intercepter
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    LoginComponent    
+    LoginComponent,
+    VehicleMoreDetailsComponent    
   ],
   providers: [
     DatePipe,
