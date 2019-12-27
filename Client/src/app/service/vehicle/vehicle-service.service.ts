@@ -19,9 +19,10 @@ export class VehicleServiceService {
   // }
 
    // register the new vehicle
-   vehicleAdd(vehicle:VehicleModel){
+   VehicleAdd(vehicle:VehicleModel){
     console.log(vehicle);
-    return this.http.post<any>(`${API_URL}/vehicle/add`,vehicle);
+    console.log("in vehicle service-service after adding");
+    return this.http.post<VehicleModel>(`${API_URL}/vehicle/add`,vehicle);
   }
 
   //get VehicleList

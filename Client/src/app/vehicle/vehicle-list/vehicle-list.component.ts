@@ -45,8 +45,9 @@ export class VehicleListComponent {
 
 
   constructor(
-    private vehicleService :VehicleServiceService,
-    private router :Router
+    private router :Router,
+    private vehicleService :VehicleServiceService
+   
   ) { }
   ngOnInit() {
     console.log("In vehcle List in vhclListCom TS");
@@ -86,7 +87,9 @@ export class VehicleListComponent {
 
     //navigate to studentRegister Page
     addVehicle(){
-      this.router.navigate(['vehicle-add'])
+      
+      this.router.navigate(['vehicle-add']);
+      console.log("In vehcle add in vhclListCom TS22");
     }
   
     closeError(){
