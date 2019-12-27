@@ -17,7 +17,7 @@ import { LoginComponent } from './login/login.component';
 
 import {DatePipe} from '@angular/common';
 import { HttpIntercepterBasicAuthService } from './service/http/http-intercepter-basic-auth.service';
-import { VehicleCategoryAddComponent } from './vehicle/vehicle-category-add/vehicle-category-add.component';
+// import { VehicleCategoryAddComponent } from './vehicle/vehicle-category-add/vehicle-category-add.component';
 // import { VehicleMoreDetailsComponent } from './vehicle/vehicle-more-details/vehicle-more-details.component';
 // import { VehicleAddComponent } from './vehicle/vehicle-add/vehicle-add.component';
 
@@ -45,7 +45,7 @@ import { VehicleCategoryAddComponent } from './vehicle/vehicle-category-add/vehi
     AppComponent,
     AdminLayoutComponent,
     LoginComponent,
-    VehicleCategoryAddComponent
+    // VehicleCategoryAddComponent
     // VehicleMoreDetailsComponent,
     // VehicleAddComponent    
   ],
