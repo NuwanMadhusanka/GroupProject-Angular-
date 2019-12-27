@@ -91,6 +91,13 @@ export class VehicleListComponent {
       this.router.navigate(['vehicle-add']);
       console.log("In vehcle add in vhclListCom TS22");
     }
+
+    addVehicleCategory(){
+      
+      this.router.navigate(['vehicle-category-add']);
+      console.log("In vehicle-category-add in vhclListCom TS22");
+    }
+
   
     closeError(){
       this.errorMessage="";
