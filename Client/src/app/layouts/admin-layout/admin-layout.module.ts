@@ -54,6 +54,7 @@ import { StaffLeaveComponent } from '../../staff/staff-leave/staff-leave.compone
 import { VehicleInsuranceComponent } from '../../vehicle/vehicle-insurance/vehicle-insurance.component';
 import { VehicleInsuranceAddComponent } from '../../vehicle/vehicle-insurance-add/vehicle-insurance-add.component';
 import { VehicleFuelComponent } from '../../vehicle/vehicle-fuel/vehicle-fuel.component';
+import { VehicleAddComponent } from '../../vehicle/vehicle-add/vehicle-add.component';
 
 
 
@@ -86,6 +87,7 @@ import { VehicleFuelComponent } from '../../vehicle/vehicle-fuel/vehicle-fuel.co
 
     ReportListComponent,
     VehicleListComponent,
+    VehicleAddComponent,
     VehicleInsuranceComponent,
     VehicleInsuranceAddComponent,
     VehicleFuelComponent,
