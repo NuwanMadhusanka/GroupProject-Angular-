@@ -2,6 +2,6 @@ export class VehicleCategoryModel{
     constructor(
         public vehicleCategoryId:Number,
         public category:String,
-        public numStudent:number
+        public num_student:Number
     ){}
 }
