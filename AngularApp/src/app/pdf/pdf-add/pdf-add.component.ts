@@ -47,6 +47,7 @@ export class PdfAddComponent implements OnInit {
 
   selectedFiles;
   showSpinner = false;
+  deletePdfFlag = false;
 
   //idate:Date;
 
@@ -186,8 +187,8 @@ export class PdfAddComponent implements OnInit {
                   showConfirmButton: false,
                   timer: 1500
                 });
-                this.router.navigate(['pdf-list'])
-              } else {
+                this.router.navigate(['pdf-add'])
+              } else { //null return
                 Swal.fire({
                   position: 'center',
                   type: 'error',
@@ -195,12 +196,14 @@ export class PdfAddComponent implements OnInit {
                   showConfirmButton: false,
                   timer: 1500
                 });
+                this.deletePdfFlag = true;
               }
               this.showSpinner = false;
               this.selectedFiles = undefined;
             },
-            error => {
+            error => { //errors
               this.showSpinner = false;
+              this.selectedFiles = undefined;
               //console.log("Error saving file so Im deleting"+this.savedPdfDetails.pdfId);
               //this.pdfService.deletePdf(this.savedPdfDetails.pdfId).subscribe()
               Swal.fire({
@@ -210,8 +213,24 @@ export class PdfAddComponent implements OnInit {
                 showConfirmButton: false,
                 timer: 1500
               });
+              this.deletePdfFlag = true;
             }
           );
+          if(this.deletePdfFlag==true){
+            this.pdfService.deletePdf(this.savedPdfDetails.pdfId).subscribe(
+          response => {
+          },
+          error => {
+            Swal.fire({
+              position: 'center',
+              type: 'error',
+              title: 'Please deleted '+this.savedPdfDetails.title+'pdf data',
+              showConfirmButton: false,
+              timer: 3000
+            });
+          }
+        )
+          }
         },
         error => {
           console.log(error);//

@@ -9,18 +9,18 @@ import { API_URL } from '../../app.constants';
 export class FileUploadServiceService {
 
   constructor(
-    private http :HttpClient
+    private http: HttpClient
   ) { }
 
   /*
   type--> 1 = userProfileImage
           2 = PDF
   */
-  fileUpload(file: File,userId:Number,type:number){ 
-    console.log("In file uploading File service");   
+  fileUpload(file: File, userId: Number, type: number) {
+    console.log("In file uploading File service");
     let formdata: FormData = new FormData();
     formdata.append('file', file);
-    return this.http.post<Number>(`${API_URL}/file/upload/${userId}/${type}`,formdata);
+    return this.http.post<Number>(`${API_URL}/file/upload/${userId}/${type}`, formdata);
   }
 
   // downLoadProfilePicture(userId){
@@ -30,4 +30,9 @@ export class FileUploadServiceService {
   // getFiles(): Observable<any> {
   //   return this.http.get(`${API_URL}/api/file/all`);
   // }
+
+  downLoadPdf(pdfId) {
+    // src="{{apiUrl}}/api/file/{{pdfData.pdfId}}/2"
+    return this.http.get<any>(`${API_URL}/api/file/${pdfId}/2`);
+  }
 }
