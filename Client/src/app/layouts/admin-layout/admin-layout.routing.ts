@@ -49,6 +49,8 @@ import { StaffLeaveComponent } from '../../staff/staff-leave/staff-leave.compone
 import { VehicleInsuranceComponent } from '../../vehicle/vehicle-insurance/vehicle-insurance.component';
 import { VehicleInsuranceAddComponent } from '../../vehicle/vehicle-insurance-add/vehicle-insurance-add.component';
 import { VehicleFuelComponent } from '../../vehicle/vehicle-fuel/vehicle-fuel.component';
+import { VehicleAddComponent } from '../../vehicle/vehicle-add/vehicle-add.component';
+import { VehicleCategoryAddComponent } from '../../vehicle/vehicle-category-add/vehicle-category-add.component';
 
 
 
@@ -71,6 +73,9 @@ export const AdminLayoutRoutes: Routes = [
 
     {path:'report-list', component:ReportListComponent, canActivate:[RouteGuardServiceService]},
     {path:'vehicle-list', component:VehicleListComponent, canActivate:[RouteGuardServiceService]},
+    {path:'vehicle-add', component:VehicleAddComponent, canActivate:[RouteGuardServiceService]},
+    {path:'vehicle-category-add', component:VehicleCategoryAddComponent, canActivate:[RouteGuardServiceService]},
+
     {path:'vehicle-insurance/:id/:vehName/:vehNumber', component:VehicleInsuranceComponent, canActivate:[RouteGuardServiceService]},
     {path:'vehicle-insurance-add/:id/:vehName/:vehNumber', component:VehicleInsuranceAddComponent, canActivate:[RouteGuardServiceService]},
     {path:'vehicle-fuel', component:VehicleFuelComponent, canActivate:[RouteGuardServiceService]},
