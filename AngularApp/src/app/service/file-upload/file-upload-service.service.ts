@@ -16,7 +16,8 @@ export class FileUploadServiceService {
   type--> 1 = userProfileImage
           2 = PDF
   */
-  fileUpload(file: File,userId:Number,type:number){    
+  fileUpload(file: File,userId:Number,type:number){ 
+    console.log("In file uploading File service");   
     let formdata: FormData = new FormData();
     formdata.append('file', file);
     return this.http.post<Number>(`${API_URL}/file/upload/${userId}/${type}`,formdata);

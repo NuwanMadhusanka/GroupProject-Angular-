@@ -42,7 +42,7 @@ export class PdfMoreDetailsComponent implements OnInit {
   user:UserModel=new UserModel(0,'','','','','','','',new Date(),0,0,0);
   staff:StaffModel=new StaffModel(1,this.user);
   adminStaff:AdminStaffModel=new AdminStaffModel(1,'q',1,this.staff);
-  pdfData:PdfModel=new PdfModel(0,'q','q','q',this.adminStaff,new Date());
+  pdfData:PdfModel=new PdfModel(0,'q','q',this.adminStaff,new Date());
   //pdfData:PdfModel=new PdfModel(1,'','','',new AdminStaffModel());
   //studentData:StudentModel=new StudentModel(1,'Nuwan','0773015590','980150429v',new Date(),new Date(),'No 20 Homagama',new UserModel(1,'nuwan@gmail.com','1234',new Date(),1,1));
   pdfSrc: string = '/pdf-test.pdf';
@@ -84,7 +84,7 @@ export class PdfMoreDetailsComponent implements OnInit {
     this.errorUpdateMessage="";
     console.log(option);    //sjould implement them 
     if( (option === 1)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Description";  this.updateName="Description"; this.updateVariable=this.pdfData.description;}
-    if( (option === 2)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Resource";  this.updateName="Resource"; this.updateVariable=this.pdfData.resource;}
+   // if( (option === 2)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Resource";  this.updateName="Resource"; this.updateVariable=this.pdfData.resource;}
     if( (option === 3)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Title"; this.updateName="Title"; this.updateVariable=this.pdfData.title;}
     
   }
@@ -106,6 +106,7 @@ export class PdfMoreDetailsComponent implements OnInit {
       }
     }
 
+/*
     //resource
     if(this.selectOption==2) {
       if( (this.updateVariable == "")){
@@ -121,7 +122,7 @@ export class PdfMoreDetailsComponent implements OnInit {
           this.isUpdateVariable=false;
           this.confirmUpdate=true;
       }
-    }
+    }*/
 
     //title
     if(this.selectOption==3) {
