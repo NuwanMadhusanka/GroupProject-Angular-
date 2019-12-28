@@ -30,6 +30,7 @@ export class TrialLessonDayFeedbackChartComponent implements OnInit {
     this.lessonBookingService.lessonFeedbackChartData(this.packageId,this.transmission).subscribe(
       response => {
         this.chartData=response;
+        console.log(this.chartData)
       },
       error => {
         console.log(error);

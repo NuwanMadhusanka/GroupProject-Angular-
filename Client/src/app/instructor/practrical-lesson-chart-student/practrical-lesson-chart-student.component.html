@@ -7,7 +7,45 @@
     </button>
 </div>
 <div class="modal-body">
-      <div id="chartContainer" style="height: 360px; width: 480px;"></div>
+      <!-- <div id="chartContainer" style="height: 360px; width: 480px;"></div> -->
+       <!-- Table Start -->
+       <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+            <tbody *ngIf="studentName==''">
+                <tr>
+                    <th>Complete Lesson</th>
+                    <td>{{studentChartData.completeLesson}}</td>
+                </tr>
+                <tr>
+                    <th>Not Complete Lesson</th>
+                    <td>{{studentChartData.notCompleteLesson}}</td>
+                </tr>
+                <tr>
+                    <th>Remain Lesson</th>
+                    <td>{{studentChartData.remainLesson}}</td>
+                </tr>
+                <tr>
+                    <th>Book Lesson</th>
+                    <td>{{studentChartData.bookLesson}}</td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="studentName!=''">
+                <tr>
+                    <th>Complete Lesson</th>
+                    <td>{{studentChartData.completeLesson}}</td>
+                </tr>
+                <tr>
+                    <th>Not Complete Lesson</th>
+                    <td>{{studentChartData.notCompleteLesson}}</td>
+                </tr>
+                <tr>
+                    <th>Remain Lesson</th>
+                    <td>{{studentChartData.remainLesson+studentChartData.bookLesson}}</td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+        <!-- Table Finish -->
       <hr>
       <p>Trial Examination Date: {{studentChartData.trialExamDate}}</p>
       <p *ngIf="studentChartData.remainDays!=0"> Remain Date for Trial Examination: {{studentChartData.remainDays}} days</p>

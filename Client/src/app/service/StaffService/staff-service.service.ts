@@ -53,25 +53,25 @@ export class StaffServiceService {
     return this.http.put<any>(`${API_URL}/staff/work/time/${updateWorkTime.fullDay}/${updateWorkTime.halfDay}`,{});
   }
 
-  getStaffSalaryDetails(month:number){
-    return this.http.get<SalaryModel[]>(`${API_URL}/staff/salary/${month}`);
+  getStaffSalaryDetails(month:number,year:number){
+    return this.http.get<SalaryModel[]>(`${API_URL}/staff/salary/${month}/${year}`);
   }
 
-  getStaffSalaryData(staffId:Number,month:number){
-    return this.http.get<SalaryModel>(`${API_URL}/staff/salary/data/${staffId}/${month}`);
+  getStaffSalaryData(staffId:Number,month:number,year:number){
+    return this.http.get<SalaryModel>(`${API_URL}/staff/salary/data/${staffId}/${month}/${year}`);
   }
 
   payStaffSalary(payment:SalaryModel){
     return this.http.put<any>(`${API_URL}/staff/pay/salary`,payment);
   }
 
-  getStaffWorkDays(staffId:Number,month:number){
-    return this.http.get<StaffWorkDaysDataMap>(`${API_URL}/staff/work/days/${staffId}/${month}`);
+  getStaffWorkDays(staffId:Number,month:number,year:number){
+    return this.http.get<StaffWorkDaysDataMap>(`${API_URL}/staff/work/days/${staffId}/${month}/${year}`);
   }
 
-  getStaffAttendance(staffId:Number,month:Number){
-    return this.http.get<AttendanceModel[]>(`${API_URL}/staff/attendance/${staffId}/${month}`);
-  }
+  // getStaffAttendance(staffId:Number,month:Number,year:number){
+  //   return this.http.get<AttendanceModel[]>(`${API_URL}/staff/attendance/${staffId}/${month}/${year}`);
+  // }
 
   getStaffData(userId:Number){
     return this.http.get<StaffModel>(`${API_URL}/staff/data/${userId}`);

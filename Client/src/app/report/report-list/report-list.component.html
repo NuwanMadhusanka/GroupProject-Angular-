@@ -4,9 +4,91 @@
 <div class="main-content">
   <div class="card">
     <div class="card-header">
-      <h4 class="card-title">Reports</h4>
+      <div class="row">
+          <div class="col-md-11">
+            <h4 *ngIf="selectedType==0" class="card-title">Monthly Reports in {{selectedYear}}</h4>
+            <h4 *ngIf="selectedType==1" class="card-title">Annual Reports in {{selectedYear}}</h4>
+          </div>
+          <div class="col-md-1">
+              <li class="nav-item pointer" style="list-style-type:none" ngbDropdown>
+                <a  class="nav-link" id="dropdownBasic1" ngbDropdownToggle>
+                  <i class="now-ui-icons ui-1_settings-gear-63" title="Setting" ></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-left" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <div *ngFor="let type of types;let i=index;">
+                    <a (click)="getSelectType(i)" class="dropdown-item" >{{type}}</a>
+                  </div>
+                </div>
+              </li>  
+              
+              <li class="nav-item pointer" style="list-style-type:none" ngbDropdown>
+                <a  class="nav-link" id="dropdownBasic1" ngbDropdownToggle>
+                  <i class="now-ui-icons ui-1_settings-gear-63" title="Setting" ></i>
+                </a>
+                <div *ngIf="selectedType==0" class="dropdown-menu dropdown-menu-left" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <div *ngFor="let year of monthlyYears">
+                    <a (click)="getSelectYear(year)" class="dropdown-item" >{{year}}</a>
+                  </div>
+                </div>
+                <div *ngIf="selectedType==1" class="dropdown-menu dropdown-menu-left" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <div *ngFor="let year of annualYears">
+                    <a (click)="getSelectYear(year)" class="dropdown-item" >{{year}}</a>
+                  </div>
+                </div>
+              </li>  
+          </div>
+      </div>
     </div>
     <div class="card-body">
+
+      <div ngbDropdown class="dropdown" placement="bottom-left">
+        <button class="btn btn-info dropdown-toggle" ngbDropdownToggle>Select the Report Type</button>
+        <div ngbDropdownMenu>
+            <div *ngFor="let report of reportsTypes;let i = index;">
+              <a (click)="selectReportType(i)" class="dropdown-item" >{{report}}</a>
+            </div>
+        </div>
+      </div>
+      <hr>
+        <div *ngIf="selectedType==0">
+            
+          <div *ngIf="selectedReportType==0" class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+              <div class="card">
+                  <div class="card-header">
+                      <h5 class="card-title">Monthly Income in {{selectedYear}}</h5>
+                  </div>
+                  <div class="card-body">
+                      <ng-container *ngFor="let packages of packageMonthlyPayemntList ; let i=index;">
+                          <h5>{{i+1}}) {{monthNames[i]}}</h5>
+                          
+                          <!-- Table Start -->
+                          <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                              <thead class=" text-primary thead-dark">
+                                <th></th>
+                                <th>Package</th>
+                                <th>Payment</th>
+                              </thead>
+                              <tbody>
+                                  <tr *ngFor="let package of packages;let x=index;">
+                                      <td>{{x+1}}</td>
+                                      <td>{{package.packageName}}</td>
+                                      <td>{{package.payment}}</td>
+                                  </tr>
+                              </tbody>
+                            </table>
+                        </div>
+                        <!-- Table Finish -->
+                        <hr>
+                      </ng-container>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <div class="col-md-3"></div>
+        </div>
 
     </div>
   </div>

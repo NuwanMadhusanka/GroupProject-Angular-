@@ -15,6 +15,7 @@ export class VehicleFuelComponent implements OnInit {
 
   monthNames = ["January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"];
+  currentYear:number;
 
   vehicleFuelList:FuelPaymentModel[]=[];
 
@@ -32,12 +33,18 @@ export class VehicleFuelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getCurrentYear();
     this.getVehicleFuelData();
     this.paymentValidate = new PaymentValidation();
   }
 
+  getCurrentYear(){
+    var date = new Date(); 
+    this.currentYear=date.getFullYear();
+  }
+
   getVehicleFuelData(){
-    this.vehicleService.getFuelData().subscribe(
+    this.vehicleService.getFuelData(this.currentYear).subscribe(
       response => {
         this.vehicleFuelList=response;
       },
@@ -72,7 +79,7 @@ export class VehicleFuelComponent implements OnInit {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, Saved!'
       }).then((result) => {
-        this.vehicleService.addVehicleFuelData(+sessionStorage.getItem("userId"),new FuelPaymentModel(-1,+this.selectMonth+1,this.amount,null)).subscribe(
+        this.vehicleService.addVehicleFuelData(+sessionStorage.getItem("userId"),new FuelPaymentModel(-1,+this.selectMonth+1,new Date(),this.amount,null)).subscribe(
           response => {
             Swal.fire({
               position: 'top-end',

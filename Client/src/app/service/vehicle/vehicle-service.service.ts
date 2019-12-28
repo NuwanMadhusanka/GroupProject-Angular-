@@ -26,11 +26,12 @@ export class VehicleServiceService {
     return this.http.post<any>(`${API_URL}/vehicle/insurance/${vehicleId}`,insurance);
   }
 
-  getFuelData(){
-    return this.http.get<FuelPaymentModel[]>(`${API_URL}/vehicle/fuel`);
+  getFuelData(year:number){
+    return this.http.get<FuelPaymentModel[]>(`${API_URL}/vehicle/fuel/${year}`);
   }
 
   addVehicleFuelData(userId:Number,fuelData:FuelPaymentModel){
+    console.log(fuelData)
     return this.http.post<any>(`${API_URL}/vehicle/fuel/${userId}`,fuelData);
   }
 }

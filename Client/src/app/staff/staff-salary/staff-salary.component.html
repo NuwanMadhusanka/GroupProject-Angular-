@@ -14,7 +14,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h6 class="card-subtitle mb-2 text-muted">Salary Details</h6>
+          <h6 class="card-subtitle mb-2 text-muted">Salary Details {{currentYear}}</h6>
         </div>
         <div class="card-body">
          
@@ -25,7 +25,7 @@
               <button class="btn btn-info dropdown-toggle" ngbDropdownToggle>Select Month</button>
               <div ngbDropdownMenu>
                   <div *ngFor="let month of monthNames; let i =index;">
-                    <a (click)="selectMonths(i)" class="dropdown-item" >{{month}}</a>
+                    <a *ngIf="(currentMonth)>i" (click)="selectMonths(i)" class="dropdown-item" >{{month}}</a>
                   </div>
               </div>
           </div>

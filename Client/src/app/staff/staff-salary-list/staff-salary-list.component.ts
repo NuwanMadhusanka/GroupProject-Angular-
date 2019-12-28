@@ -18,8 +18,14 @@ export class StaffSalaryListComponent implements OnInit {
                 "July", "August", "September", "October", "November", "December"];
   selectMonth:number;
   currentMonth:number;
+  
+  
+  years = [];
+  selectYear:number;
+  currentYear:number;
 
   staffSalaryList:SalaryModel[]=[];
+  
   
   errorMessage:String;
 
@@ -52,13 +58,19 @@ export class StaffSalaryListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getCurrentMonth();
+    this.getYears();
+    this.getCurrentMonthAndYear();
     this.getStaffSalaryDetails();
+  }
+
+  getYears(){
+    this.years.push(2019);
+    this.years.push(2020);
   }
   
 
   getStaffSalaryDetails(){
-    this.staffService.getStaffSalaryDetails(this.selectMonth+1).subscribe(
+    this.staffService.getStaffSalaryDetails(this.selectMonth+1,this.selectYear).subscribe(
       response => {
         this.staffSalaryList=response;
         this.filteredStaffSalaryList=response;
@@ -70,10 +82,13 @@ export class StaffSalaryListComponent implements OnInit {
     );
   }
 
-  getCurrentMonth(){
+  getCurrentMonthAndYear(){
     var date = new Date(); 
     this.currentMonth=date.getMonth();
     this.selectMonth =this.currentMonth; //set current month as default selection
+    
+    this.currentYear=date.getFullYear();
+    this.selectYear=this.currentYear;
   }
 
   selectMonths(index:number){
@@ -86,8 +101,14 @@ export class StaffSalaryListComponent implements OnInit {
     }  
   }
 
+  selectYears(index:number){
+    this.selectYear=this.years[index];
+    this.getStaffSalaryDetails();
+    
+  }
+
   staffSalaryPay(staffId:Number){
-    this.router.navigate(['staff-salary-pay',staffId,this.selectMonth+1]);
+    this.router.navigate(['staff-salary-pay',staffId,this.selectMonth+1,this.selectYear]);
   }
 
   closeError(){

@@ -27,8 +27,9 @@ export class PractricalLessonChartStudentComponent implements OnInit {
     this.instructroService.getPractricalLessonChartStudentData(this.studentLessonId).subscribe(
       response => {
         this.studentChartData=response;
-        
-
+        console.log(response)
+        /*
+        Chart 
         //if name is empty , then request come by studentAccount
         if(this.studentName == ''){
               //chart Initialize
@@ -78,6 +79,7 @@ export class PractricalLessonChartStudentComponent implements OnInit {
                 
               chart.render();
         }
+        */
     
       },
       error => {

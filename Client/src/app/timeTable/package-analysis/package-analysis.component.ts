@@ -564,13 +564,6 @@ export class PackageAnalysisComponent implements OnInit {
 
     this.lineChartManualData = [
       {
-        label: "Lessons",
-        pointBorderWidth: 2,
-        pointHoverRadius: 4,
-        pointHoverBorderWidth: 1,
-        pointRadius: 4,
-        fill: true,
-        borderWidth: 1,
         data: [array[1], array[2], array[3],array[4], array[5], array[6], array[0]]
       }
     ];
@@ -928,7 +921,7 @@ export class PackageAnalysisComponent implements OnInit {
   }
 
   trialLessonDayFeedbackChart(transmission){
-    const modalRef = this.modalService.open(TrialLessonDayFeedbackChartComponent,{ centered: true });
+    const modalRef = this.modalService.open(TrialLessonDayFeedbackChartComponent,{ centered: true ,size: "lg"});
     modalRef.componentInstance.packageId = this.selectPackage.packageId;
     modalRef.componentInstance.packageTitle = this.selectPackage.title;
     modalRef.componentInstance.transmission = transmission;

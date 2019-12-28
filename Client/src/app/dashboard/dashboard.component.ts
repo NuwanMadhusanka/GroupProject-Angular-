@@ -52,8 +52,20 @@ export class DashboardComponent implements OnInit {
   public insuranceLineChartLabels:Array<any>;
   public insuranceLineChartColors:Array<any>
 
+  public vehicleMaintainanceLineChartType;
+  public vehicleMaintainanceLineChartData:Array<any>;
+  public vehicleMaintainanceLineChartOptions:any;
+  public vehicleMaintainanceLineChartLabels:Array<any>;
+  public vehicleMaintainanceLineChartColors:Array<any>
+
   monthlyProfit = [];
   monthlyIncome = [];
+  updateMessage:String="";
+ 
+
+  years = [];
+  selectedYear:number;
+  currentYear:number;
 
   // events
   public chartClicked(e:any):void {
@@ -79,6 +91,11 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    
+    this.getYears();
+    this.getCurrentYear();
+    this.selectedYear=this.currentYear;
+
     this.chartColor = "#FFFFFF";
     this.canvas = document.getElementById("profitChart");
     this.ctx = this.canvas.getContext("2d");
@@ -242,7 +259,7 @@ export class DashboardComponent implements OnInit {
           pointRadius: 4,
           fill: true,
           borderWidth: 1,
-          data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 630]
+          data: [0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         }
       ];
       this.incomeLineChartColors = [
@@ -279,7 +296,7 @@ export class DashboardComponent implements OnInit {
           pointRadius: 4,
           fill: true,
           borderWidth: 1,
-          data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 630]
+          data: [0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         }
       ];
       this.outcomeLineChartColors = [
@@ -314,7 +331,7 @@ export class DashboardComponent implements OnInit {
           pointRadius: 4,
           fill: true,
           borderWidth: 1,
-          data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 630]
+          data: [0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         }
       ];
       this.salaryLineChartColors = [
@@ -349,7 +366,7 @@ export class DashboardComponent implements OnInit {
           pointRadius: 4,
           fill: true,
           borderWidth: 1,
-          data: [80, 99, 86, 96, 123, 85, 100, 75, 88, 90, 123, 155]
+          data: [0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         }
       ];
       this.fuelLineChartColors = [
@@ -386,7 +403,7 @@ export class DashboardComponent implements OnInit {
           pointRadius: 4,
           fill: true,
           borderWidth: 1,
-          data: [80, 99, 86, 96, 123, 85, 100, 75, 88, 90, 123, 155]
+          data: [0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         }
       ];
     this.insuranceLineChartColors = [
@@ -402,10 +419,48 @@ export class DashboardComponent implements OnInit {
 
     this.insuranceLineChartType = 'line';
      //Insurance Chart Finish
+
+
+    //vehicleMaintainance chart
+    this.getVehicleMaintainanceExpenses();
+    this.canvas = document.getElementById("vehicleMaintainanceLineChart");
+    this.ctx = this.canvas.getContext("2d");
+
+    this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
+    this.gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
+    this.gradientFill.addColorStop(1, this.hexToRGB('#2CA8FF', 0.6));
+
+    this.vehicleMaintainanceLineChartData = [
+        {
+          label: "Maintainance Payment (Rs)",
+          pointBorderWidth: 2,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 1,
+          pointRadius: 4,
+          fill: true,
+          borderWidth: 1,
+          data: [0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        }
+      ];
+      this.vehicleMaintainanceLineChartColors = [
+       {
+        backgroundColor: this.gradientFill,
+        borderColor: "#2CA8FF",
+        pointBorderColor: "#FFF",
+        pointBackgroundColor: "#2CA8FF",
+       }
+     ];
+    this.vehicleMaintainanceLineChartLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    this.vehicleMaintainanceLineChartOptions = this.gradientChartOptionsConfigurationWithNumbersAndGrid;
+
+    this.vehicleMaintainanceLineChartType = 'line';
+     //vehicleMaintainance chart finish
    }
 
+
+
    getMonthlyProfit(){
-    this.reportService.getMonthlyProfit().subscribe(
+    this.reportService.getMonthlyProfit(this.selectedYear).subscribe(
       response => {
         let result = [];
         this.monthlyProfit=response;
@@ -424,7 +479,7 @@ export class DashboardComponent implements OnInit {
    }
 
    getMonthlySalaryExpenses(){
-     this.reportService.getMonthlySalaryExpenses().subscribe(
+     this.reportService.getMonthlySalaryExpenses(this.selectedYear).subscribe(
        response => {
           let result = [];
           result=response;
@@ -443,7 +498,7 @@ export class DashboardComponent implements OnInit {
    }
 
    getFuelExpenses(){
-     this.reportService.getFuelExpenses().subscribe(
+     this.reportService.getFuelExpenses(this.selectedYear).subscribe(
        response => {
          let result = [];
          result=response;
@@ -460,7 +515,7 @@ export class DashboardComponent implements OnInit {
    }
 
    getInsuranceExpenses(){
-     this.reportService.getInsuranceExpenses().subscribe(
+     this.reportService.getInsuranceExpenses(this.selectedYear).subscribe(
        response => {
          let result = [];
          result=response;
@@ -476,8 +531,25 @@ export class DashboardComponent implements OnInit {
      );
    }
 
+   getVehicleMaintainanceExpenses(){
+    this.reportService.getVehicleMaintainanceExpenses(this.selectedYear).subscribe(
+      response => {
+        let result = [];
+        result=response;
+        this.vehicleMaintainanceLineChartData = [
+         {
+           data: [result[0], result[1], result[2], result[3], result[4], result[5], result[6], result[7], result[8], result[9], result[10], result[11]]
+         }
+       ];
+      },
+      error => {
+        console.log(error);
+      }
+    );
+   }
+
    getIncome(){
-     this.reportService.getIncome().subscribe(
+     this.reportService.getIncome(this.selectedYear).subscribe(
        response => {
          this.monthlyIncome=response;
          let result = [];
@@ -499,12 +571,50 @@ export class DashboardComponent implements OnInit {
       }
       
       result=outCome;
-      console.log(result);
       this.outcomeLineChartData = [
         {
           data: [result[0], result[1], result[2], result[3], result[4], result[5], result[6], result[7], result[8], result[9], result[10], result[11]]
         }
       ];
+   }
+
+  //  getSystemUpdate(){
+  //    this.reportService.getSystemUpdate().subscribe(
+  //      response => {
+  //       this.updateMessage=response.message;
+  //       this.currentYear=+response.updateYear;
+  //      },
+  //      error => {
+  //        console.log(error);
+  //      }
+  //    );
+  //  }
+
+   getYears(){
+    this.years = [2019,2020];
+  }
+
+   getCurrentYear(){
+    var date = new Date(); 
+    this.currentYear=date.getFullYear();   
+  }
+
+  getSelectYear(year:number){
+    this.selectedYear=year;
+    this.getMonthlyProfit();
+    this.getIncome();
+    this.getMonthlySalaryExpenses();
+    this.getFuelExpenses();
+    this.getInsuranceExpenses();
+    this.getVehicleMaintainanceExpenses();
+    this.delay(3000).then(any=>{
+      this.getOutCome();
+    });
+  }
+
+
+   closeMessage(){
+     this.updateMessage="";
    }
 
    async delay(ms: number) {

@@ -62,7 +62,7 @@ export const AdminLayoutRoutes: Routes = [
     {path:'staff-salary-information-add/:type/:id', component:StaffSalaryInformationAddComponent, canActivate:[RouteGuardServiceService]},
     {path:'staff-work-time', component:StaffWorkTimeComponent, canActivate:[RouteGuardServiceService]},
     {path:'staff-salary-list', component:StaffSalaryListComponent, canActivate:[RouteGuardServiceService]},
-    {path:'staff-salary-pay/:id/:month', component:StaffSalaryPayComponent, canActivate:[RouteGuardServiceService]},
+    {path:'staff-salary-pay/:id/:month/:year', component:StaffSalaryPayComponent, canActivate:[RouteGuardServiceService]},
     {path:'staff-leave', component:StaffLeaveComponent , canActivate:[RouteGuardServiceService]},
 
 

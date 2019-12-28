@@ -10,135 +10,203 @@
 </div>
 
 <div class="main-content">
-<div class="row">
-  <div class="col-lg-12">
-    <div class="card card-chart">
-      <div class="card-header">
-        <h5 class="card-category">2019 Income</h5>
-        <h4 class="card-title">Student Payment</h4>
-      </div>
-      <div class="card-body">
-        <div class="chart-area">
-          <canvas baseChart id="incomeLineChart"
-                      [datasets]="incomeLineChartData"
-                      [labels]="incomeLineChartLabels"
-                      [colors]="incomeLineChartColors"
-                      [options]="incomeLineChartOptions"
-                      [chartType]="incomeLineChartType"
-                      (chartHover)="chartHovered($event)"
-                      (chartClick)="chartClicked($event)"></canvas>
-        </div>
-      </div>
-      <div class="card-footer">
-        <div class="stats">
-          <i class="now-ui-icons arrows-1_refresh-69"></i> Updated
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="col-lg-12">
-    <div class="card card-chart">
+    <div class="card">
       <div class="card-header">
-        <h5 class="card-category">2019 Outcome</h5>
-        <h4 class="card-title">Salary+Fuel+Insurance Payments</h4>
+        <div class="row">
+          <div class="col-md-11">
+            <h6 class="card-subtitle mb-2 text-muted">Year : {{selectedYear}}</h6>
+          </div>
+          <div class="col-md-1">
+  
+              <li class="nav-item pointer" style="list-style-type:none" ngbDropdown>
+                <a  class="nav-link" id="dropdownBasic1" ngbDropdownToggle>
+                  <i class="now-ui-icons ui-1_settings-gear-63" title="Setting" ></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-left" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <div *ngFor="let year of years">
+                    <a (click)="getSelectYear(year)" class="dropdown-item" >{{year}}</a>
+                  </div>
+                </div>
+              </li>
+        
+          </div>
+        </div>
       </div>
       <div class="card-body">
-        <div class="chart-area">
-          <canvas baseChart id="outcomeLineChart"
-                      [datasets]="outcomeLineChartData"
-                      [labels]="outcomeLineChartLabels"
-                      [colors]="outcomeLineChartColors"
-                      [options]="outcomeLineChartOptions"
-                      [chartType]="outcomeLineChartType"
-                      (chartHover)="chartHovered($event)"
-                      (chartClick)="chartClicked($event)"></canvas>
-        </div>
-      </div>
-      <div class="card-footer">
-        <div class="stats">
-          <i class="now-ui-icons arrows-1_refresh-69"></i> Updated
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="col-lg-4">
-    <div class="card card-chart">
-      <div class="card-header">
-        <h5 class="card-category">2019 Expenses</h5>
-        <h4 class="card-title">Staff Salary</h4>
-      </div>
-      <div class="card-body">
-        <div class="chart-area">
-          <canvas baseChart id="salaryLineChart"
-                      [datasets]="salaryLineChartData"
-                      [labels]="salaryLineChartLabels"
-                      [colors]="salaryLineChartColors"
-                      [options]="salaryLineChartOptions"
-                      [chartType]="salaryLineChartType"
-                      (chartHover)="chartHovered($event)"
-                      (chartClick)="chartClicked($event)"></canvas>
-        </div>
-      </div>
-      <div class="card-footer">
-        <div class="stats">
-          <i class="now-ui-icons arrows-1_refresh-69"></i> Updated
-        </div>
+           <!-- Error Message -->
+            <div *ngIf="updateMessage" class="row">
+              <div class="card">
+                  <div class="card-body">
+                      <div class="alert alert-warning">
+                          <button (click)=closeMessage() type="button" aria-hidden="true" class="close">
+                            <i class="now-ui-icons ui-1_simple-remove"></i>
+                          </button>
+                          <span>{{updateMessage}}</span>
+                        </div>
+                  </div>
+              </div>
+            </div>
+            <!-- Error Message End -->
+
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card card-chart">
+                  <div class="card-header">
+                    <h5 class="card-category">{{selectedYear}} Income</h5>
+                    <h4 class="card-title">Student Payment</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-area">
+                      <canvas baseChart id="incomeLineChart"
+                                  [datasets]="incomeLineChartData"
+                                  [labels]="incomeLineChartLabels"
+                                  [colors]="incomeLineChartColors"
+                                  [options]="incomeLineChartOptions"
+                                  [chartType]="incomeLineChartType"
+                                  (chartHover)="chartHovered($event)"
+                                  (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <div class="stats">
+                      <i class="now-ui-icons arrows-1_refresh-69"></i> Updated
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12">
+                <div class="card card-chart">
+                  <div class="card-header">
+                    <h5 class="card-category">{{selectedYear}} Total Expenses</h5>
+                    <h4 class="card-title">Salary+Fuel+Insurance+Maintainance Payments</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-area">
+                      <canvas baseChart id="outcomeLineChart"
+                                  [datasets]="outcomeLineChartData"
+                                  [labels]="outcomeLineChartLabels"
+                                  [colors]="outcomeLineChartColors"
+                                  [options]="outcomeLineChartOptions"
+                                  [chartType]="outcomeLineChartType"
+                                  (chartHover)="chartHovered($event)"
+                                  (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <div class="stats">
+                      <i class="now-ui-icons arrows-1_refresh-69"></i> Updated
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="card card-chart">
+                  <div class="card-header">
+                    <h5 class="card-category">{{selectedYear}} Expenses</h5>
+                    <h4 class="card-title">Staff Salary</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-area">
+                      <canvas baseChart id="salaryLineChart"
+                                  [datasets]="salaryLineChartData"
+                                  [labels]="salaryLineChartLabels"
+                                  [colors]="salaryLineChartColors"
+                                  [options]="salaryLineChartOptions"
+                                  [chartType]="salaryLineChartType"
+                                  (chartHover)="chartHovered($event)"
+                                  (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <div class="stats">
+                      <i class="now-ui-icons arrows-1_refresh-69"></i> Updated
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6">
+                <div class="card card-chart">
+                  <div class="card-header">
+                    <h5 class="card-category">{{selectedYear}} Expenses</h5>
+                    <h4 class="card-title">Fuel</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-area">
+                      <!-- <canvas id="lineChartExampleWithNumbersAndGrid"></canvas> -->
+                      <canvas baseChart id="fuelLineChart"
+                                  [datasets]="fuelLineChartData"
+                                  [labels]="fuelLineChartLabels"
+                                  [colors]="fuelLineChartColors"
+                                  [options]="fuelLineChartOptions"
+                                  [chartType]="fuelLineChartType"
+                                  (chartHover)="chartHovered($event)"
+                                  (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <div class="stats">
+                      <i class="now-ui-icons arrows-1_refresh-69"></i> Updated
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6">
+                <div class="card card-chart">
+                  <div class="card-header">
+                    <h5 class="card-category">{{selectedYear}} Expenses</h5>
+                    <h4 class="card-title">Insurance</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-area">
+                      <canvas baseChart id="insuranceLineChart"
+                                  [datasets]="insuranceLineChartData"
+                                  [labels]="insuranceLineChartLabels"
+                                  [colors]="insuranceLineChartColors"
+                                  [options]="insuranceLineChartOptions"
+                                  [chartType]="insuranceLineChartType"
+                                  (chartHover)="chartHovered($event)"
+                                  (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <div class="stats">
+                      <i class="now-ui-icons arrows-1_refresh-69"></i> Updated
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6">
+                <div class="card card-chart">
+                  <div class="card-header">
+                    <h5 class="card-category">{{selectedYear}} Expenses</h5>
+                    <h4 class="card-title">Vehicle Maintainance</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-area">
+                      <canvas baseChart id="vehicleMaintainanceLineChart"
+                                  [datasets]="vehicleMaintainanceLineChartData"
+                                  [labels]="vehicleMaintainanceLineChartLabels"
+                                  [colors]="vehicleMaintainanceLineChartColors"
+                                  [options]="vehicleMaintainanceLineChartOptions"
+                                  [chartType]="vehicleMaintainanceLineChartType"
+                                  (chartHover)="chartHovered($event)"
+                                  (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <div class="stats">
+                      <i class="now-ui-icons arrows-1_refresh-69"></i> Updated
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
       </div>
     </div>
-  </div>
-  <div class="col-lg-4 col-md-6">
-    <div class="card card-chart">
-      <div class="card-header">
-        <h5 class="card-category">2019 Expenses</h5>
-        <h4 class="card-title">Fuel</h4>
-      </div>
-      <div class="card-body">
-        <div class="chart-area">
-          <!-- <canvas id="lineChartExampleWithNumbersAndGrid"></canvas> -->
-          <canvas baseChart id="fuelLineChart"
-                      [datasets]="fuelLineChartData"
-                      [labels]="fuelLineChartLabels"
-                      [colors]="fuelLineChartColors"
-                      [options]="fuelLineChartOptions"
-                      [chartType]="fuelLineChartType"
-                      (chartHover)="chartHovered($event)"
-                      (chartClick)="chartClicked($event)"></canvas>
-        </div>
-      </div>
-      <div class="card-footer">
-        <div class="stats">
-          <i class="now-ui-icons arrows-1_refresh-69"></i> Updated
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-4 col-md-6">
-    <div class="card card-chart">
-      <div class="card-header">
-        <h5 class="card-category">2019 Expenses</h5>
-        <h4 class="card-title">Insurance</h4>
-      </div>
-      <div class="card-body">
-        <div class="chart-area">
-          <canvas baseChart id="insuranceLineChart"
-                      [datasets]="insuranceLineChartData"
-                      [labels]="insuranceLineChartLabels"
-                      [colors]="insuranceLineChartColors"
-                      [options]="insuranceLineChartOptions"
-                      [chartType]="insuranceLineChartType"
-                      (chartHover)="chartHovered($event)"
-                      (chartClick)="chartClicked($event)"></canvas>
-        </div>
-      </div>
-      <div class="card-footer">
-        <div class="stats">
-          <i class="now-ui-icons arrows-1_refresh-69"></i> Updated
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 </div>

@@ -8,6 +8,10 @@ import Swal from 'sweetalert2';
 import { PaymentValidation } from '../../Shared/validation/payment-validation/payment-validation';
 import { StaffWorkDaysDataMap } from '../../ClassModel/MapObject/StaffWorkDaysDataMap';
 import { SalaryInformationModel } from '../../ClassModel/SalaryInformationModel';
+import { StaffModel } from '../../ClassModel/StaffModel';
+declare const require: any;
+const jsPDF = require('jspdf');
+require('jspdf-autotable');
 
 
 
@@ -21,12 +25,14 @@ export class StaffSalaryPayComponent implements OnInit {
                 "July", "August", "September", "October", "November", "December"];
 
   staffId:Number;
+  staffMemberRole:String;
   staffWorkDays:StaffWorkDaysDataMap=new StaffWorkDaysDataMap(0,0,0,0,0);
   staffSalaryData:SalaryModel;
   isStaffSalaryDataLoad=false;
   staffMemberName:String="";
   netSalary:number=0;
   month:number;
+  year:number;
 
   staffSalaryInformation:SalaryInformationModel;
   isStaffSalaryInformationLoad=false;
@@ -37,6 +43,7 @@ export class StaffSalaryPayComponent implements OnInit {
   paymentValidation = new PaymentValidation();
   errorPayment="";
 
+
   constructor(
     private router:Router,
     private route:ActivatedRoute,
@@ -45,7 +52,8 @@ export class StaffSalaryPayComponent implements OnInit {
 
   ngOnInit() {
     this.staffId=this.route.snapshot.params['id'];//get staff id by url
-    this.month=this.route.snapshot.params['month'];//get staff id by url
+    this.month=this.route.snapshot.params['month'];//get month id by url
+    this.year=this.route.snapshot.params['year'];//get year by url
     if(+sessionStorage.getItem('userRole')!=1){
         this.router.navigate(['/']);
     }
@@ -64,12 +72,13 @@ export class StaffSalaryPayComponent implements OnInit {
   }
 
   getStaffSalaryData(){
-    this.staffService.getStaffSalaryData(this.staffId,this.month).subscribe(
+    this.staffService.getStaffSalaryData(this.staffId,this.month,this.year).subscribe(
       response => {
         this.staffSalaryData=response;
         this.staffMemberName=this.staffSalaryData.staffId.userId.firstName+' '+this.staffSalaryData.staffId.userId.lastName;
         this.netSalary = this.staffSalaryData.totalPayment-this.staffSalaryData.nopay-this.staffSalaryData.payed;
         this.getStaffWorkDays();
+        this.getStaffMemberRole(this.staffSalaryData.staffId);
         this.isStaffSalaryDataLoad=true;
       },
       error =>{
@@ -104,7 +113,7 @@ export class StaffSalaryPayComponent implements OnInit {
       confirmButtonText: 'Yes, Pay!'
     }).then((result) => {
       if(result.value){
-        let staffSalaryObject = new SalaryModel(this.staffSalaryData.salaryId,this.staffSalaryData.month,this.staffSalaryData.totalPayment,this.staffSalaryData.payed,this.staffSalaryData.nopay,this.staffSalaryData.complete,this.staffSalaryData.staffId);
+        let staffSalaryObject = new SalaryModel(this.staffSalaryData.salaryId,this.staffSalaryData.month,this.year,this.staffSalaryData.totalPayment,this.staffSalaryData.payed,this.staffSalaryData.nopay,this.staffSalaryData.complete,null,this.staffSalaryData.staffId);
         staffSalaryObject.payed = this.staffSalaryData.payed+payment;
         this.staffService.payStaffSalary(staffSalaryObject).subscribe(
           response => {
@@ -136,7 +145,7 @@ export class StaffSalaryPayComponent implements OnInit {
   }
 
   getStaffWorkDays(){
-    this.staffService.getStaffWorkDays(this.staffSalaryData.staffId.staffId,this.month).subscribe(
+    this.staffService.getStaffWorkDays(this.staffSalaryData.staffId.staffId,this.month,this.year).subscribe(
       response => {
         this.staffWorkDays = response;
       },
@@ -158,6 +167,53 @@ export class StaffSalaryPayComponent implements OnInit {
         this.handleErrorResponse(error);
       }
     );
+  }
+
+  getStaffMemberRole(staff:StaffModel){
+    let role = staff.userId.role;
+    if(role==2){
+      this.staffMemberRole="Administrative Staff-Student Serviceman";
+    }else if(role==3){
+      this.staffMemberRole="Administrative Staff-Instructor Serviceman";
+    }else{
+      this.staffMemberRole="Instructor Serviceman";
+    }
+  }
+
+
+  generatePdf(title){
+
+    var doc = new jsPDF('p','pt');
+
+    doc.rect(20, 20, doc.internal.pageSize.width - 40, doc.internal.pageSize.height - 40, 'S');//page Border
+    doc.setFontType("bold");
+ 
+    
+    var res = doc.autoTableHtmlToJson(document.getElementById("salartReport"));
+    
+    var today = new Date();
+    var year=today.getFullYear();
+    var month=today.getMonth();
+    var date=today.getDate();
+    var header = function(data) {
+      doc.setFontSize(14);
+      doc.setTextColor(40);
+      doc.setFontStyle('normal');
+      //doc.addImage(headerImgData, 'JPEG', data.settings.margin.left, 20, 50, 50);
+      doc.text(title, data.settings.margin.left, 70);
+    };
+  
+    var options = {
+      beforePageContent: header,
+      margin: {
+        top: 80
+      },
+      startY: doc.autoTableEndPosY() + 90
+    };
+    
+    doc.autoTable(res.columns, res.data, options);
+    let saveFileName= this.staffMemberName+"("+month+")"+".pdf";
+    doc.save(saveFileName);
   }
 
   handleErrorResponse(error: HttpErrorResponse) {

@@ -25,6 +25,7 @@ export class StaffSalaryComponent implements OnInit {
                 "July", "August", "September", "October", "November", "December"];
   selectMonth:number;
   currentMonth:number;
+  currentYear;number;
   errorMessage:String;
 
   staffWorkDays:StaffWorkDaysDataMap=new StaffWorkDaysDataMap(0,0,0,0,0);
@@ -47,7 +48,7 @@ export class StaffSalaryComponent implements OnInit {
       this.router.navigate(['/']);
     }
     this.getSatffData();
-    this.getCurrentMonth();
+    this.getCurrentMonthAndYear();
   }
 
   getSatffData(){
@@ -67,7 +68,7 @@ export class StaffSalaryComponent implements OnInit {
   getStaffSalaryData(){
     this.isStaffSalaryDataLoad=false;
     this.isSalaryPayedByAdmin=false;
-    this.staffService.getStaffSalaryData(this.staffData.staffId,this.selectMonth+1).subscribe(
+    this.staffService.getStaffSalaryData(this.staffData.staffId,this.selectMonth+1,this.currentYear).subscribe(
       response => {
         this.staffSalaryData=response;
         if(+this.staffSalaryData.complete==1){
@@ -88,7 +89,7 @@ export class StaffSalaryComponent implements OnInit {
   }
 
   getStaffWorkDays(){
-    this.staffService.getStaffWorkDays(this.staffData.staffId,this.selectMonth+1).subscribe(
+    this.staffService.getStaffWorkDays(this.staffData.staffId,this.selectMonth+1,this.currentYear).subscribe(
       response => {
         this.staffWorkDays = response;
       },
@@ -112,10 +113,12 @@ export class StaffSalaryComponent implements OnInit {
     );
   }
 
-  getCurrentMonth(){
+  getCurrentMonthAndYear(){
     var date = new Date(); 
     this.currentMonth=date.getMonth();
     this.selectMonth =this.currentMonth-1; //set current month as default selection
+
+    this.currentYear=date.getFullYear();
   }
 
   selectMonths(index:number){

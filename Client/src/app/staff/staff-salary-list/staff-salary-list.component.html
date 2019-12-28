@@ -14,7 +14,24 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h6 class="card-subtitle mb-2 text-muted">Staff Salary Details</h6>
+          <div class="row">
+            <div class="col-md-11">
+              <h6 class="card-subtitle mb-2 text-muted">Staff Salary Details - {{selectYear}}</h6>
+            </div>
+            <div class="col-md-1">
+              <li class="nav-item pointer" style="list-style-type:none" ngbDropdown>
+                <a  class="nav-link" id="dropdownBasic1" ngbDropdownToggle>
+                  <i class="now-ui-icons ui-1_settings-gear-63" title="Setting" ></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <div *ngFor="let year of years; let i =index;">
+                    <a (click)="selectYears(i)" class="dropdown-item" >{{year}}</a>
+                  </div>
+                </div>
+              </li>
+            </div>
+          </div>
+          
         </div>
         <div class="card-body">
          
