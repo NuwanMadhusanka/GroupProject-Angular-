@@ -36,66 +36,33 @@
                 <tr>
                   <th>Added by Admin Staff:</th>
                   <td>Id-&nbsp;{{pdfData.adminStaffId.adminStaffId}}&nbsp;&nbsp;&nbsp;Name-&nbsp;{{pdfData.adminStaffId.staffId.userId.firstName}}&nbsp;{{pdfData.adminStaffId.staffId.userId.lastName}}</td>
-
                 </tr>
+
                 <tr>
                   <th>Added date:</th>
                   <td>{{pdfData.addedDate}}</td>
                 </tr>
+
                 <tr>
-                  <th></th>
-
-                  <tr>
-                    <th>Resource:</th>
-                    <td><a href={{pdfData.resource}} target="_blank">{{pdfData.resource}} </a></td>
-                    <td><a (click)=isUpdate(2)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Resource"></i></button></a></td>
-                    <td><a (click)=viewPdf()><button class="btn btn-secondary btn-sm"><i class="fas fa-eye fa-sm" title="Update Resource"></i></button></a></td>
-
-                  </tr>
-                  <tr>
-                   <!-- <a>
+                  <th>Resource:</th>
+                  <td> <a href="{{apiUrl}}/api/file/{{pdfId}}/2" target="_blank">{{pdfId}}.pdf</a></td>
+                  <td><a (click)=isUpdate(2)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Resource"></i></button></a></td>
+                 <!-- <td><a (click)=loadPdf()><button class="btn btn-secondary btn-sm"><i class="fas fa-eye fa-sm" title="Update Resource"></i></button></a></td>
+                  -->
+                </tr>
+                <!-- <tr>
+                    <th></th>
+                    <a>
                       <img class="avatar border-gray" src=downloadedPdf alt="...">
                    -->
-                    <!--<embed src={{downloadedPdf}} type="application/pdf" width="100%" height="600px" />
+                <!--<embed src={{downloadedPdf}} type="application/pdf" width="100%" height="600px" />
                   
-                  <object width="400px" height="400px" data={{downloadedPdf}}></object>  </a>-->
+                  <object width="400px" height="400px" data={{downloadedPdf}}></object>  </a>
                 
-                <a href="{[downloadedPdf}}">pdf</a> 
-                 </tr>
+                   <a href="{{apiUrl}}/api/file/{{pdfId}}/2" target="_blank">{{pdfId}}.pdf</a>
+                 </tr>-->
 
-                  <!--<tr>
-                      <th>Email:</th>
-                      <td>{{pdfData.userId.email}}</td>
-                      <td><a  (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Email"></i></button></a></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                  </tr>
-                  <tr>
-                      <th>Password</th>
-                      <td>........</td>
-                      <td><a  (click)=isUpdate(2)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Password"></i></button></a></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                  </tr>
-                  
-                  <tr>
-                      <th>ExamDate:</th>
-                      <td>{{pdfData.examDate}}</td>
-                      <td><a  (click)=isUpdate(3)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Exam Date"></i></button></a></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                  </tr>
-                  <tr>
-                      <th>Trial Date</th>
-                      <td>{{pdfData.trialDate}}</td>
-                      <td><a  (click)=isUpdate(4)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Trial Date"></i></button></a></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                  </tr>-->
+               
               </tbody>
             </table>
           </div>

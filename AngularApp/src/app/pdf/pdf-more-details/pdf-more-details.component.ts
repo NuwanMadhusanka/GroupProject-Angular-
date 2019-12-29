@@ -76,7 +76,7 @@ export class PdfMoreDetailsComponent implements OnInit {
         this.pdfData = response;
         console.log("in pdflistMoRETS2");
         console.log(this.pdfData);
-        this.loadPdf(this.pdfId);
+       // this.loadPdf();
       },
       error => {
         console.log(error);
@@ -202,10 +202,12 @@ export class PdfMoreDetailsComponent implements OnInit {
     )
   }
 
-  loadPdf(pdfId) {
-    this.fileUploadService.downLoadPdf(pdfId).subscribe(
+  loadPdf() { //method to load pdf //ERROR
+    this.fileUploadService.downLoadPdf(this.pdfId).subscribe(
       response=>{
+        console.log(response);
           this.downloadedPdf=response;
+         //var file = new File(response);
          // window.open(this.downloadedPdf);
           if(response==null){
             console.log("Nothing Downloaded");
@@ -221,7 +223,7 @@ export class PdfMoreDetailsComponent implements OnInit {
   //error handling
   private handleErrorResponse(error: HttpErrorResponse) {
     this.errorMessage = this.httpError.ErrorResponse(error);
-    console.log(this.errorMessage);
+    //console.log(this.errorMessage);
   };
 
   closeError() {
