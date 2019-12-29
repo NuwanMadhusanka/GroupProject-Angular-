@@ -27,6 +27,9 @@ import { API_URL, WEBSOCKETENDPOINT, WEBSOCKETTOPIC } from '../../app.constants'
 export class PdfMoreDetailsComponent implements OnInit {
   pdfId;
   isUpdateVariable = false;
+  isUpdateResource = false;
+  isResourceNotIncluded = true;
+  filetoUpdate;
   selectOption;//updated variable Name(number)
   updateVariable;
   placeHolder;
@@ -36,12 +39,15 @@ export class PdfMoreDetailsComponent implements OnInit {
   adminStaffId;
   userId;
   systemDate;
-  downloadedPdf;
 
   errorMessage;
   errorUpdateMessage = "";
   httpError = new HttpError();
   apiUrl = API_URL;
+
+  selectedFiles;
+  showSpinner = false;
+  downloadedPdf;
 
   userValidation = new UserValidation();
   user: UserModel = new UserModel(0, '', '', '', '', '', '', '', new Date(), 0, 0, 0);
@@ -76,7 +82,7 @@ export class PdfMoreDetailsComponent implements OnInit {
         this.pdfData = response;
         console.log("in pdflistMoRETS2");
         console.log(this.pdfData);
-       // this.loadPdf();
+        // this.loadPdf();
       },
       error => {
         console.log(error);
@@ -90,9 +96,9 @@ export class PdfMoreDetailsComponent implements OnInit {
     console.log(this.pdfData);
     this.errorUpdateMessage = "";
     console.log(option);    //sjould implement them 
-    if ((option === 1)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New Description"; this.updateName = "Description"; this.updateVariable = this.pdfData.description; }
-    // if( (option === 2)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Resource";  this.updateName="Resource"; this.updateVariable=this.pdfData.resource;}
-    if ((option === 3)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New Title"; this.updateName = "Title"; this.updateVariable = this.pdfData.title; }
+    if ((option === 2)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New Description"; this.updateName = "Description"; this.updateVariable = this.pdfData.description; }
+    if ((option === 3)) { this.isUpdateResource = true; this.selectOption = option; this.placeHolder = "New Resource"; this.updateName = "Resource"; this.updateVariable = this.filetoUpdate; }
+    if ((option === 1)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New Title"; this.updateName = "Title"; this.updateVariable = this.pdfData.title; }
 
   }
 
@@ -100,7 +106,7 @@ export class PdfMoreDetailsComponent implements OnInit {
     this.setAdminStaffAndAdminStaffId();
     //description 
 
-    if (this.selectOption == 1) {
+    if (this.selectOption == 2) {
       console.log("inUpdate in description");
       if (this.updateVariable == "") {
         this.errorUpdateMessage = "You must insert Description";
@@ -113,26 +119,30 @@ export class PdfMoreDetailsComponent implements OnInit {
       }
     }
 
-    /*
-        //resource
-        if(this.selectOption==2) {
-          if( (this.updateVariable == "")){
-              this.errorUpdateMessage="You must insert Resource.";
-          }else{
-              this.pdfData.resource=this.updateVariable;
-              this.pdfData.adminStaffId=this.adminStaff;
-              var datePipe = new DatePipe('en-US');
-              this.systemDate = new Date();
-              this.pdfData.addedDate=this.systemDate;
-              console.log(this.pdfData.adminStaffId);
-              this.errorUpdateMessage="";
-              this.isUpdateVariable=false;
-              this.confirmUpdate=true;
-          }
-        }*/
+
+    //resource
+    if (this.selectOption == 3) {
+      if ((this.updateVariable == null)) {
+        console.log("new Pdf is null")
+        this.errorUpdateMessage = "You must insert Resource.";
+      } else {
+        console.log(this.filetoUpdate);
+        console.log("new Pdf not null")
+        //this.pdfData.resource=this.updateVariable;
+        this.pdfData.adminStaffId = this.adminStaff;
+        var datePipe = new DatePipe('en-US');
+        this.systemDate = new Date();
+        this.pdfData.addedDate = this.systemDate;
+        console.log(this.pdfData.adminStaffId);
+        this.errorUpdateMessage = "";
+        this.isUpdateResource = false;
+        //this.isResourceUpdateConfirmed = true;
+        this.confirmUpdate = true;
+      }
+    }
 
     //title
-    if (this.selectOption == 3) {
+    if (this.selectOption == 1) {
 
       this.pdfData.title = this.updateVariable;
       this.errorUpdateMessage = "";
@@ -204,21 +214,62 @@ export class PdfMoreDetailsComponent implements OnInit {
 
   loadPdf() { //method to load pdf //ERROR
     this.fileUploadService.downLoadPdf(this.pdfId).subscribe(
-      response=>{
+      response => {
         console.log(response);
-          this.downloadedPdf=response;
-         //var file = new File(response);
-         // window.open(this.downloadedPdf);
-          if(response==null){
-            console.log("Nothing Downloaded");
-          }
+        this.selectedFiles = response;
+        //var file = new File(response);
+        // window.open(this.downloadedPdf);
+        if (response == null) {
+          console.log("Nothing Downloaded");
+        }
       },
-      error=>{
+      error => {
         this.handleErrorResponse(error);
       }
     )
   }
-
+  //upload pdf
+  selectFile(event) {
+    this.showSpinner = true;
+    this.selectedFiles = event.target.files;
+    console.log("files selected");
+    this.filetoUpdate=this.selectedFiles.item(0);
+    this.updateVariable=this.filetoUpdate;
+    console.log(this.filetoUpdate);
+    this.isResourceNotIncluded=false;
+    /*
+    
+   this.fileUploadService.fileUpload(this.selectedFiles.item(0), this.instructorData.staffId.userId.userId, 1).subscribe(
+      response => {
+        if (response == 0) {
+          this.errorMessage = "File size should be less than 9MB";
+        } else if (response == 1) {
+          window.location.reload();
+          Swal.fire({
+            position: 'center',
+            type: 'success',
+            title: 'Update Successful.',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        } else {
+          Swal.fire({
+            position: 'center',
+            type: 'error',
+            title: 'Update not Successful.',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+        this.showSpinner = false;
+        this.selectedFiles = undefined;
+      },
+      error => {
+        this.showSpinner = false;
+        console.log(error);
+      }
+   );*/
+  }
 
   //error handling
   private handleErrorResponse(error: HttpErrorResponse) {
