@@ -78,7 +78,6 @@ export class PdfListComponent implements OnInit {
     httpError.ErrorResponse(error);
   }
   closeError() {
-
     this.errorMessage = "";
   }
 

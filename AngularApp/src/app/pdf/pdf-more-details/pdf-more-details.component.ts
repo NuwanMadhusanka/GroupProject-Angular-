@@ -28,13 +28,15 @@ export class PdfMoreDetailsComponent implements OnInit {
   pdfId;
   isUpdateVariable = false;
   isUpdateResource = false;
-  isResourceNotIncluded = true;
+  //isResourceNotIncluded = true;
   filetoUpdate;
   selectOption;//updated variable Name(number)
   updateVariable;
   placeHolder;
   updateName;//update variable Name
   confirmUpdate = false;
+  confirmResourceUpdate = false;
+  pdfUpdatedinMemory = false;
   // adminStaff;
   adminStaffId;
   userId;
@@ -59,6 +61,7 @@ export class PdfMoreDetailsComponent implements OnInit {
   pdfSrc: string = '/pdf-test.pdf';
   constructor(
 
+    // private router: Router,
     private route: ActivatedRoute,
     private pdfService: PdfServiceService,
     private adminStaffService: AdminStaffServiceService,
@@ -123,12 +126,8 @@ export class PdfMoreDetailsComponent implements OnInit {
     //resource
     if (this.selectOption == 3) {
       if ((this.updateVariable == null)) {
-        console.log("new Pdf is null")
         this.errorUpdateMessage = "You must insert Resource.";
       } else {
-        console.log(this.filetoUpdate);
-        console.log("new Pdf not null")
-        //this.pdfData.resource=this.updateVariable;
         this.pdfData.adminStaffId = this.adminStaff;
         var datePipe = new DatePipe('en-US');
         this.systemDate = new Date();
@@ -136,7 +135,7 @@ export class PdfMoreDetailsComponent implements OnInit {
         console.log(this.pdfData.adminStaffId);
         this.errorUpdateMessage = "";
         this.isUpdateResource = false;
-        //this.isResourceUpdateConfirmed = true;
+        this.confirmResourceUpdate = true;
         this.confirmUpdate = true;
       }
     }
@@ -161,6 +160,47 @@ export class PdfMoreDetailsComponent implements OnInit {
 
   //save updates
   saveUpdate() {
+
+    if (this.confirmResourceUpdate == true) {
+
+      this.fileUploadService.fileUpload(this.selectedFiles.item(0), this.pdfId, 2).subscribe(
+        response => {
+          console.log("Uploading new File");
+          if (response == 0) {
+            this.errorMessage = "File size should be less than 9MB";
+            return; // should stop updating pdf data
+          } else if (response == 1) {  //pdf overwritten in 3s  //should continue updating "resource" relavant data
+           
+          } else { //null return 
+            Swal.fire({
+              position: 'center',
+              type: 'error',
+              title: 'Error updating pdf data.',
+              showConfirmButton: false,
+              timer: 1500
+            });
+          }
+          this.showSpinner = false;
+          this.selectedFiles = undefined;
+          return; // should stop updating pdf data
+        },
+        error => { //errors //shouldchange
+          this.showSpinner = false;
+          this.selectedFiles = undefined;
+          //console.log("Error saving file so Im deleting"+this.savedPdfDetails.pdfId);
+          //this.pdfService.deletePdf(this.savedPdfDetails.pdfId).subscribe()
+          Swal.fire({
+            position: 'center',
+            type: 'error',
+            title: 'Error updating pdf data.',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          return; // should stop updating pdf data
+        }
+      );
+
+    }
 
     //Save Update data(API)
     this.pdfService.updatePdf(this.pdfData).subscribe(
@@ -233,10 +273,10 @@ export class PdfMoreDetailsComponent implements OnInit {
     this.showSpinner = true;
     this.selectedFiles = event.target.files;
     console.log("files selected");
-    this.filetoUpdate=this.selectedFiles.item(0);
-    this.updateVariable=this.filetoUpdate;
+    this.filetoUpdate = this.selectedFiles.item(0);
+    this.updateVariable = this.filetoUpdate;
     console.log(this.filetoUpdate);
-    this.isResourceNotIncluded=false;
+    //this.isResourceNotIncluded=false;
     /*
     
    this.fileUploadService.fileUpload(this.selectedFiles.item(0), this.instructorData.staffId.userId.userId, 1).subscribe(
