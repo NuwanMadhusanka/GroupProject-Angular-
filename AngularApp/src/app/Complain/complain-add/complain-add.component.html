@@ -1,0 +1,79 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="row">
+    <div class="card">
+        <div class="card-body">
+            <div class="alert alert-danger">
+                <button (click)=closeError() type="button" aria-hidden="true" class="close">
+                  <i class="now-ui-icons ui-1_simple-remove"></i>
+                </button>
+                <span>{{errorMessage}}</span>
+              </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Error Message End -->
+
+  <div class="row">
+    <!-- First Column -->
+    <div class="col-md-1"></div>
+
+    <!-- Second Coulmn -->
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Add Video</h5>
+        </div>
+        <div class="card-body">
+          <form  (ngSubmit)="addVideo()"> 
+            <!-- First Row -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Title</label>
+                  <input type="text"  class="form-control" placeholder="Title"  name="title"   [(ngModel)]="title">
+                  <small *ngIf="errorName" class="text-danger">{{errorTitle}}</small>
+                </div>
+              </div> 
+            </div>
+            <!-- End First Row -->
+            
+            <!-- Second Row -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Description</label>
+                  <input type="text"  class="form-control" placeholder="Description"  name="description"   [(ngModel)]="description">
+                  <small *ngIf="errorName" class="text-danger">{{errorDescription}}</small>
+                </div>
+              </div> 
+            </div>
+            <!-- End Row -->
+
+            <!-- Third Row -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>URL</label>
+                  <input type="text"  class="form-control" placeholder="url"  name="url"   [(ngModel)]="url">
+                  <small *ngIf="errorName" class="text-danger">{{errorUrl}}</small>
+                </div>
+              </div> 
+            </div>
+            <!-- End Third Row -->
+
+              <button  type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Third Column --> 
+    <div class="col-md-2"></div>
+
+  </div>
+</div>

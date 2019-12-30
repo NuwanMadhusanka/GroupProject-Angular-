@@ -53,7 +53,8 @@ export class SidebarComponent implements OnInit {
       { path: '/time-table', title: 'Time Table',  icon:'files_paper', class: '' },
       { path: '/vehicle-list', title: 'Vehicle',  icon:'transportation_bus-front-12', class: '' },
       { path: '/staff-salary', title: 'Salary',  icon:'business_money-coins', class: '' },
-      { path: '/instructor-list', title: 'Instructor',  icon:'business_badge', class: '' }
+      { path: '/instructor-list', title: 'Instructor',  icon:'business_badge', class: '' },
+      { path: '/complain-list', title: 'Complain',  icon:'design_bullet-list-67', class: '' }
     ];
 
     this.adminStaffStudent=[
@@ -61,12 +62,15 @@ export class SidebarComponent implements OnInit {
       { path: '/student-list', title: 'Student',  icon:'education_hat', class: '' },
       { path: '/staff-salary', title: 'Salary',  icon:'business_money-coins', class: '' },
       { path: '/pdf-list', title: 'Pdf',  icon:'design_bullet-list-67', class: '' },
-      { path: '/video-list', title: 'Video',  icon:'design_bullet-list-67', class: '' }
+      { path: '/video-list', title: 'Video',  icon:'design_bullet-list-67', class: '' },
+      { path: '/complain-list', title: 'Complain',  icon:'design_bullet-list-67', class: '' }
     ];
 
     this.instructor=[
       { path: '/instructor-time-table', title: 'Time Table',  icon:'files_paper', class: '' },
       { path: '/staff-salary', title: 'Salary',  icon:'business_money-coins', class: '' },
+      { path: '/complain-list', title: 'Complain',  icon:'design_bullet-list-67', class: '' }
+
     ];
 
     this.student=[

@@ -50,6 +50,11 @@ import { VideoMoreDetailsComponent } from '../../video/video-more-details/video-
 import { InstructorListComponent } from '../../instructor/instructor-list/instructor-list.component';
 import { InstructorAddComponent } from '../../instructor/instructor-add/instructor-add.component';
 import { InstructorMoreDetailsComponent } from '../../instructor/instructor-more-details/instructor-more-details.component';
+import { ComplainListComponent } from '../../Complain/complain-list/complain-list.component';
+import { ComplainAddComponent } from '../../complain/complain-add/complain-add.component';
+
+
+
 
 
 
@@ -118,7 +123,10 @@ import { InstructorMoreDetailsComponent } from '../../instructor/instructor-more
     VideoMoreDetailsComponent,
     InstructorListComponent,
     InstructorAddComponent,
-    InstructorMoreDetailsComponent
+    InstructorMoreDetailsComponent,
+
+    ComplainListComponent,
+    ComplainAddComponent
   ]
 })
 

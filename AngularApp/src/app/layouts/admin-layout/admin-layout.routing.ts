@@ -45,6 +45,9 @@ import { InstructorAddComponent } from '../../instructor/instructor-add/instruct
 import { InstructorMoreDetailsComponent } from '../../instructor/instructor-more-details/instructor-more-details.component';
 import { VideoListComponent } from '../../video/video-list/video-list.component';
 import { VideoMoreDetailsComponent } from '../../video/video-more-details/video-more-details.component';
+import { ComplainListComponent } from '../../Complain/complain-list/complain-list.component';
+import { ComplainAddComponent } from '../../complain/complain-add/complain-add.component';
+
 
 
 
@@ -105,6 +108,10 @@ export const AdminLayoutRoutes: Routes = [
     {path:'instructor-list',     component:InstructorListComponent},
     {path:'instructor-add',   component:InstructorAddComponent},
     {path:'instructor-more-details/:id',   component:InstructorMoreDetailsComponent},
+
+    {path:'complain-list',   component:ComplainListComponent},
+    {path:'complain-add', component:ComplainAddComponent}
+
 
 
 
