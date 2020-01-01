@@ -41,4 +41,9 @@ export class FileUploadServiceService {
 //FileSaver.saveAs(file);
  }
 
+ downLoadPaper(paperId) { 
+   return this.http.get<any>(`${API_URL}/api/file/${paperId}/3`);
+   
+ }
+
 }

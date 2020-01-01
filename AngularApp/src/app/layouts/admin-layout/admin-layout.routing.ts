@@ -46,68 +46,75 @@ import { InstructorListComponent } from '../../instructor/instructor-list/instru
 import { InstructorAddComponent } from '../../instructor/instructor-add/instructor-add.component';
 import { InstructorMoreDetailsComponent } from '../../instructor/instructor-more-details/instructor-more-details.component';
 import { InstructorDeactivatedListComponent } from '../../instructor/instructor-deactivated-list/instructor-deactivated-list.component';
+import { PaperListComponent } from '../../paper/paper-list/paper-list.component';
+import { PaperMoreDetailsComponent } from '../../paper/paper-more-details/paper-more-details.component';
+import { PaperAddComponent } from '../../paper/paper-add/paper-add.component';
 
 
 
 
 export const AdminLayoutRoutes: Routes = [
-    { path: 'dashboard',  component: DashboardComponent, canActivate:[RouteGuardServiceService]},
-    
-    {path:'staff-list', component:StaffListComponent, canActivate:[RouteGuardServiceService]},
-    {path:'staff-salary', component:StaffSalaryComponent, canActivate:[RouteGuardServiceService]},
-    {path:'staff-salary-information-list', component:StaffSalaryInformationListComponent, canActivate:[RouteGuardServiceService]},
-    {path:'staff-salary-information-add/:type/:id', component:StaffSalaryInformationAddComponent, canActivate:[RouteGuardServiceService]},
-    {path:'staff-work-time', component:StaffWorkTimeComponent, canActivate:[RouteGuardServiceService]},
-    {path:'staff-salary-list', component:StaffSalaryListComponent, canActivate:[RouteGuardServiceService]},
-    {path:'staff-salary-pay/:id/:month', component:StaffSalaryPayComponent, canActivate:[RouteGuardServiceService]},
+    { path: 'dashboard', component: DashboardComponent, canActivate: [RouteGuardServiceService] },
+
+    { path: 'staff-list', component: StaffListComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'staff-salary', component: StaffSalaryComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'staff-salary-information-list', component: StaffSalaryInformationListComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'staff-salary-information-add/:type/:id', component: StaffSalaryInformationAddComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'staff-work-time', component: StaffWorkTimeComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'staff-salary-list', component: StaffSalaryListComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'staff-salary-pay/:id/:month', component: StaffSalaryPayComponent, canActivate: [RouteGuardServiceService] },
 
 
-    {path:'package-list', component:PackageListComponent, canActivate:[RouteGuardServiceService]},
-    {path:'package-add', component:PackageAddComponent, canActivate:[RouteGuardServiceService]},
+    { path: 'package-list', component: PackageListComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'package-add', component: PackageAddComponent, canActivate: [RouteGuardServiceService] },
 
-    {path:'report-list', component:ReportListComponent, canActivate:[RouteGuardServiceService]},
-    {path:'vehicle-list', component:VehicleListComponent, canActivate:[RouteGuardServiceService]},
-   
-    {path:'student-list', component:StudentListComponent, canActivate:[RouteGuardServiceService]},
-    {path:'student-add', component:StudentAddComponent, canActivate:[RouteGuardServiceService]},
-    {path:'student-package-add/:id/:name', component:StudentPackageAddComponent, canActivate:[RouteGuardServiceService]},
-    {path:'student-payment/:id/:name', component:StudentPaymentComponent, canActivate:[RouteGuardServiceService]},
-    {path:'student-more-details/:id', component:StudentMoreDetailsComponent, canActivate:[RouteGuardServiceService]},
-    {path:'admin-staff-student-dash-board', component:AdminStaffStudentDashBoardComponent, canActivate:[RouteGuardServiceService]},
-    {path:'student-exam-result-add', component:StudentExamResultAddComponent, canActivate:[RouteGuardServiceService]},
-    {path:'student-payment-check', component:StudentPaymentCheckComponent, canActivate:[RouteGuardServiceService]},
-    {path:'student-deactivate',  component:StudentDeactivateComponent, canActivate:[RouteGuardServiceService]},
-    
-    {path:'time-table', component:TimeTableComponent, canActivate:[RouteGuardServiceService]},
-    {path:'lesson-add', component:LessonAddComponent, canActivate:[RouteGuardServiceService]},
-    {path:'lesson-update/:id/:type', component:LessonUpdateComponent, canActivate:[RouteGuardServiceService]},
-    {path:'time-slot', component:TimeSlotComponent, canActivate:[RouteGuardServiceService]},
-    {path:'path-map', component:PathMapComponent, canActivate:[RouteGuardServiceService]},
-    {path:'package-analysis', component:PackageAnalysisComponent, canActivate:[RouteGuardServiceService]},
-   
+    { path: 'report-list', component: ReportListComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'vehicle-list', component: VehicleListComponent, canActivate: [RouteGuardServiceService] },
 
-    {path:'trial-lesson-book', component:TrialLessonBookComponent, canActivate:[RouteGuardServiceService]},
-    {path:'trial-lesson-list/:package/:title', component:TrialLessonListComponent, canActivate:[RouteGuardServiceService]},
-    {path:'trial-lesson-day-feedback/:userId/:packageId/:packageTitle', component:TrialLessonDayFeedbackComponent, canActivate:[RouteGuardServiceService]},
-    {path:'trial-lesson-day-feedback-chart',  component:TrialLessonDayFeedbackChartComponent, canActivate:[RouteGuardServiceService]},
+    { path: 'student-list', component: StudentListComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'student-add', component: StudentAddComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'student-package-add/:id/:name', component: StudentPackageAddComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'student-payment/:id/:name', component: StudentPaymentComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'student-more-details/:id', component: StudentMoreDetailsComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'admin-staff-student-dash-board', component: AdminStaffStudentDashBoardComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'student-exam-result-add', component: StudentExamResultAddComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'student-payment-check', component: StudentPaymentCheckComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'student-deactivate', component: StudentDeactivateComponent, canActivate: [RouteGuardServiceService] },
 
-    {path:'student-profile' , component:StudentProfileComponent, canActivate:[RouteGuardServiceService]},
+    { path: 'time-table', component: TimeTableComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'lesson-add', component: LessonAddComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'lesson-update/:id/:type', component: LessonUpdateComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'time-slot', component: TimeSlotComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'path-map', component: PathMapComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'package-analysis', component: PackageAnalysisComponent, canActivate: [RouteGuardServiceService] },
 
-    {path:'instructor-time-table', component:InstructorTimeTableComponent, canActivate:[RouteGuardServiceService]},
-    {path:'lesson-assign-student/:lessonId/:day/:timeSlot', component:LessonAssignStudentComponent, canActivate:[RouteGuardServiceService]},
-    {path:'practrical-lesson-chart-student', component:PractricalLessonChartStudentComponent, canActivate:[RouteGuardServiceService]},
 
-    {path:'pdf-list',     component:PdfListComponent},
-    {path:'pdf-more-details/:id',   component:PdfMoreDetailsComponent},
-    {path:'pdf-add',   component:PdfAddComponent},
-    
-     {path:'video-list',     component:VideoListComponent},
-     {path:'video-more-details/:id',   component:VideoMoreDetailsComponent},
-     {path:'video-add',   component:VideoAddComponent},
-     {path:'instructor-list',     component:InstructorListComponent},
-     {path:'instructor-add',   component:InstructorAddComponent},
-     {path:'instructor-more-details/:id',   component:InstructorMoreDetailsComponent},
-     {path:'instructor-deactivated-list',   component:InstructorDeactivatedListComponent},
+    { path: 'trial-lesson-book', component: TrialLessonBookComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'trial-lesson-list/:package/:title', component: TrialLessonListComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'trial-lesson-day-feedback/:userId/:packageId/:packageTitle', component: TrialLessonDayFeedbackComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'trial-lesson-day-feedback-chart', component: TrialLessonDayFeedbackChartComponent, canActivate: [RouteGuardServiceService] },
+
+    { path: 'student-profile', component: StudentProfileComponent, canActivate: [RouteGuardServiceService] },
+
+    { path: 'instructor-time-table', component: InstructorTimeTableComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'lesson-assign-student/:lessonId/:day/:timeSlot', component: LessonAssignStudentComponent, canActivate: [RouteGuardServiceService] },
+    { path: 'practrical-lesson-chart-student', component: PractricalLessonChartStudentComponent, canActivate: [RouteGuardServiceService] },
+
+    { path: 'pdf-list', component: PdfListComponent },
+    { path: 'pdf-more-details/:id', component: PdfMoreDetailsComponent },
+    { path: 'pdf-add', component: PdfAddComponent },
+
+    { path: 'video-list', component: VideoListComponent },
+    { path: 'video-more-details/:id', component: VideoMoreDetailsComponent },
+    { path: 'video-add', component: VideoAddComponent },
+    { path: 'instructor-list', component: InstructorListComponent },
+    { path: 'instructor-add', component: InstructorAddComponent },
+    { path: 'instructor-more-details/:id', component: InstructorMoreDetailsComponent },
+    { path: 'instructor-deactivated-list', component: InstructorDeactivatedListComponent },
+
+    { path: 'paper-list', component: PaperListComponent },
+    { path: 'paper-more-details/:id', component: PaperMoreDetailsComponent },
+    { path: 'paper-add', component: PaperAddComponent },
 
 
 

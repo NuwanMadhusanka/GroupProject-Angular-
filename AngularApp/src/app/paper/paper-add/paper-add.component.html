@@ -1,0 +1,81 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="row">
+    <div class="card">
+      <div class="card-body">
+        <div class="alert alert-danger">
+          <button (click)=closeError() type="button" aria-hidden="true" class="close">
+              <i class="now-ui-icons ui-1_simple-remove"></i>
+            </button>
+          <span>{{errorMessage}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+
+    <!-- Error Message End -->
+
+    <div class="row">
+      <!-- First Column -->
+      <div class="col-md-1"></div>
+
+      <!-- Second Coulmn -->
+      <div class="col-md-10">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="title">Add Paper</h5>
+          </div>
+          <div class="card-body">
+
+
+            <form (ngSubmit)="addPaper()">
+              <!-- End Third Row -->
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Title</label>
+                    <input [(ngModel)]="title" type="text" class="form-control" placeholder="Title" name="title">
+                    <small *ngIf="errorTitle" class="text-danger">{{errorTitle}}</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Description</label>
+                    <input [(ngModel)]="description" type="text" class="form-control" placeholder="Description" name="description">
+                  </div>
+                </div>
+              </div>
+
+              <!--uploading paper-->
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card-body">
+                    <div class="author">
+                      <a>
+                        <label for="upload-paper"> Upload Paper&nbsp;</label>
+                        <br> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+                        <img class="avatar border-gray" src="{{apiUrl}}/api/file/{{instructorUserId}}/1" alt="...">
+                        <br>
+                        <input type="file" name="paper" id="upload-paper" (change)="selectFile($event)" />
+                        <small *ngIf="errorFile" class="text-danger">{{errorFile}}</small>
+
+                      </a>
+                      <br>
+                    </div>
+                    <div class="button-container">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Submit</button>
+
+            </form>
+          </div>
