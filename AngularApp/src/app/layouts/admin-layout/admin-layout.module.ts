@@ -52,6 +52,8 @@ import { InstructorAddComponent } from '../../instructor/instructor-add/instruct
 import { InstructorMoreDetailsComponent } from '../../instructor/instructor-more-details/instructor-more-details.component';
 import { ComplainListComponent } from '../../Complain/complain-list/complain-list.component';
 import { ComplainAddComponent } from '../../complain/complain-add/complain-add.component';
+import { FeedbackListComponent } from '../../feedback/feedback-list/feedback-list.component';
+import { FeedbackAddComponent } from '../../feedback/feedback-add/feedback-add.component';
 
 
 
@@ -126,7 +128,10 @@ import { ComplainAddComponent } from '../../complain/complain-add/complain-add.c
     InstructorMoreDetailsComponent,
 
     ComplainListComponent,
-    ComplainAddComponent
+    ComplainAddComponent,
+
+    FeedbackListComponent,
+    FeedbackAddComponent
   ]
 })
 

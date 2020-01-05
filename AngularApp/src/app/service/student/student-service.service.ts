@@ -149,5 +149,11 @@ export class StudentServiceService {
   getStudentPackageData(id:Number,role:Number,packageId:Number){
     return this.http.get<StudentPackageModel>(`${API_URL}/student/package/data/${id}/${role}/${packageId}`);
   }
+  getStudentID(userId:number){
+    console.log(" In studnetservice ts UserID");
+    console.log(userId);
+    return this.http.get<StudentModel>(`${API_URL}/adminByUserId/${userId}`);
+    
+}
   
 }

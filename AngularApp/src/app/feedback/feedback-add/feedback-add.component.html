@@ -26,34 +26,25 @@
     <div class="col-md-10">
       <div class="card">
         <div class="card-header">
-          <h5 class="title">Add Complain</h5>
+          <h5 class="title">Add FeedBack</h5>
         </div>
         <div class="card-body">
-          <form  (ngSubmit)="addComplain()"> 
+          <form  (ngSubmit)="addVideo()"> 
             <!-- First Row -->
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label>Title</label>
-                  <input type="text"  class="form-control" placeholder="Title"  name="title"   [(ngModel)]="title">
+                  <label>Your FeedBack</label>
+                  <input type="text"  class="form-control" placeholder="FeedBack"  name="FeedBack"   [(ngModel)]="FeedBack">
                   <small *ngIf="errorName" class="text-danger">{{errorTitle}}</small>
                 </div>
               </div> 
             </div>
             <!-- End First Row -->
             
-            <!-- Second Row -->
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label>Complain</label>
-                  <input type="text"  class="form-control" placeholder="Complain"  name="Complain"   [(ngModel)]="complain">
-                  <small *ngIf="errorName" class="text-danger">{{errorComplain}}</small>
-                </div>
-              </div> 
-            </div>
-            <!-- End Row -->
+            
 
+            
 
               <button  type="submit" class="btn btn-primary">Submit</button>
           </form>

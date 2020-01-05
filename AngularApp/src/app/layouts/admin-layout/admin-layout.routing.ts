@@ -47,6 +47,9 @@ import { VideoListComponent } from '../../video/video-list/video-list.component'
 import { VideoMoreDetailsComponent } from '../../video/video-more-details/video-more-details.component';
 import { ComplainListComponent } from '../../Complain/complain-list/complain-list.component';
 import { ComplainAddComponent } from '../../complain/complain-add/complain-add.component';
+import { FeedbackListComponent } from '../../feedback/feedback-list/feedback-list.component';
+import { FeedbackAddComponent } from '../../feedback/feedback-add/feedback-add.component';
+
 
 
 
@@ -110,7 +113,12 @@ export const AdminLayoutRoutes: Routes = [
     {path:'instructor-more-details/:id',   component:InstructorMoreDetailsComponent},
 
     {path:'complain-list',   component:ComplainListComponent},
-    {path:'complain-add', component:ComplainAddComponent}
+    {path:'complain-add', component:ComplainAddComponent},
+
+    {path:'feedback-list', component:FeedbackListComponent},
+    {path:'feedback-add', component:FeedbackAddComponent}
+
+
 
 
 

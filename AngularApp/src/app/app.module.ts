@@ -24,6 +24,8 @@ import { HttpIntercepterBasicAuthService } from './service/http/http-intercepter
 
 
 
+
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -40,6 +42,8 @@ import { HttpIntercepterBasicAuthService } from './service/http/http-intercepter
     AppComponent,
     AdminLayoutComponent,
     LoginComponent,
+    
+
     
       
   ],

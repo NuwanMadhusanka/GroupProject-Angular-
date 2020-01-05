@@ -76,7 +76,8 @@ export class SidebarComponent implements OnInit {
     this.student=[
       { path: '/time-table', title: 'Time Table',  icon:'files_paper', class: '' },
       { path: '/trial-lesson-list/ / ', title: 'Trial Lesson',  icon:'design_bullet-list-67', class: '' },
-      { path: '/student-payment/'+sessionStorage.getItem("userId")+'/ ', title: 'Payment',  icon:'business_money-coins', class: '' }
+      { path: '/student-payment/'+sessionStorage.getItem("userId")+'/ ', title: 'Payment',  icon:'business_money-coins', class: '' },
+      { path: '/feedback-list', title: 'FeedBack',  icon:'design_bullet-list-67', class: '' }
     ];
     
   }
