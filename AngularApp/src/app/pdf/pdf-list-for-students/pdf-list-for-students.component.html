@@ -19,7 +19,7 @@
         <div class="card-header">
           <div class="row">
             <div class="col-md-9">
-              <h4 class="card-title"> PDF List</h4>
+              <h4 class="card-title"> Driving License Exam - References</h4>
               <a (click)=addPdf()><button type="button" class="btn btn-success btn-sm" title="Add Student"><i class="fas fa-plus"></i></button></a>
 
             </div>
@@ -35,7 +35,7 @@
                     </div>
                   </div>
                 </div>
-
+                
               </form>
             </div>
           </div>
@@ -46,28 +46,12 @@
             <table class="table">
               <thead class=" text-primary">
                 <th></th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Added Date</th>
-                <th>Resource</th>
-
               </thead>
               <tbody>
-                <tr *ngFor="let pdf of filteredPdf; let i = index">
+                <tr *ngFor="let pdf of filteredPdf">
 
-                  <td>{{i+1}}</td>
-                  <td>{{pdf.title}}</td>
-                  <td>{{pdf.description}}</td>
-                  <td>{{pdf.addedDate}}</td>
-                  <td><a href="{{apiUrl}}/api/file/{{pdf.pdfId}}/2">{{pdf.pdfId}}.pdf</a></td>
-                  <td>
-                    <a (click)=moreDetails(pdf.pdfId)><button class="btn btn-info btn-sm"><i class="fas fa-eye fa-sm" title="MoreDetails"></i></button></a>
-                    <a (click)=deletePdf(pdf.pdfId)><button class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm" title="Delete Pdf"></i></button></a>
-                    <!--  <a  (click)=addPackage(student.studentId)><button class="btn btn-primary btn-sm"><i class="fas fa-plus fa-sm" title="Add Package"></i></button></a>
-                    <a  (click)=addPayment(student.studentId)><button class="btn btn-secondary btn-sm"><i class="fas fa-dollar-sign fa-sm" title="Add Payment"></i></button></a>
-                    <a  
-                 -->
-                  </td>
+                  <td>&nbsp;&nbsp;<i class="now-ui-icons files_paper">&nbsp;</i><a href="{{apiUrl}}/api/file/{{pdf.pdfId}}/2">{{pdf.title}}.pdf</a> &nbsp;&nbsp;&nbsp;-&nbsp;{{pdf.description}}</td>
+                 
                 </tr>
               </tbody>
             </table>

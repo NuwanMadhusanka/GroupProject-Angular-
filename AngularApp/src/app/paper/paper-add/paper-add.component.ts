@@ -12,8 +12,8 @@ import { formatDate } from '@angular/common';
 import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
 import { FileUploadServiceService } from '../../service/file-upload/file-upload-service.service';
-
-
+///import { FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 @Component({
   selector: 'app-paper-add',
   templateUrl: './paper-add.component.html',
@@ -49,10 +49,26 @@ export class PaperAddComponent implements OnInit {
   showSpinner = false;
   deletePaperFlag = false;
 
+ /// marked = false;
+  ///theCheckbox = false;
+ /// templateChecked = true;
+ /// templateUnchecked = false;
+
   //idate:Date;
 
   //user Validation Instance
   //userValidation = new UserValidation();
+
+  //myarray: String[] = [];
+//i: number = 0;
+//languages: String[] = ["1", "2", "3", "4"];
+ //newstr: String
+  musicPreferences = [
+    { id: 1, genre: 'Pop' },
+    { id: 2, genre: 'Rock' },
+    { id: 3, genre: 'Techno' },
+    { id: 4, genre: 'Hiphop' }
+  ];
 
   constructor(
     private router: Router,
@@ -173,7 +189,7 @@ export class PaperAddComponent implements OnInit {
            });
            this.router.navigate(['paper-list'])*/
           //this.savedPaperDetails=response;
-          this.fileUploadService.fileUpload(this.selectedFiles.item(0), this.savedPaperDetails.paperId, 2).subscribe(
+          this.fileUploadService.fileUpload(this.selectedFiles.item(0), this.savedPaperDetails.paperId, 3).subscribe(
             response => {
               console.log("In file uploading");
               if (response == 0) {
@@ -282,6 +298,17 @@ export class PaperAddComponent implements OnInit {
       }
    );*/
   }
+
+ /// toggleVisibility(e){
+    
+   /// this.marked= e.target.checked;
+ /// }
+  /// getCheckboxesValue() {
+  ///  console.log('Checked value:', this.templateChecked);
+  ///  console.log('Unchecked value:', this.templateUnchecked);
+  ///}
+
+  
 
   closeError() {
     this.errorMessage = "";

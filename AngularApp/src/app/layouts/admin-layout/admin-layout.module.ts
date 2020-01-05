@@ -54,6 +54,7 @@ import { InstructorDeactivatedListComponent } from '../../instructor/instructor-
 import { PaperListComponent } from '../../paper/paper-list/paper-list.component';
 import { PaperMoreDetailsComponent } from '../../paper/paper-more-details/paper-more-details.component';
 import { PaperAddComponent } from '../../paper/paper-add/paper-add.component';
+import { PdfListForStudentsComponent } from '../../pdf/pdf-list-for-students/pdf-list-for-students.component';
 
 
 
@@ -115,6 +116,7 @@ import { PaperAddComponent } from '../../paper/paper-add/paper-add.component';
     PdfListComponent,
     PdfMoreDetailsComponent,
     PdfAddComponent,
+    PdfListForStudentsComponent,
     VideoListComponent,
     VideoMoreDetailsComponent,
     VideoAddComponent,
@@ -126,6 +128,7 @@ import { PaperAddComponent } from '../../paper/paper-add/paper-add.component';
     PaperListComponent,
     PaperMoreDetailsComponent,
     PaperAddComponent,
+    
 
   ]
 })

@@ -5,6 +5,7 @@ import { PdfModel } from '../../ClassModel/PdfModel';
 import Swal from 'sweetalert2';
 import { HttpError } from '../../Shared/httpError/HttpError';
 import { UserValidation } from '../../Shared/validation/user-validation/user-validation';
+import { API_URL, WEBSOCKETENDPOINT, WEBSOCKETTOPIC } from '../../app.constants';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class PdfListComponent implements OnInit {
   pdfs: PdfModel[] = [];
 
   validation: UserValidation = new UserValidation();
+  apiUrl = API_URL;
 
   //Filter Option Implement
   filteredPdf: PdfModel[] = [];

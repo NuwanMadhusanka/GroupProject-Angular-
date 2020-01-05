@@ -253,6 +253,7 @@ export class PaperMoreDetailsComponent implements OnInit {
   }
 
   loadPaper() { //method to load paper //ERROR
+    console.log(this.paperId);
     this.fileUploadService.downLoadPaper(this.paperId).subscribe(
       response => {
         console.log(response);

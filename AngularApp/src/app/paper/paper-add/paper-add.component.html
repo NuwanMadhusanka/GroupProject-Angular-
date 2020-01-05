@@ -75,7 +75,44 @@
                 </div>
               </div>
 
+              <!--Answer Submitting -->
+              <!--  <form>
+                <label class="container"> 
+                <input type="checkbox" [(ngModel)]="theCheckbox"  data-md-icheck (change)="toggleVisibility($event)"/>
+                    Checkbox is <span *ngIf="marked">checked</span><span *ngIf="!marked">unchecked</span>
+
+               <span class="checkmark"></span>
+               </label>
+
+                <div>And <b>ngModel</b> also works, it's value is <b>{{theCheckbox}}</b></div>
+              </form>
+
               <button type="submit" class="btn btn-primary">Submit</button>
 
+            </form>-->
+              <!--    <form>
+              <mdb-checkbox [(ngModel)]="templateChecked" name="templateChecked">Checked with ngModel</mdb-checkbox>
+              <mdb-checkbox [(ngModel)]="templateUnchecked" name="templateUnchecked">Unchecked with ngModel</mdb-checkbox>
             </form>
+            <button mdbBtn color="primary" mdbWavesEffect (click)="getCheckboxesValue()">Get checkboxes value</button>
+         
+            </div>-->
+
+
+
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <!--  </form>
+            </div>
+            <div>
+            <form [formGroup]="musicForm" (ngSubmit)="submit()">
+              <label formArrayName="musicPreferences" *ngFor="let genre of musicForm.controls.musicPreferences.controls; let i = index">
+                         <input type="checkbox" [formControlName]="i">
+                          {{musicPreferences[i].genre}}
+                </label>
+
+              <button>submit</button>
+            </form>-->
+            </form>
+            
           </div>
+          

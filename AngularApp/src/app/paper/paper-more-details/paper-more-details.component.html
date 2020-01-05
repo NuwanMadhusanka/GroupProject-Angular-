@@ -45,7 +45,7 @@
 
                 <tr>
                   <th>Resource:</th>
-                  <td> <a href="{{apiUrl}}/api/file/{{paperId}}/2" target="_blank">{{paperId}}.paper</a></td>
+                  <td> <a href="{{apiUrl}}/api/file/{{paperId}}/3" target="_blank">{{paperId}}.paper</a></td>
                   <td><a (click)=isUpdate(3)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Resource"></i></button></a></td>
                   <!-- <td><a (click)=loadPaper()><button class="btn btn-secondary btn-sm"><i class="fas fa-eye fa-sm" title="Update Resource"></i></button></a></td>
                   -->
@@ -61,8 +61,6 @@
                 
                    <a href="{{apiUrl}}/api/file/{{paperId}}/2" target="_blank">{{paperId}}.paper</a>
                  </tr>-->
-
-
               </tbody>
             </table>
           </div>
@@ -127,15 +125,15 @@
               <button (click)="update()" type="button" class="btn btn-secondary btn-round">Update</button>
 
             </div>
-            </div>
-            <!-- Update -->
-
-            <!-- Confirm All update -->
-
-            <button *ngIf="confirmUpdate" (click)="saveUpdate()" type="button" class="btn btn-primary  btn-round">Confirm All Updates</button>
-
           </div>
+          <!-- Update -->
+
+          <!-- Confirm All update -->
+
+          <button *ngIf="confirmUpdate" (click)="saveUpdate()" type="button" class="btn btn-primary  btn-round">Confirm All Updates</button>
+
         </div>
       </div>
     </div>
   </div>
+</div>

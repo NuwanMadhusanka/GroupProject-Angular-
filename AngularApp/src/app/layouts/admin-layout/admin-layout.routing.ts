@@ -49,6 +49,7 @@ import { InstructorDeactivatedListComponent } from '../../instructor/instructor-
 import { PaperListComponent } from '../../paper/paper-list/paper-list.component';
 import { PaperMoreDetailsComponent } from '../../paper/paper-more-details/paper-more-details.component';
 import { PaperAddComponent } from '../../paper/paper-add/paper-add.component';
+import { PdfListForStudentsComponent } from '../../pdf/pdf-list-for-students/pdf-list-for-students.component';
 
 
 
@@ -101,6 +102,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'practrical-lesson-chart-student', component: PractricalLessonChartStudentComponent, canActivate: [RouteGuardServiceService] },
 
     { path: 'pdf-list', component: PdfListComponent },
+    { path: 'pdf-list-for-students', component: PdfListForStudentsComponent },
     { path: 'pdf-more-details/:id', component: PdfMoreDetailsComponent },
     { path: 'pdf-add', component: PdfAddComponent },
 

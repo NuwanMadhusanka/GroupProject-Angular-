@@ -5,6 +5,7 @@ import { PaperModel } from '../../ClassModel/PaperModel';
 import Swal from 'sweetalert2';
 import { HttpError } from '../../Shared/httpError/HttpError';
 import { UserValidation } from '../../Shared/validation/user-validation/user-validation';
+import { API_URL, WEBSOCKETENDPOINT, WEBSOCKETTOPIC } from '../../app.constants';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class PaperListComponent implements OnInit {
   //Filter Option Implement
   filteredPaper: PaperModel[] = [];
   private _searchTerm: string;
+  apiUrl = API_URL;
   get searchTerm(): string {
     return this._searchTerm;
   }
