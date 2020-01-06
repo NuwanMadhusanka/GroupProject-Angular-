@@ -5,6 +5,8 @@ import { TimeTableDataList } from '../../ClassModel/MapObject/TimeTableDataList'
 import { InstructorModel } from '../../ClassModel/InstructorModel';
 import { LessonAssingStudentMap } from '../../ClassModel/MapObject/LessonAssignStudentMap';
 import { StudentPractricalChartDataMap } from '../../ClassModel/MapObject/StudentPractricalChartDataMap';
+import { LessonModel } from '../../ClassModel/LessonModel';
+
 
 @Injectable({
   providedIn: 'root'
@@ -86,6 +88,11 @@ export class InstructorServiceService {
   instructorDelete(instructorId) {
     console.log(instructorId+"insDelete Servc");
     return this.http.put<Number>(`${API_URL}/instructor/delete/${instructorId}`,{});
+  }
+
+  getInstructorAssignedUpcomingLessons(instructorId) {
+     console.log("Ins lessons-Ins service");
+    return this.http.get<LessonModel>(`${API_URL}/instructor/assignedUpComingLessons/${instructorId}`);
   }
 }
 
