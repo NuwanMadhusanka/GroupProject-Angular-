@@ -124,7 +124,7 @@ export const AdminLayoutRoutes: Routes = [
     {path:'feedback-add', component:FeedbackAddComponent},
 
 
-    {path:'leave-list', component:FeedbackListComponent},
+    {path:'leave-list', component:LeaveListComponent},
 
 
 
