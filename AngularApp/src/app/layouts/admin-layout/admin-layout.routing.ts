@@ -49,6 +49,11 @@ import { ComplainListComponent } from '../../Complain/complain-list/complain-lis
 import { ComplainAddComponent } from '../../complain/complain-add/complain-add.component';
 import { FeedbackListComponent } from '../../feedback/feedback-list/feedback-list.component';
 import { FeedbackAddComponent } from '../../feedback/feedback-add/feedback-add.component';
+import { LeaveListComponent } from '../../leave/leave-list/leave-list.component'
+
+
+
+
 
 
 
@@ -116,7 +121,15 @@ export const AdminLayoutRoutes: Routes = [
     {path:'complain-add', component:ComplainAddComponent},
 
     {path:'feedback-list', component:FeedbackListComponent},
-    {path:'feedback-add', component:FeedbackAddComponent}
+    {path:'feedback-add', component:FeedbackAddComponent},
+
+
+    {path:'leave-list', component:FeedbackListComponent},
+
+
+
+
+
 
 
 

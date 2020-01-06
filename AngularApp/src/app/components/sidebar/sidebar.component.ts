@@ -46,7 +46,10 @@ export class SidebarComponent implements OnInit {
       { path: '/staff-list', title: 'Staff',  icon:'design_bullet-list-67', class: '' },
       { path: '/staff-salary-list', title: 'Salary',  icon:'business_money-coins', class: '' },
       { path: '/package-list', title: 'Package',  icon:'education_agenda-bookmark', class: '' },
-      { path: '/report-list', title: 'Report',  icon:'files_single-copy-04', class: '' }
+      { path: '/report-list', title: 'Report',  icon:'files_single-copy-04', class: '' },
+      { path: '/leave-list', title: 'Leave',  icon:'files_single-copy-04', class: '' }
+
+
     ];
 
     this.adminStaffInstructor=[
@@ -54,7 +57,9 @@ export class SidebarComponent implements OnInit {
       { path: '/vehicle-list', title: 'Vehicle',  icon:'transportation_bus-front-12', class: '' },
       { path: '/staff-salary', title: 'Salary',  icon:'business_money-coins', class: '' },
       { path: '/instructor-list', title: 'Instructor',  icon:'business_badge', class: '' },
-      { path: '/complain-list', title: 'Complain',  icon:'design_bullet-list-67', class: '' }
+      { path: '/complain-list', title: 'Complain',  icon:'design_bullet-list-67', class: '' },
+      { path: '/leave-list', title: 'Leave',  icon:'files_single-copy-04', class: '' }
+
     ];
 
     this.adminStaffStudent=[
@@ -63,13 +68,17 @@ export class SidebarComponent implements OnInit {
       { path: '/staff-salary', title: 'Salary',  icon:'business_money-coins', class: '' },
       { path: '/pdf-list', title: 'Pdf',  icon:'design_bullet-list-67', class: '' },
       { path: '/video-list', title: 'Video',  icon:'design_bullet-list-67', class: '' },
-      { path: '/complain-list', title: 'Complain',  icon:'design_bullet-list-67', class: '' }
+      { path: '/complain-list', title: 'Complain',  icon:'design_bullet-list-67', class: '' },
+      { path: '/leave-list', title: 'Leave',  icon:'files_single-copy-04', class: '' }
+
     ];
 
     this.instructor=[
       { path: '/instructor-time-table', title: 'Time Table',  icon:'files_paper', class: '' },
       { path: '/staff-salary', title: 'Salary',  icon:'business_money-coins', class: '' },
-      { path: '/complain-list', title: 'Complain',  icon:'design_bullet-list-67', class: '' }
+      { path: '/complain-list', title: 'Complain',  icon:'design_bullet-list-67', class: '' },
+      { path: '/leave-list', title: 'Leave',  icon:'files_single-copy-04', class: '' }
+
 
     ];
 
