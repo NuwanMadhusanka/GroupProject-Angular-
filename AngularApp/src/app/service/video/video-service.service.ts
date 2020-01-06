@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { StudentPackageAddComponent,StudentPackage } from '../../student/student-package-add/student-package-add.component';
 import { VideoModel } from '../../ClassModel/VideoModel';
+import { API_URL } from '../../app.constants';
+
+
+/*import { StudentPackageAddComponent,StudentPackage } from '../../student/student-package-add/student-package-add.component';
 import { PackageModel } from '../../ClassModel/PackageModel';
 import { CourseFee } from '../../ClassModel/CourseFeeModel';
 import { PayPal } from '../../student/student-payment/student-payment.component';
 import { ExamList } from '../../adminStaff/admin-staff-student-dash-board/admin-staff-student-dash-board.component';
-import { API_URL } from '../../app.constants';
-
-
-
-
+*/
 
 
 @Injectable({
@@ -22,47 +21,41 @@ export class VideoServiceService {
     private http:HttpClient,
   ) { }
 
-
-//get VideoList
-  videoList(){
-      //console.log("abd");
-      console.log("In Vido SErvice -VideoList");
+//get video List
+videoList(){
       return this.http.get<VideoModel[]>(`${API_URL}/videos`);
   }
 
-    //Get Specific video Details
-  getVideo(videoId){
-    console.log("In service getVideo");
+  //Get Specific video Details using videoID
+  getVideobyID(videoId){
     return this.http.get<VideoModel>(`${API_URL}/video/${videoId}`);
-
   }
-   //save new video
-  saveVideo(video:VideoModel){
+
+  //add new video
+  addVideo(video:VideoModel){
+    console.log("In video Service add meth");
     console.log(video);
-    return this.http.post<VideoModel>(`${API_URL}/video/add`,video); 
-   
+    return this.http.post<VideoModel>(`${API_URL}/video/add`,video);
   }
 
-  //delete Video details
-  deleteVideo(videoId){
-    console.log("in service vdo del");
-    return this.http.delete<any>(`${API_URL}/video/${videoId}`);
+   deleteVideo(videoId){
+     console.log("In video Service delete meth");
+     console.log(videoId);
+    return this.http.delete<any>(`${API_URL}/video/delete/${videoId}`);
   }
+
 
   //Update Video Data
   updateVideo(video:VideoModel){
     return this.http.put<VideoModel>(`${API_URL}/video/update`,video);
   }
-
-/*
- 
-
-  //get StudentList
-  studentList(){
-      //console.log("abd");
-
-      return this.http.get<StudentModel[]>(`${API_URL}/students`);
+  /*//register the new student
+  studentRegister(student:StudentModel){
+    console.log(student);
+    return this.http.post<StudentModel>(`${API_URL}/student/register`,student);
+    //console.log(user);
   }
+
 
   //getStudent following package's Id(Result is integer list)
   studentPackagesId(id:Number){
@@ -80,7 +73,10 @@ export class VideoServiceService {
     return this.http.post<any>(`${API_URL}/student/package/${id}`,selectedPackage);
   }
 
-  
+  //delete student package details
+  studentPackegeDelete(stuId,pacId){
+    return this.http.delete<any>(`${API_URL}/student/package/${stuId}/${pacId}`);
+  }
 
   //get student CourseFee Details
   studentCourseFees(stuId,pacId){
@@ -94,12 +90,12 @@ export class VideoServiceService {
      return this.http.post<any>(`${API_URL}/student/coursefee/${studentPackageId}/${packageId}`,courseFee);
   }
 
-  //Get Specific Student Details
-  studentGet(studentId){
-    return this.http.get<StudentModel>(`${API_URL}/student/${studentId}`);
-  }
-
   
+
+  //Update Student Data
+  studentUpdate(student:StudentModel){
+    return this.http.put<StudentModel>(`${API_URL}/student/update`,student);
+  }
 
   //delete Student Data
   studentDelete(stuId){

@@ -46,4 +46,9 @@ export class FileUploadServiceService {
    
  }
 
+  downLoadVideo(videoId) { 
+   return this.http.get<any>(`${API_URL}/api/file/${videoId}/4`);
+   
+ }
+
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PaperServiceService } from '../../service/learning-material/paper/paper-service.service';
+import { PaperServiceService } from '../../service/paper/paper-service.service';
 import { PaperModel } from '../../ClassModel/PaperModel';
 import Swal from 'sweetalert2';
 import { HttpError } from '../../Shared/httpError/HttpError';

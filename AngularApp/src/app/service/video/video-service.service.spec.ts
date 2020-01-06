@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { VideoServiceService } from './video-service.service';
 
-describe('StudentServiceService', () => {
+describe('VideoServiceService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {

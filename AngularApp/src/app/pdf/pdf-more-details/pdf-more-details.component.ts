@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentModel } from '../../ClassModel/StudentModel';
 import { ActivatedRoute } from '@angular/router';
-import { PdfServiceService } from '../../service/learning-material/pdf/pdf-service.service';
+import { PdfServiceService } from '../../service/pdf/pdf-service.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PdfModel } from '../../ClassModel/PdfModel';
 import { StaffModel } from '../../ClassModel/StaffModel';

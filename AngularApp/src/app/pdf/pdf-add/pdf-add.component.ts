@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserServiceService } from '../../service/user/user-service.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PdfServiceService } from '../../service/learning-material/pdf/pdf-service.service';
+import { PdfServiceService } from '../../service/pdf/pdf-service.service';
 import { AdminStaffServiceService } from '../../service/adminStaff/admin-staff-service.service';
 import { UserModel } from '../../ClassModel/UserModel';
 import { PdfModel } from '../../ClassModel/PdfModel';
@@ -187,7 +187,7 @@ export class PdfAddComponent implements OnInit {
                   showConfirmButton: false,
                   timer: 1500
                 });
-                this.router.navigate(['pdf-add'])
+               // this.router.navigate(['pdf-add'])
               } else { //null return
                 Swal.fire({
                   position: 'center',

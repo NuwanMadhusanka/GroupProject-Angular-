@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserServiceService } from '../../service/user/user-service.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PaperServiceService } from '../../service/learning-material/paper/paper-service.service';
+import { PaperServiceService } from '../../service/paper/paper-service.service';
 import { AdminStaffServiceService } from '../../service/adminStaff/admin-staff-service.service';
 import { UserModel } from '../../ClassModel/UserModel';
 import { PaperModel } from '../../ClassModel/PaperModel';

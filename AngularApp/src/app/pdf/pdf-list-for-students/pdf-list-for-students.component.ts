@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PdfServiceService } from '../../service/learning-material/pdf/pdf-service.service';
+import { PdfServiceService } from '../../service/pdf/pdf-service.service';
 import { PdfModel } from '../../ClassModel/PdfModel';
 import Swal from 'sweetalert2';
 import { HttpError } from '../../Shared/httpError/HttpError';

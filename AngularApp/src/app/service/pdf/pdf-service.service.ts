@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { PaperModel } from '../../../ClassModel/PaperModel';
-import { API_URL } from '../../../app.constants';
+import { PdfModel } from '../../ClassModel/PdfModel';
+import { API_URL } from '../../app.constants';
 
 
 /*import { StudentPackageAddComponent,StudentPackage } from '../../student/student-package-add/student-package-add.component';
@@ -15,39 +15,39 @@ import { ExamList } from '../../adminStaff/admin-staff-student-dash-board/admin-
 @Injectable({
   providedIn: 'root'
 })
-export class PaperServiceService {
+export class PdfServiceService {
 
   constructor(
     private http:HttpClient,
   ) { }
 
-//get paper List
-paperList(){
-      return this.http.get<PaperModel[]>(`${API_URL}/papers`);
+//get pdf List
+pdfList(){
+      return this.http.get<PdfModel[]>(`${API_URL}/pdfs`);
   }
 
-  //Get Specific paper Details using paperID
-  getPaperbyID(paperId){
-    return this.http.get<PaperModel>(`${API_URL}/paper/${paperId}`);
+  //Get Specific pdf Details using pdfID
+  getPdfbyID(pdfId){
+    return this.http.get<PdfModel>(`${API_URL}/pdf/${pdfId}`);
   }
 
-  //add new paper
-  addPaper(paper:PaperModel){
-    console.log("In paper Service add meth");
-    console.log(paper);
-    return this.http.post<PaperModel>(`${API_URL}/paper/add`,paper);
+  //add new pdf
+  addPdf(pdf:PdfModel){
+    console.log("In pdf Service add meth");
+    console.log(pdf);
+    return this.http.post<PdfModel>(`${API_URL}/pdf/add`,pdf);
   }
 
-   deletePaper(paperId){
-     console.log("In paper Service delete meth");
-     console.log(paperId);
-    return this.http.delete<any>(`${API_URL}/paper/delete/${paperId}`);
+   deletePdf(pdfId){
+     console.log("In pdf Service delete meth");
+     console.log(pdfId);
+    return this.http.delete<any>(`${API_URL}/pdf/delete/${pdfId}`);
   }
 
 
-  //Update Paper Data
-  updatePaper(paper:PaperModel){
-    return this.http.put<PaperModel>(`${API_URL}/paper/update`,paper);
+  //Update Pdf Data
+  updatePdf(pdf:PdfModel){
+    return this.http.put<PdfModel>(`${API_URL}/pdf/update`,pdf);
   }
   /*//register the new student
   studentRegister(student:StudentModel){

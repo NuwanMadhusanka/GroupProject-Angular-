@@ -50,6 +50,7 @@ import { PaperListComponent } from '../../paper/paper-list/paper-list.component'
 import { PaperMoreDetailsComponent } from '../../paper/paper-more-details/paper-more-details.component';
 import { PaperAddComponent } from '../../paper/paper-add/paper-add.component';
 import { PdfListForStudentsComponent } from '../../pdf/pdf-list-for-students/pdf-list-for-students.component';
+import { VideoListForStudentsComponent } from '../../video/video-list-for-students/video-list-for-students.component';
 
 
 
@@ -107,13 +108,13 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'pdf-add', component: PdfAddComponent },
 
     { path: 'video-list', component: VideoListComponent },
+    { path: 'video-list-for-students', component: VideoListForStudentsComponent },
     { path: 'video-more-details/:id', component: VideoMoreDetailsComponent },
     { path: 'video-add', component: VideoAddComponent },
     { path: 'instructor-list', component: InstructorListComponent },
     { path: 'instructor-add', component: InstructorAddComponent },
     { path: 'instructor-more-details/:id', component: InstructorMoreDetailsComponent },
     { path: 'instructor-deactivated-list', component: InstructorDeactivatedListComponent },
-
     { path: 'paper-list', component: PaperListComponent },
     { path: 'paper-more-details/:id', component: PaperMoreDetailsComponent },
     { path: 'paper-add', component: PaperAddComponent },

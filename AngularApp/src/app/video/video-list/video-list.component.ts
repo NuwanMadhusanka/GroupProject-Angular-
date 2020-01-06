@@ -4,9 +4,9 @@ import { VideoServiceService } from '../../service/video/video-service.service';
 import { VideoModel } from '../../ClassModel/VideoModel';
 import Swal from 'sweetalert2';
 import { HttpError } from '../../Shared/httpError/HttpError';
-import {formatDate} from '@angular/common';
-import { DatePipe } from '@angular/common';
 import { UserValidation } from '../../Shared/validation/user-validation/user-validation';
+import { API_URL, WEBSOCKETENDPOINT, WEBSOCKETTOPIC } from '../../app.constants';
+
 
 @Component({
   selector: 'app-video-list',
@@ -15,26 +15,25 @@ import { UserValidation } from '../../Shared/validation/user-validation/user-val
 })
 export class VideoListComponent implements OnInit {
 
-  errorMessage="";
-
+  errorMessage = "";
   videos: VideoModel[] = [];
 
   validation: UserValidation = new UserValidation();
+  apiUrl = API_URL;
 
-    //Filter Option Implement
-  filteredVideos: VideoModel[] = [];
+  //Filter Option Implement
+  filteredVideo: VideoModel[] = [];
   private _searchTerm: string;
   get searchTerm(): string {
     return this._searchTerm;
   }
   set searchTerm(value: string) {
     this._searchTerm = value;
-    this.filteredVideos = this.filterVideo(value);
+    this.filteredVideo = this.filterVideo(value);
   }
 
   //Filtering method
   filterVideo(searchString: string) {
-
     return this.videos.filter(video =>
       video.videoId.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
       video.title.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
@@ -42,54 +41,67 @@ export class VideoListComponent implements OnInit {
       video.adminStaffId.adminStaffId.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
       video.addedDate.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1
     );
+
   }
-  
 
   constructor(
-    private router:Router,
-    private videoService:VideoServiceService
+    private router: Router,
+    private videoService: VideoServiceService,
+
+
+
   ) { }
 
   ngOnInit() {
-    console.log("In Video List in videoListCom TS");
     this.videoList();
   }
 
-  //get Student List
-  videoList(){
+  //to get the list of Videos
+  videoList() {
+
     this.videoService.videoList().subscribe(
       response => {
-        this.videos=response;
-        this.filteredVideos=this.videos;
-        console.log(response);
+        this.videos = response;
+        this.filteredVideo = this.videos;
+        //for(let video of this.videos){
+        console.log(this.videos);
+        // }
+        // this.handleErrorResponse(this.videos[0].adminStaff==null);
       },
       error => {
+        //this.errorMessage=response;
         this.handleErrorResponse(error);
       }
     )
   }
-   //navigate to studentRegister Page
-  addVideo(){
-      this.router.navigate(['video-add']) 
-  }
-
-  //navigate to more details page
-  moreDetails(videoId){
-    this.router.navigate(['video-more-details',videoId]);
-  }
-
-  handleErrorResponse(error){
-    this.errorMessage="There is a problem with the service. please try again later.";
+  handleErrorResponse(error) {
+    this.errorMessage = error;
     let httpError = new HttpError();
     httpError.ErrorResponse(error);
   }
+  closeError() {
+    this.errorMessage = "";
+  }
 
-//delete Video
-  deleteVideo(videoId:Number){
-    console.log("In vode del ts");
+  //navigate to more details page of video
+  moreDetails(videoId) {
+    console.log("in videolistcomTS " + videoId);
+    this.router.navigate(['video-more-details', videoId]);
+    // console.log(this.router.navigate(['video-more-details',videoId]));
+  }
+
+  addVideo() {
+    console.log("In videolist com ts 1");
+    this.router.navigate(['video-add']);
+    console.log("In videolist com ts 2");
+  }
+
+  //delete Video
+  deleteVideo(videoId: Number) {
+    console.log("INvideoDelinCOMTS");
     Swal.fire({
       title: 'Are you sure?',
-      text: "Delete student Details,Payemnt Details and all other relevant information.Can't revert the Data!",
+      text: "Delete Video.Can't revert the Data!",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -97,76 +109,67 @@ export class VideoListComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
-        
+        console.log("INvideoDelinCOMTS2");
         //Call to API
         this.videoService.deleteVideo(videoId).subscribe(
           response => {
-            this.videoList(); 
-              Swal.fire({
+            this.videoList();
+            Swal.fire({
               position: 'center',
               type: 'success',
-              title:'Video Id:'+ videoId + '\'s record was deleted successful',
+              title: 'PDf id :' + videoId + ' record was successfuly deldeted',
               showConfirmButton: false,
               timer: 3000
             });
           },
           error => {
+            console.log("error");
             console.log(error);
             this.handleErrorResponse(error);
-             Swal.fire({
+            Swal.fire({
               position: 'center',
               type: 'error',
-              title: 'Video Id:'+ videoId +  '\'s record was deleted not successful',
+              title: 'PDf id :' +videoId + '\'s record was not successfuly deleted',
               showConfirmButton: false,
               timer: 3000
             });
           }
-           
+
         )
       }
     })
   }
 
 
-/*
- 
 
-  //get Student List
-  studentList(){
-    this.studentService.studentList().subscribe(
-      response => {
-        this.students=response;
-        // console.log(this.students);
-      },
-      error => {
-        this.handleErrorResponse(error);
-      }
-    )
-  }
-
-  //delete Student
+  /*
+    //navigate to studentRegister Page
+    addStudent(){
+        this.router.navigate(['student-add'])
+    }
   
-  //navigate to student-package
-  addPackage(studentId:Number){
-    console.log(studentId);
-    this.router.navigate(['student-package-add',studentId])
-  }
-
-  //navigate to student-payment 
-  addPayment(studentId){
-    this.router.navigate(['student-payment',studentId])
-  }
-
+   
   
-
-  closeError(){
-    this.errorMessage="";
-  }
-
-  handleErrorResponse(error){
-    this.errorMessage="There is a problem with the service. please try again later.";
-    let httpError = new HttpError();
-    httpError.ErrorResponse(error);
-  }
-*/
+    //navigate to student-package
+    addPackage(studentId:Number){
+      console.log(studentId);
+      this.router.navigate(['student-package-add',studentId])
+    }
+  
+    //navigate to student-payment 
+    addPayment(studentId){
+      this.router.navigate(['student-payment',studentId])
+    }
+  
+    //navigate to more details page
+    
+  
+    
+  
+    handleErrorResponse(error){
+      this.errorMessage="There is a problem with the service. please try again later.";
+      let httpError = new HttpError();
+      httpError.ErrorResponse(error);
+    }
+  */
 }

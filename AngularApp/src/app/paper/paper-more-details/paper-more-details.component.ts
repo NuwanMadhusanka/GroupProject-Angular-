@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentModel } from '../../ClassModel/StudentModel';
 import { ActivatedRoute } from '@angular/router';
-import { PaperServiceService } from '../../service/learning-material/paper/paper-service.service';
+import { PaperServiceService } from '../../service/paper/paper-service.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PaperModel } from '../../ClassModel/PaperModel';
 import { StaffModel } from '../../ClassModel/StaffModel';
