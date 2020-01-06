@@ -64,8 +64,7 @@ export class StaffSalaryListComponent implements OnInit {
   }
 
   getYears(){
-    this.years.push(2019);
-    this.years.push(2020);
+    this.years = this.staffService.getYears();
   }
   
 
@@ -93,7 +92,7 @@ export class StaffSalaryListComponent implements OnInit {
 
   selectMonths(index:number){
     this.errorMessage="";
-    if(index<=this.currentMonth){
+    if( (this.selectYear==this.selectYear && index<=this.currentMonth) || (this.selectYear<this.currentYear)){
       this.selectMonth=index;
       this.getStaffSalaryDetails();
     }else{
@@ -103,8 +102,10 @@ export class StaffSalaryListComponent implements OnInit {
 
   selectYears(index:number){
     this.selectYear=this.years[index];
-    this.getStaffSalaryDetails();
-    
+    if(this.selectYear==this.currentYear){
+      this.selectMonth=this.currentMonth;
+    }
+    this.getStaffSalaryDetails();   
   }
 
   staffSalaryPay(staffId:Number){

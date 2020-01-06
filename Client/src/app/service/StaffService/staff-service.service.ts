@@ -7,6 +7,7 @@ import { SalaryModel } from '../../ClassModel/SalaryModel';
 import { StaffWorkDaysDataMap } from '../../ClassModel/MapObject/StaffWorkDaysDataMap';
 import { StaffModel } from '../../ClassModel/StaffModel';
 import { AttendanceModel } from '../../ClassModel/MapObject/AttendanceModel';
+import { LeaveSettingModel } from '../../ClassModel/LeaveSettingModel';
 
 @Injectable({
   providedIn: 'root'
@@ -37,8 +38,8 @@ export class StaffServiceService {
     return this.http.put<any>(`${API_URL}/staff/salary/information`,salaryInformation);
   }
 
-  getStaffRoleSalaryInformation(staffId:Number){
-    return this.http.get<SalaryInformationModel>(`${API_URL}/staff/role/salary/information/${staffId}`);
+  getStaffRoleSalaryInformation(staffId:Number,year:Number,month:Number){
+    return this.http.get<SalaryInformationModel>(`${API_URL}/staff/role/salary/information/${staffId}/${year}/${month}`);
   }
 
   deleteStaffSalaryInfromation(salaryInformationId:Number){
@@ -50,7 +51,7 @@ export class StaffServiceService {
   }
 
   updateStaffWorkTime(updateWorkTime:WorkTimeModel){
-    return this.http.put<any>(`${API_URL}/staff/work/time/${updateWorkTime.fullDay}/${updateWorkTime.halfDay}`,{});
+    return this.http.put<any>(`${API_URL}/staff/work/time`,updateWorkTime);
   }
 
   getStaffSalaryDetails(month:number,year:number){
@@ -78,11 +79,18 @@ export class StaffServiceService {
   }
 
   getStaffLeave(){
-    return this.http.get<number>(`${API_URL}/staff/leave`);
+    return this.http.get<LeaveSettingModel>(`${API_URL}/staff/leave`);
   }
 
-  updateStaffLeave(adminId:Number,leaves:Number){
-    return this.http.put<any>(`${API_URL}/staff/leave/${adminId}/${leaves}`,{});
+  updateStaffLeave(leaveSetting:LeaveSettingModel){
+    return this.http.put<any>(`${API_URL}/staff/leave`,leaveSetting);
+  }
+
+  getYears(){
+    let years = [];
+    years.push(2019);
+    years.push(2020);
+    return years;
   }
 
 }

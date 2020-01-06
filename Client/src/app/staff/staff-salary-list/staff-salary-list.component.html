@@ -40,11 +40,16 @@
           <!-- Drop down -->
           <div ngbDropdown class="dropdown" placement="bottom-left">
               <button class="btn btn-info dropdown-toggle" ngbDropdownToggle>Select Month</button>
-              <div ngbDropdownMenu>
+              <div *ngIf="selectYear==currentYear" ngbDropdownMenu>
                   <div *ngFor="let month of monthNames; let i =index;">
-                    <a (click)="selectMonths(i)" class="dropdown-item" >{{month}}</a>
+                    <a *ngIf="i<=currentMonth" (click)="selectMonths(i)" class="dropdown-item" >{{month}}</a>
                   </div>
               </div>
+              <div *ngIf="selectYear<currentYear" ngbDropdownMenu>
+                <div *ngFor="let month of monthNames; let i =index;">
+                  <a  (click)="selectMonths(i)" class="dropdown-item" >{{month}}</a>
+                </div>
+            </div>
           </div>
             <!-- Drop Down Finish -->
 

@@ -8,8 +8,8 @@
       </div>
       <div class="card-body">
   
-              <a *ngIf="staffSalaryInformationList.length!=3" (click)=staffSalary(1,0)><button type="button" class="btn btn-success btn-sm" title="Add"><i class="fas fa-plus"></i></button></a>      
-              <a *ngIf="staffSalaryInformationList.length==3" class="disabled"><button type="button" class="btn btn-success btn-sm" title="Add"><i class="fas fa-plus"></i></button></a>      
+              <!-- <a *ngIf="staffSalaryInformationList.length!=3" (click)=staffSalary(1,0)><button type="button" class="btn btn-success btn-sm" title="Add"><i class="fas fa-plus"></i></button></a>      
+              <a *ngIf="staffSalaryInformationList.length==3" class="disabled"><button type="button" class="btn btn-success btn-sm" title="Add"><i class="fas fa-plus"></i></button></a>       -->
 
               <!-- Table Start -->
               <div class="table-responsive">
@@ -33,7 +33,7 @@
                         <td>{{salary.nopay | number : '1.2-2'}}</td>
                         <td>
                           <a (click)=staffSalary(2,salary.salaryInformationId)><button type="button" class="btn btn-secondary btn-sm" title="Update"><i class="fas fa-edit"></i></button></a>
-                          <a (click)=deleteStaffSalary(salary.salaryInformationId)><button type="button" class="btn btn-danger btn-sm" title="Delete"><i class="fas fa-trash"></i></button></a>
+                          <!-- <a (click)=deleteStaffSalary(salary.salaryInformationId)><button type="button" class="btn btn-danger btn-sm" title="Delete"><i class="fas fa-trash"></i></button></a> -->
                         </td>
                       </tr>
                     </tbody>

@@ -1,12 +1,11 @@
 import { AdminModel } from './AdminModel';
 
-export class WorkTimeModel{
+export class LeaveSettingModel{
     constructor(
-        public workTimeId:Number,
+        public leaveSettingId:Number,
         public updateDate:Date,
         public applyMonth:Number,
-        public fullDay:Number,
-        public halfDay:Number,
+        public numLeave:Number,
         public adminId:AdminModel
     ){}
 }

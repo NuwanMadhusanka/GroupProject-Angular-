@@ -5,6 +5,7 @@
   <div class="card">
     <div class="card-header">
       <h5 class="card-title">Staff Work Time</h5>
+      <p>Last Update : {{lastUpdate}}</p>
     </div>
     <div class="card-body">
 
@@ -31,7 +32,7 @@
                                 <td>{{workTimeData.fullDay}}</td>
                                 <td>
                                     <a  (click)=staffWorkTimeUpdate(1)><button type="button" class="btn btn-secondary btn-sm" title="Edit"><i class="fas fa-edit"></i></button></a>  
-                                    <a  (click)=staffSalary(1,0)><button type="button" class="btn btn-danger btn-sm" title="Delete"><i class="fas fa-trash"></i></button></a>  
+                                    <!-- <a  (click)=staffSalary(1,0)><button type="button" class="btn btn-danger btn-sm" title="Delete"><i class="fas fa-trash"></i></button></a>   -->
                                   </td>
                               </tr>
                               <tr>
@@ -40,7 +41,7 @@
                                   <td>{{workTimeData.halfDay}}</td>
                                   <td>
                                       <a  (click)=staffWorkTimeUpdate(2)><button type="button" class="btn btn-secondary btn-sm" title="Edit"><i class="fas fa-edit"></i></button></a>  
-                                      <a  (click)=staffSalary(1,0)><button type="button" class="btn btn-danger btn-sm" title="Delete"><i class="fas fa-trash"></i></button></a>  
+                                      <!-- <a  (click)=staffSalary(1,0)><button type="button" class="btn btn-danger btn-sm" title="Delete"><i class="fas fa-trash"></i></button></a>   -->
                                   </td>
                                 </tr>
                             </tbody>
@@ -53,6 +54,7 @@
                     <div class="card">
                       <div class="card-header">
                         <h6 class="card-title">Update Work Time</h6>
+                        <small class="text-info"># Update details will be applyed from {{monthNames[currentMonth+1]}} {{currentYear}}</small>
                       </div>
                       <div class="card-body">
 

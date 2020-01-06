@@ -12,7 +12,14 @@ import Swal from 'sweetalert2';
 })
 export class StaffWorkTimeComponent implements OnInit {
 
-  workTimeData:WorkTimeModel=new WorkTimeModel(0,1,1,null);
+  monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+
+  currentYear:Number;
+  currentMonth:Number;
+  lastUpdate = new Date();
+
+  workTimeData:WorkTimeModel=new WorkTimeModel(0,new Date(),0,1,1,null);
 
   isUpdate=false;
   updateWorkTypeId:Number;
@@ -26,12 +33,14 @@ export class StaffWorkTimeComponent implements OnInit {
 
   ngOnInit() {
     this.getWorkTime();
+    this.getCurrentMonthAndYear();
   }
 
   getWorkTime(){
     this.staffService.getStaffWorkTime().subscribe(
       response => {
         this.workTimeData=response;
+        this.lastUpdate=this.workTimeData.updateDate;
       },
       error => {
         console.log(error);
@@ -61,7 +70,8 @@ export class StaffWorkTimeComponent implements OnInit {
     if(this.updateWorkTime==null || this.updateWorkTime<=0 || this.updateWorkTime>24){
       this.errorUpdateWorkTime="Enter Valid Work Time";
     }else{
-      let updateWorkTimeData = new WorkTimeModel(this.workTimeData.workTimeId,this.workTimeData.fullDay,this.workTimeData.halfDay,null);
+      console.log(this.currentMonth)
+      let updateWorkTimeData = new WorkTimeModel(this.workTimeData.workTimeId,new Date(),+this.currentMonth+1,this.workTimeData.fullDay,this.workTimeData.halfDay,this.workTimeData.adminId);
       (this.updateWorkTypeId==1 ? updateWorkTimeData.fullDay=this.updateWorkTime : updateWorkTimeData.halfDay=this.updateWorkTime);
       this.staffService.updateStaffWorkTime(updateWorkTimeData).subscribe(
         response => {
@@ -86,7 +96,18 @@ export class StaffWorkTimeComponent implements OnInit {
             timer: 3000
           });
         }
-      )
+      );
+    }
+  }
+
+  getCurrentMonthAndYear(){
+    var date = new Date(); 
+    this.currentMonth=date.getMonth();   
+    this.currentYear=date.getFullYear();
+
+    if(this.currentMonth==11){//Month is december
+      this.currentMonth=0;
+      this.currentYear=+this.currentYear+1;
     }
   }
 

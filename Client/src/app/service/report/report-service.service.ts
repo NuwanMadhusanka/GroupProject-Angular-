@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { API_URL } from '../../app.constants';
 import { YearUpdateModel } from '../../ClassModel/YearUpdateModel';
 import { PackagePaymentDataMap } from '../../ClassModel/MapObject/PackagePaymentDataMap';
+import { OutComeDataMap } from '../../ClassModel/MapObject/OutComeDataMap';
+import { ProfitDataMap } from '../../ClassModel/MapObject/ProfitDataMap';
 
 @Injectable({
   providedIn: 'root'
@@ -44,5 +46,13 @@ export class ReportServiceService {
 
   getPackagePaymentMonthly(year){
     return this.http.get<[[PackagePaymentDataMap]]>(`${API_URL}/report/package/month/payment/${year}`);
+  }
+
+  getOutComeMonthly(year){
+    return this.http.get<[OutComeDataMap]>(`${API_URL}/report/outcome/${year}`);
+  }
+
+  getProfitMonthly(year){
+     return this.http.get<[ProfitDataMap]>(`${API_URL}/report/profit/${year}`);
   }
 }

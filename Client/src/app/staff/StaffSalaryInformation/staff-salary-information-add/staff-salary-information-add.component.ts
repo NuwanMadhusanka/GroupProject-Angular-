@@ -18,8 +18,15 @@ import { UserModel } from '../../../ClassModel/UserModel';
 })
 export class StaffSalaryInformationAddComponent implements OnInit {
 
+  monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+
   type:Number;//type 1-->Add ,2-->Update
   salaryInformationId:Number;
+
+  currentMonth:Number;
+  currentYear:Number;
+  lastUpdateDate = new Date();
 
   staffRoleList:StaffRole[]=[];
   staffSalaryInformationList:SalaryInformationModel[]=[];
@@ -45,6 +52,7 @@ export class StaffSalaryInformationAddComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getCurrentMonthAndYear();
     this.type=this.route.snapshot.params['type'];//get student id by url
     this.salaryInformationId=this.route.snapshot.params['id'];//get student id by url
     if(this.type==1){
@@ -68,6 +76,7 @@ export class StaffSalaryInformationAddComponent implements OnInit {
     this.staffService.getStaffSalaryInformation(salaryInformationId).subscribe(
       response => {
         this.salaryInformation = response;
+        this.lastUpdateDate=this.salaryInformation.updateDate;
         
         this.selectRoleId=this.salaryInformation.staffType;
         if(this.selectRoleId==2){
@@ -116,7 +125,7 @@ export class StaffSalaryInformationAddComponent implements OnInit {
     }
 
     if(!isError){
-      let salaryInformation = new SalaryInformationModel(0,this.selectRoleId,this.fullDayaSalary,this.halfDayaSalary,this.noPay,null);
+      let salaryInformation = new SalaryInformationModel(0,new Date(),+this.currentMonth+1,this.selectRoleId,this.fullDayaSalary,this.halfDayaSalary,this.noPay,null);
       
       if(this.type==1){
         let adminId = new AdminModel(0,"",new UserModel(+sessionStorage.getItem("userId"),'','','','','','','',new Date(),1,1,0));
@@ -168,6 +177,17 @@ export class StaffSalaryInformationAddComponent implements OnInit {
           }
         );
       }
+    }
+  }
+
+  getCurrentMonthAndYear(){
+    var date = new Date(); 
+    this.currentMonth=date.getMonth();   
+    this.currentYear=date.getFullYear();
+
+    if(this.currentMonth==11){//Month is december
+      this.currentMonth=0;
+      this.currentYear=+this.currentYear+1;
     }
   }
 

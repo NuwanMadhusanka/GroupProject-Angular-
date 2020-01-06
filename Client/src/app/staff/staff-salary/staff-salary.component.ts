@@ -101,7 +101,7 @@ export class StaffSalaryComponent implements OnInit {
   }
 
   getStaffSalaryInformation(){
-    this.staffService.getStaffRoleSalaryInformation(this.staffData.staffId).subscribe(
+    this.staffService.getStaffRoleSalaryInformation(this.staffData.staffId,this.currentYear,this.currentMonth).subscribe(
       response => {
         this.staffSalaryInformation=response;
         this.isStaffSalaryInformationLoad=true;

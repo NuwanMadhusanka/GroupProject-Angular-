@@ -15,25 +15,34 @@ export class VehicleFuelComponent implements OnInit {
 
   monthNames = ["January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"];
+  years = [];
   currentYear:number;
+  currentMonth:number;
+  selectYear:number;
 
   vehicleFuelList:FuelPaymentModel[]=[];
 
   isAddSelect=false;              
   selectMonth:Number;
   amount:number;
+  year:number;
 
   errorSelectMonth:String;
   errorAmount:String;
+  errorYear:String;
 
   paymentValidate:PaymentValidation;
 
   constructor(
-    private vehicleService :VehicleServiceService
+    private vehicleService :VehicleServiceService,
+    
   ) { }
 
   ngOnInit() {
+    this.getYears();
     this.getCurrentYear();
+    this.selectYear=this.currentYear;
+
     this.getVehicleFuelData();
     this.paymentValidate = new PaymentValidation();
   }
@@ -43,8 +52,12 @@ export class VehicleFuelComponent implements OnInit {
     this.currentYear=date.getFullYear();
   }
 
+  getYears(){
+    this.years=this.vehicleService.getFuelPaymentYears();
+  }
+
   getVehicleFuelData(){
-    this.vehicleService.getFuelData(this.currentYear).subscribe(
+    this.vehicleService.getFuelData(this.selectYear).subscribe(
       response => {
         this.vehicleFuelList=response;
       },
@@ -64,8 +77,13 @@ export class VehicleFuelComponent implements OnInit {
       this.errorAmount="Insert Valid Amount";
       error=true;
     }
-    if(this.selectMonth==null){
-      this.errorSelectMonth="Select the month";
+
+    if(this.selectMonth==null || this.selectMonth>this.currentMonth){
+      this.errorSelectMonth="Select the valid month";
+      error=true;
+    }
+    if(this.year>this.currentYear){
+      this.errorYear="Cannot insert future year ";
       error=true;
     }
 
@@ -79,7 +97,7 @@ export class VehicleFuelComponent implements OnInit {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, Saved!'
       }).then((result) => {
-        this.vehicleService.addVehicleFuelData(+sessionStorage.getItem("userId"),new FuelPaymentModel(-1,+this.selectMonth+1,new Date(),this.amount,null)).subscribe(
+        this.vehicleService.addVehicleFuelData(+sessionStorage.getItem("userId"),new FuelPaymentModel(-1,+this.selectMonth+1,this.year,new Date(),this.amount,null)).subscribe(
           response => {
             Swal.fire({
               position: 'top-end',
@@ -108,6 +126,11 @@ export class VehicleFuelComponent implements OnInit {
       });
     }
     
+  }
+
+  getSelectYear(year){
+    this.selectYear=year;
+    this.getVehicleFuelData();
   }
 
   addVehicle(){
