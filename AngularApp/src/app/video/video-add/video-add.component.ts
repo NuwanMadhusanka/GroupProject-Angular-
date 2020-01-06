@@ -118,7 +118,7 @@ export class VideoAddComponent implements OnInit {
 
     if (this.selectedFiles == null) {
       console.log("Error file");
-      this.errorSelectedFile = "PDF file is mandatory";
+      this.errorSelectedFile = "Video file is mandatory";
     }
 
     //Save to the DB
@@ -161,7 +161,7 @@ export class VideoAddComponent implements OnInit {
       this.videoService.addVideo(new VideoModel(-1, this.title, this.description, this.adminStaff, this.addedDate)).subscribe(
         response => {
           this.savedVideoDetails = response;
-          console.log("PDF adding response came");
+          console.log("Video adding response came");
           console.log(response);
           /* console.log(response);
            Swal.fire({
@@ -173,7 +173,7 @@ export class VideoAddComponent implements OnInit {
            });
            this.router.navigate(['video-list'])*/
           //this.savedVideoDetails=response;
-          this.fileUploadService.fileUpload(this.selectedFiles.item(0), this.savedVideoDetails.videoId, 2).subscribe(
+          this.fileUploadService.fileUpload(this.selectedFiles.item(0), this.savedVideoDetails.videoId, 4).subscribe(
             response => {
               console.log("In file uploading");
               if (response == 0) {
