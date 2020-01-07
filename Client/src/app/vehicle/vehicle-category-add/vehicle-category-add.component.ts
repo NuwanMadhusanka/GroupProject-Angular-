@@ -15,7 +15,7 @@ export class VehicleCategoryAddComponent implements OnInit {
   errorMessage;
   httpError:HttpError;
   category:String="";
-  num_student:Number;
+  numStudent:Number;
 
 
   vehicleCategorListData:VehicleCategoryModel[]=[];
@@ -29,7 +29,7 @@ export class VehicleCategoryAddComponent implements OnInit {
 
   //add new timeSlot
   isAddVehicleCategory=false;
-  newVehicleCategory = new VehicleCategoryModel(-1,this.category,this.num_student);
+  newVehicleCategory = new VehicleCategoryModel(-1,this.category,this.numStudent);
   errorCategoryNew;
   errorNum_studentNew;
 
@@ -65,7 +65,7 @@ export class VehicleCategoryAddComponent implements OnInit {
     this.errorCategory="";
     this.errorNum_student="";
     this.isUpdateVariable=true;
-    this.updateVehicleCategory=new VehicleCategoryModel(vehicleCategory.vehicleCategoryId, vehicleCategory.category, vehicleCategory.num_student);
+    this.updateVehicleCategory=new VehicleCategoryModel(vehicleCategory.vehicleCategoryId, vehicleCategory.category, vehicleCategory.numStudent);
   }
 
   // updateConfirm(){
@@ -135,7 +135,7 @@ export class VehicleCategoryAddComponent implements OnInit {
       this.errorCategoryNew="";
       this.errorNum_studentNew="";
       if(this.newVehicleCategory.category!=null){
-        if(this.newVehicleCategory.num_student!=null){
+        if(this.newVehicleCategory.numStudent!=null){
             this.vehicleService.addVehicleCategory(this.newVehicleCategory).subscribe(
               response => {
                   //console.log(response);
@@ -168,7 +168,7 @@ export class VehicleCategoryAddComponent implements OnInit {
   delete(vehicleCategory:VehicleCategoryModel){
     Swal.fire({
       title: 'Are you sure?',
-      text: "Delete Time Slot of "+vehicleCategory.category+" - "+vehicleCategory.num_student,
+      text: "Delete Time Slot of "+vehicleCategory.category+" - "+vehicleCategory.numStudent,
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -219,9 +219,15 @@ export class VehicleCategoryAddComponent implements OnInit {
   // Finish Delete Time Slot Section
 
   //error handling
-  private handleErrorResponse(error: HttpErrorResponse) {
-    this.errorMessage=this.httpError.ErrorResponse(error);
-    console.log(this.errorMessage);
+  // private handleErrorResponse(error: HttpErrorResponse) {
+  //   this.errorMessage=this.httpError.ErrorResponse(error);
+  //   console.log(this.errorMessage);
+  // };
+
+  handleErrorResponse(error: HttpErrorResponse) {
+    this.errorMessage="There is a problem with the service. please try again later.";
+    let httpError = new HttpError();
+    httpError.ErrorResponse(error);
   };
 
   //button(close)

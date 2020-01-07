@@ -208,7 +208,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="row">
+                <!-- <div class="row">
                   <div class="col-md-5">
                     <div class="form-group">
                       <label>vehicleCategoryId</label>
@@ -216,8 +216,20 @@
                       <small *ngIf="errorVehicleCategoryId" class="text-danger">{{errorVehicleCategoryId}}</small>
                     </div>
                   </div>
-                </div>
-
+                </div> -->
+                 <!-- vehicle Category selection -->
+                 <div class="col-sm-8 col-lg-12">
+                  <div>
+                      
+                        <label for="sel1">Vehicle Category:</label>
+                        <select  class="form-control" [(ngModel)]="vehicle_category_id" name="Selectvehicle_category_id">
+                          <option [ngValue]="undefined" selected disabled>Select a Vehicle Category</option>
+                          <option (click)="getVehicleCategoryLit" *ngFor="let vehicle_category of VehicleCategoryListData"  [ngValue]="vehicle_category" >{{vehicle_category.Category}}</option>
+                        </select>
+                        <small *ngIf="errorVehicleCategoryId" class="text-danger">{{errorVehicleCategoryId}}</small>
+                  </div>
+               </div>
+               <!-- vehicle Category Selection -->
             <!-- 5 Row -->
             <div class="row">
                 <div class="col-md-5">

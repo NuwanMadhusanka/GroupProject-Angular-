@@ -23,6 +23,11 @@ import { VehicleCategoryModel } from '../../ClassModel/MapObject/VehicleCategory
   styleUrls: ['./vehicle-add.component.scss']
 })
 export class VehicleAddComponent implements OnInit {
+  [x: string]: any;
+
+  VehicleCategoryListData:VehicleCategoryModel[]=[];
+  fuel_typeData:VehicleModel[]=[];
+  transmisionData:VehicleModel[]=[];
 
   //form variables
   // vehicleId:Number;
@@ -34,8 +39,8 @@ export class VehicleAddComponent implements OnInit {
   document_lic:String="";
   // instructor_id:InstructorModel;
   status:Number;
-  // vehicle_category_id:VehicleCategoryModel;
-  vehicle_category_id:Number;
+  vehicle_category_id:VehicleCategoryModel;
+ // vehicle_category_id:Number;
 
   // insurance_period:Date;
   
@@ -59,6 +64,7 @@ export class VehicleAddComponent implements OnInit {
   regexp:any;//Regular Expression for NIC
   test:boolean;//Regular exprssion result
   instructor_id: InstructorModel;
+ // VehicleCategoryModel: any;
   // vehicle_category_id: VehicleCategoryModel;
   // fuel_typeData: VehicleModel[];
   // transmisionData: VehicleModel[];
@@ -82,6 +88,7 @@ export class VehicleAddComponent implements OnInit {
 
   ngOnInit() {
     console.log("In vehicle add comTs"); 
+    this.getVehicleCategoryLit();
   }
 
   //Student Registration Funtion
@@ -173,7 +180,7 @@ export class VehicleAddComponent implements OnInit {
   // console.log(this.insurance_period);
   if(!errorFlag){
     console.log("in vehcle add cmts after adding");
-    this.vehicleService.VehicleAdd(new VehicleModel(-1,this.brand,this.model,this.fuel_type,this.transmission,this.document_lic,this.status,this.number,this.vehicle_category_id)).subscribe(
+    this.vehicleService.VehicleAdd(new VehicleModel(-1,this.brand,this.model,this.fuel_type,this.transmission,this.document_lic,this.status,this.number,this.VehicleCategoryModel.vehicle_category_id).subscribe(
           response => {
             console.log(response);
            
@@ -196,7 +203,7 @@ export class VehicleAddComponent implements OnInit {
           footer: 'Something bad happened, please try again later.'
         });
        }
-      )
+     ) );
     }
   }
   closeError(){
@@ -210,27 +217,41 @@ export class VehicleAddComponent implements OnInit {
   };
 
 
-  // showfuel_type(){
-  //   this.vehicleService.vehicleList().subscribe(
-  //     response => {
-  //         this.fuel_typeData=response;
-  //     },
-  //     error => {
-  //         console.log(error);
-  //         this.handleErrorResponse(error);
-  //     }
-  //   );
-  // }
-  // Showtransmission(){
-  //   this.vehicleService.vehicleList().subscribe(
-  //     response => {
-  //         this.transmisionData=response;
-  //     },
-  //     error => {
-  //         console.log(error);
-  //         this.handleErrorResponse(error);
-  //     }
-  //   );
-  // }
+  showfuel_type(){
+    this.vehicleService.vehicleList().subscribe(
+      response => {
+          this.fuel_typeData=response;
+      },
+      error => {
+          console.log(error);
+          this.handleErrorResponse(error);
+      }
+    );
+  }
+  Showtransmission(){
+    this.vehicleService.vehicleList().subscribe(
+      response => {
+          this.transmisionData=response;
+      },
+      error => {
+          console.log(error);
+          this.handleErrorResponse(error);
+      }
+    );
+  }
+  //get vehicle category Details
+  getVehicleCategoryLit(){
+    this.vehicleService.getVehicleCategoryList().subscribe(
+      response => {
+        this.VehicleCategoryListData=response;
+    },
+    error => {
+        console.log(error);
+        this.handleErrorResponse(error);
+    }
+  );
+}
+
+  
   
 }

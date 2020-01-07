@@ -2,6 +2,7 @@ import { InstructorModel } from './InstructorModel';
 import { VehicleCategoryModel } from './MapObject/VehicleCategory';
 
 export class VehicleModel{
+  subscribe: any;
     constructor(
         public vehicleId:Number,
         public brand:String,
@@ -13,7 +14,7 @@ export class VehicleModel{
         public status:Number,
         public number:String,
         // public insurancePeriod:Date,
-        public vehicleCategoryId:VehicleCategoryModel
+        public vehicle_category_id:VehicleCategoryModel
         
 
     ){}
