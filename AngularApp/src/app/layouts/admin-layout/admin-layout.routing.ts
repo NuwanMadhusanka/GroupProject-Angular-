@@ -119,6 +119,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'paper-more-details/:id', component: PaperMoreDetailsComponent },
     { path: 'paper-add', component: PaperAddComponent },
 
-
+    { path: 'time-table-to-update/:id', component: TimeTableComponent, canActivate: [RouteGuardServiceService] },
 
 ];

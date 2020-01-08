@@ -143,4 +143,9 @@ export class TimeTableServiceService {
     return this.http.get<Date>(`${API_URL}/timetable/lesson/date/${lessonId}`);
   }
 
+  //get Time table list of a instrudtor
+  getTimeTableListofInstructor(type,instructorId){//type 0:Deactivate Lessons / 1:Activate Lessons
+    return this.http.get<TimeTableDataList[]>(`${API_URL}/timetable/lessonsOfInstructor/${type}/${instructorId}`);
+  }
+
 }

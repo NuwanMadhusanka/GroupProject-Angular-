@@ -89,17 +89,17 @@ export class InstructorListComponent implements OnInit {
       confirmButtonText: 'Yes, deactivate!'
     }).then((result) => {
       if (result.value) {
-
+       // window.open('http://localhost:4200/staff-salary', '', 'width=600,height=400,left=200,top=200');
         //Call to API to check salary payments
         this.instructorService.checkInstructorSalaryPayments(instructorId).subscribe(
           response => {
             if (response == 1) { // salary payments are completed
-              console.log("Res salary" + response);
+              console.log("Res salary" + response+"insID"+instructorId);
 
               //call API to check assigned lessons for future
               this.instructorService.getInstructorAssignedUpcomingLessons(instructorId).subscribe(
                 response => {
-                  if (response == null) { // no future assigned lessons
+                  if (response == 1 ) { // no lessons
                     console.log("Res lessons" + response);
 
                     this.instructorService.instructorDeactivate(instructorId).subscribe( //deactivate instructor
@@ -125,21 +125,22 @@ export class InstructorListComponent implements OnInit {
                     );
 
                   }
-                  if (response != null) { // instructor is assigned to future lessons
+                  if (response == 0) { // instructor is assigned to future lessons
                     console.log("Still have lessons");
                     Swal.fire({
                       position: 'center',
                       type: 'error',
                       title: 'Instructor has assigned Lessons',
-                      text: 'Instructor' + instructorId + 'still has assigned lessons. Proceed deactivation ',
+                      text: 'Instructor' + instructorId + 'still has assigned lessons.Can not deactivate ',
                       showCancelButton: true,
                       confirmButtonColor: '#3085d6',
                       cancelButtonColor: '#d33',
-                      confirmButtonText: 'Yes, deactivate!',
+                      confirmButtonText: 'View assigned lessons!',
                     }).then((result) => {
                       if (result.value) {
                         console.log("line 141");
-
+                        this.router.navigate(['time-table-to-update',instructorId]);
+                    /*
                        this.instructorService.instructorDeactivate(instructorId).subscribe( //deactivate instructor
                           response => {
                             Swal.fire({
@@ -160,7 +161,7 @@ export class InstructorListComponent implements OnInit {
                               timer: 3000
                             });
                           }
-                        );
+                       );   */
                       }
                     })
                   }
@@ -194,11 +195,51 @@ export class InstructorListComponent implements OnInit {
                   console.log("line 136");
 
                   //call API to check assigned lessons for future
-                  this.instructorService.getInstructorAssignedUpcomingLessons(instructorId).subscribe(
-                    response => {
-                      if (response == null) { // no future assigned lessons
-                        console.log("Res lessons" + response);
+              this.instructorService.getInstructorAssignedUpcomingLessons(instructorId).subscribe(
+                response => {
+                  if (response == 1 ) { // no lessons
+                    console.log("Res lessons" + response);
 
+                    this.instructorService.instructorDeactivate(instructorId).subscribe( //deactivate instructor
+                      response => {
+                        Swal.fire({
+                          position: 'center',
+                          type: 'success',
+                          title: 'Instructor ID :' + instructorId + '\'s profile deactivated Succesfully',
+                          showConfirmButton: false,
+                          timer: 3000
+                        });
+
+                       this.instructorList();
+                      },
+                      error => {
+                        Swal.fire({
+                          position: 'center',
+                          type: 'error',
+                          title: ' 113 InstructorID ' + instructorId + '\'s profile was not deactivated ',
+                          showConfirmButton: false,
+                          timer: 3000
+                        });
+                      }
+                    );
+
+                  }
+                  if (response == 0) { // instructor is assigned to future lessons
+                    console.log("Still have lessons");
+                    Swal.fire({
+                      position: 'center',
+                      type: 'error',
+                      title: 'Instructor has assigned Lessons',
+                      text: 'Instructor' + instructorId + 'still has assigned lessons.Can not deactivate ',
+                      showCancelButton: true,
+                      confirmButtonColor: '#3085d6',
+                      cancelButtonColor: '#d33',
+                      confirmButtonText: 'View assigned lessons!',
+                    }).then((result) => {
+                      if (result.value) {
+                        console.log("line 141");
+                        this.router.navigate(['time-table-to-update',instructorId]);
+                    /*
                        this.instructorService.instructorDeactivate(instructorId).subscribe( //deactivate instructor
                           response => {
                             Swal.fire({
@@ -214,67 +255,29 @@ export class InstructorListComponent implements OnInit {
                             Swal.fire({
                               position: 'center',
                               type: 'error',
-                              title: ' 113 InstructorID ' + instructorId + '\'s profile was not deactivated ',
+                              title: ' 152 InstructorID ' + instructorId + '\'s profile was not deactivated ',
                               showConfirmButton: false,
                               timer: 3000
                             });
                           }
-                        ); 
-
+                       );   */
                       }
-                      if (response != null) { // instructor is assigned to future lessons
-                        console.log("Still have lessons");
-                        Swal.fire({
-                          position: 'center',
-                          type: 'error',
-                          title: 'Instructor has assigned Lessons',
-                          text: 'Instructor' + instructorId + 'still has assigned lessons. Proceed deactivation ',
-                          showCancelButton: true,
-                          confirmButtonColor: '#3085d6',
-                          cancelButtonColor: '#d33',
-                          confirmButtonText: 'Yes, deactivate!',
-                        }).then((result) => {
-                          if (result.value) {
-                            console.log("line 141");
+                    })
+                  }
+                },
+                error => { //error in checking instructor assgned future lessons
+                  this.handleErrorResponse(0, error);
+                  Swal.fire({
+                    position: 'center',
+                    type: 'error',
+                    title: '167 InstructorID ' + instructorId + '\'s profile was not deactivated ',
+                    showConfirmButton: false,
+                    timer: 3000
+                  });
+                }
 
-                            this.instructorService.instructorDeactivate(instructorId).subscribe( //deactivate instructor
-                              response => {
-                                Swal.fire({
-                                  position: 'center',
-                                  type: 'success',
-                                  title: 'Instructor ID :' + instructorId + '\'s profile deactivated Succesfully',
-                                  showConfirmButton: false,
-                                  timer: 3000
-                                });
-                                this.instructorList();
-                              },
-                              error => {
-                                Swal.fire({
-                                  position: 'center',
-                                  type: 'error',
-                                  title: ' 152 InstructorID ' + instructorId + '\'s profile was not deactivated ',
-                                  showConfirmButton: false,
-                                  timer: 3000
-                                });
-                              }
-                            );
-                          }
-                        })
-                      }
-                    },
-                    error => { //error in checking instructor assgned future lessons
-                      this.handleErrorResponse(0, error);
-                      Swal.fire({
-                        position: 'center',
-                        type: 'error',
-                        title: '167 InstructorID ' + instructorId + '\'s profile was not deactivated ',
-                        showConfirmButton: false,
-                        timer: 3000
-                      });
-                    }
-
-                  );  //end of assigned lesson checking
-                 
+              ); 
+                
                 }
               })
             }

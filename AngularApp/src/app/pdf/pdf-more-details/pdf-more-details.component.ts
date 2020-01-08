@@ -17,7 +17,7 @@ import { HttpError } from '../../Shared/httpError/HttpError';
 import { formatDate } from '@angular/common';
 import { DatePipe } from '@angular/common';
 import { API_URL, WEBSOCKETENDPOINT, WEBSOCKETTOPIC } from '../../app.constants';
-
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-pdf-more-details',
@@ -41,6 +41,7 @@ export class PdfMoreDetailsComponent implements OnInit {
   adminStaffId;
   userId;
   systemDate;
+  pdfFile;
 
   errorMessage;
   errorUpdateMessage = "";
@@ -82,10 +83,11 @@ export class PdfMoreDetailsComponent implements OnInit {
     console.log("in pdfMOREcomTS1");
     this.pdfService.getPdfbyID(this.pdfId).subscribe(
       response => {
+        this.loadPdf();
         this.pdfData = response;
         console.log("in pdflistMoRETS2");
         console.log(this.pdfData);
-        // this.loadPdf();
+        
       },
       error => {
         console.log(error);
@@ -170,7 +172,7 @@ export class PdfMoreDetailsComponent implements OnInit {
             this.errorMessage = "File size should be less than 9MB";
             return; // should stop updating pdf data
           } else if (response == 1) {  //pdf overwritten in 3s  //should continue updating "resource" relavant data
-           
+
           } else { //null return 
             Swal.fire({
               position: 'center',
@@ -253,17 +255,21 @@ export class PdfMoreDetailsComponent implements OnInit {
   }
 
   loadPdf() { //method to load pdf //ERROR
+    console.log("load pdf meth");
     this.fileUploadService.downLoadPdf(this.pdfId).subscribe(
       response => {
         console.log(response);
         this.selectedFiles = response;
+        this.pdfFile=response;
+        console.log(this.pdfFile);
         //var file = new File(response);
         // window.open(this.downloadedPdf);
-        if (response == null) {
+        if (response != null) {
           console.log("Nothing Downloaded");
         }
       },
       error => {
+        console.log("Error in loadPdf");
         this.handleErrorResponse(error);
       }
     )

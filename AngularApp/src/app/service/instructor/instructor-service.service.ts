@@ -12,12 +12,12 @@ import { LessonModel } from '../../ClassModel/LessonModel';
   providedIn: 'root'
 })
 export class InstructorServiceService {
-  
-  
+
+
   constructor(
     private http: HttpClient
   ) { }
- 
+
   getInstructorLesson(userId) {
     return this.http.get<TimeTableDataList[]>(`${API_URL}/instructor/lesson/${userId}`);
   }
@@ -42,7 +42,7 @@ export class InstructorServiceService {
     console.log("ins serv ts");
     return this.http.get<InstructorModel[]>(`${API_URL}/instructors/${status}`);
   }
- 
+
   //Get Specific Instructor Details
   getInstructorbyID(instructorId) {
     console.log("In service get Instructor");
@@ -68,32 +68,37 @@ export class InstructorServiceService {
 
   //Deactivate Instructor
   instructorDeactivate(instructorId) {
-    console.log(instructorId+"insDeactv Servc");
-    return this.http.put<number>(`${API_URL}/instructor/deactivate/${instructorId}`,{});
+    console.log(instructorId + "insDeactv Servc");
+    return this.http.put<number>(`${API_URL}/instructor/deactivate/${instructorId}`, {});
   }
 
-//activate Instructor accout
-   activateInstructorAccount(instructorId) {
-     console.log("Ins Activation");
+  //activate Instructor accout
+  activateInstructorAccount(instructorId) {
+    console.log("Ins Activation");
     return this.http.put<Number>(`${API_URL}/instructor/activate/account/${instructorId}`, {});
   }
 
-//check Salary Payments
-   checkInstructorSalaryPayments(instructorId) {
-     console.log("Ins Salary Payment");
+  //check Salary Payments
+  checkInstructorSalaryPayments(instructorId) {
+    console.log("Ins Salary Payment");
     return this.http.get<Number>(`${API_URL}/instructor/checkSalaryPayments/${instructorId}`);
   }
 
   //Delete Instructor
   instructorDelete(instructorId) {
-    console.log(instructorId+"insDelete Servc");
-    return this.http.put<Number>(`${API_URL}/instructor/delete/${instructorId}`,{});
+    console.log(instructorId + "insDelete Servc");
+    return this.http.put<Number>(`${API_URL}/instructor/delete/${instructorId}`, {});
   }
 
   getInstructorAssignedUpcomingLessons(instructorId) {
-     console.log("Ins lessons-Ins service");
-    return this.http.get<LessonModel>(`${API_URL}/instructor/assignedUpComingLessons/${instructorId}`);
+    console.log("Ins lessons-Ins service");
+    return this.http.get<Number>(`${API_URL}/instructor/assignedUpComingLessons/${instructorId}`);
   }
+
+/*
+  removeAssignedVehicleofInstructor(instructorId) {
+    return this.http.get<Number>(`${API_URL}/instructor/removeAssignedVehicle/${instructorId}`);
+  }*/
 }
 
 
