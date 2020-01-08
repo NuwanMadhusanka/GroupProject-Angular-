@@ -90,15 +90,23 @@ export class InstructorServiceService {
     return this.http.put<Number>(`${API_URL}/instructor/delete/${instructorId}`, {});
   }
 
+  //check instructors assigned up coming lessons
   getInstructorAssignedUpcomingLessons(instructorId) {
     console.log("Ins lessons-Ins service");
     return this.http.get<Number>(`${API_URL}/instructor/assignedUpComingLessons/${instructorId}`);
   }
 
-/*
-  removeAssignedVehicleofInstructor(instructorId) {
-    return this.http.get<Number>(`${API_URL}/instructor/removeAssignedVehicle/${instructorId}`);
-  }*/
+  //check whether any payments are done to instructor
+  checkInstructorSalaryDetails(instructorId) {
+    console.log("Ins lessons-Ins service check bfr delete");
+    return this.http.get<Number>(`${API_URL}/instructor/checkInstructorSalaryDetails/${instructorId}`);
+
+  }
+
+  /*
+    removeAssignedVehicleofInstructor(instructorId) {
+      return this.http.get<Number>(`${API_URL}/instructor/removeAssignedVehicle/${instructorId}`);
+    }*/
 }
 
 
