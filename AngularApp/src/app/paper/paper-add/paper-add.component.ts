@@ -48,27 +48,17 @@ export class PaperAddComponent implements OnInit {
   selectedFiles;
   showSpinner = false;
   deletePaperFlag = false;
+  noOfQuestions: number[] = [];
 
- /// marked = false;
+  /// marked = false;
   ///theCheckbox = false;
- /// templateChecked = true;
- /// templateUnchecked = false;
+  /// templateChecked = true;
+  /// templateUnchecked = false;
 
   //idate:Date;
 
   //user Validation Instance
   //userValidation = new UserValidation();
-
-  //myarray: String[] = [];
-//i: number = 0;
-//languages: String[] = ["1", "2", "3", "4"];
- //newstr: String
-  musicPreferences = [
-    { id: 1, genre: 'Pop' },
-    { id: 2, genre: 'Rock' },
-    { id: 3, genre: 'Techno' },
-    { id: 4, genre: 'Hiphop' }
-  ];
 
   constructor(
     private router: Router,
@@ -83,6 +73,10 @@ export class PaperAddComponent implements OnInit {
     console.log("In paperadd new Compo ts OnIt");
     this.userId = sessionStorage.getItem("userId");
     console.log("UserId in onit PDf Add" + this.userId);
+    // this.papers=[];
+    for (var i = 1; i < 11; i++) {
+      this.noOfQuestions.push(i);
+    }
     this.setAdminStaffAndAdminStaffId();
 
   }
@@ -174,7 +168,7 @@ export class PaperAddComponent implements OnInit {
 
     if (this.errorTitle == "" && this.errorAddedDate == "" && this.errorAdminStaffId == "" && this.errorSelectedFile == "") {
 
-      this.paperService.addPaper(new PaperModel(-1, this.title,this.adminStaff, this.addedDate)).subscribe(
+      this.paperService.addPaper(new PaperModel(-1, this.title, this.adminStaff, this.addedDate)).subscribe(
         response => {
           this.savedPaperDetails = response;
           console.log("Paper adding response came");
@@ -232,20 +226,20 @@ export class PaperAddComponent implements OnInit {
               this.deletePaperFlag = true;
             }
           );
-          if(this.deletePaperFlag==true){
+          if (this.deletePaperFlag == true) {
             this.paperService.deletePaper(this.savedPaperDetails.paperId).subscribe(
-          response => {
-          },
-          error => {
-            Swal.fire({
-              position: 'center',
-              type: 'error',
-              title: 'Please deleted '+this.savedPaperDetails.title+'paper data',
-              showConfirmButton: false,
-              timer: 3000
-            });
-          }
-        )
+              response => {
+              },
+              error => {
+                Swal.fire({
+                  position: 'center',
+                  type: 'error',
+                  title: 'Please deleted ' + this.savedPaperDetails.title + 'paper data',
+                  showConfirmButton: false,
+                  timer: 3000
+                });
+              }
+            )
           }
         },
         error => {
@@ -266,7 +260,13 @@ export class PaperAddComponent implements OnInit {
   //upload paper
   selectFile(event) {
     this.showSpinner = true;
-    this.selectedFiles = event.target.files;/*
+    this.selectedFiles = event.target.files;
+
+
+    //getAnswers
+
+    /*
+    
    this.fileUploadService.fileUpload(this.selectedFiles.item(0), this.instructorData.staffId.userId.userId, 1).subscribe(
       response => {
         if (response == 0) {
@@ -299,16 +299,20 @@ export class PaperAddComponent implements OnInit {
    );*/
   }
 
- /// toggleVisibility(e){
-    
-   /// this.marked= e.target.checked;
- /// }
+  getAnswers() {
+
+  }
+
+  /// toggleVisibility(e){
+
+  /// this.marked= e.target.checked;
+  /// }
   /// getCheckboxesValue() {
   ///  console.log('Checked value:', this.templateChecked);
   ///  console.log('Unchecked value:', this.templateUnchecked);
   ///}
 
-  
+
 
   closeError() {
     this.errorMessage = "";

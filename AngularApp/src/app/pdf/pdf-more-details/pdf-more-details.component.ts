@@ -256,6 +256,7 @@ export class PdfMoreDetailsComponent implements OnInit {
 
   loadPdf() { //method to load pdf //ERROR
     console.log("load pdf meth");
+    console.log("pdfId"+this.pdfId);
     this.fileUploadService.downLoadPdf(this.pdfId).subscribe(
       response => {
         console.log(response);
@@ -316,6 +317,23 @@ export class PdfMoreDetailsComponent implements OnInit {
       }
    );*/
   }
+
+  //viewPdf
+  /*loadList(documentId){
+        GoodInStockService.getLoadList(documentId)
+            .then(
+                function(d){
+                    var file = new Blob([d.data], {type: 'application/pdf'});
+                    var url = window.URL || window.webkitURL;
+                    var fileURL = url.createObjectURL(file);
+                    window.open(fileURL);
+                },
+                function(errResponse){
+                    console.error('Error while getting Load list');
+                }
+            )
+
+    }*/
 
   //error handling
   private handleErrorResponse(error: HttpErrorResponse) {

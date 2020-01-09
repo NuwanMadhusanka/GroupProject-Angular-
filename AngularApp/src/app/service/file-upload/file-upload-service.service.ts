@@ -35,24 +35,12 @@ export class FileUploadServiceService {
   //   return this.http.get(`${API_URL}/api/file/all`);
   // }
 
-  downLoadPdf(pdfId) {  //method to load pdf //error
-    // console.log(this.http.get<any>(`${API_URL}/api/file/${pdfId}/2`));
-
-    // src="{{apiUrl}}/api/file/{{pdfData.pdfId}}/2"
-    //return FileSaver.saveAs(this.http.get<any>(`${API_URL}/api/file/${pdfId}/2`), 'my_file_name.pdf');
-    
-    this.http.get<any>(`${API_URL}/api/file/${pdfId}/2`)
+  downLoadPdf(pdfId) {  
+    console.log("?????????????????????");
+    console.log(this.http.get<any>(`${API_URL}/api/file/${pdfId}/2`+"In service"));
     return this.http.get<any>(`${API_URL}/api/file/${pdfId}/2`);
-    // var file = new File(["Hello, world!"], "hello world.txt", {type: "text/plain;charset=utf-8"});
-    //FileSaver.saveAs(file);
-    /* this.http.get(`${API_URL}/api/file/${pdfId}/2`,{
-           responseType: 'arraybuffer',headers:headers} 
-          ).subscribe(response => this.downLoadFile(response, "application/ms-excel"));*/
   }
-  // downLoadPaper(paperId){		
-  //	return this.http.get('${API_URL}/api/file/${paperId}/3', { responseType:'blob'});
-  //  }
-
+  
   downLoadPaper(paperId) {
     console.log("hy");
     return this.http.get<any>(`${API_URL}/api/file/${paperId}/3`);
