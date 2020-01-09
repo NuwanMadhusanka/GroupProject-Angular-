@@ -55,6 +55,7 @@ import { ComplainAddComponent } from '../../complain/complain-add/complain-add.c
 import { FeedbackListComponent } from '../../feedback/feedback-list/feedback-list.component';
 import { FeedbackAddComponent } from '../../feedback/feedback-add/feedback-add.component';
 import { LeaveListComponent } from '../../leave/leave-list/leave-list.component';
+import { LeaveAddComponent } from '../../leave/leave-add/leave-add.component';
 
 
 
@@ -135,7 +136,8 @@ import { LeaveListComponent } from '../../leave/leave-list/leave-list.component'
     FeedbackListComponent,
     FeedbackAddComponent,
 
-    LeaveListComponent
+    LeaveListComponent,
+    LeaveAddComponent
 
 
   ]
