@@ -50,15 +50,8 @@ export class PaperAddComponent implements OnInit {
   deletePaperFlag = false;
   noOfQuestions: number[] = [];
   noOfAnswers: number[] = [];
-  answers:number[]=[];
-  //isChecked;
-  /// marked = false;
-  ///theCheckbox = false;
-  /// templateChecked = true;
-  /// templateUnchecked = false;
-
-  //idate:Date;
-
+  answers: number[] = [];
+  num = 0;
   //user Validation Instance
   //userValidation = new UserValidation();
 
@@ -79,11 +72,11 @@ export class PaperAddComponent implements OnInit {
     for (var i = 1; i < 11; i++) {
       this.noOfQuestions.push(i);
     }
-     for (var i = 1; i < 5; i++) {
+    for (var i = 1; i < 5; i++) {
       this.noOfAnswers.push(i);
     }
     for (var i = 1; i < 11; i++) {
-      this.answers.push(i);
+      this.answers.push(0);
     }
     this.setAdminStaffAndAdminStaffId();
 
@@ -307,8 +300,12 @@ export class PaperAddComponent implements OnInit {
    );*/
   }
 
-  getAnswers(val) {
-      console.log(val+"val");
+  getAnswers(event) {
+    if (event.target.checked) {
+      console.log('checked: ' + event.target.name + 'Quest');
+      console.log('checked: ' + event.target.value + 'Value');
+      this.answers[event.target.name-1]=event.target.value; // set the checked answer for the question
+    }
   }
 
   /// toggleVisibility(e){
