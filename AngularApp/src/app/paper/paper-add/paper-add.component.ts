@@ -49,7 +49,9 @@ export class PaperAddComponent implements OnInit {
   showSpinner = false;
   deletePaperFlag = false;
   noOfQuestions: number[] = [];
-
+  noOfAnswers: number[] = [];
+  answers:number[]=[];
+  //isChecked;
   /// marked = false;
   ///theCheckbox = false;
   /// templateChecked = true;
@@ -76,6 +78,12 @@ export class PaperAddComponent implements OnInit {
     // this.papers=[];
     for (var i = 1; i < 11; i++) {
       this.noOfQuestions.push(i);
+    }
+     for (var i = 1; i < 5; i++) {
+      this.noOfAnswers.push(i);
+    }
+    for (var i = 1; i < 11; i++) {
+      this.answers.push(i);
     }
     this.setAdminStaffAndAdminStaffId();
 
@@ -299,8 +307,8 @@ export class PaperAddComponent implements OnInit {
    );*/
   }
 
-  getAnswers() {
-
+  getAnswers(val) {
+      console.log(val+"val");
   }
 
   /// toggleVisibility(e){
