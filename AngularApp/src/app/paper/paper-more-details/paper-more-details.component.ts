@@ -55,7 +55,7 @@ export class PaperMoreDetailsComponent implements OnInit {
   user: UserModel = new UserModel(0, '', '', '', '', '', '', '', new Date(), 0, 0, 0);
   staff: StaffModel = new StaffModel(1, this.user);
   adminStaff: AdminStaffModel = new AdminStaffModel(1, 'q', 1, this.staff);
-  paperData: PaperModel = new PaperModel(0, 'q', this.adminStaff, new Date());
+  paperData: PaperModel = new PaperModel(0, 'q', this.adminStaff, new Date(),0,0);
   //paperData:PaperModel=new PaperModel(1,'','','',new AdminStaffModel());
   //studentData:StudentModel=new StudentModel(1,'Nuwan','0773015590','980150429v',new Date(),new Date(),'No 20 Homagama',new UserModel(1,'nuwan@gmail.com','1234',new Date(),1,1));
   paperSrc: string = '/paper-test.paper';

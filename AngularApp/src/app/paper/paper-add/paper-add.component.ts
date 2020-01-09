@@ -29,6 +29,8 @@ export class PaperAddComponent implements OnInit {
   adminStaffId: Number = -1;
   addedDate: Date = null;
   systemDate: Date = null;
+  noOfQuestions = -1;
+  noOfAnswers = -1;
   //addedDate:Date=formatDate(new Date(), 'yyyy/MM/dd', 'en');
   userId;
   savedPaperDetails: PaperModel;
@@ -40,6 +42,8 @@ export class PaperAddComponent implements OnInit {
   errorAdminStaffId;
   errorAddedDate;
   errorSelectedFile;
+  errorNoOfQuestions;
+  errorNoOfAnswers;
 
   errorMessage: String;
   regexp: any;//Regular Expression for NIC
@@ -48,8 +52,8 @@ export class PaperAddComponent implements OnInit {
   selectedFiles;
   showSpinner = false;
   deletePaperFlag = false;
-  noOfQuestions: number[] = [];
-  noOfAnswers: number[] = [];
+  questionCount: number[] = [];
+  answerCount: number[] = [];
   answers: number[] = [];
   num = 0;
   //user Validation Instance
@@ -70,10 +74,10 @@ export class PaperAddComponent implements OnInit {
     console.log("UserId in onit PDf Add" + this.userId);
     // this.papers=[];
     for (var i = 1; i < 11; i++) {
-      this.noOfQuestions.push(i);
+      this.questionCount.push(i);
     }
     for (var i = 1; i < 5; i++) {
-      this.noOfAnswers.push(i);
+      this.answerCount.push(i);
     }
     for (var i = 1; i < 11; i++) {
       this.answers.push(0);
@@ -109,6 +113,8 @@ export class PaperAddComponent implements OnInit {
     this.errorAdminStaffId = "";
     this.errorAddedDate = "";
     this.errorSelectedFile = "";
+    this.errorNoOfAnswers = "";
+    this.errorNoOfQuestions = "";
 
 
     //validate Title
@@ -127,9 +133,22 @@ export class PaperAddComponent implements OnInit {
       this.errorAdminStaffId = "Error getting Admin Staff Details";  // should take admin staff id from log in user details
     }
 
+    //check if file is selected
     if (this.selectedFiles == null) {
       console.log("Error file");
       this.errorSelectedFile = "Paper file is mandatory";
+    }
+
+    //validate no of questions
+    if (this.noOfQuestions == -1) {
+      console.log("Error noOfQuest");
+      this.errorNoOfQuestions = "No of questions is mandatory";
+    }
+
+     //validate no of answers per question
+    if (this.noOfQuestions == -1) {
+      console.log("Error noOfAns");
+      this.errorNoOfAnswers = "No of answers is mandatory";
     }
 
     //Save to the DB
@@ -166,10 +185,28 @@ export class PaperAddComponent implements OnInit {
         timer: 1500
       });
     }
+       if (this.errorNoOfAnswers != "") {
+      Swal.fire({
+        position: 'center',
+        type: 'error',
+        text: this.errorNoOfAnswers,
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+       if (this.errorNoOfQuestions != "") {
+      Swal.fire({
+        position: 'center',
+        type: 'error',
+        text: this.errorNoOfQuestions,
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
 
-    if (this.errorTitle == "" && this.errorAddedDate == "" && this.errorAdminStaffId == "" && this.errorSelectedFile == "") {
+    if (this.errorTitle == "" && this.errorAddedDate == "" && this.errorAdminStaffId == "" && this.errorSelectedFile == "" && this.errorNoOfAnswers == "" && this.errorNoOfQuestions == "") {
 
-      this.paperService.addPaper(new PaperModel(-1, this.title, this.adminStaff, this.addedDate)).subscribe(
+      this.paperService.addPaper(new PaperModel(-1, this.title, this.adminStaff, this.addedDate, this.noOfQuestions, this.noOfAnswers)).subscribe(
         response => {
           this.savedPaperDetails = response;
           console.log("Paper adding response came");
@@ -262,13 +299,8 @@ export class PaperAddComponent implements OnInit {
   selectFile(event) {
     this.showSpinner = true;
     this.selectedFiles = event.target.files;
-
-
-    //getAnswers
-
-    /*
-    
-   this.fileUploadService.fileUpload(this.selectedFiles.item(0), this.instructorData.staffId.userId.userId, 1).subscribe(
+/*
+    this.fileUploadService.fileUpload(this.selectedFiles.item(0), this.instructorData.staffId.userId.userId, 1).subscribe(
       response => {
         if (response == 0) {
           this.errorMessage = "File size should be less than 9MB";
@@ -297,27 +329,16 @@ export class PaperAddComponent implements OnInit {
         this.showSpinner = false;
         console.log(error);
       }
-   );*/
+    );*/
   }
 
   getAnswers(event) {
     if (event.target.checked) {
       console.log('checked: ' + event.target.name + 'Quest');
       console.log('checked: ' + event.target.value + 'Value');
-      this.answers[event.target.name-1]=event.target.value; // set the checked answer for the question
+      this.answers[event.target.name - 1] = event.target.value; // set the checked answer for the question
     }
   }
-
-  /// toggleVisibility(e){
-
-  /// this.marked= e.target.checked;
-  /// }
-  /// getCheckboxesValue() {
-  ///  console.log('Checked value:', this.templateChecked);
-  ///  console.log('Unchecked value:', this.templateUnchecked);
-  ///}
-
-
 
   closeError() {
     this.errorMessage = "";
