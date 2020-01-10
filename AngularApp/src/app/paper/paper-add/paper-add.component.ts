@@ -29,8 +29,8 @@ export class PaperAddComponent implements OnInit {
   adminStaffId: Number = -1;
   addedDate: Date = null;
   systemDate: Date = null;
-  noOfQuestions = -1;
-  noOfAnswers = -1;
+  noOfQuestions = 0;
+  noOfAnswers = 0;
   //addedDate:Date=formatDate(new Date(), 'yyyy/MM/dd', 'en');
   userId;
   savedPaperDetails: PaperModel;
@@ -54,7 +54,7 @@ export class PaperAddComponent implements OnInit {
   deletePaperFlag = false;
   questionCount: number[] = [];
   answerCount: number[] = [];
-  answers: number[] = [];
+  answers: number[][] = [];
   num = 0;
   //user Validation Instance
   //userValidation = new UserValidation();
@@ -80,7 +80,11 @@ export class PaperAddComponent implements OnInit {
       this.answerCount.push(i);
     }
     for (var i = 1; i < 11; i++) {
-      this.answers.push(0);
+      this.answers[i - 1] = [];
+      for (var j = 1; j < 5; j++) {
+        this.answers[i - 1].push(0);
+
+      }
     }
     this.setAdminStaffAndAdminStaffId();
 
@@ -106,6 +110,7 @@ export class PaperAddComponent implements OnInit {
   }
 
   addPaper() {
+    console.log("nOofAns" + this.noOfAnswers);
     console.log("In paperadd method in addnewPaperTs with submit");
     var datePipe = new DatePipe('en-US');
     this.addedDate = new Date();
@@ -140,16 +145,18 @@ export class PaperAddComponent implements OnInit {
     }
 
     //validate no of questions
-    if (this.noOfQuestions == -1) {
+    if (this.noOfQuestions == 0) {
       console.log("Error noOfQuest");
       this.errorNoOfQuestions = "No of questions is mandatory";
     }
 
-     //validate no of answers per question
-    if (this.noOfQuestions == -1) {
+    //validate no of answers per question
+    if (this.noOfQuestions == 0) {
       console.log("Error noOfAns");
       this.errorNoOfAnswers = "No of answers is mandatory";
     }
+
+
 
     //Save to the DB
     // if (this.errorMessage == null) {
@@ -185,7 +192,7 @@ export class PaperAddComponent implements OnInit {
         timer: 1500
       });
     }
-       if (this.errorNoOfAnswers != "") {
+    if (this.errorNoOfAnswers != 0) {
       Swal.fire({
         position: 'center',
         type: 'error',
@@ -194,7 +201,7 @@ export class PaperAddComponent implements OnInit {
         timer: 1500
       });
     }
-       if (this.errorNoOfQuestions != "") {
+    if (this.errorNoOfQuestions != 0) {
       Swal.fire({
         position: 'center',
         type: 'error',
@@ -204,12 +211,12 @@ export class PaperAddComponent implements OnInit {
       });
     }
 
-    if (this.errorTitle == "" && this.errorAddedDate == "" && this.errorAdminStaffId == "" && this.errorSelectedFile == "" && this.errorNoOfAnswers == "" && this.errorNoOfQuestions == "") {
-
-      this.paperService.addPaper(new PaperModel(-1, this.title, this.adminStaff, this.addedDate, this.noOfQuestions, this.noOfAnswers)).subscribe(
+    if (this.errorTitle == "" && this.errorAddedDate == "" && this.errorAdminStaffId == "" && this.errorSelectedFile == "" && this.errorNoOfAnswers =="" && this.errorNoOfQuestions == "") {
+      console.log("Paper adding response came " + this.noOfAnswers);
+      this.paperService.addPaper(new PaperModel(-1, this.title, this.noOfQuestions, this.noOfAnswers, this.adminStaff, this.addedDate), this.answers).subscribe(
         response => {
           this.savedPaperDetails = response;
-          console.log("Paper adding response came");
+
           console.log(response);
           /* console.log(response);
            Swal.fire({
@@ -299,44 +306,19 @@ export class PaperAddComponent implements OnInit {
   selectFile(event) {
     this.showSpinner = true;
     this.selectedFiles = event.target.files;
-/*
-    this.fileUploadService.fileUpload(this.selectedFiles.item(0), this.instructorData.staffId.userId.userId, 1).subscribe(
-      response => {
-        if (response == 0) {
-          this.errorMessage = "File size should be less than 9MB";
-        } else if (response == 1) {
-          window.location.reload();
-          Swal.fire({
-            position: 'center',
-            type: 'success',
-            title: 'Update Successful.',
-            showConfirmButton: false,
-            timer: 1500
-          });
-        } else {
-          Swal.fire({
-            position: 'center',
-            type: 'error',
-            title: 'Update not Successful.',
-            showConfirmButton: false,
-            timer: 1500
-          });
-        }
-        this.showSpinner = false;
-        this.selectedFiles = undefined;
-      },
-      error => {
-        this.showSpinner = false;
-        console.log(error);
-      }
-    );*/
   }
 
   getAnswers(event) {
     if (event.target.checked) {
-      console.log('checked: ' + event.target.name + 'Quest');
-      console.log('checked: ' + event.target.value + 'Value');
-      this.answers[event.target.name - 1] = event.target.value; // set the checked answer for the question
+      // console.log(event.target.data.('active'==0));
+      console.log('checked: ' + event.target.id + 'Quest');
+      console.log('checked: ' + event.target.value + 'Ans');
+      this.answers[event.target.id - 1][event.target.value - 1] = (event.target.value); // set the checked answer for the question
+      console.log(this.answers[event.target.id - 1][event.target.value - 1]);
+    } else {
+      console.log("hy");
+      this.answers[event.target.id - 1][event.target.value - 1] = 0; // remove unchecked answer from list
+      console.log(this.answers[event.target.id - 1][event.target.value - 1]);
     }
   }
 
