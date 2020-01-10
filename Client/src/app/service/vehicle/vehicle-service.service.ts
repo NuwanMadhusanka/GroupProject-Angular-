@@ -25,6 +25,7 @@ export class VehicleServiceService {
     console.log(vehicle);
     console.log("in vehicle service-service after adding");
     return this.http.post<VehicleModel>(`${API_URL}/vehicle/add`,vehicle);
+    
   }
 
   //get VehicleList

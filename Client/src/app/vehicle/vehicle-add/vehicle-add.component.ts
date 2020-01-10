@@ -23,11 +23,17 @@ import { VehicleCategoryModel } from '../../ClassModel/MapObject/VehicleCategory
   styleUrls: ['./vehicle-add.component.scss']
 })
 export class VehicleAddComponent implements OnInit {
-  [x: string]: any;
+   [x: string]: any;
 
   VehicleCategoryListData:VehicleCategoryModel[]=[];
   fuel_typeData:VehicleModel[]=[];
   transmisionData:VehicleModel[]=[];
+
+  transmissionData:any[] = [
+    {id:1 ,name:'Auto'},
+    {id:2 ,name:'MAnual'}
+   
+  ];
 
   //form variables
   // vehicleId:Number;
@@ -180,32 +186,47 @@ export class VehicleAddComponent implements OnInit {
   // console.log(this.insurance_period);
   if(!errorFlag){
     console.log("in vehcle add cmts after adding");
-    this.vehicleService.VehicleAdd(new VehicleModel(-1,this.brand,this.model,this.fuel_type,this.transmission,this.document_lic,this.status,this.number,this.VehicleCategoryModel.vehicle_category_id).subscribe(
+    this.vehicleService.VehicleAdd(new VehicleModel(-1,this.brand,this.model,this.fuel_type,this.transmission,this.document_lic,this.status,this.number,this.vehicle_category_id)).subscribe(
           response => {
             console.log(response);
-           
-         Swal.fire({
-          position: 'top-end',
-          type: 'success',
-          title: 'Save Successful.',
-          showConfirmButton: false,
-          timer: 1500
-          });
-          this.router.navigate(['vehicle-list'])
-       },
-       error => {
-        console.log(error);
-        this.handleErrorResponse(error);
-        Swal.fire({
-          type: 'error',
-          title: 'Oops...',
-          text: "Save Not Completed.",
-          footer: 'Something bad happened, please try again later.'
-        });
-       }
-     ) );
-    }
+            this.router.navigate(['vehicle-list'])}, 
+          error => {
+            //If some error occurs it is handled using handleErrorResponse method
+            console.log(error);
+            this.handleErrorResponse(error);
+          }
+        ) 
+    
   }
+
+}
+  //           console.log("---------!!--");
+  //           console.log(response);
+           
+  //        Swal.fire({
+  //         position: 'top-end',
+  //         type: 'success',
+  //         title: 'Save Successful.',
+  //         showConfirmButton: false,
+  //         timer: 1500
+  //         });
+  //         this.router.navigate(['vehicle-list'])
+  //      },
+  //      error => {
+  //       console.log(error);
+  //       this.handleErrorResponse(error);
+  //       Swal.fire({
+  //         type: 'error',
+  //         title: 'Oops...',
+  //         text: "Save Not Completed.",
+  //         footer: 'Something bad happened, please try again later.'
+          
+  //       });
+  //      }
+  //    )
+
+  //   }
+  // }
   closeError(){
     this.errorMessage="";
   }
@@ -217,17 +238,17 @@ export class VehicleAddComponent implements OnInit {
   };
 
 
-  showfuel_type(){
-    this.vehicleService.vehicleList().subscribe(
-      response => {
-          this.fuel_typeData=response;
-      },
-      error => {
-          console.log(error);
-          this.handleErrorResponse(error);
-      }
-    );
-  }
+  // showfuel_type(){
+  //   this.vehicleService.vehicleList().subscribe(
+  //     response => {
+  //         this.fuel_typeData=response;
+  //     },
+  //     error => {
+  //         console.log(error);
+  //         this.handleErrorResponse(error);
+  //     }
+  //   );
+  // }
   Showtransmission(){
     this.vehicleService.vehicleList().subscribe(
       response => {
