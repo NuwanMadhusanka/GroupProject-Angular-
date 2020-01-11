@@ -76,5 +76,11 @@ export class StaffServiceService {
   getStaffData(userId:Number){
     return this.http.get<StaffModel>(`${API_URL}/staff/data/${userId}`);
   }
+  getStaffFromUserID(userId:number){
+    console.log(" In Staffservice ts UserID");
+    console.log(userId);
+    return this.http.get<StaffModel>(`${API_URL}/staffByUserId/${userId}`);
+    
+}
 
 }
