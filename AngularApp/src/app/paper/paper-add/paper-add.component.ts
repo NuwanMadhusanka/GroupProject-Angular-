@@ -73,22 +73,8 @@ export class PaperAddComponent implements OnInit {
     this.userId = sessionStorage.getItem("userId");
     console.log("UserId in onit PDf Add" + this.userId);
     // this.papers=[];
-    for (var i = 1; i < 11; i++) {
-      this.questionCount.push(i);
-    }
-    for (var i = 1; i < 5; i++) {
-      this.answerCount.push(i);
-    }
-    for (var i = 1; i < 11; i++) {
-      this.answers[i - 1] = [];
-    }
-    for (var i = 1; i < 11; i++) {
-      for (var j = 1; j < 5; j++) {
-        this.answers[i - 1].push(0);
-        console.log("push");
-      }
-    }
     this.setAdminStaffAndAdminStaffId();
+
 
   }
 
@@ -112,6 +98,7 @@ export class PaperAddComponent implements OnInit {
   }
 
   addPaper() {
+    
     console.log("nOofAns" + this.noOfAnswers);
     console.log("In paperadd method in addnewPaperTs with submit");
     var datePipe = new DatePipe('en-US');
@@ -215,6 +202,8 @@ export class PaperAddComponent implements OnInit {
 
     if (this.errorTitle == "" && this.errorAddedDate == "" && this.errorAdminStaffId == "" && this.errorSelectedFile == "" && this.errorNoOfAnswers == "" && this.errorNoOfQuestions == "") {
       console.log("Paper adding response came " + this.noOfAnswers);
+
+
       this.paperService.addPaper(new PaperModel(-1, this.title, this.noOfQuestions, this.noOfAnswers, this.adminStaff, this.addedDate), this.answers).subscribe(
         response => {
           this.savedPaperDetails = response;
@@ -321,6 +310,26 @@ export class PaperAddComponent implements OnInit {
       console.log("hy");
       this.answers[event.target.id - 1][event.target.value - 1] = 0; // remove unchecked answer from list
       console.log(this.answers[event.target.id - 1][event.target.value - 1]);
+    }
+  }
+
+  loadAnswers(val){
+    console.log("aaa");
+    this.questionCount=[];
+    this.answerCount=[];
+    for (var i = 1; i < (this.noOfQuestions) % 10 + 1; i++) {
+      this.questionCount.push(i);
+    }
+    for (var i = 1; i < (this.noOfAnswers) % 10 + 1; i++) {
+      this.answerCount.push(i);
+    }
+    for (var i = 1; i < (this.noOfQuestions) % 10 + 1; i++) {
+      this.answers[i - 1] = [];
+    }
+    for (var i = 1; i < (this.noOfQuestions) % 10 + 1; i++) {
+      for (var j = 1; j < (this.noOfAnswers) % 10 + 1; j++) {
+        this.answers[i - 1].push(0);
+      }
     }
   }
 

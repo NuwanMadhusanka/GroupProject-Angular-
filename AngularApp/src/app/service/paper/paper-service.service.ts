@@ -35,8 +35,8 @@ export class PaperServiceService {
   addPaper(paper: PaperModel, answers) {
     console.log("In paper Service add meth");
     console.log(paper);
-    for (var i = 0; i < 10; i++) {
-      for (var j = 0; j < 4; j++) {
+    for (var i = 0; i < paper.no_of_questions; i++) {
+      for (var j = 0; j < paper.no_of_answers; j++) {
         //console.log(paper.no_of_answers);
         console.log(answers[i][j]);
       }

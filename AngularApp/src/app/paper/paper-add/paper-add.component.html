@@ -57,14 +57,14 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>No of Question</label>
-                    <input [(ngModel)]="noOfQuestions" type="text" class="form-control" placeholder="No of questions" name="noOfQuestions">
+                    <input [(ngModel)]="noOfQuestions" type="text" class="form-control" placeholder="No of questions" name="noOfQuestions" (ngModelChange)="loadAnswers($event)">
                     <small *ngIf="errorNoOfQuestions" class="text-danger">{{errorNoOfQuestions}}</small>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label>No of Answers per Questions</label>
-                    <input [(ngModel)]="noOfAnswers" type="text" class="form-control" placeholder="No of Answers" name="noOfAnswers">
+                    <label>No of Answers per Question</label>
+                    <input [(ngModel)]="noOfAnswers" type="text" class="form-control" placeholder="No of Answers" name="noOfAnswers" (ngModelChange)="loadAnswers($event)">
                     <small *ngIf="errorNoOfAnswers" class="text-danger">{{errorNoOfAnswers}}</small>
                   </div>
                 </div>
@@ -97,7 +97,8 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <div *ngFor="let quest of questionCount">
-                      <div class="form-check form-check-inline" *ngFor="let ans of answerCount">
+                      <label class="form-check-label">({{quest}})&nbsp;&nbsp;&nbsp;</label>
+                       <div class="form-check form-check-inline" *ngFor="let ans of answerCount">
                         <label class="form-check-label">{{ans}}
                         <input class="form-check-input" type="checkbox"  id="{{quest}}" value="{{ans}}"  (click)="getAnswers($event)" >  
                         <span class="form-check-sign"></span>
