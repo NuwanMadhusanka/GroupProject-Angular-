@@ -81,9 +81,11 @@ export class PaperAddComponent implements OnInit {
     }
     for (var i = 1; i < 11; i++) {
       this.answers[i - 1] = [];
+    }
+    for (var i = 1; i < 11; i++) {
       for (var j = 1; j < 5; j++) {
         this.answers[i - 1].push(0);
-
+        console.log("push");
       }
     }
     this.setAdminStaffAndAdminStaffId();
@@ -211,7 +213,7 @@ export class PaperAddComponent implements OnInit {
       });
     }
 
-    if (this.errorTitle == "" && this.errorAddedDate == "" && this.errorAdminStaffId == "" && this.errorSelectedFile == "" && this.errorNoOfAnswers =="" && this.errorNoOfQuestions == "") {
+    if (this.errorTitle == "" && this.errorAddedDate == "" && this.errorAdminStaffId == "" && this.errorSelectedFile == "" && this.errorNoOfAnswers == "" && this.errorNoOfQuestions == "") {
       console.log("Paper adding response came " + this.noOfAnswers);
       this.paperService.addPaper(new PaperModel(-1, this.title, this.noOfQuestions, this.noOfAnswers, this.adminStaff, this.addedDate), this.answers).subscribe(
         response => {

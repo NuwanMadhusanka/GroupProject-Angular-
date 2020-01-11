@@ -37,12 +37,12 @@ export class PaperServiceService {
     console.log(paper);
     for (var i = 0; i < 10; i++) {
       for (var j = 0; j < 4; j++) {
-        console.log(paper.no_of_answers);
+        //console.log(paper.no_of_answers);
         console.log(answers[i][j]);
       }
     }
     console.log(paper.no_of_questions);
-    return this.http.post<PaperModel>(`${API_URL}/paper/add`, paper);
+    return this.http.post<PaperModel>(`${API_URL}/paper/add/${answers}`, paper);
   }
 
   deletePaper(paperId) {
