@@ -17,7 +17,7 @@ export class VehicleServiceService {
 
   // getVehicleList(status:Number){
   //   return this.http.get<VehicleModel[]>(`${API_URL}/vehicles/${status}`);
-  // }
+  // }ssz
 
    // register the new vehicle
    VehicleAdd(vehicle:VehicleModel){
@@ -36,6 +36,7 @@ export class VehicleServiceService {
 
   getVehicleCategoryList(){
     console.log("vhcle list service getVehicleCategoryList");
+    // console.log(vehicleCategorListData);
       return this.http.get<VehicleCategoryModel[]>(`${API_URL}/vehicles/vehiclecategory`);  
   }
 

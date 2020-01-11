@@ -12,6 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class VehicleCategoryAddComponent implements OnInit {
 
+  // vehicleCategory: VehicleCategoryModel[] = [];
   errorMessage;
   httpError:HttpError;
   category:String="";
@@ -35,6 +36,30 @@ export class VehicleCategoryAddComponent implements OnInit {
 
   //validation
   // timeTableValidation = new TimeTableValidation();
+
+
+    //Filter Option Implement
+    filteredVehiclecats: VehicleCategoryModel[];
+    private _searchTerm: string;
+    get searchTerm(): string {
+      return this._searchTerm;
+    }
+    set searchTerm(value: string) {
+      this._searchTerm = value;
+      this.filteredVehiclecats = this.filterVehicleCat(value);
+    }
+  
+    //Filtering method
+    filterVehicleCat(searchString: string) {
+  
+      return this.vehicleCategorListData.filter(vehicleCat =>
+        vehicleCat.vehicleCategoryId.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+        vehicleCat.category.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+        vehicleCat.numStudent.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 
+        // vehicle.number.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+        // vehicle.transmission.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1
+      );
+    }
 
   constructor(
     private vehicleService:VehicleServiceService

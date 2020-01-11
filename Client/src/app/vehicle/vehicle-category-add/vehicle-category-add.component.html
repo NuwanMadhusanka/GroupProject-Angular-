@@ -39,6 +39,7 @@
             <div class="table-responsive">
                 <table class="table">
                   <thead class=" text-primary">
+                    <th></th>
                     <th>Category</th>
                     <th>Number of Students</th>
                     <th>Option</th>
@@ -46,8 +47,8 @@
                   <tbody>
                     <tr *ngFor="let vehicleCategory of vehicleCategorListData">
                         <td>{{i+1}})</td>
-                      <td>{{vehicleCategory.Category}}</td>
-                      <td>{{vehicleCategory.num_students   }}</td>
+                      <td>{{vehicleCategory.category}}</td>
+                      <td>{{vehicleCategory.numStudent}}</td>
                       <td>
                           <a  (click)=isUpdate(vehicleCategory)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update VehicleCategory"></i></button></a>
                           <a  (click)=delete(vehicleCategory)><button class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm" title="Delete VehicleCategory"></i></button></a>
