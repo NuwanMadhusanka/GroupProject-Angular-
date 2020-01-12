@@ -27,6 +27,16 @@
                   <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Title"></i></button></a></td>
                 </tr>
                 <!--<tr>
+                  <th>No of questions:</th>
+                  <td>{{paperData.no_of_questions}}</td>
+                  <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Title"></i></button></a></td>
+                </tr>
+                 <tr>
+                  <th>No of Answers:</th>
+                  <td>{{paperData.no_of_answers}}</td>
+                  <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Title"></i></button></a></td>
+                </tr>-->
+                <!--<tr>
                   <th>Description:</th>
                   <td>{{paperData.description}}</td>
                   <td><a (click)=isUpdate(2)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
@@ -50,6 +60,12 @@
                   <!-- <td><a (click)=loadPaper()><button class="btn btn-secondary btn-sm"><i class="fas fa-eye fa-sm" title="Update Resource"></i></button></a></td>
                   -->
                 </tr>
+                <tr>
+                  <th>View Answers:</th>
+                  <td><a (click)=loadAnswers()><button class="btn btn-secondary btn-sm"><i class="fas fa-eye fa-sm" title="Update Title"></i></button></a></td>
+                </tr>
+
+
                 <!-- <tr>
                     <th></th>
                     <a>
@@ -131,6 +147,57 @@
           <!-- Confirm All update -->
 
           <button *ngIf="confirmUpdate" (click)="saveUpdate()" type="button" class="btn btn-primary  btn-round">Confirm All Updates</button>
+
+          <!--View Answers-->
+          <div *ngIf="viewAnswers" class="card">
+            <div class="card-header">
+              <button (click)=close() type="button" aria-hidden="true" class="close">
+                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                      </button>
+            </div>
+            <div class="card-body">
+              <div class="col-sm-8 col-lg-6">
+                <div class="form-group">
+                  <h6 class="card-title">Answers</h6>
+                  <!--<input type="text" value="" placeholder="{{placeHolder}}" class="form-control" name="password" [(ngModel)]="updateVariable"/>-->
+                  <br/>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>No of Question</label>
+                        <input [(ngModel)]="noOfQuestions" type="text" class="form-control" placeholder="No of questions" name="noOfQuestions" (ngModelChange)="loadAnswers($event)">
+                        <small *ngIf="errorNoOfQuestions" class="text-danger">{{errorNoOfQuestions}}</small>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Answers per Question</label>
+                        <input [(ngModel)]="noOfAnswers" type="text" class="form-control" placeholder="No of Answers" name="noOfAnswers" (ngModelChange)="loadAnswers($event)">
+                        <small *ngIf="errorNoOfAnswers" class="text-danger">{{errorNoOfAnswers}}</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div *ngFor="let quest of questionCount">
+                          <label class="form-check-label">({{quest}})&nbsp;&nbsp;&nbsp;</label>
+                          <div class="form-check form-check-inline" *ngFor="let ans of answerCount">
+                            <label class="form-check-label">{{ans}}
+                        <input class="form-check-input" type="checkbox"  id="{{quest}}" value="{{ans}}"  (click)="getAnswers($event)" >  
+                        <span class="form-check-sign"></span>
+                        </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <small *ngIf="errorUpdateMessage && isUpdate" class="text-danger">{{errorUpdateMessage}}</small>
+                </div>
+              </div>
+              <button (click)="update()" type="button" class="btn btn-secondary btn-round">Update</button>
+            </div>
+          </div>
 
         </div>
       </div>

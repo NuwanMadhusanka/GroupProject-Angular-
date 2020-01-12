@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PaperServiceService } from '../../service/paper/paper-service.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PaperModel } from '../../ClassModel/PaperModel';
+import { PaperQuestionModel } from '../../ClassModel/PaperQuestionModel';
 import { StaffModel } from '../../ClassModel/StaffModel';
 import { AdminStaffModel } from '../../ClassModel/AdminStaffModel';
 import { UserModel } from '../../ClassModel/UserModel';
@@ -51,11 +52,19 @@ export class PaperMoreDetailsComponent implements OnInit {
   showSpinner = false;
   downloadedPaper;
 
+  noOfQuestions;
+  noOfAnswers;
+  questionCount: number[] = [];
+  answerCount: number[] = [];
+  answers: number[][] = [];
+  viewAnswers = false;
+  paperQuestions: PaperQuestionModel[] = [];
+
   userValidation = new UserValidation();
   user: UserModel = new UserModel(0, '', '', '', '', '', '', '', new Date(), 0, 0, 0);
   staff: StaffModel = new StaffModel(1, this.user);
   adminStaff: AdminStaffModel = new AdminStaffModel(1, 'q', 1, this.staff);
-  paperData: PaperModel = new PaperModel(0, 'q',0,0, this.adminStaff, new Date());
+  paperData: PaperModel = new PaperModel(0, 'q', 0, 0, this.adminStaff, new Date());
   //paperData:PaperModel=new PaperModel(1,'','','',new AdminStaffModel());
   //studentData:StudentModel=new StudentModel(1,'Nuwan','0773015590','980150429v',new Date(),new Date(),'No 20 Homagama',new UserModel(1,'nuwan@gmail.com','1234',new Date(),1,1));
   paperSrc: string = '/paper-test.paper';
@@ -109,18 +118,18 @@ export class PaperMoreDetailsComponent implements OnInit {
     this.setAdminStaffAndAdminStaffId();
     //description 
 
-   /* if (this.selectOption == 2) {
-      console.log("inUpdate in description");
-      if (this.updateVariable == "") {
-        this.errorUpdateMessage = "You must insert Description";
-      } else {
-        this.paperData.description = this.updateVariable;
-        this.errorUpdateMessage = "";
-        this.isUpdateVariable = false;
-        this.confirmUpdate = true;
-        console.log("inUpdate in description data set");
-      }
-    }*/
+    /* if (this.selectOption == 2) {
+       console.log("inUpdate in description");
+       if (this.updateVariable == "") {
+         this.errorUpdateMessage = "You must insert Description";
+       } else {
+         this.paperData.description = this.updateVariable;
+         this.errorUpdateMessage = "";
+         this.isUpdateVariable = false;
+         this.confirmUpdate = true;
+         console.log("inUpdate in description data set");
+       }
+     }*/
 
 
     //resource
@@ -170,7 +179,7 @@ export class PaperMoreDetailsComponent implements OnInit {
             this.errorMessage = "File size should be less than 9MB";
             return; // should stop updating paper data
           } else if (response == 1) {  //paper overwritten in 3s  //should continue updating "resource" relavant data
-           
+
           } else { //null return 
             Swal.fire({
               position: 'center',
@@ -310,6 +319,42 @@ export class PaperMoreDetailsComponent implements OnInit {
         console.log(error);
       }
    );*/
+  }
+
+  loadAnswers() {
+    console.log("aaa");
+    this.paperService.getAnswers(this.paperData.paperId).subscribe(
+      response => {
+        this.paperQuestions = response;
+        //for(let paper of this.papers){
+        console.log(this.paperQuestions[0].answer);
+        // }
+        // this.handleErrorResponse(this.papers[0].adminStaff==null);
+      },
+      error => {
+        //this.errorMessage=response;
+        this.handleErrorResponse(error);
+      }
+    )
+    this.viewAnswers = true;
+    this.questionCount = [];
+    this.answerCount = [];
+    this.noOfQuestions = this.paperData.no_of_questions;
+    this.noOfAnswers = this.paperData.no_of_answers;
+    for (var i = 1; i < (this.noOfQuestions) % 10 + 1; i++) {
+      this.questionCount.push(i);
+    }
+    for (var i = 1; i < (this.noOfAnswers) % 10 + 1; i++) {
+      this.answerCount.push(i);
+    }
+    for (var i = 1; i < (this.noOfQuestions) % 10 + 1; i++) {
+      this.answers[i - 1] = [];
+    }
+    for (var i = 1; i < (this.noOfQuestions) % 10 + 1; i++) {
+      for (var j = 1; j < (this.noOfAnswers) % 10 + 1; j++) {
+        this.answers[i - 1].push(0);
+      }
+    }
   }
 
   //error handling
