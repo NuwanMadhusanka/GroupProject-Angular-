@@ -50,6 +50,12 @@ export class VehicleServiceService {
     return this.http.delete<Number>(`${API_URL}/vehicles/vehiclecategory/${vehicleCategoryID}`);
   }
 
+  
+  
+  updateVehicleCategory(vehicleCategory:VehicleCategoryModel){
+    console.log("vhcle list service updateVehicleCategory");
+    return this.http.put<any>(`${API_URL}/vehicles/vehiclecategory`,vehicleCategory);  
+  }
 
   getVehicleInsurancePaymentDetails(vehicleId:Number){
     return this.http.get<InsurancePaymentModel[]>(`${API_URL}/vehicle/insurance/${vehicleId}`);

@@ -87,65 +87,67 @@ export class VehicleCategoryAddComponent implements OnInit {
 
 
   isUpdate(vehicleCategory:VehicleCategoryModel){
+    console.log("in isupdate vehicle ctgry add cmts");
     this.errorCategory="";
     this.errorNum_student="";
     this.isUpdateVariable=true;
     this.updateVehicleCategory=new VehicleCategoryModel(vehicleCategory.vehicleCategoryId, vehicleCategory.category, vehicleCategory.numStudent);
   }
 
-  // updateConfirm(){
-  //   this.errorCategory="";
-  //   this.errorNum_student="";
-  //   if(this.timeTableValidation.isValidTimeSlot(this.updateVehicleCategory.startTime)){ 
-  //     if(this.timeTableValidation.isValidTimeSlot(this.updateVehicleCategory.finishTime)){
-  //       Swal.fire({
-  //         title: 'Are you sure?',
-  //         text: "Is update the time slot(This result will effect to whole the lesson's time)",
-  //         type: 'warning',
-  //         showCancelButton: true,
-  //         confirmButtonColor: '#3085d6',
-  //         cancelButtonColor: '#d33',
-  //         confirmButtonText: 'Yes, update it!'
-  //       }).then((result) => {
-  //         if (result.value) {
+  updateConfirm(){
+    console.log("in updateconfirm vehicle ctgry add cmts");
+    this.errorCategoryNew="";
+    this.errorNum_studentNew="";
+    if(this.updateVehicleCategory.category!=null){
+      if(this.updateVehicleCategory.numStudent!=null){
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "Is update the Vehicle Category(This result will effect to whole the Vehicle Category)",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, update it!'
+        }).then((result) => {
+          if (result.value) {
             
-  //           //Call to API
-  //           this.vehicleService.updateVehicleCategory(this.updateVehicleCategory).subscribe(
-  //             response => {
-  //                 Swal.fire({
-  //                   position: 'center',
-  //                   type: 'success',
-  //                   title: 'Update Completed',
-  //                   showConfirmButton: false,
-  //                   timer: 2000
-  //                 });
-  //                 this.vehicleCategorListData=[];
-  //                 this.timeSlotList();
-  //                 this.isUpdateVariable=false;
-  //             },
-  //             error => {
-  //               console.log(error);
-  //               Swal.fire({
-  //                 position: 'center',
-  //                 type: 'error',
-  //                 title: 'Update is not completed',
-  //                 showConfirmButton: false,
-  //                 timer: 2000
-  //               });
-  //               this.handleErrorResponse(error);
-  //             }
-  //           );
-  //         }
-  //       });
-  //     }else{
-  //       this.errorTo="Insert Valid Time(To)";
-  //     }
-  //   }}
+            //Call to API
+            this.vehicleService.updateVehicleCategory(this.updateVehicleCategory).subscribe(
+              response => {
+                  Swal.fire({
+                    position: 'center',
+                    type: 'success',
+                    title: 'Update Completed',
+                    showConfirmButton: false,
+                    timer: 2000
+                  });
+                  this.vehicleCategorListData=[];
+                  this.vehicleCategoryList();
+                  this.isUpdateVariable=false;
+              },
+              error => {
+                console.log(error);
+                Swal.fire({
+                  position: 'center',
+                  type: 'error',
+                  title: 'Update is not completed',
+                  showConfirmButton: false,
+                  timer: 2000
+                });
+                this.handleErrorResponse(error);
+              }
+            );
+          }
+        });
+      }else{
+        this.errorCategory="Insert Valid Category name";
+      }
+    }
 
-    // else{
-    //   this.errorFrom="Insert Valid Time(From)";
-    // }
-  
+    else{
+      this.errorNum_student="Insert Valid number of students";
+    }
+}
    
   // Finish update time slot data 
 
