@@ -41,7 +41,7 @@
     </div>
     <div class="card-body">
 
-      <div *ngIf="selectedType==0" ngbDropdown class="dropdown" placement="bottom-left">
+      <div  ngbDropdown class="dropdown" placement="bottom-left">
         <button class="btn btn-info dropdown-toggle" ngbDropdownToggle>Select the Report Type</button>
         <div ngbDropdownMenu>
             <div *ngFor="let report of reportsTypes;let i = index;">
@@ -50,10 +50,11 @@
         </div>
       </div>
       <hr>
+        
         <div *ngIf="selectedType==0">
             
           <!-- Monthly Income  Start-->
-          <div *ngIf="selectedReportType==0" class="row">
+          <div *ngIf="selectedReportType==0" class="row" id="monthlyIncomeReport">
             <div class="col-md-3"></div>
             <div class="col-md-6">
               <div class="card">
@@ -84,6 +85,7 @@
                         <!-- Table Finish -->
                         <hr>
                       </ng-container>
+                      <button  class="btn btn-info" (click)="generatePDF()">Generate PDF</button>
                   </div>
                 </div>
             </div>
@@ -191,11 +193,191 @@
 
         </div>
 
-    </div>
+        <div *ngIf="selectedType==1">
 
-    <div>
-      <div id="chartContainer" style="height: 370px; width: 100%;" ></div>
-    </div>
+               <!-- Yearly Income  -->
+                <div *ngIf="selectedReportType==0" class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+
+                      <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Yearly Income</h5>
+                        </div>
+                        <div class="card-body">
+                            <ng-container *ngFor="let income of yearlyIncomeList ; let i=index;">
+                                <h5>{{i+1}}) {{monthNames[i]}}</h5>
+                                <!-- Table Start -->
+                                <div class="table-responsive">
+                                  <table class="table table-striped table-bordered">
+                                    <thead class=" text-primary thead-dark">
+                                      <th>Package</th>
+                                      <th *ngFor="let year of income.years">
+                                        {{year}}
+                                      </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let package of income.packages ; let x=index;">  
+                                            <td>{{package}}</td>
+                                            <ng-container *ngFor="let payment of income.payments[x]">
+                                              <td *ngIf="payment!=-1">
+                                                {{payment | number : '1.2-2'}}
+                                              </td>
+                                              <td *ngIf="payment==-1">
+                                                -
+                                              </td>
+                                            </ng-container>
+                                        </tr>
+                                    </tbody>
+                                  </table>
+                              </div>
+                              <hr>
+                              <!-- Table Finish -->
+                          </ng-container>    
+                      </div>
+
+                    </div>
+                    <div class="col-md-2"></div>
+                  </div>
+                <!-- Yearly Income Finish -->
+
+        </div>
+
+      </div>
+
+
+       <!-- Yearly Outcome  -->
+       <div *ngIf="selectedType==1 && selectedReportType==1" class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+
+          <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Yearly OutCome</h5>
+            </div>
+            <div class="card-body">
+                <ng-container *ngFor="let outcome of yearlyOutcomeList ; let i=index;">
+                    <h5>{{i+1}}) {{monthNames[i]}}</h5>
+                    <!-- Table Start -->
+                    <div class="table-responsive">
+                      <table class="table table-striped table-bordered">
+                        <thead class=" text-primary thead-dark">
+                          <th></th>
+                          <th>Expenses Type</th>
+                          <th *ngFor="let year of outcome.years">
+                            {{year}}
+                          </th>
+                        </thead>
+                        <tbody>
+                          <tr>  
+                              <td>1</td>
+                              <td>Staff Salary</td>
+                              <ng-container *ngFor="let salary of outcome.salary">
+                                <td *ngIf="salary!=-1">{{salary | number : '1.2-2'}}</td>
+                                <td *ngIf="salary==-1">-</td>
+                              </ng-container>
+                            </tr>
+                            <tr>  
+                                <td>2</td>
+                                <td>Vehicle Fuel</td>
+                                <ng-container *ngFor="let fuel of outcome.fuel">
+                                  <td *ngIf="fuel!=-1">{{fuel | number : '1.2-2'}}</td>
+                                  <td *ngIf="fuel==-1">-</td>
+                                </ng-container>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Vehicle Maintainance</td>
+                                <ng-container *ngFor="let maintainance of outcome.maintainance">
+                                  <td *ngIf="maintainance!=-1">{{maintainance | number : '1.2-2'}}</td>
+                                  <td *ngIf="maintainance==-1">-</td>
+                                </ng-container>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Vehicle Insurance</td>
+                                <ng-container *ngFor="let insurance of outcome.insurance">
+                                  <td *ngIf="insurance!=-1">{{insurance | number : '1.2-2'}}</td>
+                                  <td *ngIf="insurance==-1">-</td>
+                                </ng-container>
+                            </tr>
+                            
+                        </tbody>
+                      </table>
+                  </div>
+                  <hr>
+                  <!-- Table Finish -->
+              </ng-container>    
+          </div>
+
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+      <!-- Yearly Outcome Finish -->
+
+
+       <!-- Yearly Profit  -->
+       <div *ngIf="selectedType==1 && selectedReportType==2" class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+
+          <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Yearly Profit</h5>
+            </div>
+            <div class="card-body">
+                <ng-container *ngFor="let profit of yearlyProfitList ; let i=index;">
+                    <h5>{{i+1}}) {{monthNames[i]}}</h5>
+                    <!-- Table Start -->
+                    <div class="table-responsive">
+                      <table class="table table-striped table-bordered">
+                        <thead class=" text-primary thead-dark">
+                          <th></th>
+                          <th>Expenses Type</th>
+                          <th *ngFor="let year of profit.years">
+                            {{year}}
+                          </th>
+                        </thead>
+                        <tbody>
+                          <tr>  
+                              <td>1</td>
+                              <td>Income</td>
+                              <ng-container *ngFor="let income of profit.income">
+                                <td *ngIf="income!=-1">{{income | number : '1.2-2'}}</td>
+                                <td *ngIf="income==-1">-</td>
+                              </ng-container>
+                            </tr>
+                            <tr>  
+                                <td>2</td>
+                                <td>OutCome</td>
+                                <ng-container *ngFor="let outcome of profit.outcome">
+                                  <td *ngIf="outcome!=-1">{{outcome | number : '1.2-2'}}</td>
+                                  <td *ngIf="outcome==-1">-</td>
+                                </ng-container>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Profit</td>
+                                <ng-container *ngFor="let profitData of profit.profit">
+                                  <td *ngIf="profitData!=-1">{{profitData | number : '1.2-2'}}</td>
+                                  <td *ngIf="profitData==-1">-</td>
+                                </ng-container>
+                            </tr>
+                      
+                            
+                        </tbody>
+                      </table>
+                  </div>
+                  <hr>
+                  <!-- Table Finish -->
+              </ng-container>    
+          </div>
+
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+      <!-- Yearly Profit Finish -->
 
   </div>
 </div>
+

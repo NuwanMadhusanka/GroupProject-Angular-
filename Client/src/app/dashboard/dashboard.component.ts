@@ -591,7 +591,14 @@ export class DashboardComponent implements OnInit {
   //  }
 
    getYears(){
-    this.years = [2019,2020];
+    this.reportService.getYearList().subscribe(
+      response => {
+        this.years = response;
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
    getCurrentYear(){

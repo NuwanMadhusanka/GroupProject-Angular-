@@ -6,6 +6,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { HttpError } from '../../Shared/httpError/HttpError';
 import { OutComeDataMap } from '../../ClassModel/MapObject/OutComeDataMap';
 import { ProfitDataMap } from '../../ClassModel/MapObject/ProfitDataMap';
+import { YearlyIncomeDataMap } from '../../ClassModel/MapObject/YearlyIncomeDataMap';
+import { YearlyOutcomeDataMap } from '../../ClassModel/MapObject/YearlyOutcomeDataMap';
+import { YearlyProfitDataMap } from '../../ClassModel/MapObject/YearlyProfitDataMap';
+declare const require: any;
+const jsPDF = require('jspdf');
+require('jspdf-autotable');
 
 
 @Component({
@@ -25,14 +31,16 @@ export class ReportListComponent implements OnInit {
   types = ["Monthly","Yearly"];
   selectedType:number;
 
-  monthlyYears = [2019,2020];
-  annualYears = [2019];
+  monthlyYears = [];
   selectedYear:number;
   currentYear:number;
 
   packageMonthlyPayemntList: [[PackagePaymentDataMap]] ;
   outComeMonthlyList:[OutComeDataMap] ;
   profitMonthlyList:[ProfitDataMap] ;
+  yearlyIncomeList:[YearlyIncomeDataMap] ;
+  yearlyOutcomeList:[YearlyOutcomeDataMap] ;
+  yearlyProfitList:[YearlyProfitDataMap] ;
 
   totalIncome:number=0;
   totalOutCome:number=0;
@@ -44,10 +52,23 @@ export class ReportListComponent implements OnInit {
 
   ngOnInit() {
     this.getCurrentYear();
+    this.getYearList();
     this.selectedType=0;
     this.selectedYear=this.currentYear;
     this.selectedReportType=0;
     this.getReportData();
+  }
+
+  getYearList(){
+    this.reportService.getYearList().subscribe(
+      response => {
+        this.monthlyYears = response;
+      },
+      error => {
+        console.log(error);
+        this.handleErrorResponse(error);
+      }
+    );
   }
 
   getCurrentYear(){
@@ -86,7 +107,15 @@ export class ReportListComponent implements OnInit {
     }
 
     if(this.selectedType==1){
-     // this.annualReport();
+     if(this.selectedReportType==0){
+       this.getYearlyIncome();
+     }
+     if(this.selectedReportType==1){
+       this.getYearlyOutcome();
+     }
+     if(this.selectedReportType==2){
+       this.getYearlyProfit();
+     }
     }
   }
 
@@ -127,9 +156,43 @@ export class ReportListComponent implements OnInit {
     );
   }
 
-  private handleErrorResponse(error: HttpErrorResponse) {
-    let httpError = new HttpError();
-    httpError.ErrorResponse(error);
+  
+  getYearlyIncome(){
+    this.reportService.getYearlyIncome().subscribe(
+      response => {
+        this.yearlyIncomeList = response;
+      },
+      error => {
+        console.log(error);
+        this.handleErrorResponse(error);
+      }
+    );
+  }
+
+  getYearlyOutcome(){
+    this.reportService.getYearlyOutcome().subscribe(
+      response => {
+        this.yearlyOutcomeList = response;
+      },
+      error => {
+        console.log(error);
+        this.handleErrorResponse(error);
+      }
+    );
+  }
+
+  getYearlyProfit(){
+    this.reportService.getYearlyProfit().subscribe(
+      response => {
+        this.yearlyProfitList=response;
+        console.log(this.selectedReportType)
+        console.log(this.selectedType)
+      },
+      error => {
+        console.log(error);
+        this.handleErrorResponse(error);
+      }
+    );
   }
 
   calculateTotal(dataList:[ProfitDataMap]){
@@ -146,137 +209,26 @@ export class ReportListComponent implements OnInit {
     this.totalProfit=totalProfit;
   }
 
-  // annualReport(){
-  //   var chart = new CanvasJS.Chart("chartContainer", {
-  //     title: {
-  //       text: "House Median Price"
-  //     },
-  //     axisX: {
-  //       valueFormatString: "MMM YYYY"
-  //     },
-  //     axisY2: {
-  //       title: "Median List Price",
-  //       prefix: "$",
-  //       suffix: "K"
-  //     },
-  //     toolTip: {
-  //       shared: true
-  //     },
-  //     legend: {
-  //       cursor: "pointer",
-  //       verticalAlign: "top",
-  //       horizontalAlign: "center",
-  //       dockInsidePlotArea: true,
-  //       // itemclick: toogleDataSeries
-  //     },
-  //     data: [{
-  //       type:"line",
-  //       axisYType: "secondary",
-  //       name: "San Fransisco",
-  //       showInLegend: true,
-  //       markerSize: 0,
-  //       yValueFormatString: "$#,###k",
-  //       dataPoints: [		
-  //         { x: new Date(2014,0,1), y: 850 },
-  //         { x: new Date(2014,1,1), y: 889 },
-  //         { x: new Date(2014,2,1), y: 890 },
-  //         { x: new Date(2014,3,1), y: 899 },
-  //         { x: new Date(2014,4, 1), y: 903 },
-  //         { x: new Date(2014,5, 1), y: 925 },
-  //         { x: new Date(2014,6, 1), y: 899 },
-  //         { x: new Date(2014,7, 1), y: 875 },
-  //         { x: new Date(2014,8, 1), y: 927 },
-  //         { x: new Date(2014,9, 1), y: 949 },
-  //         { x: new Date(2014, 10, 1), y: 946 },
-  //         { x: new Date(2014, 11, 1), y: 927 },
-  //         { x: new Date(2015,0, 1), y: 950 },
-  //         { x: new Date(2015,1, 1), y: 998 },
-  //         { x: new Date(2015, 2, 1), y: 998 },
-  //         { x: new Date(2015, 3, 1), y: 1050 },
-  //         { x: new Date(2015, 4, 1), y: 1050 },
-  //         { x: new Date(2015, 5, 1), y: 999 },
-  //         { x: new Date(2015, 6, 1), y: 998 },
-  //         { x: new Date(2015, 7, 1), y: 998 },
-  //         { x: new Date(2015, 8, 1), y: 1050 },
-  //         { x: new Date(2015, 9, 1), y: 1070 },
-  //         { x: new Date(2015, 10, 1), y: 1050 },
-  //         { x: new Date(2015, 11, 1), y: 1050 },
-  //         { x: new Date(2016, 0, 1), y: 995 },
-  //         { x: new Date(2016, 1, 1), y: 1090 },
-  //         { x: new Date(2016, 2, 1), y: 1100 },
-  //         { x: new Date(2016, 3, 1), y: 1150 },
-  //         { x: new Date(2016, 4, 1), y: 1150 },
-  //         { x: new Date(2016, 5, 1), y: 1150 },
-  //         { x: new Date(2016, 6, 1), y: 1100 },
-  //         { x: new Date(2016, 7, 1), y: 1100 },
-  //         { x: new Date(2016, 08, 1), y: 1150 },
-  //         { x: new Date(2016, 09, 1), y: 1170 },
-  //         { x: new Date(2016, 10, 1), y: 1150 },
-  //         { x: new Date(2016, 11, 1), y: 1150 },
-  //         { x: new Date(2017, 0, 1), y: 1150 },
-  //         { x: new Date(2017, 1, 1), y: 1200 },
-  //         { x: new Date(2017, 2, 1), y: 1200 },
-  //         { x: new Date(2017,3, 1), y: 1200 },
-  //         { x: new Date(2017,4, 1), y: 1190 },
-  //         { x: new Date(2017, 5, 1), y: 1170 }
-  //       ]
-  //     },
-  //     {
-  //       type: "line",
-  //       axisYType: "secondary",
-  //       name: "Manhattan",
-  //       showInLegend: true,
-  //       markerSize: 0,
-  //       yValueFormatString: "$#,###k",
-  //       dataPoints: [
-  //         { x: new Date(2014, 0, 1), y: 1200 },
-  //         { x: new Date(2014, 1, 1), y: 1200 },
-  //         { x: new Date(2014, 2, 1), y: 1190 },
-  //         { x: new Date(2014, 3, 1), y: 1180 },
-  //         { x: new Date(2014, 4, 1), y: 1250 },
-  //         { x: new Date(2014, 5, 1), y: 1270 },
-  //         { x: new Date(2014, 6, 1), y: 1300 },
-  //         { x: new Date(2014, 7, 1), y: 1300 },
-  //         { x: new Date(2014, 8, 1), y: 1358 },
-  //         { x: new Date(2014, 9, 1), y: 1410 },
-  //         { x: new Date(2014, 10, 1), y: 1480 },
-  //         { x: new Date(2014, 11, 1), y: 1500 },
-  //         { x: new Date(2015, 0, 1), y: 1500 },
-  //         { x: new Date(2015, 1, 1), y: 1550 },
-  //         { x: new Date(2015, 2, 1), y: 1550 },
-  //         { x: new Date(2015, 3, 1), y: 1590 },
-  //         { x: new Date(2015, 4, 1), y: 1600 },
-  //         { x: new Date(2015,5, 1), y: 1590 },
-  //         { x: new Date(2015, 6, 1), y: 1590 },
-  //         { x: new Date(2015, 7, 1), y: 1620 },
-  //         { x: new Date(2015, 8, 1), y: 1670 },
-  //         { x: new Date(2015, 9, 1), y: 1720 },
-  //         { x: new Date(2015, 10, 1), y: 1750 },
-  //         { x: new Date(2015, 11, 1), y: 1820 },
-  //         { x: new Date(2016, 0, 1), y: 2000 },
-  //         { x: new Date(2016, 1, 1), y: 1920 },
-  //         { x: new Date(2016, 2, 1), y: 1750 },
-  //         { x: new Date(2016, 3, 1), y: 1850 },
-  //         { x: new Date(2016, 4, 1), y: 1750 },
-  //         { x: new Date(2016, 5, 1), y: 1730 },
-  //         { x: new Date(2016, 6, 1), y: 1700 },
-  //         { x: new Date(2016, 7, 1), y: 1730 },
-  //         { x: new Date(2016, 08, 1), y: 1720 },
-  //         { x: new Date(2016, 09, 1), y: 1740 },
-  //         { x: new Date(2016, 10, 1), y: 1750 },
-  //         { x: new Date(2016, 11, 1), y: 1750 },
-  //         { x: new Date(2017,0, 1), y: 1750 },
-  //         { x: new Date(2017, 1, 1), y: 1770 },
-  //         { x: new Date(2017, 2, 1), y: 1750 },
-  //         { x: new Date(2017, 3, 1), y: 1750 },
-  //         { x: new Date(2017, 4, 1), y: 1730 },
-  //         { x: new Date(2017, 5, 1), y: 1730 }
-  //       ]
-  //     }
-  //     ]
-  //   });
-  //   chart.render();
-    
-  // }
+ 
+
+  generatePDF(){
+    let mywindow = window.open('', 'PRINT', 'height=650,width=900,top=100,left=150');
+
+    mywindow.document.write(`<html><head><title>Report</title>`);
+    mywindow.document.write('</head><body >');
+    mywindow.document.write(document.getElementById('monthlyIncomeReport').innerHTML);
+    mywindow.document.write('</body></html>');
+
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10*/
+
+    mywindow.print();
+    mywindow.close();
+  }
+
+  private handleErrorResponse(error: HttpErrorResponse) {
+    let httpError = new HttpError();
+    httpError.ErrorResponse(error);
+  }
 
 }
