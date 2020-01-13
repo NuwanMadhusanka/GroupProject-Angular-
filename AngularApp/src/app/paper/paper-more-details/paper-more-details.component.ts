@@ -59,6 +59,8 @@ export class PaperMoreDetailsComponent implements OnInit {
   answers: number[][] = [];
   viewAnswers = false;
   paperQuestions: PaperQuestionModel[] = [];
+  isChecked:boolean[][]=[];
+  isCheckedq=true; //temp
 
   userValidation = new UserValidation();
   user: UserModel = new UserModel(0, '', '', '', '', '', '', '', new Date(), 0, 0, 0);
@@ -323,20 +325,7 @@ export class PaperMoreDetailsComponent implements OnInit {
 
   loadAnswers() {
     console.log("aaa");
-    this.paperService.getAnswers(this.paperData.paperId).subscribe(
-      response => {
-        this.paperQuestions = response;
-        //for(let paper of this.papers){
-        console.log(this.paperQuestions[0].answer);
-        // }
-        // this.handleErrorResponse(this.papers[0].adminStaff==null);
-      },
-      error => {
-        //this.errorMessage=response;
-        this.handleErrorResponse(error);
-      }
-    )
-    this.viewAnswers = true;
+
     this.questionCount = [];
     this.answerCount = [];
     this.noOfQuestions = this.paperData.no_of_questions;
@@ -349,12 +338,38 @@ export class PaperMoreDetailsComponent implements OnInit {
     }
     for (var i = 1; i < (this.noOfQuestions) % 10 + 1; i++) {
       this.answers[i - 1] = [];
+      this.isChecked[i-1]=[];
     }
     for (var i = 1; i < (this.noOfQuestions) % 10 + 1; i++) {
       for (var j = 1; j < (this.noOfAnswers) % 10 + 1; j++) {
         this.answers[i - 1].push(0);
       }
     }
+    this.paperService.getAnswers(this.paperData.paperId).subscribe(
+      response => {
+        this.paperQuestions = response;
+        for (var i = 0; i < (this.noOfQuestions) % 10; i++) {
+          console.log(this.paperQuestions[i].answer);
+          for (var j = 0; j < (this.noOfAnswers) % 10 ; j++) {
+            console.log(this.paperQuestions[i].answer[j]+"  ,");
+            if(this.paperQuestions[i].answer[j]==0){
+              this.isChecked[i][j]=false;
+            }else{
+              this.isChecked[i][j]=true;
+            }
+
+          }
+        }
+        this.viewAnswers = true;
+        // console.log(this.paperQuestions[0].answer+"In Loading answers");
+        // this.handleErrorResponse(this.papers[0].adminStaff==null);
+      },
+      error => {
+        //this.errorMessage=response;
+        this.handleErrorResponse(error);
+      }
+    )
+
   }
 
   //error handling

@@ -11,11 +11,7 @@
 
           <div class="table-responsive">
             <table class="table">
-              <!-- <thead class=" text-primary">
-                  <th>Name</th>
-                  <th>Course</th>
-                  <th>Option</th>
-                </thead> -->
+            
               <tbody>
                 <tr>
                   <th>Paper ID:</th>
@@ -26,23 +22,7 @@
                   <td>{{paperData.title}}</td>
                   <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Title"></i></button></a></td>
                 </tr>
-                <!--<tr>
-                  <th>No of questions:</th>
-                  <td>{{paperData.no_of_questions}}</td>
-                  <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Title"></i></button></a></td>
-                </tr>
-                 <tr>
-                  <th>No of Answers:</th>
-                  <td>{{paperData.no_of_answers}}</td>
-                  <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Title"></i></button></a></td>
-                </tr>-->
-                <!--<tr>
-                  <th>Description:</th>
-                  <td>{{paperData.description}}</td>
-                  <td><a (click)=isUpdate(2)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
-                </tr>-->
-
-
+        
                 <tr>
                   <th>Added by Admin Staff:</th>
                   <td>Id-&nbsp;{{paperData.adminStaffId.adminStaffId}}&nbsp;&nbsp;&nbsp;Name-&nbsp;{{paperData.adminStaffId.staffId.userId.firstName}}&nbsp;{{paperData.adminStaffId.staffId.userId.lastName}}</td>
@@ -184,7 +164,7 @@
                           <label class="form-check-label">({{quest}})&nbsp;&nbsp;&nbsp;</label>
                           <div class="form-check form-check-inline" *ngFor="let ans of answerCount">
                             <label class="form-check-label">{{ans}}
-                        <input class="form-check-input" type="checkbox"  id="{{quest}}" value="{{ans}}"  (click)="getAnswers($event)" >  
+                        <input class="form-check-input" type="checkbox"  id="{{quest}}" value="{{ans}}"  (click)="getAnswers($event)" [(ngModel)]="isChecked[quest-1][ans-1]" >  
                         <span class="form-check-sign"></span>
                         </label>
                           </div>
