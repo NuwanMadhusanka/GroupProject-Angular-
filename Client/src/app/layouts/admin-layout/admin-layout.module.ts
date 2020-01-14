@@ -56,6 +56,7 @@ import { VehicleInsuranceAddComponent } from '../../vehicle/vehicle-insurance-ad
 import { VehicleFuelComponent } from '../../vehicle/vehicle-fuel/vehicle-fuel.component';
 import { VehicleAddComponent } from '../../vehicle/vehicle-add/vehicle-add.component';
 import { VehicleCategoryAddComponent } from '../../vehicle/vehicle-category-add/vehicle-category-add.component';
+import { VehicleMoreDetailsComponent } from '../../vehicle/vehicle-more-details/vehicle-more-details.component';
 
 
 
@@ -93,6 +94,7 @@ import { VehicleCategoryAddComponent } from '../../vehicle/vehicle-category-add/
     VehicleInsuranceComponent,
     VehicleInsuranceAddComponent,
     VehicleFuelComponent,
+    VehicleMoreDetailsComponent,
  
     
     StudentListComponent,

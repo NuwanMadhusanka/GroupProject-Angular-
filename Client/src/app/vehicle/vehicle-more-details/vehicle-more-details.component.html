@@ -1,3 +1,103 @@
-<p>
-  vehicle-more-details works!
-</p>
+<div class="panel-header panel-header-sm" >
+</div>
+  
+  <div class="main-content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+              <h4 class="card-title">Vehicle Details</h4>
+          </div>
+          <div class="card-body">
+           
+            <div class="table-responsive">
+              <table class="table">
+                <!-- <thead class=" text-primary">
+                  <th>Name</th>
+                  <th>Course</th>
+                  <th>Option</th>
+                </thead> -->
+                
+                <tbody>
+                  <tr>
+                    <th>Vehicle ID:</th>
+                    <td>{{vehicleData.vehicleId}}</td>
+                  </tr>
+                   <tr>
+                     <th>Brand:</th>
+                     <td>{{vehicleData.Brand}}</td> 
+                     <td><a  (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
+                  </tr>
+                 
+                  <tr>
+                     <th>Model:</th>
+                     <td>{{vehicleData.model}}</td> 
+                     <td><a  (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Description"></i></button></a></td>
+                  </tr>
+                  <tr>
+                     <th>Number:</th>
+                     <td>{{vehicleData.Number}}</td>
+                    <td><a  (click)=isUpdate(2)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update URL"></i></button></a></td>
+
+                  </tr>
+                  <tr>
+                    <th>Transmision:</th>
+                    <td>{{vehicleData.Transmision}}</td>
+                   <td><a  (click)=isUpdate(2)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update URL"></i></button></a></td>
+
+                 </tr>
+                 <tr>
+                  <th>fuel-type:</th>
+                  <td>{{vehicleData.fuel-type}}</td>
+                 <td><a  (click)=isUpdate(2)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update URL"></i></button></a></td>
+
+               </tr>
+               <tr>
+                <th>document License:</th>
+                <td>{{vehicleData.document_lic}}</td>
+               <td><a  (click)=isUpdate(2)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update URL"></i></button></a></td>
+
+             </tr>
+                  <!-- <tr>
+                      <th>Vehicle category id:</th>
+                     <td>Id-&nbsp;{{vehicleData.vehicle_category_id.vehicle_category_id}}&nbsp;&nbsp;&nbsp;Name-&nbsp;{{videoData.vehicle_category_id.staffId.userId.firstName}}&nbsp;{{videoData.adminStaffId.staffId.userId.lastName}}</td>
+                      
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                  </tr> -->
+                 
+                  
+                  
+                </tbody>
+              </table>
+            </div> 
+            
+            <!-- Update -->
+            <div *ngIf="isUpdateVariable" class="card">
+                <div class="card-header">
+                    <button (click)=close() type="button" aria-hidden="true" class="close">
+                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                      </button>
+                </div>
+                <div class="card-body">
+                  <div class="col-sm-8 col-lg-6">
+                      <div class="form-group">
+                          <label>{{updateName}}:</label>
+                          <input type="text" value="" placeholder="{{placeHolder}}" class="form-control" name="password" [(ngModel)]="updateVariable"/>
+                          <small *ngIf="errorUpdateMessage && isUpdate" class="text-danger">{{errorUpdateMessage}}</small>
+                      </div>
+                    </div>
+                    <button  (click)="update()" type="button" class="btn btn-secondary btn-round">Update</button>
+                  </div>
+            </div>
+            <!-- Update --> 
+
+            <!-- Confirm All update -->
+            <button *ngIf="confirmUpdate"  (click)="saveUpdate()" type="button" class="btn btn-primary  btn-round">Confirm All Updates</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
