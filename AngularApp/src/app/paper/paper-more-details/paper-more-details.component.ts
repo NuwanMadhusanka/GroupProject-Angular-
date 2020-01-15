@@ -8,6 +8,7 @@ import { PaperQuestionModel } from '../../ClassModel/PaperQuestionModel';
 import { StaffModel } from '../../ClassModel/StaffModel';
 import { AdminStaffModel } from '../../ClassModel/AdminStaffModel';
 import { UserModel } from '../../ClassModel/UserModel';
+import { PaperAnswerMap } from '../../ClassModel/MapObject/PaperAnswerMap';
 import { UserValidation } from '../../Shared/validation/user-validation/user-validation';
 import { AdminStaffServiceService } from '../../service/adminStaff/admin-staff-service.service';
 import { FileUploadServiceService } from '../../service/file-upload/file-upload-service.service';
@@ -59,8 +60,10 @@ export class PaperMoreDetailsComponent implements OnInit {
   answers: number[][] = [];
   viewAnswers = false;
   paperQuestions: PaperQuestionModel[] = [];
-  isChecked:boolean[][]=[];
-  isCheckedq=true; //temp
+  isChecked: boolean[][] = [];
+  isCheckedq = true; //temp
+  paperAnswerMap: PaperAnswerMap;
+  ans:String="";
 
   userValidation = new UserValidation();
   user: UserModel = new UserModel(0, '', '', '', '', '', '', '', new Date(), 0, 0, 0);
@@ -325,7 +328,6 @@ export class PaperMoreDetailsComponent implements OnInit {
 
   loadAnswers() {
     console.log("aaa");
-
     this.questionCount = [];
     this.answerCount = [];
     this.noOfQuestions = this.paperData.no_of_questions;
@@ -338,7 +340,7 @@ export class PaperMoreDetailsComponent implements OnInit {
     }
     for (var i = 1; i < (this.noOfQuestions) % 10 + 1; i++) {
       this.answers[i - 1] = [];
-      this.isChecked[i-1]=[];
+      this.isChecked[i - 1] = [];
     }
     for (var i = 1; i < (this.noOfQuestions) % 10 + 1; i++) {
       for (var j = 1; j < (this.noOfAnswers) % 10 + 1; j++) {
@@ -350,12 +352,13 @@ export class PaperMoreDetailsComponent implements OnInit {
         this.paperQuestions = response;
         for (var i = 0; i < (this.noOfQuestions) % 10; i++) {
           console.log(this.paperQuestions[i].answer);
-          for (var j = 0; j < (this.noOfAnswers) % 10 ; j++) {
-            console.log(this.paperQuestions[i].answer[j]+"  ,");
-            if(this.paperQuestions[i].answer[j]==0){
-              this.isChecked[i][j]=false;
-            }else{
-              this.isChecked[i][j]=true;
+          for (var j = 0; j < (this.noOfAnswers) % 10; j++) {
+            console.log(this.paperQuestions[i].answer[j] + "  ,");
+            this.answers[i][j] = parseInt(this.paperQuestions[i].answer[j], 10);
+            if (this.paperQuestions[i].answer[j] == "0") {
+              this.isChecked[i][j] = false;
+            } else {
+              this.isChecked[i][j] = true;
             }
 
           }
@@ -370,6 +373,50 @@ export class PaperMoreDetailsComponent implements OnInit {
       }
     )
 
+  }
+
+  getAnswers(event) { //mark checked answers
+    if (event.target.checked) {
+      // console.log(event.target.data.('active'==0));
+      console.log('checked: ' + event.target.id + 'Quest');
+      console.log('checked: ' + event.target.value + 'Ans');
+      this.answers[event.target.id - 1][event.target.value - 1] = (event.target.value); // set the checked answer for the question
+      console.log(this.answers[event.target.id - 1][event.target.value - 1]);
+    } else {
+      console.log("hy");
+      this.answers[event.target.id - 1][event.target.value - 1] = 0; // remove unchecked answer from list
+      console.log(this.answers[event.target.id - 1][event.target.value - 1]);
+    }
+  }
+
+  updateAnswers() {
+    console.log("Up" + this.paperData);
+    //convert 2D array to 1D array
+    for (var i = 1; i < (this.noOfQuestions) % 10 + 1; i++) {
+      for (var j = 1; j < (this.noOfAnswers) % 10 + 1; j++) {
+        //this.ans[(i-1)*4+(j-1)]=1;
+        //this.ans[(i*4)+1]=this.answers[i - 1][];
+        this.ans+=(this.answers[i-1][j-1].toString());
+      }
+    }
+    this.paperAnswerMap = new PaperAnswerMap(this.paperData, this.ans);
+    this.paperService.updateAnswers(this.paperAnswerMap).subscribe(
+      response => {
+        console.log(response);
+
+        Swal.fire({
+          position: 'top-end',
+          type: 'success',
+          title: 'Update Successful.',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      },
+      error => {
+        console.log(error);
+        this.handleErrorResponse(error);
+      }
+    )
   }
 
   //error handling

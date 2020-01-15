@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { PaperModel } from '../../ClassModel/PaperModel';
 import { PaperQuestionModel } from '../../ClassModel/PaperQuestionModel';
+import { PaperAnswerMap } from '../../ClassModel/MapObject/PaperAnswerMap';
 import { API_URL } from '../../app.constants';
 
 
@@ -57,8 +58,24 @@ export class PaperServiceService {
     return this.http.put<PaperModel>(`${API_URL}/paper/update`, paper);
   }
 
+  //get answers of paper
   getAnswers(paperId) {
     return this.http.get<PaperQuestionModel[]>(`${API_URL}/paperquestions/${paperId}`);
+  }
+
+  //Update Answers of paper
+  // updateAnswers(paper: PaperModel, answers) {
+  //   console.log("In Updating answers");
+  //   console.log(paper);
+  //   return this.http.put<PaperModel>(`${API_URL}/paperAnswers/update/${answers}`, paper);
+  // }
+
+  updateAnswers(paperAnswer: PaperAnswerMap) {
+    console.log("In Updating answers");
+    console.log(paperAnswer.answers);
+    var a=10;
+    console.log(paperAnswer+"1");
+    return this.http.post<PaperAnswerMap>(`${API_URL}/paperAnswers/update`, paperAnswer);
   }
 
 }
