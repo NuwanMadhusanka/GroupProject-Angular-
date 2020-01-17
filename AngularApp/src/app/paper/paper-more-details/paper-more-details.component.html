@@ -22,6 +22,16 @@
                   <td>{{paperData.title}}</td>
                   <td><a (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Title"></i></button></a></td>
                 </tr>
+                <tr>
+                  <th>No of Questions:</th>
+                  <td>{{paperData.no_of_questions}}</td>
+                  <td><a (click)=isUpdate(4)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Title"></i></button></a></td>
+                </tr>
+                <tr>
+                  <th>No of Answers:</th>
+                  <td>{{paperData.no_of_answers}}</td>
+                  <td><a (click)=isUpdate(5)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Title"></i></button></a></td>
+                </tr>
         
                 <tr>
                   <th>Added by Admin Staff:</th>
@@ -145,14 +155,14 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>No of Question</label>
-                        <input [(ngModel)]="noOfQuestions" type="text" class="form-control" placeholder="No of questions" name="noOfQuestions" (ngModelChange)="loadAnswers($event)">
+                        <input [(ngModel)]="noOfQuestions" type="text" class="form-control" placeholder="No of questions" name="noOfQuestions" (ngModelChange)="addMoreAnswers($event)">
                         <small *ngIf="errorNoOfQuestions" class="text-danger">{{errorNoOfQuestions}}</small>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Answers per Question</label>
-                        <input [(ngModel)]="noOfAnswers" type="text" class="form-control" placeholder="No of Answers" name="noOfAnswers" (ngModelChange)="loadAnswers($event)">
+                        <input [(ngModel)]="noOfAnswers" type="text" class="form-control" placeholder="No of Answers" name="noOfAnswers" (ngModelChange)="addMoreAnswers($event)">
                         <small *ngIf="errorNoOfAnswers" class="text-danger">{{errorNoOfAnswers}}</small>
                       </div>
                     </div>

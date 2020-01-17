@@ -63,7 +63,7 @@ export class PaperMoreDetailsComponent implements OnInit {
   isChecked: boolean[][] = [];
   isCheckedq = true; //temp
   paperAnswerMap: PaperAnswerMap;
-  ans:String="";
+  ans: String = "";
 
   userValidation = new UserValidation();
   user: UserModel = new UserModel(0, '', '', '', '', '', '', '', new Date(), 0, 0, 0);
@@ -116,6 +116,8 @@ export class PaperMoreDetailsComponent implements OnInit {
     //if ((option === 2)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New Description"; this.updateName = "Description"; this.updateVariable = this.paperData.description; }
     if ((option === 3)) { this.isUpdateResource = true; this.selectOption = option; this.placeHolder = "New Resource"; this.updateName = "Resource"; this.updateVariable = this.filetoUpdate; }
     if ((option === 1)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New Title"; this.updateName = "Title"; this.updateVariable = this.paperData.title; }
+    if ((option === 4)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "No of Questions"; this.updateName = "No Of Questions"; this.updateVariable = this.paperData.no_of_questions; }
+    if ((option === 5)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "No of Answers"; this.updateName = "No Of Answers"; this.updateVariable = this.paperData.no_of_answers; }
 
   }
 
@@ -158,6 +160,24 @@ export class PaperMoreDetailsComponent implements OnInit {
     if (this.selectOption == 1) {
 
       this.paperData.title = this.updateVariable;
+      this.errorUpdateMessage = "";
+      this.isUpdateVariable = false;
+      this.confirmUpdate = true;
+
+    }
+    //no of questions
+    if (this.selectOption == 4) {
+
+      this.paperData.no_of_questions = this.updateVariable;
+      this.errorUpdateMessage = "";
+      this.isUpdateVariable = false;
+      this.confirmUpdate = true;
+
+    }
+    //no of answers
+    if (this.selectOption == 5) {
+
+      this.paperData.no_of_answers = this.updateVariable;
       this.errorUpdateMessage = "";
       this.isUpdateVariable = false;
       this.confirmUpdate = true;
@@ -233,6 +253,9 @@ export class PaperMoreDetailsComponent implements OnInit {
         this.confirmUpdate = false;
         this.paperData = response;
 
+        this.noOfQuestions = this.paperData.no_of_questions; //
+        this.noOfAnswers = this.paperData.no_of_answers; //
+     
       },
       error => {
         console.log(error);
@@ -396,7 +419,7 @@ export class PaperMoreDetailsComponent implements OnInit {
       for (var j = 1; j < (this.noOfAnswers) % 10 + 1; j++) {
         //this.ans[(i-1)*4+(j-1)]=1;
         //this.ans[(i*4)+1]=this.answers[i - 1][];
-        this.ans+=(this.answers[i-1][j-1].toString());
+        this.ans += (this.answers[i - 1][j - 1].toString());
       }
     }
     this.paperAnswerMap = new PaperAnswerMap(this.paperData, this.ans);
@@ -417,6 +440,47 @@ export class PaperMoreDetailsComponent implements OnInit {
         this.handleErrorResponse(error);
       }
     )
+  }
+
+  addMoreAnswers(val) {
+    console.log("Adding more answers");
+    console.log(this.noOfQuestions);
+    //If entered numbers are more than 
+    if (this.noOfQuestions > this.paperData.no_of_questions) {
+      console.log("Large1");
+      for (var i = this.paperData.no_of_questions + 1; i < (this.noOfQuestions % 10) + 1; i++) {
+
+        console.log("plus one" + i);
+        this.questionCount.push(i);
+        console.log("Large2");
+        this.answers[i - 1] = [];
+        console.log("Large3");
+      }
+      for (var i = this.paperData.no_of_questions + 1; i < (this.noOfQuestions) % 10 + 1; i++) {
+        console.log("Large4");
+        for (var j = 1; j < (this.noOfAnswers) % 10 + 1; j++) {
+          console.log("Large5");
+          this.answers[i - 1].push(0);
+          console.log("Large6");
+        }
+      }
+    }
+    // this.questionCount=[];
+    // this.answerCount=[];
+    // for (var i = 1; i < (this.noOfQuestions) % 10 + 1; i++) {
+    //   this.questionCount.push(i);
+    // }
+    // for (var i = 1; i < (this.noOfAnswers) % 10 + 1; i++) {
+    //   this.answerCount.push(i);
+    // }
+    // for (var i = 1; i < (this.noOfQuestions) % 10 + 1; i++) {
+    //   this.answers[i - 1] = [];
+    // }
+    // for (var i = 1; i < (this.noOfQuestions) % 10 + 1; i++) {
+    //   for (var j = 1; j < (this.noOfAnswers) % 10 + 1; j++) {
+    //     this.answers[i - 1].push(0);
+    //   }
+    // }
   }
 
   //error handling
