@@ -255,7 +255,7 @@ export class PaperMoreDetailsComponent implements OnInit {
 
         this.noOfQuestions = this.paperData.no_of_questions; //
         this.noOfAnswers = this.paperData.no_of_answers; //
-     
+
       },
       error => {
         console.log(error);
@@ -372,23 +372,28 @@ export class PaperMoreDetailsComponent implements OnInit {
     }
     this.paperService.getAnswers(this.paperData.paperId).subscribe(
       response => {
-        this.paperQuestions = response;
-        for (var i = 0; i < (this.noOfQuestions) % 10; i++) {
-          console.log(this.paperQuestions[i].answer);
-          for (var j = 0; j < (this.noOfAnswers) % 10; j++) {
-            console.log(this.paperQuestions[i].answer[j] + "  ,");
-            this.answers[i][j] = parseInt(this.paperQuestions[i].answer[j], 10);
-            if (this.paperQuestions[i].answer[j] == "0") {
-              this.isChecked[i][j] = false;
-            } else {
-              this.isChecked[i][j] = true;
-            }
+        if (response != null) {
+          this.paperQuestions = response;
+          for (var i = 0; i < (this.noOfQuestions) % 10; i++) {
+            console.log(this.paperQuestions[i].answer);
+            for (var j = 0; j < (this.noOfAnswers) % 10; j++) {
+              console.log(this.paperQuestions[i].answer[j] + "  ,");
+              this.answers[i][j] = parseInt(this.paperQuestions[i].answer[j], 10);
+              if (this.paperQuestions[i].answer[j] == "0") {
+                this.isChecked[i][j] = false;
+              } else {
+                this.isChecked[i][j] = true;
+              }
 
+            }
           }
+          this.viewAnswers = true;
+          // console.log(this.paperQuestions[0].answer+"In Loading answers");
+          // this.handleErrorResponse(this.papers[0].adminStaff==null);
         }
-        this.viewAnswers = true;
-        // console.log(this.paperQuestions[0].answer+"In Loading answers");
-        // this.handleErrorResponse(this.papers[0].adminStaff==null);
+        if(response==null){
+          console.log("No Answers");
+        }
       },
       error => {
         //this.errorMessage=response;
