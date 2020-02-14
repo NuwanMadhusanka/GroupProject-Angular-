@@ -23,7 +23,7 @@ import { VehicleCategoryModel } from '../../ClassModel/MapObject/VehicleCategory
   styleUrls: ['./vehicle-add.component.scss']
 })
 export class VehicleAddComponent implements OnInit {
-   [x: string]: any;
+  //  [x: string]: any;
 
   VehicleCategoryListData:VehicleCategoryModel[]=[];
   fuel_typeData:VehicleModel[]=[];
@@ -31,9 +31,21 @@ export class VehicleAddComponent implements OnInit {
 
   transmissionData:any[] = [
     {id:1 ,name:'Auto'},
-    {id:2 ,name:'MAnual'}
+    {id:2 ,name:'Manual'}
    
   ];
+
+  fueltypeData:any[] = [
+    {id:1 ,name:'Diesel'},
+    {id:2 ,name:'Petrol'}
+   
+  ];
+
+  statusData:any[]=[
+    {id:0 ,name:'Not Available'},
+    {id:1 ,name:'Available'}
+  ]
+  ;
   
 
   //form variables
@@ -41,12 +53,12 @@ export class VehicleAddComponent implements OnInit {
   brand:String="";
   number:String="";
   model:String="";
-  fuel_type:Number;
+  fuelType:Number;
   transmission:Number;
   document_lic:String="";
   // instructor_id:InstructorModel;
   status:Number;
-  vehicle_category_id:VehicleCategoryModel;
+  selectvehicleCategory:VehicleCategoryModel;
  // vehicle_category_id:Number;
 
   // insurance_period:Date;
@@ -110,6 +122,7 @@ export class VehicleAddComponent implements OnInit {
     this.errorTransmission="";
     this.errorDocumentLic="";
     this.errorStatus="";
+    this.errorVehicleCategoryId="";
     // this.errorInsurancePeriod="";
 
 
@@ -134,8 +147,8 @@ export class VehicleAddComponent implements OnInit {
 
 
     //  validate fuel_type
-     if(this.fuel_type == null){
-      this.errorFuelType="fuel_type should be selected.";
+     if(this.fuelType == null){
+      this.errorFuelType="fuelType should be selected.";
       errorFlag=true;
   }
 
@@ -170,7 +183,7 @@ export class VehicleAddComponent implements OnInit {
   
     //  validate vehicleCategiryId
 
-    if(this.vehicle_category_id == null){
+    if(this.selectvehicleCategory == null){
       this.errorVehicleCategoryId="insert vcid";
       errorFlag=true;
   }
@@ -181,14 +194,14 @@ export class VehicleAddComponent implements OnInit {
   console.log(this.number);
   console.log(this.document_lic);
   console.log(this.transmission);
-  console.log(this.fuel_type);
-  console.log(this.vehicle_category_id);
+  console.log(this.fuelType);
+  console.log(this.selectvehicleCategory);
   console.log(this.status);
   // console.log(this.insurance_period);
   if(!errorFlag){
     console.log("in vehcle add cmts after adding");
-    this.vehicleService.VehicleAdd(new VehicleModel(-1,this.brand,this.model,this.fuel_type,this.transmission,this.document_lic,this.status,this.number,this.vehicle_category_id)).subscribe(
-          response => {
+  
+    this.vehicleService.VehicleAdd(new VehicleModel(-1,this.brand,this.model,this.fuelType,this.transmission,this.document_lic,this.status,this.number,this.selectvehicleCategory)).subscribe(          response => {
             console.log(response);
             this.router.navigate(['vehicle-list'])}, 
           error => {
@@ -239,17 +252,17 @@ export class VehicleAddComponent implements OnInit {
   };
 
 
-  // showfuel_type(){
-  //   this.vehicleService.vehicleList().subscribe(
-  //     response => {
-  //         this.fuel_typeData=response;
-  //     },
-  //     error => {
-  //         console.log(error);
-  //         this.handleErrorResponse(error);
-  //     }
-  //   );
-  // }
+  showfuel_type(){
+    this.vehicleService.vehicleList().subscribe(
+      response => {
+          this.fuel_typeData=response;
+      },
+      error => {
+          console.log(error);
+          this.handleErrorResponse(error);
+      }
+    );
+  }
   Showtransmission(){
     this.vehicleService.vehicleList().subscribe(
       response => {
@@ -266,6 +279,7 @@ export class VehicleAddComponent implements OnInit {
     this.vehicleService.getVehicleCategoryList().subscribe(
       response => {
         this.VehicleCategoryListData=response;
+        console.log(this.VehicleCategoryListData);
     },
     error => {
         console.log(error);

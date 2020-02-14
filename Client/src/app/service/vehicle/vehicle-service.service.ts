@@ -41,6 +41,7 @@ export class VehicleServiceService {
   }
 
 
+
   addVehicleCategory(vehicleCategory:VehicleCategoryModel){
     return this.http.post<VehicleCategoryModel>(`${API_URL}/vehicles/vehiclecategory`,vehicleCategory);  
   }
@@ -74,6 +75,8 @@ export class VehicleServiceService {
   getFuelData(){
     return this.http.get<FuelPaymentModel[]>(`${API_URL}/vehicle/fuel`);
   }
+
+  
 
   addVehicleFuelData(userId:Number,fuelData:FuelPaymentModel){
     return this.http.post<any>(`${API_URL}/vehicle/fuel/${userId}`,fuelData);

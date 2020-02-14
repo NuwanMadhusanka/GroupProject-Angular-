@@ -95,7 +95,7 @@
                     <label for="sel1">Transmision:</label>
                     <select  class="form-control" [(ngModel)]="transmission" name="transmission">
                       <option [ngValue]="undefined" selected disabled>Select a transmission</option>
-                      <option *ngFor="let transmission1 of transmissionData"  [ngValue]="transmission1.id" >{{transmission1.name}}</option>
+                      <option *ngFor="let transmissionData of transmissionData"  [ngValue]="transmissionData.id" >{{transmissionData.name}}</option>
                     </select>
                     <small *ngIf="errorTransmission" class="text-danger">{{errorTransmission}}</small>
               </div>
@@ -167,35 +167,39 @@
                  </div> -->
                  <!-- Finish Day Selection -->
 
-               
-                
+                 <div class="col-sm-8 col-lg-12">
+                  <div>
+                      
+                        <label for="sel1">fuelType:</label>
+                        <select  class="form-control" [(ngModel)]="fuelType" name="fuelType">
+                          <option [ngValue]="undefined" selected disabled>Select a fuel type</option>
+                          <option *ngFor="let fueltypeData of fueltypeData"  [ngValue]="fueltypeData.id" >{{fueltypeData.name}}</option>
+                        </select>
+                        <small *ngIf="errorFuelType" class="text-danger">{{errorFuelType}}</small>
+                  </div>
+               </div>
 
-                <div class="row">
-                  <div class="col-md-5">
-                    <div class="form-group">
-                      <label>fuel_type</label>
-                      <input [(ngModel)]="fuel_type" type="text" class="form-control" placeholder="fuel_type" name="fuel_type">
-                      <small *ngIf="errorFuelType" class="text-danger">{{errorFuelType}}</small>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-5">
-                    <div class="form-group">
-                      <label>status</label>
-                      <input [(ngModel)]="status" type="text" class="form-control" placeholder="status" name="status">
+               <div class="col-sm-8 col-lg-12">
+                <div>
+                    
+                      <label for="sel1">status:</label>
+                      <select  class="form-control" [(ngModel)]="status" name="status">
+                        <option [ngValue]="undefined" selected disabled>Select a status</option>
+                        <option *ngFor="let statusData of statusData"  [ngValue]="statusData.id" >{{statusData.name}}</option>
+                      </select>
                       <small *ngIf="errorStatus" class="text-danger">{{errorStatus}}</small>
-                    </div>
-                  </div>
                 </div>
+             </div>
+                
+           
             
                  <div class="col-sm-8 col-lg-12">
                   <div>
                       
                         <label for="sel1">Vehicle Category:</label>
-                        <select  class="form-control" [(ngModel)]="vehicle_category_id" name="Selectvehicle_category_id">
+                        <select  class="form-control" [(ngModel)]="selectvehicleCategory" name="Selectvehicle_category_id">
                           <option [ngValue]="undefined" selected disabled>Select a Vehicle Category</option>
-                          <option (click)="getVehicleCategoryLit" *ngFor="let vehicle_category of VehicleCategoryListData"  [ngValue]="vehicle_category" >{{vehicle_category.Category}}</option>
+                          <option  *ngFor="let VehicleCategoryListData of VehicleCategoryListData"  [ngValue]="VehicleCategoryListData.vehicleCategoryId" >{{VehicleCategoryListData.category}}</option>
                         </select>
                         <small *ngIf="errorVehicleCategoryId" class="text-danger">{{errorVehicleCategoryId}}</small>
                   </div>

@@ -7,14 +7,14 @@ export class VehicleModel{
         public vehicleId:Number,
         public brand:String,
         public model:String,
-        public fuel_type: Number,
+        public fuelType: Number,
         public transmission:Number,
         public document_lic:String,
         // public instructorId:InstructorModel,
         public status:Number,
         public number:String,
         // public insurancePeriod:Date,
-        public vehicle_category_id:VehicleCategoryModel
+        public vehicleCategoryId:VehicleCategoryModel
         
 
     ){}
