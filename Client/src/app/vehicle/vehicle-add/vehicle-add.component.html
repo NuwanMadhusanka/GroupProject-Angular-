@@ -95,7 +95,7 @@
                     <label for="sel1">Transmision:</label>
                     <select  class="form-control" [(ngModel)]="transmission" name="transmission">
                       <option [ngValue]="undefined" selected disabled>Select a transmission</option>
-                      <option (click)="Showtransmission()" *ngFor="let transmission of transmissionData"  [ngValue]="transmission" >{{transmissionData.id}}</option>
+                      <option *ngFor="let transmission1 of transmissionData"  [ngValue]="transmission1.id" >{{transmission1.name}}</option>
                     </select>
                     <small *ngIf="errorTransmission" class="text-danger">{{errorTransmission}}</small>
               </div>

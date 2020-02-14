@@ -34,6 +34,7 @@ export class VehicleAddComponent implements OnInit {
     {id:2 ,name:'MAnual'}
    
   ];
+  
 
   //form variables
   // vehicleId:Number;
