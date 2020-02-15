@@ -56,6 +56,9 @@ import { PaperMoreDetailsComponent } from '../../paper/paper-more-details/paper-
 import { PaperAddComponent } from '../../paper/paper-add/paper-add.component';
 import { PdfListForStudentsComponent } from '../../pdf/pdf-list-for-students/pdf-list-for-students.component';
 import { VideoListForStudentsComponent } from '../../video/video-list-for-students/video-list-for-students.component';
+import { PaperListForStudentsComponent } from '../../paper/paper-list-for-students/paper-list-for-students.component';
+import { PaperAnswerSheetComponent } from '../../paper/paper-answer-sheet/paper-answer-sheet.component';
+import { PaperMarkListComponent } from '../../paper/paper-marks-list/paper-mark-list.component';
 
 
 
@@ -130,7 +133,10 @@ import { VideoListForStudentsComponent } from '../../video/video-list-for-studen
     PaperListComponent,
     PaperMoreDetailsComponent,
     PaperAddComponent,
-    
+    PaperListForStudentsComponent,
+    PaperAnswerSheetComponent,
+    PaperMarkListComponent,
+
 
   ]
 })

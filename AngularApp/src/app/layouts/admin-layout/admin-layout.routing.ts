@@ -49,8 +49,11 @@ import { InstructorDeactivatedListComponent } from '../../instructor/instructor-
 import { PaperListComponent } from '../../paper/paper-list/paper-list.component';
 import { PaperMoreDetailsComponent } from '../../paper/paper-more-details/paper-more-details.component';
 import { PaperAddComponent } from '../../paper/paper-add/paper-add.component';
+import { PaperListForStudentsComponent } from '../../paper/paper-list-for-students/paper-list-for-students.component';
+import { PaperAnswerSheetComponent } from '../../paper/paper-answer-sheet/paper-answer-sheet.component';
 import { PdfListForStudentsComponent } from '../../pdf/pdf-list-for-students/pdf-list-for-students.component';
 import { VideoListForStudentsComponent } from '../../video/video-list-for-students/video-list-for-students.component';
+import { PaperMarkListComponent } from '../../paper/paper-marks-list/paper-mark-list.component';
 
 
 
@@ -118,6 +121,9 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'paper-list', component: PaperListComponent },
     { path: 'paper-more-details/:id', component: PaperMoreDetailsComponent },
     { path: 'paper-add', component: PaperAddComponent },
+    { path: 'paper-list-for-students', component: PaperListForStudentsComponent },
+    { path: 'paper-answer-sheet/:id', component: PaperAnswerSheetComponent },
+    { path: 'paper-mark-list', component: PaperMarkListComponent },
 
     { path: 'time-table-to-update/:id', component: TimeTableComponent, canActivate: [RouteGuardServiceService] },
 

@@ -81,6 +81,7 @@ export class SidebarComponent implements OnInit {
       { path: '/student-payment/' + sessionStorage.getItem("userId") + '/ ', title: 'Payment', icon: 'business_money-coins', class: '' },
       { path: '/pdf-list-for-students/', title: 'Pdf', icon: 'files_single-copy-04', class: '' },
       { path: '/video-list-for-students/', title: 'Video', icon: 'files_single-copy-04', class: '' },
+      { path: '/paper-list-for-students/', title: 'Paper', icon: 'files_single-copy-04', class: '' },
 
     ];
 

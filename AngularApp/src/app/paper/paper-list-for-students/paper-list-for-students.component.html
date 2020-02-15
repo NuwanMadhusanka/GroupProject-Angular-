@@ -19,9 +19,7 @@
         <div class="card-header">
           <div class="row">
             <div class="col-md-9">
-              <h4 class="card-title"> Paper List</h4>
-              <a (click)=addPaper()><button type="button" class="btn btn-success btn-sm" title="Add Paper"><i class="fas fa-plus"></i></button></a>
-              <a (click)=viewMarks()><button type="button" class="btn btn-info btn-sm" title="View Submitted Paper Marks"><i class="far fa-file"></i></button></a>
+              <h4 class="card-title"> Written Examination - ModelPapers</h4>
 
             </div>
 
@@ -47,28 +45,24 @@
             <table class="table">
               <thead class=" text-primary">
                 <th></th>
-                <th>Title</th>
-              <!--  <th>Description</th>-->
-                <th>Added Date</th>
-                <th>Resource</th>
+                <th></th>
+                <th></th>
 
               </thead>
               <tbody>
                 <tr *ngFor="let paper of filteredPaper; let i = index">
 
-                  <td>{{i+1}}</td>
+                  <!--<td>{{i+1}}</td>
                   <td>{{paper.title}}</td>
-                <!--  <td>{{paper.description}}</td>-->
-                  <td>{{paper.addedDate}}</td>
                   <td><a href="{{apiUrl}}/api/file/{{paper.paperId}}/3">{{paper.paperId}}.paper</a></td>
                   <td>
                     <a (click)=moreDetails(paper.paperId)><button class="btn btn-info btn-sm"><i class="fas fa-eye fa-sm" title="MoreDetails"></i></button></a>
-                    <a (click)=deletePaper(paper.paperId)><button class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm" title="Delete Paper"></i></button></a>
-                    <!--  <a  (click)=addPackage(student.studentId)><button class="btn btn-primary btn-sm"><i class="fas fa-plus fa-sm" title="Add Package"></i></button></a>
-                    <a  (click)=addPayment(student.studentId)><button class="btn btn-secondary btn-sm"><i class="fas fa-dollar-sign fa-sm" title="Add Payment"></i></button></a>
-                    <a  
-                 -->
-                  </td>
+                  </td>-->
+
+                 <td>&nbsp;&nbsp;<i class="now-ui-icons files_paper">&nbsp;</i><a href="{{apiUrl}}/api/file/{{paper.paperId}}/3">{{paper.title}}&nbsp; - {{paper.paperId}}.pdf</a>
+                 </td>
+                 <td><a (click)=moreDetails(paper.paperId)><button class="btn btn-info btn-sm"><i class="fas fa-eye fa-sm" title="MoreDetails"></i></button></a></td>
+
                 </tr>
               </tbody>
             </table>

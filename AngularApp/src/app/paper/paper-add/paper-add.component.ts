@@ -209,16 +209,6 @@ export class PaperAddComponent implements OnInit {
           this.savedPaperDetails = response;
 
           console.log(response);
-          /* console.log(response);
-           Swal.fire({
-             position: 'top-end',
-             type: 'success',
-             title: 'Paper Successfuly saved.',
-             showConfirmButton: false,
-             timer: 2000
-           });
-           this.router.navigate(['paper-list'])*/
-          //this.savedPaperDetails=response;
           this.fileUploadService.fileUpload(this.selectedFiles.item(0), this.savedPaperDetails.paperId, 3).subscribe(
             response => {
               console.log("In file uploading");

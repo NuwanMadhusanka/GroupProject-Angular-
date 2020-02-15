@@ -9,11 +9,11 @@ import { API_URL, WEBSOCKETENDPOINT, WEBSOCKETTOPIC } from '../../app.constants'
 
 
 @Component({
-  selector: 'app-paper-list',
-  templateUrl: './paper-list.component.html',
-  styleUrls: ['./paper-list.component.scss']
+  selector: 'app-paper-list-for-students',
+  templateUrl: './paper-list-for-students.component.html',
+  styleUrls: ['./paper-list-for-students.component.scss']
 })
-export class PaperListComponent implements OnInit {
+export class PaperListForStudentsComponent implements OnInit {
 
   errorMessage = "";
   papers: PaperModel[] = [];
@@ -86,95 +86,9 @@ export class PaperListComponent implements OnInit {
   //navigate to more details page of paper
   moreDetails(paperId) {
     console.log("in paperlistcomTS " + paperId);
-    this.router.navigate(['paper-more-details', paperId]);
+    this.router.navigate(['paper-answer-sheet', paperId]);
     // console.log(this.router.navigate(['paper-more-details',paperId]));
   }
 
-  addPaper() {
-    console.log("In paperlist com ts 1");
-    this.router.navigate(['paper-add']);
-    console.log("In paperlist com ts 2");
-  }
-
-   viewMarks() {
-    console.log("View Marks");
-    this.router.navigate(['paper-mark-list']);
-  }
-
-  //delete Paper
-  deletePaper(paperId: Number) {
-    console.log("INpaperDelinCOMTS");
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "Delete Paper.Can't revert the Data!",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.value) {
-        console.log("INpaperDelinCOMTS2");
-        //Call to API
-        this.paperService.deletePaper(paperId).subscribe(
-          response => {
-            this.paperList();
-            Swal.fire({
-              position: 'center',
-              type: 'success',
-              title: 'PDf id :' + paperId + ' record was successfuly deldeted',
-              showConfirmButton: false,
-              timer: 3000
-            });
-          },
-          error => {
-            console.log("error");
-            console.log(error);
-            this.handleErrorResponse(error);
-            Swal.fire({
-              position: 'center',
-              type: 'error',
-              title: 'PDf id :' +paperId + '\'s record was not successfuly deleted',
-              showConfirmButton: false,
-              timer: 3000
-            });
-          }
-
-        )
-      }
-    })
-  }
-
-
-
-  /*
-    //navigate to studentRegister Page
-    addStudent(){
-        this.router.navigate(['student-add'])
-    }
   
-   
-  
-    //navigate to student-package
-    addPackage(studentId:Number){
-      console.log(studentId);
-      this.router.navigate(['student-package-add',studentId])
-    }
-  
-    //navigate to student-payment 
-    addPayment(studentId){
-      this.router.navigate(['student-payment',studentId])
-    }
-  
-    //navigate to more details page
-    
-  
-    
-  
-    handleErrorResponse(error){
-      this.errorMessage="There is a problem with the service. please try again later.";
-      let httpError = new HttpError();
-      httpError.ErrorResponse(error);
-    }
-  */
 }
