@@ -46,11 +46,17 @@ export class VehicleServiceService {
     return this.http.post<VehicleCategoryModel>(`${API_URL}/vehicles/vehiclecategory`,vehicleCategory);  
   }
 
+  //get specific vehicle
   getVehicle(vehicleId){
+    console.log(vehicleId)
     console.log("in getVehicle vhcle list service");
-    return this.http.get<VehicleModel>(`${API_URL}/vehicle/${vehicleId}`);  
-
+    return this.http.get<VehicleModel>(`${API_URL}/vehicle/${vehicleId}`); 
   }
+
+    //Update Vehicle Data
+    updateVehicle(vehicleId){
+      return this.http.put<VehicleModel>(`${API_URL}/vehicle/update`,vehicleId);
+    }
 
 
   

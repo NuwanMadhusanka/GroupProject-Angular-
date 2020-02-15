@@ -78,7 +78,7 @@ export const AdminLayoutRoutes: Routes = [
     {path:'vehicle-list', component:VehicleListComponent, canActivate:[RouteGuardServiceService]},
     {path:'vehicle-add', component:VehicleAddComponent, canActivate:[RouteGuardServiceService]},
     {path:'vehicle-category-add', component:VehicleCategoryAddComponent, canActivate:[RouteGuardServiceService]},
-    {path:'vehicle-more-details', component:VehicleMoreDetailsComponent, canActivate:[RouteGuardServiceService]},
+    {path:'vehicle-more-details/:id', component:VehicleMoreDetailsComponent, canActivate:[RouteGuardServiceService]},
     {path:'instructor-assign', component:InstructorAssignComponent, canActivate:[RouteGuardServiceService]},
 
     {path:'vehicle-insurance/:id/:vehName/:vehNumber', component:VehicleInsuranceComponent, canActivate:[RouteGuardServiceService]},

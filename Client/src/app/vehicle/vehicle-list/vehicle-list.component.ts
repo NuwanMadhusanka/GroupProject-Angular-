@@ -103,8 +103,9 @@ export class VehicleListComponent {
       console.log("In vehicle-category-add in vhclListCom TS22");
     }
 
-    moreDetails(){
-      this.router.navigate(['vehicle-more-details']);
+    moreDetails(vehicleId){
+      console.log(vehicleId)
+      this.router.navigate(['vehicle-more-details' ,vehicleId]);
       console.log("In vehicle-more-details in vhclListCom TS22");
     }
 
