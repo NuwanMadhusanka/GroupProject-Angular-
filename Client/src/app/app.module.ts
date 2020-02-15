@@ -46,7 +46,7 @@ import { InstructorAssignComponent } from './vehicle/instructor-assign/instructo
     AppComponent,
     AdminLayoutComponent,
     LoginComponent,
-    InstructorAssignComponent,
+    // InstructorAssignComponent,
     // VehicleCategoryAddComponent
     // VehicleMoreDetailsComponent,
     // VehicleAddComponent    

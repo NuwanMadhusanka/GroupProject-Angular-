@@ -199,7 +199,7 @@
                         <label for="sel1">Vehicle Category:</label>
                         <select  class="form-control" [(ngModel)]="selectvehicleCategory" name="Selectvehicle_category_id">
                           <option [ngValue]="undefined" selected disabled>Select a Vehicle Category</option>
-                          <option  *ngFor="let VehicleCategoryListData of VehicleCategoryListData"  [ngValue]="VehicleCategoryListData.vehicleCategoryId" >{{VehicleCategoryListData.category}}</option>
+                          <option  *ngFor="let VehicleCategoryListData of VehicleCategoryListData"  [ngValue]="VehicleCategoryListData" >{{VehicleCategoryListData.category}}</option>
                         </select>
                         <small *ngIf="errorVehicleCategoryId" class="text-danger">{{errorVehicleCategoryId}}</small>
                   </div>
