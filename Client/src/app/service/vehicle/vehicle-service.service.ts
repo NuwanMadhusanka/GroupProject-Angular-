@@ -48,7 +48,7 @@ export class VehicleServiceService {
 
   getVehicle(vehicleId){
     console.log("in getVehicle vhcle list service");
-    return this.http.get<VehicleModel>(`${API_URL}/vehicle`);  
+    return this.http.get<VehicleModel>(`${API_URL}/vehicle/${vehicleId}`);  
 
   }
 

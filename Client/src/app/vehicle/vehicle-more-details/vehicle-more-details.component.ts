@@ -17,12 +17,13 @@ export class VehicleMoreDetailsComponent implements OnInit {
   errorMessage;
   errorUpdateMessage = "";
   httpError = new HttpError();
-
+  vehicleId;
 
 
   vehicleCategory: VehicleCategoryModel = new VehicleCategoryModel(1, 'q', 1);
-  vehicleData: VehicleModel = new VehicleModel(1, 'q', 'q', 1,1,'q',1,'q', this.vehicleCategory);
-  vehicleId: any;
+  vehicleData: VehicleModel = new VehicleModel(1, ' ', ' ', 1,1,' ',1,' ', this.vehicleCategory);
+  // vehicleData: VehicleModel;
+ // vehicleId: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,8 +32,8 @@ export class VehicleMoreDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.vehicleId = this.route.snapshot.params['id'];//get video id by url
-    console.log("In Video more detils ts");
+    this.vehicleId = this.route.snapshot.params['id'];//get vehicle id by url
+    console.log("In vehicle more detils ts");
     this.VehicleDetails();
   }
 
