@@ -5,6 +5,8 @@ import { VehicleServiceService } from '../../service/vehicle/vehicle-service.ser
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpError } from '../../Shared/httpError/HttpError';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+// import { type } from 'os';
 
 
 
@@ -108,6 +110,50 @@ export class VehicleListComponent {
       this.router.navigate(['vehicle-more-details' ,vehicleId]);
       console.log("In vehicle-more-details in vhclListCom TS22");
     }
+
+    // deleteVehicle(vehicleId){
+    //   console.log(vehicleId);
+    //   console.log("In vehicle delete in vhclListCom TS22");
+    // }
+    //delete Video
+    deleteVehicle(vehicleId:Number){
+    console.log("In vehicle delete in vhclListCom TS");
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Delete student Details,Payemnt Details and all other relevant information.Can't revert the Data!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        
+        //Call to API
+        this.vehicleService.deleteVehicle(vehicleId).subscribe(
+          response => {
+            this.vehicleList(); 
+            Swal.fire(
+              'Deleted!',
+              'Vehicle Record has been deleted.',
+              'success'
+            )
+          },
+          error => {
+            console.log(error);
+         //   this.handleErrorResponse(type:any,error);
+            Swal.fire({
+              type: 'error',
+              title: 'Oops...',
+              text: 'Delete Is Not Successful!',
+              footer: 'Something bad happened, please try again later.'
+            })
+          }
+           
+        )
+      }
+    })
+  }
 
   
     closeError(){

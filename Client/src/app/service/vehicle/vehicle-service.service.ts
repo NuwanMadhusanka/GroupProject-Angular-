@@ -55,6 +55,13 @@ export class VehicleServiceService {
       return this.http.put<VehicleModel>(`${API_URL}/vehicle/update`,vehicleId);
     }
 
+    deleteVehicle(vehicleId){
+      console.log("in service vehicle del");
+      return this.http.delete<any>(`${API_URL}/vehicle/${vehicleId}`);
+    }
+
+   
+
 
     addVehicleCategory(vehicleCategory:VehicleCategoryModel){
       console.log("vhcle list service AddVehicleCategory");
