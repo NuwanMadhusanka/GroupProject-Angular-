@@ -88,7 +88,9 @@
         <th>Model</th>
         <th>Number</th>
         <th>Transmition</th>
+        <th>InstructorAssign</th>
         <th>Options</th>
+   
       </thead>
       <tbody id="mytable">
         <tr *ngFor="let vehicle of filteredVehicles; let i = index">
@@ -100,7 +102,8 @@
           <td *ngIf="vehicle.transmission==1">{{vehicle.vehicleCategoryId.category}} (Manual)</td>
           <td *ngIf="vehicle.transmission==2">{{vehicle.vehicleCategoryId.category}} (Auto)</td>
           
-          
+          <td *ngIf="vehicle.instructorId!=undefined">  <button type="button" class="btn btn-success">Assign</button> </td>
+          <td *ngIf="vehicle.instructorId==undefined"> <button type="button" class="btn btn-danger">Not Assign </button> </td>
               <!-- <td></td>
               <td>{{vehicle.Name}})</td>
               <td>{{vehicle.Category}}</td>
@@ -111,6 +114,9 @@
             <a  (click)=moreDetails(vehicle.vehicleId)><button class="btn btn-info btn-sm"><i class="fas fa-eye fa-sm" title="MoreDetails"></i></button></a>
             <a (click)=deleteVehicle(vehicle.vehicleId)><button type="button" class="btn btn-secondary btn-sm" title="Deactivate Vehicle"><i class="fas fa-times"></i></button></a>
           </td>
+         
+          
+         
         </tr>
       </tbody>
     </table>

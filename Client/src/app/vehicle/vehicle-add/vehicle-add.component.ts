@@ -56,7 +56,7 @@ export class VehicleAddComponent implements OnInit {
   fuelType:Number;
   transmission:Number;
   document_lic:String="";
-  // instructor_id:InstructorModel;
+   instructor_id:InstructorModel;
   status:Number;
   selectvehicleCategory:VehicleCategoryModel;
  // vehicle_category_id:Number;
@@ -82,7 +82,6 @@ export class VehicleAddComponent implements OnInit {
   errorMessage:String;
   regexp:any;//Regular Expression for NIC
   test:boolean;//Regular exprssion result
-  instructor_id: InstructorModel;
  // VehicleCategoryModel: any;
   // vehicle_category_id: VehicleCategoryModel;
   // fuel_typeData: VehicleModel[];
@@ -201,7 +200,7 @@ export class VehicleAddComponent implements OnInit {
   if(!errorFlag){
     console.log("in vehcle add cmts after adding");
   
-    this.vehicleService.VehicleAdd(new VehicleModel(-1,this.brand,this.model,this.fuelType,this.transmission,this.document_lic,this.status,this.number,this.selectvehicleCategory)).subscribe(          response => {
+    this.vehicleService.VehicleAdd(new VehicleModel(-1,this.brand,this.model,this.fuelType,this.transmission,this.document_lic,this.instructor_id,this.status,this.number,this.selectvehicleCategory)).subscribe(          response => {
             console.log(response);
             this.router.navigate(['vehicle-list'])}, 
           error => {

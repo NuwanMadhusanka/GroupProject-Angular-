@@ -10,7 +10,7 @@ export class VehicleModel{
         public fuelType: Number,
         public transmission:Number,
         public document_lic:String,
-        // public instructorId:InstructorModel,
+        public instructorId:InstructorModel,
         public status:Number,
         public number:String,
         // public insurancePeriod:Date,

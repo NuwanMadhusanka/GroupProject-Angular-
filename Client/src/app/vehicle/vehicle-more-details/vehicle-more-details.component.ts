@@ -6,6 +6,9 @@ import { VehicleCategoryModel } from '../../ClassModel/MapObject/VehicleCategory
 import { HttpError } from '../../Shared/httpError/HttpError';
 import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
+import { InstructorModel } from '../../ClassModel/InstructorModel';
+import { StaffModel } from '../../ClassModel/StaffModel';
+import { UserModel } from '../../ClassModel/UserModel';
 
 @Component({
   selector: 'app-vehicle-more-details',
@@ -26,8 +29,11 @@ export class VehicleMoreDetailsComponent implements OnInit {
   confirmUpdate = false;
 
 
+  user : UserModel = new UserModel (1, '','','','','','','',new Date(),1,1,1);
+  staff: StaffModel = new StaffModel(1, this.user);
+  instructor:InstructorModel = new InstructorModel(1,'q', this.staff);
   vehicleCategory: VehicleCategoryModel = new VehicleCategoryModel(1, 'q', 1);
-  vehicleData: VehicleModel = new VehicleModel(1, 'q ', 'q ', 1,1,' q',1,' q', this.vehicleCategory);
+  vehicleData: VehicleModel = new VehicleModel(1, 'q ', 'q ', 1,1,' q',this.instructor,1,' q', this.vehicleCategory);
   // vehicleData: VehicleModel;
  // vehicleId: any;
 

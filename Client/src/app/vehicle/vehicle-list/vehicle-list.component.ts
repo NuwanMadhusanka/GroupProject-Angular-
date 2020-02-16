@@ -40,7 +40,8 @@ export class VehicleListComponent {
       vehicle.brand.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
       vehicle.model.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
       vehicle.number.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
-      vehicle.transmission.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1
+      vehicle.transmission.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      vehicle.instructorId.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1
     );
   }
   
