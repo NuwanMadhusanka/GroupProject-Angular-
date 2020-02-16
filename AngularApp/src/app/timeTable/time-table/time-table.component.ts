@@ -37,6 +37,7 @@ export class TimeTableComponent implements OnInit {
   timeValidation;
 
   instructorId=-1;
+  isInstructor=false;
 
   constructor(
     private router: Router,
@@ -59,6 +60,7 @@ export class TimeTableComponent implements OnInit {
     }else{
       this.getTimeTableList();
     }
+    
   }
 
   getTimeTableList() {

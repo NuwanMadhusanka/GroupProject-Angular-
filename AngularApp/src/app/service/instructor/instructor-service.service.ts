@@ -103,6 +103,12 @@ export class InstructorServiceService {
 
   }
 
+  //Get Instructor by UserId
+  getInstructorbyUserId(userId) {
+    console.log("In service get Instructor");
+    return this.http.get<Number>(`${API_URL}/instructor/getbyUser/${userId}`);
+  }
+
   /*
     removeAssignedVehicleofInstructor(instructorId) {
       return this.http.get<Number>(`${API_URL}/instructor/removeAssignedVehicle/${instructorId}`);

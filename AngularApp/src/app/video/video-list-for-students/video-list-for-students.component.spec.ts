@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VideoListForStudentsComponent } from './video-list-for-students.component';
+import { VideoListForStudentsComponent } from './video-list.component';
 
 describe('VideoListForStudentsComponent', () => {
   let component: VideoListForStudentsComponent;

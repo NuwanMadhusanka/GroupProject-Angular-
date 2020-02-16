@@ -49,10 +49,6 @@ export class PdfAddComponent implements OnInit {
   showSpinner = false;
   deletePdfFlag = false;
 
-  //idate:Date;
-
-  //user Validation Instance
-  //userValidation = new UserValidation();
 
   constructor(
     private router: Router,
@@ -121,13 +117,6 @@ export class PdfAddComponent implements OnInit {
       this.errorSelectedFile = "PDF file is mandatory";
     }
 
-    //Save to the DB
-    // if (this.errorMessage == null) {
-    //  console.log(this.errorMessage);
-    //  if(this.selectedFiles==null){
-    //    console.log("file not selected");
-    //  }
-
     if (this.errorAddedDate != "") {
       Swal.fire({
         position: 'center',
@@ -163,16 +152,7 @@ export class PdfAddComponent implements OnInit {
           this.savedPdfDetails = response;
           console.log("PDF adding response came");
           console.log(response);
-          /* console.log(response);
-           Swal.fire({
-             position: 'top-end',
-             type: 'success',
-             title: 'Pdf Successfuly saved.',
-             showConfirmButton: false,
-             timer: 2000
-           });
-           this.router.navigate(['pdf-list'])*/
-          //this.savedPdfDetails=response;
+         
           this.fileUploadService.fileUpload(this.selectedFiles.item(0), this.savedPdfDetails.pdfId, 2).subscribe(
             response => {
               console.log("In file uploading");
@@ -187,7 +167,6 @@ export class PdfAddComponent implements OnInit {
                   showConfirmButton: false,
                   timer: 1500
                 });
-               // this.router.navigate(['pdf-add'])
               } else { //null return
                 Swal.fire({
                   position: 'center',
@@ -204,8 +183,6 @@ export class PdfAddComponent implements OnInit {
             error => { //errors
               this.showSpinner = false;
               this.selectedFiles = undefined;
-              //console.log("Error saving file so Im deleting"+this.savedPdfDetails.pdfId);
-              //this.pdfService.deletePdf(this.savedPdfDetails.pdfId).subscribe()
               Swal.fire({
                 position: 'center',
                 type: 'error',
@@ -250,37 +227,7 @@ export class PdfAddComponent implements OnInit {
   //upload pdf
   selectFile(event) {
     this.showSpinner = true;
-    this.selectedFiles = event.target.files;/*
-   this.fileUploadService.fileUpload(this.selectedFiles.item(0), this.instructorData.staffId.userId.userId, 1).subscribe(
-      response => {
-        if (response == 0) {
-          this.errorMessage = "File size should be less than 9MB";
-        } else if (response == 1) {
-          window.location.reload();
-          Swal.fire({
-            position: 'center',
-            type: 'success',
-            title: 'Update Successful.',
-            showConfirmButton: false,
-            timer: 1500
-          });
-        } else {
-          Swal.fire({
-            position: 'center',
-            type: 'error',
-            title: 'Update not Successful.',
-            showConfirmButton: false,
-            timer: 1500
-          });
-        }
-        this.showSpinner = false;
-        this.selectedFiles = undefined;
-      },
-      error => {
-        this.showSpinner = false;
-        console.log(error);
-      }
-   );*/
+    this.selectedFiles = event.target.files;
   }
 
   closeError() {

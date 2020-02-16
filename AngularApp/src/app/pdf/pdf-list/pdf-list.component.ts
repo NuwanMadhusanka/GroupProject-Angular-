@@ -48,8 +48,6 @@ export class PdfListComponent implements OnInit {
     private router: Router,
     private pdfService: PdfServiceService,
 
-
-
   ) { }
 
   ngOnInit() {
@@ -63,13 +61,9 @@ export class PdfListComponent implements OnInit {
       response => {
         this.pdfs = response;
         this.filteredPdf = this.pdfs;
-        //for(let pdf of this.pdfs){
         console.log(this.pdfs);
-        // }
-        // this.handleErrorResponse(this.pdfs[0].adminStaff==null);
       },
       error => {
-        //this.errorMessage=response;
         this.handleErrorResponse(error);
       }
     )
@@ -87,7 +81,6 @@ export class PdfListComponent implements OnInit {
   moreDetails(pdfId) {
     console.log("in pdflistcomTS " + pdfId);
     this.router.navigate(['pdf-more-details', pdfId]);
-    // console.log(this.router.navigate(['pdf-more-details',pdfId]));
   }
 
   addPdf() {
@@ -140,36 +133,4 @@ export class PdfListComponent implements OnInit {
     })
   }
 
-
-
-  /*
-    //navigate to studentRegister Page
-    addStudent(){
-        this.router.navigate(['student-add'])
-    }
-  
-   
-  
-    //navigate to student-package
-    addPackage(studentId:Number){
-      console.log(studentId);
-      this.router.navigate(['student-package-add',studentId])
-    }
-  
-    //navigate to student-payment 
-    addPayment(studentId){
-      this.router.navigate(['student-payment',studentId])
-    }
-  
-    //navigate to more details page
-    
-  
-    
-  
-    handleErrorResponse(error){
-      this.errorMessage="There is a problem with the service. please try again later.";
-      let httpError = new HttpError();
-      httpError.ErrorResponse(error);
-    }
-  */
 }
