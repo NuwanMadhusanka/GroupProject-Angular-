@@ -66,18 +66,20 @@ export class VehicleServiceService {
     addVehicleCategory(vehicleCategory:VehicleCategoryModel){
       console.log("vhcle list service AddVehicleCategory");
       console.log(vehicleCategory);
-      return this.http.post<any>(`${API_URL}/vehicles/vehiclecategory`,vehicleCategory);  
+      return this.http.post<any>(`${API_URL}/vehicles/vehiclecategory/`,vehicleCategory);  
     }
    
    
   
-  updateVehicleCategory(vehicleCategoryID){
+  updateVehicleCategory(vehicleCategoryId){
     console.log("vhcle list service updateVehicleCategory");
-    return this.http.put<VehicleCategoryModel>(`${API_URL}/vehicles/vehiclecategory`,vehicleCategoryID);  
+    return this.http.put<VehicleCategoryModel>(`${API_URL}/vehicles/vehiclecategory`,vehicleCategoryId);  
   }
 
-  deleteVehicleCategory(vehicleCategoryID){
-    return this.http.delete<Number>(`${API_URL}/vehicles/vehiclecategory/${vehicleCategoryID}`);
+  deleteVehicleCategory(vehicleCategoryId){
+    console.log(vehicleCategoryId);
+    console.log("in service vehicle category del");
+    return this.http.delete<any>(`${API_URL}/vehicles/vehiclecategory/${vehicleCategoryId}`);
   }
 
 

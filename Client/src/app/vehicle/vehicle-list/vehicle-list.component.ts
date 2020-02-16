@@ -120,7 +120,7 @@ export class VehicleListComponent {
     console.log("In vehicle delete in vhclListCom TS");
     Swal.fire({
       title: 'Are you sure?',
-      text: "Delete student Details,Payemnt Details and all other relevant information.Can't revert the Data!",
+      text: "Delete vehicle Details and all other relevant information.Can't revert the Data!",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

@@ -5,6 +5,7 @@ import { VehicleServiceService } from '../../service/vehicle/vehicle-service.ser
 import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-vehicle-category-add',
@@ -42,6 +43,7 @@ export class VehicleCategoryAddComponent implements OnInit {
     //Filter Option Implement
     filteredVehiclecats: VehicleCategoryModel[];
     private _searchTerm: string;
+  vehicleCategoryId: any;
     get searchTerm(): string {
       return this._searchTerm;
     }
@@ -53,21 +55,23 @@ export class VehicleCategoryAddComponent implements OnInit {
     //Filtering method
     filterVehicleCat(searchString: string) {
   
-      return this.vehicleCategorListData.filter(vehicleCat =>
-        vehicleCat.vehicleCategoryId.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
-        vehicleCat.category.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
-        vehicleCat.numStudent.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 
+      return this.vehicleCategorListData.filter(vehicleCategory =>
+        vehicleCategory.vehicleCategoryId.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+        vehicleCategory.category.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+        vehicleCategory.numStudent.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 
         // vehicle.number.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
         // vehicle.transmission.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1
       );
     }
 
   constructor(
+    private route: ActivatedRoute,
     private router:Router,
     private vehicleService:VehicleServiceService
   ) { }
 
   ngOnInit() {
+    // this.vehicleCategoryId = this.route.snapshot.params['id'];
     this.vehicleCategoryList();
   }
 
@@ -248,10 +252,10 @@ export class VehicleCategoryAddComponent implements OnInit {
   //Finish Add new Time Slot Section
 
   // Delete Time Slot Section
-  delete(vehicleCategory:VehicleCategoryModel){
+  delete(vehicleCategoryId:Number){
     Swal.fire({
       title: 'Are you sure?',
-      text: "Delete Time Slot of "+vehicleCategory.category+" - "+vehicleCategory.numStudent,
+      text: "Delete Time Slot of ",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -260,45 +264,33 @@ export class VehicleCategoryAddComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         
-        //Call to API
-        this.vehicleService.deleteVehicleCategory(vehicleCategory.vehicleCategoryId).subscribe(
-          response => {
-              if(response==0){//not delete because of foreignkey constrain
-                Swal.fire({
-                  position: 'center',
-                  type: 'error',
-                  title: 'Delete not successful.',
-                  footer:'There is some lessons at this time slot',
-                  showConfirmButton: false,
-                  timer: 3000
-                });
-              }
-              if(response==1){//delete success
-                Swal.fire({
-                  position: 'center',
-                  type: 'success',
-                  title: 'Delete Successful.',
-                  showConfirmButton: false,
-                  timer: 2000
-                });
-              }
-          },
-          error => {
-            console.log(error);
-            this.handleErrorResponse(error);
-            Swal.fire({
-              position: 'center',
-              type: 'error',
-              title: 'Delete not successful.',
-              showConfirmButton: false,
-              timer: 2000
-            });
-          }
-           
-        );
-      }
-    })
-  }
+       //Call to API
+       this.vehicleService.deleteVehicleCategory(vehicleCategoryId).subscribe(
+        response => {
+          
+          this.vehicleCategoryList(); 
+          Swal.fire(
+            'Deleted!',
+            'Vehicle Record has been deleted.',
+            'success'
+          )
+        },
+        error => {
+          console.log(error);
+       //   this.handleErrorResponse(type:any,error);
+          Swal.fire({
+            type: 'error',
+            title: 'Oops...',
+            text: 'Delete Is Not Successful!',
+            footer: 'Something bad happened, please try again later.'
+          })
+        }
+         
+      )
+    }
+  })
+}
+
   // Finish Delete Time Slot Section
 
   //error handling
