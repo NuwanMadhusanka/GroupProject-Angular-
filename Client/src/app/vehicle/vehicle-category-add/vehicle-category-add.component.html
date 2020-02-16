@@ -22,13 +22,13 @@
                 <div class="col-sm-6 col-lg-4">
                     <div class="form-group">
                         <label>Category:</label>
-                        <input type="text"  class="form-control"  name="Category"  [(ngModel)]="newVehicleCategory.numategory"/>
-                        <small *ngIf="errorCategoryNew" class="text-danger">{{errorCategoryNew}}</small>
+                        <input type="text"  class="form-control"  name="Category"  [(ngModel)]="category"/>
+                        <small *ngIf="errorCategory" class="text-danger">{{errorCategory}}</small>
                     </div>
                     <div class="form-group">
                         <label>Number of Students:</label>
-                        <input type="number"  class="form-control"  name="to"  [(ngModel)]="newVehicleCategory.num_students"/>
-                        <small *ngIf="errorNum_studentNew" class="text-danger">{{errorNum_studentNew}}</small>
+                        <input type="number"  class="form-control"  name="to"  [(ngModel)]="numStudent"/>
+                        <small *ngIf="errorNum_student" class="text-danger">{{errorNum_student}}</small>
                     </div>
                   </div>
                   <button  (click)="saveConfirm()" type="button" class="btn btn-secondary btn-round">Save</button>
@@ -45,7 +45,7 @@
                     <th>Option</th>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let vehicleCategory of vehicleCategorListData">
+                    <tr *ngFor="let vehicleCategory of vehicleCategorListData; let i=index;">
                         <td>{{i+1}})</td>
                       <td>{{vehicleCategory.category}}</td>
                       <td>{{vehicleCategory.numStudent}}</td>
@@ -74,7 +74,7 @@
                     </div>
                     <div class="form-group">
                         <label>Number of Students:</label>
-                        <input type="text"  class="form-control"  name="to"  [(ngModel)]="updateVehicleCategory.num_students"/>
+                        <input type="text"  class="form-control"  name="to"  [(ngModel)]="updateVehicleCategory.numStudent"/>
                         <small *ngIf="errorNum_student" class="text-danger">{{errorNum_student}}</small>
                     </div>
                   </div>

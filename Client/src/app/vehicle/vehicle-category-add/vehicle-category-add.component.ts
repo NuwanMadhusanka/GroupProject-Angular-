@@ -4,6 +4,7 @@ import { VehicleCategoryModel } from '../../ClassModel/MapObject/VehicleCategory
 import { VehicleServiceService } from '../../service/vehicle/vehicle-service.service';
 import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vehicle-category-add',
@@ -62,6 +63,7 @@ export class VehicleCategoryAddComponent implements OnInit {
     }
 
   constructor(
+    private router:Router,
     private vehicleService:VehicleServiceService
   ) { }
 
@@ -100,6 +102,8 @@ export class VehicleCategoryAddComponent implements OnInit {
     this.errorNum_studentNew="";
     if(this.updateVehicleCategory.category!=null){
       if(this.updateVehicleCategory.numStudent!=null){
+        console.log(this.updateVehicleCategory.category);
+        console.log(this.updateVehicleCategory.numStudent);
         Swal.fire({
           title: 'Are you sure?',
           text: "Is update the Vehicle Category(This result will effect to whole the Vehicle Category)",
@@ -151,44 +155,96 @@ export class VehicleCategoryAddComponent implements OnInit {
    
   // Finish update time slot data 
 
-  // Add new Time Slot Section
+ // Add new Time Slot Section
   addVehicleCategory(){
     this.isAddVehicleCategory=true;
     this.errorCategory="";
+    this.errorNum_student="";}
+
+  
+
+  //   let errorFlag=false;
+  //   //validate Category
+  //   if(this.category == null){
+  //     this.errorCategory="Insert valid category.";
+  //     errorFlag=true;
+  // }
+
+  //    //validate NumStudents
+  //    if(this.numStudent == null){
+  //     this.errorNum_student="Insert Valid Number.";
+  //     errorFlag=true;
+  // }
+  // console.log(this.category);
+  // console.log(this.numStudent);
+
+  // if(!errorFlag){
+  //   console.log("in vehcle category add cmts after adding");
+  
+  //   this.vehicleService.addVehicleCategory(new VehicleCategoryModel(-1,this.category,this.numStudent)).subscribe(          response => {
+  //           console.log(response);
+  //           this.router.navigate(['vehicle-category-add'])}, 
+  //         error => {
+  //           //If some error occurs it is handled using handleErrorResponse method
+  //           console.log(error);
+  //           this.handleErrorResponse(error);
+  //         }
+  //       ) 
+    
+  // }
+    
+  // }
+  saveConfirm(){
+    this.errorCategory="";
     this.errorNum_student="";
+
+    let errorFlag=false;
+   
+
+    
+    //validate Category
+    if(this.category == null){
+      this.errorCategory="Insert valid category.";
+      errorFlag=true;
   }
 
-  saveConfirm(){
-      this.errorCategoryNew="";
-      this.errorNum_studentNew="";
-      if(this.newVehicleCategory.category!=null){
-        if(this.newVehicleCategory.numStudent!=null){
-            this.vehicleService.addVehicleCategory(this.newVehicleCategory).subscribe(
-              response => {
-                  //console.log(response);
-                  Swal.fire('Save is Completed.');
-                  this.vehicleCategorListData=[];
-                  this.vehicleCategoryList();
-                  this.isAddVehicleCategory=false;
-              },
-              error => {
-                console.log(error);
-                Swal.fire({
-                  type: 'error',
-                  title: 'Oops...',
-                  text: 'Save is not Successful!',
-                  footer: 'Something bad happened, please try again later.'
-                });
-                this.handleErrorResponse(error);
-              }
-            )
-        }else{
-          this.errorCategoryNew="Insert category";
-        }
-      }else{
-        this.errorNum_studentNew="Insert number of students";
-      }
+     //validate NumStudents
+     if(this.numStudent == null){
+      this.errorNum_student="Insert Valid Number.";
+      errorFlag=true;
   }
+ 
+
+  if(!errorFlag){
+    console.log(this.category);
+    console.log(this.numStudent);
+    console.log("in vehcle category add cmts after adding");
+    console.log("in saveConfirm vehicle ctgry add cmts");
+    this.newVehicleCategory = new VehicleCategoryModel(-1,this.category,this.numStudent);
+
+     this.vehicleService.addVehicleCategory(this.newVehicleCategory).subscribe(
+            response => {
+                console.log(response);
+                Swal.fire('Save is Completed.');
+                this.vehicleCategorListData=[];
+                this.vehicleCategoryList();
+                this.isAddVehicleCategory=false;
+            },
+            error => {
+              console.log(error);
+              Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: 'Save is not Successful!',
+                footer: 'Something bad happened, please try again later.'
+              });
+              this.handleErrorResponse(error);
+            }
+          )
+      }
+    
+}
+
   //Finish Add new Time Slot Section
 
   // Delete Time Slot Section

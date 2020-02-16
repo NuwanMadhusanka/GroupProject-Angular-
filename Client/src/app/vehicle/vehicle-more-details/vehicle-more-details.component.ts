@@ -92,7 +92,7 @@ export class VehicleMoreDetailsComponent implements OnInit {
     }
 
       //Model
-      if (this.selectOption == 1) {
+      if (this.selectOption == 2) {
         if ((this.updateVariable == "")) {
           this.errorUpdateMessage = "Insert Valid Model.";
         } else {
@@ -104,7 +104,7 @@ export class VehicleMoreDetailsComponent implements OnInit {
       }
 
         //Number
-    if (this.selectOption == 1) {
+    if (this.selectOption == 3) {
       if ((this.updateVariable == "")) {
         this.errorUpdateMessage = "Insert Valid Number.";
       } else {
@@ -116,7 +116,7 @@ export class VehicleMoreDetailsComponent implements OnInit {
     }
 
       //Transmission
-      if (this.selectOption == 1) {
+      if (this.selectOption == 4) {
         if ((this.updateVariable == "")) {
           this.errorUpdateMessage = "Insert Valid Transmission.";
         } else {
@@ -128,7 +128,7 @@ export class VehicleMoreDetailsComponent implements OnInit {
       }
 
         //FuelType
-    if (this.selectOption == 1) {
+    if (this.selectOption == 5) {
       if ((this.updateVariable == "")) {
         this.errorUpdateMessage = "Insert Valid FuelType.";
       } else {
@@ -140,7 +140,7 @@ export class VehicleMoreDetailsComponent implements OnInit {
     }
 
       //Document License
-      if (this.selectOption == 1) {
+      if (this.selectOption == 6) {
         if ((this.updateVariable == "")) {
           this.errorUpdateMessage = "Insert Valid License Document.";
         } else {

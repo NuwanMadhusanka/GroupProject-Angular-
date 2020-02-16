@@ -42,9 +42,6 @@ export class VehicleServiceService {
 
 
 
-  addVehicleCategory(vehicleCategory:VehicleCategoryModel){
-    return this.http.post<VehicleCategoryModel>(`${API_URL}/vehicles/vehiclecategory`,vehicleCategory);  
-  }
 
   //get specific vehicle
   getVehicle(vehicleId){
@@ -59,10 +56,17 @@ export class VehicleServiceService {
     }
 
 
+    addVehicleCategory(vehicleCategory:VehicleCategoryModel){
+      console.log("vhcle list service AddVehicleCategory");
+      console.log(vehicleCategory);
+      return this.http.post<any>(`${API_URL}/vehicles/vehiclecategory`,vehicleCategory);  
+    }
+   
+   
   
-  updateVehicleCategory(vehicleCategory:VehicleCategoryModel){
+  updateVehicleCategory(vehicleCategoryID){
     console.log("vhcle list service updateVehicleCategory");
-    return this.http.put<any>(`${API_URL}/vehicles/vehiclecategory`,vehicleCategory);  
+    return this.http.put<VehicleCategoryModel>(`${API_URL}/vehicles/vehiclecategory`,vehicleCategoryID);  
   }
 
   deleteVehicleCategory(vehicleCategoryID){
