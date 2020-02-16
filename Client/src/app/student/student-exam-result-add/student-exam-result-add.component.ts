@@ -96,8 +96,13 @@ export class StudentExamResultAddComponent implements OnInit {
     let notPassStudent=this.writtenExamList.length-this.writtenExamListCount;
     this.studentService.submitWrittenExamResult(this.examDate,this.writtenExamListCount,notPassStudent).subscribe(
       response =>{
-          //console.log(response);
-          Swal.fire('Submission is Successful')
+        Swal.fire({
+          position: 'center',
+          type: 'success',
+          title: 'Written examed result saved.',
+          showConfirmButton: false,
+          timer: 2000
+        });
       },
       error =>{
           console.log(error);
@@ -167,12 +172,16 @@ export class StudentExamResultAddComponent implements OnInit {
 
   //submit trial exam result
   submitTrialExamResult(){
-    //console.log("date:"+this.trialDate+"  "+this.trialExamListCount);
     let notPassStudent=this.trialExamList.length-this.trialExamListCount;
     this.studentService.submitTrialExamResult(this.trialDate,this.trialExamListCount,notPassStudent).subscribe(
       response =>{
-          //console.log(response);
-          Swal.fire('Submission is Successful');
+          Swal.fire({
+            position: 'top-end',
+            type: 'success',
+            title: 'Trial exam results saved.',
+            showConfirmButton: false,
+            timer: 2000
+          });
       },
       error =>{
           console.log(error);

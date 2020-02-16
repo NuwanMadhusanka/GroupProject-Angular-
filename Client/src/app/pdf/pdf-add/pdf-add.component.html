@@ -2,78 +2,81 @@
 </div>
 <div class="main-content">
 
-<!-- Error Message -->
-<div *ngIf="errorMessage" class="row">
-<div class="card">
-    <div class="card-body">
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="row">
+    <div class="card">
+      <div class="card-body">
         <div class="alert alert-danger">
-            <button (click)=closeError() type="button" aria-hidden="true" class="close">
+          <button (click)=closeError() type="button" aria-hidden="true" class="close">
               <i class="now-ui-icons ui-1_simple-remove"></i>
             </button>
-            <span>{{errorMessage}}</span>
-          </div>
+          <span>{{errorMessage}}</span>
+        </div>
+      </div>
     </div>
-</div>
-</div>
-<div>
-  
-<!-- Error Message End -->
+  </div>
+  <div>
 
-<div class="row">
-<!-- First Column -->
-<div class="col-md-1"></div>
+    <!-- Error Message End -->
 
-<!-- Second Coulmn -->
-<div class="col-md-10">
-  <div class="card">
-    <div class="card-header">
-      <h5 class="title">Add Pdf</h5>
-    </div>
-    <div class="card-body">
+    <div class="row">
+      <!-- First Column -->
+      <div class="col-md-1"></div>
 
-
-      <form  (ngSubmit)="addPdf()">
-        <!-- End Third Row -->
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <label>Title</label>
-              <input [(ngModel)]="title" type="text" class="form-control" placeholder="Title" name="title">
-              <small *ngIf="errorTags" class="text-danger">{{errorTags}}</small>
-            </div>
+      <!-- Second Coulmn -->
+      <div class="col-md-10">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="title">Add Pdf</h5>
           </div>
-        </div>
-        
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <label>Description</label>
-              <input [(ngModel)]="description" type="text" class="form-control" placeholder="Description" name="description">
-              <small *ngIf="errorDescription" class="text-danger">{{errorDescription}}</small>
-            </div>
+          <div class="card-body">
+
+
+            <form (ngSubmit)="addPdf()">
+              <!-- End Third Row -->
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Title</label>
+                    <input [(ngModel)]="title" type="text" class="form-control" placeholder="Title" name="title">
+                    <small *ngIf="errorTitle" class="text-danger">{{errorTitle}}</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Description</label>
+                    <input [(ngModel)]="description" type="text" class="form-control" placeholder="Description" name="description">
+                  </div>
+                </div>
+              </div>
+
+              <!--uploading pdf-->
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card-body">
+                    <div class="author">
+                      <a>
+                        <label for="upload-pdf"> Upload Pdf&nbsp;</label>
+                        <br> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+                        <img class="avatar border-gray" src="{{apiUrl}}/api/file/{{instructorUserId}}/1" alt="...">
+                        <br>
+                        <input type="file" name="pdf" id="upload-pdf" (change)="selectFile($event)" />
+                        <small *ngIf="errorFile" class="text-danger">{{errorFile}}</small>
+
+                      </a>
+                      <br>
+                    </div>
+                    <div class="button-container">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Submit</button>
+
+            </form>
+
           </div>
-        </div>
-        
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <label>Resource</label>
-              <input [(ngModel)]="resource" type="text" class="form-control" placeholder="Resource" name="resource">
-              <small *ngIf="errorResource" class="text-danger">{{errorResource}}</small>
-            </div>
-          </div>  
-        </div>
-        
-        
-         <button  type="submit" class="btn btn-primary">Submit</button>
-      <!-- </form>
-    </div>-->
-<!--    </div>
-</div>
-
-Third Column 
-<div class="col-md-2"></div>-->
-
-<!-- </div>-->
-  </form>
-</div>

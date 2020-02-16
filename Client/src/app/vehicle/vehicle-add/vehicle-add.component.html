@@ -1,0 +1,244 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="row">
+    <div class="card">
+        <div class="card-body">
+            <div class="alert alert-danger">
+                <button (click)=closeError() type="button" aria-hidden="true" class="close">
+                  <i class="now-ui-icons ui-1_simple-remove"></i>
+                </button>
+                <span>{{errorMessage}}</span>
+              </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Error Message End -->
+
+  <div class="row">
+    <!-- First Column -->
+    <div class="col-md-1"></div>
+
+    <!-- Second Coulmn -->
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Register Vehicle</h5>
+        </div>
+        <div class="card-bodyA">
+          <form (ngSubmit)="addVehicle()">
+            
+            <!-- First Row -->
+            <!-- <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Vehicle ID</label>
+                  <input type="text"  class="form-control" placeholder="Vehicle ID"  name="vehicleId"   [(ngModel)]="vehicleId">
+                  <small *ngIf="errorVehicleID" class="text-danger">{{errorVehicleID}}</small>
+                </div>
+              </div> 
+            </div> -->
+            <!-- End First Row -->
+
+            <!-- Secon Row -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Brand</label>
+                  <input [(ngModel)]="brand" type="text" class="form-control" placeholder="Brand" name="brand">
+                  <small *ngIf="errorBrand" class="text-danger">{{errorBrand}}</small>
+                </div>
+              </div>
+            </div>
+            <!-- End Second Row -->
+
+            
+            <!-- Third Row -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Number</label>
+                  <input [(ngModel)]="number" type="text" class="form-control" placeholder="Number" name="number">
+                  <small *ngIf="errorNumber" class="text-danger">{{errorNumber}}</small>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Model</label>
+                  <input [(ngModel)]="model" type="text" class="form-control" placeholder="Model" name="model">
+                  <small *ngIf="errorModel" class="text-danger">{{errorModel}}</small>
+                </div>
+              </div>
+            </div>
+             <!-- fuel_type selection -->
+             <!-- <div class="col-sm-8 col-lg-12">
+              <div>
+                  
+                    <label for="sel1">fuel_type:</label>
+                    <select  class="form-control" [(ngModel)]="fuel_type" name="fuel_type">
+                      <option [ngValue]="undefined" selected disabled>Select a fuel_type</option>
+                      <option (click)="showfuel_type()" *ngFor="let fuel_type of fuel_typeData"  [ngValue]="fuel_type" >{{Vehicle.fuel_type}}</option>
+                    </select>
+                    <small *ngIf="errorFuelType" class="text-danger">{{errorFuelType}}</small>
+              </div>
+           </div> -->
+           
+           <!-- fuel_type Selection -->
+
+           <!-- Transmision selection -->
+           <div class="col-sm-8 col-lg-12">
+              <div>
+                  
+                    <label for="sel1">Transmision:</label>
+                    <select  class="form-control" [(ngModel)]="transmission" name="transmission">
+                      <option [ngValue]="undefined" selected disabled>Select a transmission</option>
+                      <option *ngFor="let transmissionData of transmissionData"  [ngValue]="transmissionData.id" >{{transmissionData.name}}</option>
+                    </select>
+                    <small *ngIf="errorTransmission" class="text-danger">{{errorTransmission}}</small>
+              </div>
+           </div>
+           <!-- Transmision Selection -->
+
+
+            <!-- <div class="col-md-6">
+              <div class="form-group">
+                <label>Fuel Type</label> -->
+                <!-- <input [(ngModel)]="fuelType" type="text" class="form-control" placeholder="Fuel Type" name="fuelType"> -->
+                <!-- <div class="form-check form-check-radio">
+                  <label class="form-check-label">
+                      <input class="form-check-input" type="radio" ng-model="fuelType" name="exampleRadios1" id="exampleRadios3" value="1" >
+                      Petrol
+                      <span class="form-check-sign"></span>
+                  </label>
+              </div>
+              <div class="form-check form-check-radio">
+                  <label class="form-check-label">
+                      <input class="form-check-input" type="radio" ng-model="fuelType" name="exampleRadios1" id="exampleRadios4" value="2" checked>
+                      Diesel
+                      <span class="form-check-sign"></span>
+                  </label>
+              </div>
+                <small *ngIf="errorFuelType" class="text-danger">{{errorFuelType}}</small>
+              </div>
+            
+          </div> -->
+            <!-- End Third Row -->
+            
+            <!-- Fourth Row -->
+            <!-- <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Transmission</label> 
+                    <input [(ngModel)]="transmission" type="text" class="form-control" placeholder="Transmission" name="transmission">
+   
+                      <div class="form-check form-check-radio">
+                      <label class="form-check-label">
+                          <input class="form-check-input" type="radio" ng-model="transmission" name="exampleRadios" id="exampleRadios1" value="1" >
+                          Auto
+                          <span class="form-check-sign"></span>
+                      </label>
+                  </div>
+                  <div class="form-check form-check-radio">
+                      <label class="form-check-label">
+                          <input class="form-check-input" type="radio" ng-model="transmission" name="exampleRadios" id="exampleRadios2" value="2" checked>
+                          Manual
+                          <span class="form-check-sign"></span>
+                      </label>
+                  </div>
+                    <small *ngIf="errorTransmission" class="text-danger">{{errorTransmission}}</small>
+                  </div>
+                </div>
+              </div> -->
+              <!-- End Fourth Row -->
+
+                  <!-- Fuel Type selection -->
+                  <!-- <div class="col-sm-8 col-lg-6">
+                    <div>
+                        <label for="sel1">Select Fuel Type:</label>
+                        <select class="form-control" name="day" [(ngModel)]="fuelType">
+                          <option [ngValue]="undefined" selected disabled>Select a Day</option>
+                          <option (click)="showInstructor()" *ngFor="let day of dayListData"  [ngValue]="day.id" >{{day.name}}</option>
+                        </select>
+                        <small *ngIf="errorSelectDay" class="text-danger">{{errorSelectDay}}</small>
+                    </div>
+                 </div> -->
+                 <!-- Finish Day Selection -->
+
+                 <div class="col-sm-8 col-lg-12">
+                  <div>
+                      
+                        <label for="sel1">fuelType:</label>
+                        <select  class="form-control" [(ngModel)]="fuelType" name="fuelType">
+                          <option [ngValue]="undefined" selected disabled>Select a fuel type</option>
+                          <option *ngFor="let fueltypeData of fueltypeData"  [ngValue]="fueltypeData.id" >{{fueltypeData.name}}</option>
+                        </select>
+                        <small *ngIf="errorFuelType" class="text-danger">{{errorFuelType}}</small>
+                  </div>
+               </div>
+
+               <div class="col-sm-8 col-lg-12">
+                <div>
+                    
+                      <label for="sel1">status:</label>
+                      <select  class="form-control" [(ngModel)]="status" name="status">
+                        <option [ngValue]="undefined" selected disabled>Select a status</option>
+                        <option *ngFor="let statusData of statusData"  [ngValue]="statusData.id" >{{statusData.name}}</option>
+                      </select>
+                      <small *ngIf="errorStatus" class="text-danger">{{errorStatus}}</small>
+                </div>
+             </div>
+                
+           
+            
+                 <div class="col-sm-8 col-lg-12">
+                  <div>
+                      
+                        <label for="sel1">Vehicle Category:</label>
+                        <select  class="form-control" [(ngModel)]="selectvehicleCategory" name="Selectvehicle_category_id">
+                          <option [ngValue]="undefined" selected disabled>Select a Vehicle Category</option>
+                          <option  *ngFor="let VehicleCategoryListData of VehicleCategoryListData"  [ngValue]="VehicleCategoryListData" >{{VehicleCategoryListData.category}}</option>
+                        </select>
+                        <small *ngIf="errorVehicleCategoryId" class="text-danger">{{errorVehicleCategoryId}}</small>
+                  </div>
+               </div>
+               <!-- vehicle Category Selection -->
+            <!-- 5 Row -->
+            <div class="row">
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label>Document Lic</label>
+                    <input [(ngModel)]="document_lic" type="text" class="form-control" placeholder="Document Lic" name="document_lic">
+                    <small *ngIf="errorDocumentLic" class="text-danger">{{errorDocumentLic}}</small>
+                  </div>
+                </div>
+              </div>
+            <!-- End 5 Row -->
+
+             <!-- Third Row -->
+             <!-- <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Insurance Period</label>
+                    <input [(ngModel)]="insurance_period" type="date" class="form-control" placeholder="Insurance Period" name="insurance_period">
+                    <small class="text-info">Insert Insurance Period </small><br>
+                    <small *ngIf="errorInsurancePeriod" class="text-danger">{{errorInsurancePeriod}}</small>
+                  </div>
+                </div> -->
+                
+              <!-- </div>  -->
+              <!-- End Third Row -->
+            
+              <button  type="submit" class="btn btn-secondary btn-round">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Third Column -->
+    <div class="col-md-2"></div>
+
+  </div>
+</div>

@@ -33,7 +33,7 @@
           <div class="row">
             <div class="col-md-9">
                 <h4 class="card-title">Insurance Details of {{vehicleName}} (No:{{vehicleNumber}})</h4>
-                <a (click)=addVehicleInsurance()><button type="button" class="btn btn-success btn-sm" title="Add Insurance Payemnt"><i class="fas fa-plus"></i></button></a>
+                <a *ngIf="role==3" (click)=addVehicleInsurance()><button type="button" class="btn btn-success btn-sm" title="Add Insurance Payemnt"><i class="fas fa-plus"></i></button></a>
             </div>
           </div>
         </div>

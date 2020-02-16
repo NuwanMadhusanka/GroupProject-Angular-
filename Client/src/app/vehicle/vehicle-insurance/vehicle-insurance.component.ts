@@ -12,6 +12,8 @@ import { HttpError } from '../../Shared/httpError/HttpError';
 })
 export class VehicleInsuranceComponent implements OnInit {
 
+  role:number;
+
   vehicleId:Number;
   vehicleName:String;
   vehicleNumber:String;
@@ -30,6 +32,12 @@ export class VehicleInsuranceComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    
+    this.role = +sessionStorage.getItem("userRole");
+    if(this.role==null || this.role==2 || this.role ==4 || this.role==5){
+        this.router.navigate(['/']);
+    }
+
     this.vehicleId = this.route.snapshot.params['id'];
     this.vehicleName = this.route.snapshot.params['vehName'];
     this.vehicleNumber = this.route.snapshot.params['vehNumber'];

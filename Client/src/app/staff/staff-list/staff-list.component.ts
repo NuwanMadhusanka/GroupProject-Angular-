@@ -3,6 +3,9 @@ import { StaffServiceService } from '../../service/StaffService/staff-service.se
 import { StaffModel } from '../../ClassModel/StaffModel';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpError } from '../../Shared/httpError/HttpError';
+import { Router } from '@angular/router';
+import { InstructorServiceService } from '../../service/instructor/instructor-service.service';
+import { InstructorModel } from '../../ClassModel/InstructorModel';
 
 @Component({
   selector: 'app-staff-list',
@@ -16,7 +19,9 @@ export class StaffListComponent implements OnInit {
   instructorList:StaffModel[]=[];
 
   constructor(
-    private staffService :StaffServiceService
+    private staffService :StaffServiceService,
+    private instructorService :InstructorServiceService,
+    private router:Router
   ) { }
 
   ngOnInit() {
@@ -36,6 +41,19 @@ export class StaffListComponent implements OnInit {
         });
       },
       error => {
+        console.log(error);
+        this.handleErrorResponse(error);
+      }
+    );
+  }
+
+  moreDetails(email:String){
+    this.instructorService.getInstructorbyEmail(email).subscribe(
+      response => {
+        let instructor:InstructorModel = response;
+        this.router.navigate(['instructor-more-details',instructor.instructorId]);
+      },
+      error =>{
         console.log(error);
         this.handleErrorResponse(error);
       }

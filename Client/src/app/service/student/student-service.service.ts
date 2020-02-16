@@ -51,7 +51,7 @@ export class StudentServiceService {
   }
 
   //delete student package details
-  studentPackegeDelete(stuId,pacId){
+  studentPackageDelete(stuId,pacId){
     return this.http.delete<any>(`${API_URL}/student/package/${stuId}/${pacId}`);
   }
 
@@ -112,8 +112,8 @@ export class StudentServiceService {
   }
 
   //written Exam Data
-  studentExamResult(type:Number){
-    return this.http.get<[]>(`${API_URL}/student/exam/result/${type}`);
+  studentExamResult(type:Number,year){
+    return this.http.get<[]>(`${API_URL}/student/exam/result/${type}/${year}`);
   }
 
   submitWrittenExamResult(date,countPass,countFail){

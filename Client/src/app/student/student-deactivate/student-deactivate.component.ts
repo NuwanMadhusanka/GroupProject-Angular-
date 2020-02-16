@@ -64,15 +64,15 @@ export class StudentDeactivateComponent implements OnInit {
      this.studentService.activateStudentAccount(studentId).subscribe(
        response => {
         if(response==1){//Previous payment are completed
-          console.log(response)
-          Swal.fire({
-            position: 'center',
-            type: 'success',
-            title: studentName+'\'s account activated as new account.',
-            showConfirmButton: false,
-            timer: 2000
-          });
-          this.router.navigate(['student-list']);
+          // Swal.fire({
+          //   position: 'center',
+          //   type: 'success',
+          //   title: studentName+'\'s account activated as new account.',
+          //   showConfirmButton: false,
+          //   timer: 2000
+          // });
+          this.clearStudentPreviousPayment(studentId,studentName);
+          //this.router.navigate(['student-list']);
         }else{//previous payment are not completed
           Swal.fire({
             title: 'Is Account Activate?',
@@ -91,6 +91,13 @@ export class StudentDeactivateComponent implements OnInit {
        },
        error => {
          console.log(error);
+         Swal.fire({
+          position: 'center',
+          type: 'error',
+          title: 'Opps Something went wrong.Please try again later.',
+          showConfirmButton: false,
+          timer: 2000
+        });
          this.handleErrorResponse(error);
        }
      );

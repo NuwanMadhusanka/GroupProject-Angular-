@@ -9,6 +9,7 @@ import * as SockJS from 'sockjs-client';
 import { WebSocketCommunicationDataMap } from '../../ClassModel/MapObject/WebSocketCommunicationDataMap';
 import { API_URL, WEBSOCKETENDPOINT, WEBSOCKETTOPIC } from '../../app.constants';
 import { UserAuthenticationServiceService } from '../../service/user-authentication-service.service';
+import { InstructorServiceService } from '../../service/instructor/instructor-service.service';
 
 
 @Component({
@@ -28,6 +29,8 @@ export class NavbarComponent implements OnInit {
     isEarlyNotification=false;
     isNotificationBadgeOn=true;
 
+    instructorId:Number;
+
     //WebSocket
     stompClient: any;
     webSocketService;
@@ -44,7 +47,7 @@ export class NavbarComponent implements OnInit {
     public isCollapsed = true;
 
     
-    constructor(location: Location,  private element: ElementRef, private router: Router,private notificationService:NotificationServisceService,private userAuthenticationService:UserAuthenticationServiceService) {
+    constructor(location: Location,  private element: ElementRef, private router: Router,private notificationService:NotificationServisceService,private userAuthenticationService:UserAuthenticationServiceService,private instructorService:InstructorServiceService) {
       this.location = location;
       this.sidebarVisible = false;
     }
@@ -208,10 +211,19 @@ export class NavbarComponent implements OnInit {
       }else if(role == '3'){
         
       }else if(role == '4'){
-
+        this.getInstructorByUserId();
       }else if(role == '5'){
         this.router.navigate(['student-profile']);
       }
+    }
+
+    getInstructorByUserId(){
+      this.instructorService.getInstructorbyUserId(this.userId).subscribe(
+      response => {
+        this.instructorId= response;  
+        console.log(this.instructorId+"IINN");
+        this.router.navigate(['instructor-more-details', response]);
+      })
     }
 
     getNotification(){

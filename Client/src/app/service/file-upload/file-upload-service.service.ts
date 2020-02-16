@@ -29,4 +29,28 @@ export class FileUploadServiceService {
   // getFiles(): Observable<any> {
   //   return this.http.get(`${API_URL}/api/file/all`);
   // }
+
+  downLoadPdf(pdfId) {  
+    console.log("?????????????????????");
+    console.log(this.http.get<any>(`${API_URL}/api/file/${pdfId}/2`+"In service"));
+    return this.http.get<any>(`${API_URL}/api/file/${pdfId}/2`);
+  }
+  
+  downLoadPaper(paperId) {
+    console.log("hy");
+    return this.http.get<any>(`${API_URL}/api/file/${paperId}/3`);
+  }
+
+  downLoadVideo(videoId) {
+    return this.http.get<any>(`${API_URL}/api/file/${videoId}/4`);
+
+  }
+  downLoadFile(data: any, type: string) {
+    let blob = new Blob([data], { type: type });
+    let url = window.URL.createObjectURL(blob);
+    let pwa = window.open(url);
+    if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
+      alert('Please disable your Pop-up blocker and try again.');
+    }
+  }
 }

@@ -42,18 +42,35 @@ import { StaffWorkTimeComponent } from '../../staff/StaffWorkTime/staff-work-tim
 import { StaffSalaryListComponent } from '../../staff/staff-salary-list/staff-salary-list.component';
 import { StaffSalaryPayComponent } from '../../staff/staff-salary-pay/staff-salary-pay.component';
 import { PdfListComponent } from '../../pdf/pdf-list/pdf-list.component';
-import { PdfMoreDetailsComponent } from '../../pdf/pdf-more-details/pdf-more-details.component';
+
 import { PdfAddComponent } from '../../pdf/pdf-add/pdf-add.component';
 import { VideoAddComponent } from '../../video/video-add/video-add.component';
 import { VideoListComponent } from '../../video/video-list/video-list.component';
 import { VideoMoreDetailsComponent } from '../../video/video-more-details/video-more-details.component';
 import { InstructorListComponent } from '../../instructor/instructor-list/instructor-list.component';
 import { InstructorAddComponent } from '../../instructor/instructor-add/instructor-add.component';
-import { InstructorMoreDetailsComponent } from '../../instructor/instructor-more-details/instructor-more-details.component';
+
 import { StaffLeaveComponent } from '../../staff/staff-leave/staff-leave.component';
 import { VehicleInsuranceComponent } from '../../vehicle/vehicle-insurance/vehicle-insurance.component';
 import { VehicleInsuranceAddComponent } from '../../vehicle/vehicle-insurance-add/vehicle-insurance-add.component';
 import { VehicleFuelComponent } from '../../vehicle/vehicle-fuel/vehicle-fuel.component';
+import { StaffMoreDetailsComponent } from '../../staff/staff-more-details/staff-more-details.component';
+import { InstructorMoreDetailsComponent } from '../../instructor/instructor-more-details/instructor-more-details.component';
+import { InstructorDeactivatedListComponent } from '../../instructor/instructor-deactivated-list/instructor-deactivated-list.component';
+import { PdfListForStudentsComponent } from '../../pdf/pdf-list-for-students/pdf-list-for-students.component';
+import { PdfMoreDetailsComponent } from '../../pdf/pdf-more-details/pdf-more-details.component';
+import { PaperAddComponent } from '../../paper/paper-add/paper-add.component';
+import { PaperListComponent } from '../../paper/paper-list/paper-list.component';
+import { PaperMoreDetailsComponent } from '../../paper/paper-more-details/paper-more-details.component';
+import { VehicleAddComponent } from '../../vehicle/vehicle-add/vehicle-add.component';
+import { VehicleMoreDetailsComponent } from '../../vehicle/vehicle-more-details/vehicle-more-details.component';
+import { VideoListForStudentsComponent } from '../../video/video-list-for-students/video-list-for-students.component';
+import { PaperAnswerSheetComponent } from '../../paper/paper-answer-sheet/paper-answer-sheet.component';
+import { PaperMarkListComponent } from '../../paper/paper-mark-list/paper-mark-list.component';
+import { PaperListForStudentsComponent } from '../../paper/paper-list-for-students/paper-list-for-students.component';
+
+
+
 
 
 
@@ -80,6 +97,7 @@ import { VehicleFuelComponent } from '../../vehicle/vehicle-fuel/vehicle-fuel.co
     StaffSalaryListComponent,
     StaffSalaryPayComponent,
     StaffLeaveComponent,
+    StaffMoreDetailsComponent,
 
     PackageListComponent,
     PackageAddComponent,
@@ -89,6 +107,9 @@ import { VehicleFuelComponent } from '../../vehicle/vehicle-fuel/vehicle-fuel.co
     VehicleInsuranceComponent,
     VehicleInsuranceAddComponent,
     VehicleFuelComponent,
+    VehicleAddComponent,
+    VehicleMoreDetailsComponent,
+    VideoListForStudentsComponent,
  
     
     StudentListComponent,
@@ -121,12 +142,21 @@ import { VehicleFuelComponent } from '../../vehicle/vehicle-fuel/vehicle-fuel.co
     PdfListComponent,
     PdfMoreDetailsComponent,
     PdfAddComponent,
+    PdfListForStudentsComponent,
     VideoAddComponent,
     VideoListComponent,
     VideoMoreDetailsComponent,
     InstructorListComponent,
     InstructorAddComponent,
-    InstructorMoreDetailsComponent
+    InstructorMoreDetailsComponent,
+    InstructorDeactivatedListComponent,
+
+    PaperAddComponent,
+    PaperListComponent,
+    PaperMoreDetailsComponent,
+    PaperAnswerSheetComponent,
+    PaperMarkListComponent,
+    PaperListForStudentsComponent
   ]
 })
 

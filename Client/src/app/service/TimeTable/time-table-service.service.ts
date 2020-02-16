@@ -49,7 +49,6 @@ export class TimeTableServiceService {
   }
 
   deletePath(pathId){
-    console.log(pathId);
     return this.http.delete<any>(`${API_URL}/timetable/path/${pathId}`)
   }
 

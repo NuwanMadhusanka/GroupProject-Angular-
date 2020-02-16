@@ -40,8 +40,71 @@ export class InstructorServiceService {
     return this.http.get<InstructorModel[]>(`${API_URL}/instructors`);
   }
 
+  instructorList1(status){
+    return this.http.get<InstructorModel[]>(`${API_URL}/instructors/${status}`);
+  }
+
  //Get Specific Instructor Details
  getInstructorbyID(instructorId){
   return this.http.get<InstructorModel>(`${API_URL}/instructor/${instructorId}`);
  }
+
+ //Update Instructor Data
+ updateInstructor(instructor: InstructorModel) {
+  console.log(instructor);
+  return this.http.put<number>(`${API_URL}/instructor/update`, instructor);
+}
+
+//Register Instructor
+instructorRegister(instructor: InstructorModel) {
+  return this.http.post<number>(`${API_URL}/instructor/register`, instructor);
+}
+
+//Get Specific Instructor Details using NIC no
+getInstructorbyEmail(email) {
+  console.log("In service get Instructor");
+  return this.http.get<InstructorModel>(`${API_URL}/instructor/getbyEmail/${email}`);
+}
+
+//Deactivate Instructor
+instructorDeactivate(instructorId) {
+  console.log(instructorId + "insDeactv Servc");
+  return this.http.put<number>(`${API_URL}/instructor/deactivate/${instructorId}`, {});
+}
+
+//activate Instructor accout
+activateInstructorAccount(instructorId) {
+  console.log("Ins Activation");
+  return this.http.put<Number>(`${API_URL}/instructor/activate/account/${instructorId}`, {});
+}
+
+//check Salary Payments
+checkInstructorSalaryPayments(instructorId) {
+  console.log("Ins Salary Payment");
+  return this.http.get<Number>(`${API_URL}/instructor/checkSalaryPayments/${instructorId}`);
+}
+
+//Delete Instructor
+instructorDelete(instructorId) {
+  console.log(instructorId + "insDelete Servc");
+  return this.http.put<Number>(`${API_URL}/instructor/delete/${instructorId}`, {});
+}
+
+//check instructors assigned up coming lessons
+getInstructorAssignedUpcomingLessons(instructorId) {
+  console.log("Ins lessons-Ins service");
+  return this.http.get<Number>(`${API_URL}/instructor/assignedUpComingLessons/${instructorId}`);
+}
+
+//check whether any payments are done to instructor
+checkInstructorSalaryDetails(instructorId) {
+  console.log("Ins lessons-Ins service check bfr delete");
+  return this.http.get<Number>(`${API_URL}/instructor/checkInstructorSalaryDetails/${instructorId}`);
+
+}
+
+getInstructorbyUserId(userId){
+  return this.http.get<Number>(`${API_URL}/instructor/getbyUser/${userId}`);
+}
+
 }

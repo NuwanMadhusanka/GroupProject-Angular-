@@ -1,0 +1,64 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage">
+    <div class="alert alert-danger">
+      <button (click)=closeError() type="button" aria-hidden="true" class="close">
+            <i class="now-ui-icons ui-1_simple-remove"></i>
+          </button>
+      <span>{{errorMessage}}</span>
+    </div>
+  </div>
+  <!-- Error Message End -->
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-9">
+              <h4 class="card-title"> Driving License Exam - References</h4>
+             
+
+            </div>
+
+            <div class="col-md-3">
+              <form>
+
+                <div class="input-group no-border">
+                  <input type="text" [(ngModel)]="searchTerm" name="search" class="form-control" placeholder="Search..." id="searchBox">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <i class="now-ui-icons ui-1_zoom-bold"></i>
+                    </div>
+                  </div>
+                </div>
+                
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary">
+                <th></th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let pdf of filteredPdf">
+
+                  <td>&nbsp;&nbsp;<i class="now-ui-icons files_paper">&nbsp;</i><a href="{{apiUrl}}/api/file/{{pdf.pdfId}}/2">{{pdf.title}}.pdf</a> &nbsp;&nbsp;&nbsp;-&nbsp;{{pdf.description}}</td>
+                 
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

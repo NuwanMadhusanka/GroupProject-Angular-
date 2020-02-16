@@ -60,12 +60,12 @@
                     <td *ngIf="staff.userId.status==0"><span class="badge badge-danger">NA</span></td>
                    
                     <td>  
-                      <a  (click)=moreDetails(student.studentId)><button class="btn btn-info btn-sm"><i class="fas fa-eye fa-sm" title="MoreDetails"></i></button></a>
+                      <a  (click)=moreDetails(staff.userId.userId)><button class="btn btn-info btn-sm"><i class="fas fa-eye fa-sm" title="MoreDetails"></i></button></a>
 
                       <a *ngIf="staff.userId.status==1" (click)=addPackage()><button class="btn btn-secondary btn-sm"><i class="fas fa-times fa-sm" title="Deactivate"></i></button></a>
                       <a *ngIf="staff.userId.status==0" (click)=addPackage()><button class="btn btn-secondary btn-sm"><i class="fas fa-times fa-sm" title="Activate"></i></button></a>
 
-                      <a  (click)=addPayment(student.studentId,student.userId.firstName)><button class="btn btn-success btn-sm"><i class="fas fa-edit fa-sm"></i></button></a>
+                      <a  (click)=addPayment(student.studentId,student.userId.firstName)><button class="btn btn-success btn-sm"><i class="fas fa-edit fa-sm" title="Record Leave"></i></button></a>
                     </td>
                   </tr>
                 </tbody>
@@ -113,7 +113,7 @@
                       <td *ngIf="staff.userId.status==0"><span class="badge badge-danger">NA</span></td>
                      
                       <td>  
-                        <a  (click)=moreDetails(student.studentId)><button class="btn btn-info btn-sm"><i class="fas fa-eye fa-sm" title="MoreDetails"></i></button></a>
+                        <a  (click)=moreDetails(staff.userId.email)><button class="btn btn-info btn-sm"><i class="fas fa-eye fa-sm" title="MoreDetails"></i></button></a>
                       </td>
                     </tr>
                   </tbody>

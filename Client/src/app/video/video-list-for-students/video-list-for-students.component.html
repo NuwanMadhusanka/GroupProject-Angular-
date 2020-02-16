@@ -1,0 +1,62 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage">
+    <div class="alert alert-danger">
+      <button (click)=closeError() type="button" aria-hidden="true" class="close">
+            <i class="now-ui-icons ui-1_simple-remove"></i>
+          </button>
+      <span>{{errorMessage}}</span>
+    </div>
+  </div>
+  <!-- Error Message End -->
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-9">
+              <h4 class="card-title"> Video List</h4>
+            </div>
+
+            <div class="col-md-3">
+              <form>
+
+                <div class="input-group no-border">
+                  <input type="text" [(ngModel)]="searchTerm" name="search" class="form-control" placeholder="Search..." id="searchBox">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <i class="now-ui-icons ui-1_zoom-bold"></i>
+                    </div>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class=" text-primary">
+
+                  <th></th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let video of filteredVideos">
+
+                    <td>{{video.title}} : {{video.description}} :-</td>
+                    <td><i class="media-1_button-play">&nbsp;</i><a href="{{video.url}}">{{video.url}}</a></td>
+                    
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>

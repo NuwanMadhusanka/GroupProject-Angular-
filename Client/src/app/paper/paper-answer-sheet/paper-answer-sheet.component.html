@@ -1,0 +1,80 @@
+<div class="panel-header panel-header-sm">
+</div>
+
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Paper Details</h4>
+
+
+          <div class="table-responsive">
+            <table class="table">
+
+              <tbody>
+                <tr>
+                  <th>Title:</th>
+                  <td>{{paperData.title}}</td>
+                  </tr>
+                <tr>
+
+                  <tr>
+                    <th>Added date:</th>
+                    <td>{{paperData.addedDate}}</td>
+                  </tr>
+
+                  <tr>
+                    <th>Resource:</th>
+                    <td> <a href="{{apiUrl}}/api/file/{{paperId}}/3" target="_blank">{{paperId}}.paper</a></td>
+                  </tr>
+                  <tr>
+                    <th>Answer Sheet:</th>
+                    <td><a (click)=loadAnswers()><button class="btn btn-secondary btn-sm"><i class="fas fa-eye fa-sm" title="Update Title"></i></button></a></td>
+                  </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <!--View Answers-->
+          <div *ngIf="viewAnswers" class="card">
+            <div class="card-header">
+              <button (click)=close() type="button" aria-hidden="true" class="close">
+                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                      </button>
+            </div>
+            <div class="card-body">
+              <div class>
+                <div class="form-group">
+                  <h6 class="card-title">Answers</h6>
+                  <!--<input type="text" value="" placeholder="{{placeHolder}}" class="form-control" name="password" [(ngModel)]="updateVariable"/>-->
+                  <br/>
+                  
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div *ngFor="let quest of questionCount">
+                          <label class="form-check-label">({{quest}})&nbsp;&nbsp;&nbsp;</label>
+                          <div class="form-check form-check-inline" *ngFor="let ans of answerCount">
+                            <label class="form-check-label">{{ans}}
+                        <input class="form-check-input" type="checkbox"  id="{{quest}}" value="{{ans}}"  (click)="getAnswers($event)" [(ngModel)]="isChecked[quest-1][ans-1]" >  
+                        <span class="form-check-sign"></span>
+                        </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <small *ngIf="errorUpdateMessage && isUpdate" class="text-danger">{{errorUpdateMessage}}</small>
+                </div>
+              </div>
+              <button (click)="addStudentPaperAnswers()" type="button" class="btn btn-secondary btn-round">Submit</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

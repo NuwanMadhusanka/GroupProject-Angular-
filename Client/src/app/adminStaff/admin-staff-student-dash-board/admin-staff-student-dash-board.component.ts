@@ -3,6 +3,8 @@ import { StudentServiceService } from '../../service/student/student-service.ser
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpError } from '../../Shared/httpError/HttpError';
 import { DatePipe } from '@angular/common';
+import { ReportServiceService } from '../../service/report/report-service.service';
+import { Router } from '@angular/router';
 declare const require: any;
 const jsPDF = require('jspdf');
 require('jspdf-autotable');
@@ -20,6 +22,13 @@ export class ExamList{
   styleUrls: ['./admin-staff-student-dash-board.component.scss']
 })
 export class AdminStaffStudentDashBoardComponent implements OnInit {
+
+  years:[];
+  currentYear :number;
+
+  selectedYearWrittenExam :number;
+  selectedYearTrialExam :number;
+
   public gradientStroke;
   public chartColor;
   public canvas : any;
@@ -62,8 +71,10 @@ export class AdminStaffStudentDashBoardComponent implements OnInit {
 
 
   constructor(
+    private router:Router,
     private studentService:StudentServiceService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private reportService: ReportServiceService
   ) { }
 
 
@@ -77,10 +88,15 @@ export class AdminStaffStudentDashBoardComponent implements OnInit {
   lineChartTrialExamData=[];
 
   ngOnInit() {
+    this.getCurrentYear();
+    this.getYearList();
     this.studentTrialList();
     this.studentExamList();
-    this.getlineChartWrittenExamData();
-    this.getlineChartTrialExamData();
+
+    this.selectedYearWrittenExam=this.currentYear;
+    this.selectedYearTrialExam=this.currentYear;
+    this.getlineChartWrittenExamData(this.selectedYearWrittenExam);
+    this.getlineChartTrialExamData(this.selectedYearTrialExam);
 
     this.chartColor = "#FFFFFF";
 
@@ -205,6 +221,33 @@ export class AdminStaffStudentDashBoardComponent implements OnInit {
 
   }
 
+  getCurrentYear(){
+    var date = new Date(); 
+    this.currentYear=date.getFullYear();   
+  }
+
+  getYearList(){
+    this.reportService.getYearList().subscribe(
+      response => {
+        this.years = response;
+      },
+      error => {
+        console.log(error);
+        this.handleErrorResponse(error);
+      }
+    );
+  }
+
+  getSelectYearWrittenExam(year:number){
+    this.selectedYearWrittenExam=year;
+    this.getlineChartWrittenExamData(this.selectedYearWrittenExam);
+  }
+
+  getSelectYearTrialExam(year){
+    this.selectedYearTrialExam=year;
+    this.getlineChartTrialExamData(this.selectedYearTrialExam);
+  }
+
   studentTrialList(){
     let localdate=this.datePipe.transform(new Date(), 'yyyy-MM-dd')
      this.studentService.studentTrialList(localdate).subscribe(
@@ -279,11 +322,10 @@ export class AdminStaffStudentDashBoardComponent implements OnInit {
   }
 
   //line chart data wrriten exam result
-  getlineChartWrittenExamData(){
-    this.studentService.studentExamResult(1).subscribe(
+  getlineChartWrittenExamData(year){
+    this.studentService.studentExamResult(1,year).subscribe(
       response => {
          this.lineChartWrittenExamData=response;
-
          this.writtenExamLineChartData = [
           {
             data: [this.lineChartWrittenExamData[0], this.lineChartWrittenExamData[1], this.lineChartWrittenExamData[2],  
@@ -302,8 +344,8 @@ export class AdminStaffStudentDashBoardComponent implements OnInit {
 
 
    //line chart data wrriten exam result
-   getlineChartTrialExamData(){
-    this.studentService.studentExamResult(2).subscribe(
+   getlineChartTrialExamData(year){
+    this.studentService.studentExamResult(2,year).subscribe(
       response => {
         
          this.lineChartTrialExamData=response;
@@ -322,6 +364,10 @@ export class AdminStaffStudentDashBoardComponent implements OnInit {
         this.handleErrorResponse(error);
       }
     )
+  }
+
+  addExamResult(){
+    this.router.navigate(['student-exam-result-add']);
   }
 
   handleErrorResponse(error:HttpErrorResponse){

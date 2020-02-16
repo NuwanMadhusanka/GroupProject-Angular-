@@ -45,6 +45,8 @@ export class SidebarComponent implements OnInit {
       { path: '/dashboard', title: 'Dashboard',  icon: 'design_app', class: ''},
       { path: '/staff-list', title: 'Staff',  icon:'design_bullet-list-67', class: '' },
       { path: '/staff-salary-list', title: 'Salary',  icon:'business_money-coins', class: '' },
+      { path: '/student-list', title: 'Student',  icon:'education_hat', class: '' },
+      { path: '/vehicle-list', title: 'Vehicle',  icon:'transportation_bus-front-12', class: '' },
       { path: '/package-list', title: 'Package',  icon:'education_agenda-bookmark', class: '' },
       { path: '/report-list', title: 'Report',  icon:'files_single-copy-04', class: '' }
     ];
@@ -61,7 +63,8 @@ export class SidebarComponent implements OnInit {
       { path: '/student-list', title: 'Student',  icon:'education_hat', class: '' },
       { path: '/staff-salary', title: 'Salary',  icon:'business_money-coins', class: '' },
       { path: '/pdf-list', title: 'Pdf',  icon:'design_bullet-list-67', class: '' },
-      { path: '/video-list', title: 'Video',  icon:'design_bullet-list-67', class: '' }
+      { path: '/video-list', title: 'Video',  icon:'design_bullet-list-67', class: '' },
+      { path: '/paper-list', title: 'Paper', icon: 'files_paper', class: '' }
     ];
 
     this.instructor=[
@@ -72,7 +75,10 @@ export class SidebarComponent implements OnInit {
     this.student=[
       { path: '/time-table', title: 'Time Table',  icon:'files_paper', class: '' },
       { path: '/trial-lesson-list/ / ', title: 'Trial Lesson',  icon:'design_bullet-list-67', class: '' },
-      { path: '/student-payment/'+sessionStorage.getItem("userId")+'/ ', title: 'Payment',  icon:'business_money-coins', class: '' }
+      { path: '/student-payment/'+sessionStorage.getItem("userId")+'/ ', title: 'Payment',  icon:'business_money-coins', class: '' },
+      { path: '/pdf-list-for-students/', title: 'Pdf', icon: 'files_single-copy-04', class: '' },
+      { path: '/video-list-for-students', title: 'Video', icon: 'files_single-copy-04', class: '' },
+      { path: '/paper-list-for-students/', title: 'Paper', icon: 'files_single-copy-04', class: '' },
     ];
     
   }

@@ -13,6 +13,7 @@ import { UserValidation } from '../../Shared/validation/user-validation/user-val
 })
 export class StudentListComponent implements OnInit {
 
+  role:number;
   errorMessage="";
 
   students: StudentModel[] = [];
@@ -47,6 +48,12 @@ export class StudentListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.role = +sessionStorage.getItem("userRole");
+    if(this.role==null || this.role==3 || this.role ==4 || this.role==5){
+        this.router.navigate(['/']);
+    }
+
     this.studentList();
   }
 

@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 })
 export class VehicleListComponent {
 
+  role:number;
   vehicleList:VehicleModel[]=[];
 
   constructor(
@@ -23,6 +24,12 @@ export class VehicleListComponent {
   ) { }
 
   ngOnInit() {
+
+    this.role = +sessionStorage.getItem("userRole");
+    if(this.role==null || this.role==2 || this.role ==4 || this.role==5){
+        this.router.navigate(['/']);
+    }
+
     this.getVehicleList(1);
   }
 
@@ -45,8 +52,16 @@ export class VehicleListComponent {
     }
   }
 
+  addVehicle(){
+    this.router.navigate(['vehicle-add']);
+  }
+
   vehicleFuelData(){
     this.router.navigate(['vehicle-fuel']);
+  }
+
+  vehicleMoreDetails(vehicleId:number){
+    this.router.navigate(['vehicle-more-details',vehicleId]);
   }
 
   //error handling

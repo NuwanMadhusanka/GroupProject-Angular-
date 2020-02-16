@@ -6,6 +6,7 @@ export class VehicleModel{
         public vehicleId:Number,
         public brand:String,
         public model:String,
+        public fuelType:Number,
         public transmission:Number,
         public documentLic:String,
         public instructorId:InstructorModel,

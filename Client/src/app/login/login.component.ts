@@ -83,6 +83,8 @@ export class LoginComponent implements OnInit {
                 this.handleSuccessfulResponse(response);
               },
               error =>{
+                this.showSpinner=false;   
+                this.errorMessage="INVALID CREDENTIALS.";
                 console.log(error);
               }
             );

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StudentServiceService } from '../../service/student/student-service.service';
 import { PackageModel } from '../../ClassModel/PackageModel';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -13,7 +13,7 @@ import { PaymentValidation } from '../../Shared/validation/payment-validation/pa
 export class PayPal{
   constructor(
     public redirect_url:Number,
-    public status:String
+    public status:String,
   ){}
 }
 
@@ -26,9 +26,11 @@ export class StudentPaymentComponent implements OnInit {
 
   constructor(
     private route:ActivatedRoute,
-    private studentService:StudentServiceService
+    private studentService:StudentServiceService,
+    private router:Router
   ) { }
 
+  role:number;
   studentId:Number;
   studentName;
   studentPackages:PackageModel[]=[];//student follwing packages
@@ -63,6 +65,12 @@ export class StudentPaymentComponent implements OnInit {
   isVisitStudent=false;
 
   ngOnInit() {
+
+    this.role = +sessionStorage.getItem("userRole");
+    if(this.role==null || this.role==3 || this.role ==4){
+        this.router.navigate(['/']);
+    }
+
     let id=this.route.snapshot.params['id'];//get student id by url
     this.studentName=this.route.snapshot.params['name'];
     if(this.studentName != ' '){

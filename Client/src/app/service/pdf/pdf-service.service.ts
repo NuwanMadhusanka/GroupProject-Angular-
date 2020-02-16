@@ -1,16 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { PdfModel } from '../../../ClassModel/PdfModel';
-import { API_URL } from '../../../app.constants';
-
-
-/*import { StudentPackageAddComponent,StudentPackage } from '../../student/student-package-add/student-package-add.component';
-import { PackageModel } from '../../ClassModel/PackageModel';
-import { CourseFee } from '../../ClassModel/CourseFeeModel';
-import { PayPal } from '../../student/student-payment/student-payment.component';
-import { ExamList } from '../../adminStaff/admin-staff-student-dash-board/admin-staff-student-dash-board.component';
-*/
-
+import { HttpClient } from '@angular/common/http';
+import { PdfModel } from '../../ClassModel/PdfModel';
+import { API_URL } from '../../app.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -133,5 +124,4 @@ pdfList(){
     return this.http.post<any>(`${API_URL}/student/trialexam/result?date=`+date+"&countPass="+countPass+"&countFail="+countFail,{});
   }
 */
-
 }

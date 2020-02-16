@@ -26,7 +26,7 @@ export class StudentAddComponent implements OnInit {
   email:String="";
   password:String="";
   examDate:Date=null;
-  trialDate:Date;
+  trialDate:Date=null;
 
   //form error messages variables
   errorFirstName;
@@ -70,6 +70,8 @@ export class StudentAddComponent implements OnInit {
     this.errorPassword="";
     this.errorExamDate="";
     this.errorAddress="";
+    this.errorTrialExamDate="";
+    this.errorMessageDate="";
 
     //validate name
     if(this.firstName===""){
@@ -131,7 +133,7 @@ export class StudentAddComponent implements OnInit {
 
 
     //Save to the DB
-    if(this.errorFirstName=="" && this.errorLastName=="" && this.errorNic=="" && this.errorTel=="" && this.errorAddress=="" && this.errorEmail=="" && this.errorPassword=="" && this.errorExamDate==""){
+    if(this.errorFirstName=="" && this.errorLastName=="" && this.errorNic=="" && this.errorTel=="" && this.errorAddress=="" && this.errorEmail=="" && this.errorPassword=="" && this.errorExamDate=="" && this.errorTrialExamDate=="" && this.errorMessageDate=="" ){
      
       //work with backend service
 

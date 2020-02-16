@@ -37,7 +37,6 @@ import { StaffWorkTimeComponent } from '../../staff/StaffWorkTime/staff-work-tim
 import { StaffSalaryListComponent } from '../../staff/staff-salary-list/staff-salary-list.component';
 import { StaffSalaryPayComponent } from '../../staff/staff-salary-pay/staff-salary-pay.component';
 import { PdfListComponent } from '../../pdf/pdf-list/pdf-list.component';
-import { PdfMoreDetailsComponent } from '../../pdf/pdf-more-details/pdf-more-details.component';
 import { PdfAddComponent } from '../../pdf/pdf-add/pdf-add.component';
 import { VideoAddComponent } from '../../video/video-add/video-add.component';
 import { InstructorListComponent } from '../../instructor/instructor-list/instructor-list.component';
@@ -49,6 +48,19 @@ import { StaffLeaveComponent } from '../../staff/staff-leave/staff-leave.compone
 import { VehicleInsuranceComponent } from '../../vehicle/vehicle-insurance/vehicle-insurance.component';
 import { VehicleInsuranceAddComponent } from '../../vehicle/vehicle-insurance-add/vehicle-insurance-add.component';
 import { VehicleFuelComponent } from '../../vehicle/vehicle-fuel/vehicle-fuel.component';
+import { StaffMoreDetailsComponent } from '../../staff/staff-more-details/staff-more-details.component';
+import { InstructorDeactivatedListComponent } from '../../instructor/instructor-deactivated-list/instructor-deactivated-list.component';
+import { PdfMoreDetailsComponent } from '../../pdf/pdf-more-details/pdf-more-details.component';
+import { PdfListForStudentsComponent } from '../../pdf/pdf-list-for-students/pdf-list-for-students.component';
+import { PaperAddComponent } from '../../paper/paper-add/paper-add.component';
+import { PaperListComponent } from '../../paper/paper-list/paper-list.component';
+import { PaperMoreDetailsComponent } from '../../paper/paper-more-details/paper-more-details.component';
+import { VehicleAddComponent } from '../../vehicle/vehicle-add/vehicle-add.component';
+import { VehicleMoreDetailsComponent } from '../../vehicle/vehicle-more-details/vehicle-more-details.component';
+import { VideoListForStudentsComponent } from '../../video/video-list-for-students/video-list-for-students.component';
+import { PaperAnswerSheetComponent } from '../../paper/paper-answer-sheet/paper-answer-sheet.component';
+import { PaperListForStudentsComponent } from '../../paper/paper-list-for-students/paper-list-for-students.component';
+import { PaperMarkListComponent } from '../../paper/paper-mark-list/paper-mark-list.component';
 
 
 
@@ -64,6 +76,7 @@ export const AdminLayoutRoutes: Routes = [
     {path:'staff-salary-list', component:StaffSalaryListComponent, canActivate:[RouteGuardServiceService]},
     {path:'staff-salary-pay/:id/:month/:year', component:StaffSalaryPayComponent, canActivate:[RouteGuardServiceService]},
     {path:'staff-leave', component:StaffLeaveComponent , canActivate:[RouteGuardServiceService]},
+    {path:'staff-more-details/:id', component:StaffMoreDetailsComponent , canActivate:[RouteGuardServiceService]},
 
 
     {path:'package-list', component:PackageListComponent, canActivate:[RouteGuardServiceService]},
@@ -74,6 +87,9 @@ export const AdminLayoutRoutes: Routes = [
     {path:'vehicle-insurance/:id/:vehName/:vehNumber', component:VehicleInsuranceComponent, canActivate:[RouteGuardServiceService]},
     {path:'vehicle-insurance-add/:id/:vehName/:vehNumber', component:VehicleInsuranceAddComponent, canActivate:[RouteGuardServiceService]},
     {path:'vehicle-fuel', component:VehicleFuelComponent, canActivate:[RouteGuardServiceService]},
+    {path:'vehicle-add', component:VehicleAddComponent, canActivate:[RouteGuardServiceService]},
+    {path:'vehicle-more-details/:id', component:VehicleMoreDetailsComponent, canActivate:[RouteGuardServiceService]},
+   
    
     {path:'student-list', component:StudentListComponent, canActivate:[RouteGuardServiceService]},
     {path:'student-add', component:StudentAddComponent, canActivate:[RouteGuardServiceService]},
@@ -107,14 +123,21 @@ export const AdminLayoutRoutes: Routes = [
     {path:'pdf-list',     component:PdfListComponent},
     {path:'pdf-more-details/:id',   component:PdfMoreDetailsComponent},
     {path:'pdf-add',   component:PdfAddComponent},
+    {path:'pdf-list-for-students',   component:PdfListForStudentsComponent},
     {path:'video-list',     component:VideoListComponent},
     {path:'video-more-details/:id',   component:VideoMoreDetailsComponent},
+    {path:'video-list-for-students', component:VideoListForStudentsComponent, canActivate:[RouteGuardServiceService]},
     {path:'video-add',   component:VideoAddComponent},
     {path:'instructor-list',     component:InstructorListComponent},
     {path:'instructor-add',   component:InstructorAddComponent},
     {path:'instructor-more-details/:id',   component:InstructorMoreDetailsComponent},
+    {path:'instructor-deactivated-list',   component:InstructorDeactivatedListComponent},
 
-
-
-
+    { path: 'paper-list', component: PaperListComponent },
+    { path: 'paper-more-details/:id', component: PaperMoreDetailsComponent },
+    { path: 'paper-add', component: PaperAddComponent },
+    { path: 'paper-list-for-students', component: PaperListForStudentsComponent },
+    { path: 'paper-answer-sheet/:id', component: PaperAnswerSheetComponent },
+    { path: 'paper-mark-list', component: PaperMarkListComponent },
+    { path: 'paper-mark-list/:id', component: PaperMarkListComponent }
 ];

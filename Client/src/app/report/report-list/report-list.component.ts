@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import * as CanvasJS from '../../../assets/js/canvasjs.min';
 import { PackagePaymentDataMap } from '../../ClassModel/MapObject/PackagePaymentDataMap';
 import { ReportServiceService } from '../../service/report/report-service.service';
@@ -13,6 +13,13 @@ declare const require: any;
 const jsPDF = require('jspdf');
 require('jspdf-autotable');
 
+import * as jspdf from 'jspdf';  
+const html2canvas = require('../../../../node_modules/html2canvas'); 
+
+interface TotalPacakgeIncome {
+  packageName: string;
+  payment: number;
+}
 
 @Component({
   selector: 'app-report-list',
@@ -20,6 +27,8 @@ require('jspdf-autotable');
   styleUrls: ['./report-list.component.scss']
 })
 export class ReportListComponent implements OnInit {
+
+  @ViewChild('screenshotCanvas') screenCanvas: ElementRef;
 
 
   monthNames = ["January", "February", "March", "April", "May", "June",
@@ -45,6 +54,11 @@ export class ReportListComponent implements OnInit {
   totalIncome:number=0;
   totalOutCome:number=0;
   totalProfit:number=0;
+
+  totalPackageIncomeMonthly: TotalPacakgeIncome[]=[];
+  totalOutcomeMonthly: OutComeDataMap = new OutComeDataMap(0,0,0,0);
+
+  totalYearlyIncome: YearlyIncomeDataMap[] = [];
 
   constructor(
     private reportService :ReportServiceService
@@ -123,6 +137,7 @@ export class ReportListComponent implements OnInit {
     this.reportService.getPackagePaymentMonthly(this.selectedYear).subscribe(
       response => {
         this.packageMonthlyPayemntList=response;
+        this.totalPackageIncomeCalculate();
       },
       error => {
         console.log(error);
@@ -135,6 +150,7 @@ export class ReportListComponent implements OnInit {
     this.reportService.getOutComeMonthly(this.selectedYear).subscribe(
       response => {
         this.outComeMonthlyList=response;
+        this.totalOutComeCalculate();
       },
       error => {
         console.log(error);
@@ -209,21 +225,68 @@ export class ReportListComponent implements OnInit {
     this.totalProfit=totalProfit;
   }
 
+  totalPackageIncomeCalculate(){
+    this.totalPackageIncomeMonthly=[];
+    let numOfPackages = this.packageMonthlyPayemntList[0].length;
+    let numOfMonths = this.packageMonthlyPayemntList.length;
+
+    for(let i=0 ; i<numOfPackages ; i++){
+      let packageObject:TotalPacakgeIncome = {packageName:this.packageMonthlyPayemntList[0][i].packageName+'',payment:0};
+      this.totalPackageIncomeMonthly[i]=packageObject;
+    }
+    
+    for(let i=0 ; i<numOfMonths ; i++){
+      for(let k=0 ; k<numOfPackages ; k++){
+        let amount = this.totalPackageIncomeMonthly[k].payment;
+        let payment = this.packageMonthlyPayemntList[i][k].payment;
+        let totalAmount = amount+ (+payment);
+        this.totalPackageIncomeMonthly[k].payment=totalAmount;
+      }
+    }
+  }
+
+  totalOutComeCalculate(){
+    let totalInsuranceExpenses=0;
+    let totalFuelExpenses=0;
+    let totalVehicleMaintainanceExpenses=0;
+    let totalSalaryExpenses=0;
+
+    this.outComeMonthlyList.forEach(element => {
+      totalFuelExpenses+=element.vehicleFuel;
+      totalSalaryExpenses+=element.staffSalary;
+      totalInsuranceExpenses+=element.vehicleInsurance;
+      totalVehicleMaintainanceExpenses+=element.vehicleMaintainance;
+    });
+ 
+    this.totalOutcomeMonthly= new OutComeDataMap(totalInsuranceExpenses,totalVehicleMaintainanceExpenses,totalFuelExpenses,totalSalaryExpenses);
+  }
+
  
 
-  generatePDF(){
-    let mywindow = window.open('', 'PRINT', 'height=650,width=900,top=100,left=150');
+  generatePDF(data,title){
+    html2canvas(data, { allowTaint: true }).then(canvas => {
 
-    mywindow.document.write(`<html><head><title>Report</title>`);
-    mywindow.document.write('</head><body >');
-    mywindow.document.write(document.getElementById('monthlyIncomeReport').innerHTML);
-    mywindow.document.write('</body></html>');
+      let HTML_Width = canvas.width;
+      let HTML_Height = canvas.height;
+      let top_left_margin = 15;
+      let PDF_Width = HTML_Width + (top_left_margin * 2);
+      let PDF_Height = (PDF_Width * 1.5) + (top_left_margin * -4);
+      let canvas_image_width = HTML_Width;
+      let canvas_image_height = HTML_Height;
+      let totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
 
-    mywindow.document.close(); // necessary for IE >= 10
-    mywindow.focus(); // necessary for IE >= 10*/
-
-    mywindow.print();
-    mywindow.close();
+      canvas.getContext('2d');
+      let imgData = canvas.toDataURL("image/jpeg", 1.0);
+      let pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+      pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+      pdf.rect(20, 20, PDF_Width - 60, PDF_Height - 60, 'S');
+      for (let i = 1; i <= totalPDFPages; i++) {
+        pdf.addPage([PDF_Width, PDF_Height], 'p');
+        pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+        pdf.rect(20, 20, PDF_Width - 60, PDF_Height - 60, 'S');
+      }
+       pdf.save(title+".pdf");
+    });
   }
 
   private handleErrorResponse(error: HttpErrorResponse) {

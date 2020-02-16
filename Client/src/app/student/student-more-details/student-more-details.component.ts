@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentModel } from '../../ClassModel/StudentModel';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StudentServiceService } from '../../service/student/student-service.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserModel } from '../../ClassModel/UserModel';
@@ -18,6 +18,7 @@ import { EncryptDecryptServiceService } from '../../service/encrypt-decrypt-serv
 })
 export class StudentMoreDetailsComponent implements OnInit {
   
+  role:number;
   studentId;
   isUpdateVariable=false;
   selectOption;//updated variable Name(number)
@@ -40,12 +41,19 @@ export class StudentMoreDetailsComponent implements OnInit {
   constructor(
     private route:ActivatedRoute,
     private studentService:StudentServiceService,
-    private encoder : EncryptDecryptServiceService
+    private router:Router
   ) { }
 
   ngOnInit() {
+
+    this.role = +sessionStorage.getItem("userRole");
+    if(this.role==null || this.role==3 || this.role ==4 || this.role==5){
+        this.router.navigate(['/']);
+    }
+
     this.studentId=this.route.snapshot.params['id'];//get student id by url
     this.studentDetails();
+
   }
 
   isUpdate(option){

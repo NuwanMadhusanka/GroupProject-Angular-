@@ -5,6 +5,7 @@ import { HttpError } from '../../Shared/httpError/HttpError';
 import Swal from 'sweetalert2';
 import { VehicleServiceService } from '../../service/vehicle/vehicle-service.service';
 import { FuelPaymentModel } from '../../ClassModel/FuelPaymentModel';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vehicle-fuel',
@@ -12,6 +13,8 @@ import { FuelPaymentModel } from '../../ClassModel/FuelPaymentModel';
   styleUrls: ['./vehicle-fuel.component.scss']
 })
 export class VehicleFuelComponent implements OnInit {
+
+  role:number;
 
   monthNames = ["January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"];
@@ -35,10 +38,16 @@ export class VehicleFuelComponent implements OnInit {
 
   constructor(
     private vehicleService :VehicleServiceService,
-    
+    private router:Router
   ) { }
 
   ngOnInit() {
+
+    this.role = +sessionStorage.getItem("userRole");
+    if(this.role==null || this.role==2 || this.role ==4 || this.role==5){
+        this.router.navigate(['/']);
+    }
+
     this.getYears();
     this.getCurrentYear();
     this.selectYear=this.currentYear;

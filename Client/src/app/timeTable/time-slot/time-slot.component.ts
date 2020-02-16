@@ -135,8 +135,14 @@ export class TimeSlotComponent implements OnInit {
         if(this.timeTableValidation.isValidTimeSlot(this.newTimeSlot.finishTime)  && this.newTimeSlot.finishTime.getDate==null){
             this.timeTableService.addTimeSlot(this.newTimeSlot).subscribe(
               response => {
-                  //console.log(response);
-                  Swal.fire('Save is Completed.');
+                  Swal.fire({
+                    position: 'center',
+                    type: 'success',
+                    title: 'Save Completed.',
+                    showConfirmButton: false,
+                    timer: 3000
+                  });
+                  
                   this.timeSlotListData=[];
                   this.timeSlotList();
                   this.isAddTimeSlot=false;
@@ -195,6 +201,7 @@ export class TimeSlotComponent implements OnInit {
                   showConfirmButton: false,
                   timer: 2000
                 });
+                this.timeSlotList();
               }
           },
           error => {

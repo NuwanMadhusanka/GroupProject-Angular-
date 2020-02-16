@@ -14,142 +14,436 @@ import { UserValidation } from '../../Shared/validation/user-validation/user-val
 })
 export class InstructorListComponent implements OnInit {
 
-  errorMessage="";
+  errorMessage = "";
 
-  instructors:  InstructorModel[] = [];
-  validation:UserValidation = new UserValidation();
+  instructors: InstructorModel[] = [];
+  validation: UserValidation = new UserValidation();
 
   //Filter Option Implement
   filteredInstructors: InstructorModel[] = [];
-  private _searchTerm:string;
-  get searchTerm(): string{
+  private _searchTerm: string;
+  get searchTerm(): string {
     return this._searchTerm;
   }
-  set searchTerm(value:string){
-    this._searchTerm=value;
-    this.filteredInstructors = this.filterStudent(value);
+  set searchTerm(value: string) {
+    this._searchTerm = value;
+    this.filteredInstructors = this.filtereInstructors(value);
   }
 
-  filterStudent(searchString:String){    // should change this code
-     if(this.validation.isDigitContain(searchString)){
-      return this.instructors.filter(instructor => 
-        instructor.licence.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
-     }
-     return this.instructors.filter(instructor => 
-        instructor.licence.toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1) ;
-        
+  filtereInstructors(searchString: String) {
+    return this.instructors.filter(instructor =>
+      instructor.instructorId.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      instructor.staffId.userId.firstName.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      instructor.staffId.userId.lastName.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      instructor.staffId.userId.nic.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      instructor.licence.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      instructor.staffId.userId.email.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      instructor.staffId.userId.tel.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1
+    );
+
   }
   //Finish filter option implementation
 
   constructor(
-    private router:Router,
-    private instructorService:InstructorServiceService
+    private router: Router,
+    private instructorService: InstructorServiceService
   ) { }
 
   ngOnInit() {
     this.instructorList();
   }
 
+  //navigate to Instructor Register Page
+  addInstructor() {
+    this.router.navigate(['instructor-add'])
+  }
+
   //get Instructor List
-  instructorList(){
-    this.instructorService.instructorList().subscribe(
+  instructorList() {
+    this.instructorService.instructorList1(1).subscribe(
       response => {
-        this.instructors=response;
-        this.filteredInstructors=this.instructors;
+        this.instructors = response;
+        this.filteredInstructors = this.instructors;
         console.log(response);
       },
       error => {
-        this.handleErrorResponse(1,error);
+        this.handleErrorResponse(1, error);
       }
     );
   }
 
   //navigate to more details page
-  moreDetails(instructorId){
-    this.router.navigate(['instructor-more-details',instructorId]);
-  }
-/*
-  //navigate to studentRegister Page
-  addStudent(){
-    this.router.navigate(['student-add'])
+  moreDetails(instructorId) {
+    this.router.navigate(['instructor-more-details', instructorId]);
   }
 
-  //delete Student
-  deleteStudent(studentId,studentName){
+  //deactivate Instructor
+  deactivateInstructor(instructorId) {
     Swal.fire({
       title: 'Are you sure?',
-      text: "Is delete "+studentName +"'s record?",//" student's details,payemnt details and all other relevant information.Can't revert the data!",
+      text: "Deactivate instructor " + instructorId + "'s record?",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Yes, deactivate!'
     }).then((result) => {
       if (result.value) {
-        
-        //Call to API
-        this.studentService.studentDelete(studentId).subscribe(
+        // window.open('http://localhost:4200/staff-salary', '', 'width=600,height=400,left=200,top=200');
+        //Call to API to check salary payments
+        this.instructorService.checkInstructorSalaryPayments(instructorId).subscribe(
           response => {
-            this.studentList();
-            Swal.fire({
-              position: 'center',
-              type: 'success',
-              title: studentName+'\'s record was deleted successful',
-              showConfirmButton: false,
-              timer: 3000
-            });
+            if (response == 1) { // salary payments are completed
+              console.log("Res salary" + response + "insID" + instructorId);
+
+              //call API to check assigned lessons for future
+              this.instructorService.getInstructorAssignedUpcomingLessons(instructorId).subscribe(
+                response => {
+                  if (response == 1) { // no lessons
+                    console.log("Res lessons" + response);
+
+                    this.instructorService.instructorDeactivate(instructorId).subscribe( //deactivate instructor
+                      response => {
+                        Swal.fire({
+                          position: 'center',
+                          type: 'success',
+                          title: 'Instructor ID :' + instructorId + '\'s profile deactivated Succesfully',
+                          showConfirmButton: false,
+                          timer: 3000
+                        });
+                        this.instructorList();
+                      },
+                      error => {
+                        Swal.fire({
+                          position: 'center',
+                          type: 'error',
+                          title: ' 113 InstructorID ' + instructorId + '\'s profile was not deactivated ',
+                          showConfirmButton: false,
+                          timer: 3000
+                        });
+                      }
+                    );
+
+                  }
+                  if (response == 0) { // instructor is assigned to future lessons
+                    console.log("Still have lessons");
+                    Swal.fire({
+                      position: 'center',
+                      type: 'error',
+                      title: 'Instructor has assigned Lessons',
+                      text: 'Instructor' + instructorId + 'still has assigned lessons.Can not deactivate ',
+                      showCancelButton: true,
+                      confirmButtonColor: '#3085d6',
+                      cancelButtonColor: '#d33',
+                      confirmButtonText: 'View assigned lessons!',
+                    }).then((result) => {
+                      if (result.value) {
+                        console.log("line 141");
+                        this.router.navigate(['time-table-to-update', instructorId]);
+                        /*
+                           this.instructorService.instructorDeactivate(instructorId).subscribe( //deactivate instructor
+                              response => {
+                                Swal.fire({
+                                  position: 'center',
+                                  type: 'success',
+                                  title: 'Instructor ID :' + instructorId + '\'s profile deactivated Succesfully',
+                                  showConfirmButton: false,
+                                  timer: 3000
+                                });
+                                this.instructorList();
+                              },
+                              error => {
+                                Swal.fire({
+                                  position: 'center',
+                                  type: 'error',
+                                  title: ' 152 InstructorID ' + instructorId + '\'s profile was not deactivated ',
+                                  showConfirmButton: false,
+                                  timer: 3000
+                                });
+                              }
+                           );   */
+                      }
+                    })
+                  }
+                },
+                error => { //error in checking instructor assgned future lessons
+                  this.handleErrorResponse(0, error);
+                  Swal.fire({
+                    position: 'center',
+                    type: 'error',
+                    title: '167 InstructorID ' + instructorId + '\'s profile was not deactivated ',
+                    showConfirmButton: false,
+                    timer: 3000
+                  });
+                }
+
+              );
+            }
+            if (response == 0) { // instructor salary payments are not completed
+              console.log("Error in payments");
+              Swal.fire({
+                position: 'center',
+                type: 'error',
+                title: 'Salary Payments  not Completed',
+                text: 'Instructor' + instructorId + '\'s Salary payments are not completed. Proceed deactivation ',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, deactivate!',
+              }).then((result) => {
+                if (result.value) { //confirm to proceed deactivation without compelting salary payments
+                  console.log("line 136");
+
+                  //call API to check assigned lessons for future
+                  this.instructorService.getInstructorAssignedUpcomingLessons(instructorId).subscribe(
+                    response => {
+                      if (response == 1) { // no lessons
+                        console.log("Res lessons" + response);
+
+                        this.instructorService.instructorDeactivate(instructorId).subscribe( //deactivate instructor
+                          response => {
+                            Swal.fire({
+                              position: 'center',
+                              type: 'success',
+                              title: 'Instructor ID :' + instructorId + '\'s profile deactivated Succesfully',
+                              showConfirmButton: false,
+                              timer: 3000
+                            });
+
+                            this.instructorList();
+                          },
+                          error => {
+                            Swal.fire({
+                              position: 'center',
+                              type: 'error',
+                              title: ' 113 InstructorID ' + instructorId + '\'s profile was not deactivated ',
+                              showConfirmButton: false,
+                              timer: 3000
+                            });
+                          }
+                        );
+
+                      }
+                      if (response == 0) { // instructor is assigned to future lessons
+                        console.log("Still have lessons");
+                        Swal.fire({
+                          position: 'center',
+                          type: 'error',
+                          title: 'Instructor has assigned Lessons',
+                          text: 'Instructor' + instructorId + 'still has assigned lessons.Can not deactivate ',
+                          showCancelButton: true,
+                          confirmButtonColor: '#3085d6',
+                          cancelButtonColor: '#d33',
+                          confirmButtonText: 'View assigned lessons!',
+                        }).then((result) => {
+                          if (result.value) {
+                            console.log("line 141");
+                            this.router.navigate(['time-table-to-update', instructorId]);
+                            /*
+                               this.instructorService.instructorDeactivate(instructorId).subscribe( //deactivate instructor
+                                  response => {
+                                    Swal.fire({
+                                      position: 'center',
+                                      type: 'success',
+                                      title: 'Instructor ID :' + instructorId + '\'s profile deactivated Succesfully',
+                                      showConfirmButton: false,
+                                      timer: 3000
+                                    });
+                                    this.instructorList();
+                                  },
+                                  error => {
+                                    Swal.fire({
+                                      position: 'center',
+                                      type: 'error',
+                                      title: ' 152 InstructorID ' + instructorId + '\'s profile was not deactivated ',
+                                      showConfirmButton: false,
+                                      timer: 3000
+                                    });
+                                  }
+                               );   */
+                          }
+                        })
+                      }
+                    },
+                    error => { //error in checking instructor assgned future lessons
+                      this.handleErrorResponse(0, error);
+                      Swal.fire({
+                        position: 'center',
+                        type: 'error',
+                        title: '167 InstructorID ' + instructorId + '\'s profile was not deactivated ',
+                        showConfirmButton: false,
+                        timer: 3000
+                      });
+                    }
+
+                  );
+
+                }
+              })
+            }
           },
           error => {
-            this.handleErrorResponse(0,error);
+            this.handleErrorResponse(0, error);
             Swal.fire({
               position: 'center',
               type: 'error',
-              title: studentName+'\'s record was deleted not successful',
+              title: '167 InstructorID ' + instructorId + '\'s profile was not deactivated ',
               showConfirmButton: false,
               timer: 3000
             });
           }
-           
-        );
+        );//
       }
     })
   }
 
-
-  //navigate to student-package
-  addPackage(studentId,studentName){
-    console.log(studentId);
-    this.router.navigate(['student-package-add',studentId,studentName]);
+  deactivatedInstructorList() {
+    console.log("deactivated InsList");
+    this.router.navigate(['instructor-deactivated-list']);
   }
-
-  //navigate to student-payment 
-  addPayment(studentId,studentName){
-    this.router.navigate(['student-payment',studentId,studentName]);
-  }
-
   
+  //delete Instructor
+  deleteInstructor(instructorId) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Delete instructor " + instructorId + "'s record?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Delete!'
+    }).then((result) => {
+      if (result.value) {
+        // window.open('http://localhost:4200/staff-salary', '', 'width=600,height=400,left=200,top=200');
+        //Call to API to check salary payments
+        this.instructorService.checkInstructorSalaryDetails(instructorId).subscribe(
+          response => {
+            if (response == 1) { // no revalant salary payments of instructor
+              console.log("Res salary no" + response + "insID" + instructorId);
 
-  studentPaymentCheck(){
-    this.router.navigate(['student-payment-check']);
+              //call API to check assigned lessons for future
+              this.instructorService.getInstructorAssignedUpcomingLessons(instructorId).subscribe(
+                response => {
+                  if (response == 1) { // no lessons
+                    console.log("Res lessons" + response);
+
+                    this.instructorService.instructorDelete(instructorId).subscribe( //deactivate instructor
+                      response => {
+                        Swal.fire({
+                          position: 'center',
+                          type: 'success',
+                          title: 'Instructor ID :' + instructorId + '\'s profile Deleted Succesfully',
+                          showConfirmButton: false,
+                          timer: 3000
+                        });
+                        this.instructorList();
+                      },
+                      error => {
+                        Swal.fire({
+                          position: 'center',
+                          type: 'error',
+                          title: ' 113 InstructorID ' + instructorId + '\'s profile was not Deleted ',
+                          showConfirmButton: false,
+                          timer: 3000
+                        });
+                      }
+                    );
+
+                  }
+                  if (response == 0) { // instructor has relavant payment details
+                    console.log("have payments Cant delete");
+                    Swal.fire({
+                      position: 'center',
+                      type: 'error',
+                      title: ' 113 InstructorID ' + instructorId + '\'s profile was not Deleted ',
+                      text: ' 113 InstructorID ' + instructorId + '\'has relavant payment details ',
+                      showConfirmButton: false,
+                      timer: 3000
+                    });
+
+                  }
+                },
+                error => { //error in checking instructor assgned future lessons
+                  this.handleErrorResponse(0, error);
+                  Swal.fire({
+                    position: 'center',
+                    type: 'error',
+                    title: '167 InstructorID ' + instructorId + '\'s profile was not deleted ',
+                    showConfirmButton: false,
+                    timer: 3000
+                  });
+                }
+
+              );
+            }
+            if (response == 0) { // instructor has relavant salary payments
+              Swal.fire({
+                position: 'center',
+                type: 'error',
+                title: '167 InstructorID ' + instructorId + '\'s profile was not deleted ',
+                text:'Instructor has relavant salary payments',
+                showConfirmButton: false,
+                timer: 3000
+              });
+            }
+          },
+          error => {
+            this.handleErrorResponse(0, error);
+            Swal.fire({
+              position: 'center',
+              type: 'error',
+              title: '167 InstructorID ' + instructorId + '\'s profile was not deactivated ',
+              text:'ERROR',
+              showConfirmButton: false,
+              timer: 3000
+            });
+          }
+
+        );//
+      }
+    })
   }
-
-  studentDeactivate(){
-    this.router.navigate(['student-deactivate']);
-  }
-
   /*
-  1 -->  Initialize API Call
-  0 --> Other API Call
-  */
-  handleErrorResponse(type,error){
-    if(type==1){
-      this.errorMessage="There is a problem with the service. please try again later.";
+    //navigate to studentRegister Page
+    addStudent(){
+      this.router.navigate(['student-add'])
+    }
+  
+    
+    //navigate to student-package
+    addPackage(studentId,studentName){
+      console.log(studentId);
+      this.router.navigate(['student-package-add',studentId,studentName]);
+    }
+  
+    //navigate to student-payment 
+    addPayment(studentId,studentName){
+      this.router.navigate(['student-payment',studentId,studentName]);
+    }
+  
+    
+  
+    studentPaymentCheck(){
+      this.router.navigate(['student-payment-check']);
+    }
+  
+    studentDeactivate(){
+      this.router.navigate(['student-deactivate']);
+    }
+  
+    /*
+    1 -->  Initialize API Call
+    0 --> Other API Call
+    */
+  handleErrorResponse(type, error) {
+    if (type == 1) {
+      this.errorMessage = "There is a problem with the service. please try again later.";
     }
     let httpError = new HttpError();
     httpError.ErrorResponse(error);
   }
-   closeError(){
-    this.errorMessage="";
+  closeError() {
+    this.errorMessage = "";
   }
 
 }

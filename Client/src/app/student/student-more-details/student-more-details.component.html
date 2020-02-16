@@ -41,7 +41,7 @@
                   <tr>
                      <th>NIC:</th>
                      <td>{{studentData.userId.nic}}</td>
-                     <td><a  (click)=isUpdate(0)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update NIC"></i></button></a></td>
+                     <td *ngIf="role==2"><a  (click)=isUpdate(0)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update NIC"></i></button></a></td>
                      <td></td>
                      <td></td>
                      <td></td>
@@ -49,7 +49,7 @@
                   <tr>
                       <th>Email:</th>
                       <td>{{studentData.userId.email}}</td>
-                      <td><a  (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Email"></i></button></a></td>
+                      <td *ngIf="role==2"><a  (click)=isUpdate(1)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Email"></i></button></a></td>
                       <td></td>
                       <td></td>
                       <td></td>
@@ -57,7 +57,7 @@
                   <tr>
                       <th>Password</th>
                       <td>........</td>
-                      <td><a  (click)=isUpdate(2)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Password"></i></button></a></td>
+                      <td *ngIf="role==2"><a  (click)=isUpdate(2)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Password"></i></button></a></td>
                       <td></td>
                       <td></td>
                       <td></td>
@@ -66,7 +66,7 @@
                   <tr>
                       <th>ExamDate:</th>
                       <td>{{studentData.examDate}}</td>
-                      <td><a  (click)=isUpdate(3)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Exam Date"></i></button></a></td>
+                      <td *ngIf="role==2"><a  (click)=isUpdate(3)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Exam Date"></i></button></a></td>
                       <td></td>
                       <td></td>
                       <td></td>
@@ -74,7 +74,7 @@
                   <tr>
                       <th>Trial Date</th>
                       <td>{{studentData.trialDate}}</td>
-                      <td><a  (click)=isUpdate(4)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Trial Date"></i></button></a></td>
+                      <td *ngIf="role==2"><a  (click)=isUpdate(4)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update Trial Date"></i></button></a></td>
                       <td></td>
                       <td></td>
                       <td></td>

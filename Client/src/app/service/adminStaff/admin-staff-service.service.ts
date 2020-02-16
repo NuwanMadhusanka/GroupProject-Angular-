@@ -24,9 +24,6 @@ export class AdminStaffServiceService {
     return this.http.delete<any>(`http://localhost:8080/user/${userId}`);
   }*/
   getAdminStaffFromUserID(userId:number){
-          console.log(" In adminsrvice ts UserID");
-          console.log(userId);
-          return this.http.get<AdminStaffModel>(`${API_URL}/adminByUserId/${userId}`);
-          
+      return this.http.get<AdminStaffModel>(`${API_URL}/adminByUserId/${userId}`);     
   }
 }

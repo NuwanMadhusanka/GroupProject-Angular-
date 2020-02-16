@@ -21,9 +21,9 @@
           <div class="row">
             <div class="col-md-9">
                 <h4 class="card-title"> Student List</h4>
-                <a (click)=addStudent()><button type="button" class="btn btn-success btn-sm" title="Add Student"><i class="fas fa-plus"></i></button></a>
-                <a (click)=studentPaymentCheck()><button type="button" class="btn btn-info btn-sm" title="Student Payment Check"><i class="fas fa-list-alt"></i></button></a>
-                <a (click)=studentDeactivate()><button type="button" class="btn btn-secondary btn-sm" title="Deactivate Student Accounts"><i class="fas fa-times"></i></button></a>
+                <a *ngIf="role==2" (click)=addStudent()><button type="button" class="btn btn-success btn-sm" title="Add Student"><i class="fas fa-plus"></i></button></a>
+                <a *ngIf="role==2" (click)=studentPaymentCheck()><button type="button" class="btn btn-info btn-sm" title="Student Payment Check"><i class="fas fa-list-alt"></i></button></a>
+                <a *ngIf="role==2" (click)=studentDeactivate()><button type="button" class="btn btn-secondary btn-sm" title="Deactivate Student Accounts"><i class="fas fa-times"></i></button></a>
             </div>
             <div class="col-md-3">
                 <form>
@@ -61,9 +61,12 @@
                   <!-- <td>{{student.userId.address}}</td> -->
                   <td>  
                     <a  (click)=moreDetails(student.studentId)><button class="btn btn-info btn-sm"><i class="fas fa-eye fa-sm" title="MoreDetails"></i></button></a>
-                    <a  (click)=addPackage(student.studentId,student.userId.firstName)><button class="btn btn-success btn-sm"><i class="fas fa-plus fa-sm" title="Add Package"></i></button></a>
-                    <a  (click)=addPayment(student.studentId,student.userId.firstName)><button class="btn btn-secondary btn-sm"><i class="fas fa-dollar-sign fa-sm" title="Add Payment"></i></button></a>
-                    <a  (click)=deleteStudent(student.studentId,student.userId.firstName)><button class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm" title="Delete Student"></i></button></a>
+                    <a *ngIf="role==2"  (click)=addPackage(student.studentId,student.userId.firstName)><button class="btn btn-success btn-sm"><i class="fas fa-plus fa-sm" title="Add Package"></i></button></a>
+                    
+                    <a *ngIf="role==2" (click)=addPayment(student.studentId,student.userId.firstName)><button class="btn btn-secondary btn-sm"><i class="fas fa-dollar-sign fa-sm" title="Add Payment"></i></button></a>
+                    <a *ngIf="role==1" (click)=addPayment(student.studentId,student.userId.firstName)><button class="btn btn-secondary btn-sm"><i class="fas fa-dollar-sign fa-sm" title="Payments"></i></button></a>
+                    
+                    <a *ngIf="role==2"  (click)=deleteStudent(student.studentId,student.userId.firstName)><button class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm" title="Delete Student"></i></button></a>
                   </td>
                 </tr>
               </tbody>

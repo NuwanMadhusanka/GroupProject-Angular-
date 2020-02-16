@@ -36,7 +36,7 @@
                 <div class="form-group">
                   <label>Title</label>
                   <input type="text"  class="form-control" placeholder="Title"  name="title"   [(ngModel)]="title">
-                  <small *ngIf="errorName" class="text-danger">{{errorTitle}}</small>
+                  <small *ngIf="errorTitle" class="text-danger">{{errorTitle}}</small>
                 </div>
               </div> 
             </div>
@@ -48,8 +48,7 @@
                 <div class="form-group">
                   <label>Description</label>
                   <input type="text"  class="form-control" placeholder="Description"  name="description"   [(ngModel)]="description">
-                  <small *ngIf="errorName" class="text-danger">{{errorDescription}}</small>
-                </div>
+                  </div>
               </div> 
             </div>
             <!-- End Row -->
@@ -60,7 +59,7 @@
                 <div class="form-group">
                   <label>URL</label>
                   <input type="text"  class="form-control" placeholder="url"  name="url"   [(ngModel)]="url">
-                  <small *ngIf="errorName" class="text-danger">{{errorUrl}}</small>
+                  <small *ngIf="errorUrl" class="text-danger">{{errorUrl}}</small>
                 </div>
               </div> 
             </div>

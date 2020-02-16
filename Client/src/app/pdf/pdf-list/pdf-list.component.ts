@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { PdfServiceService } from '../../service/learning-material/pdf/pdf-service.service';
 import { PdfModel } from '../../ClassModel/PdfModel';
-import Swal from 'sweetalert2';
-import { HttpError } from '../../Shared/httpError/HttpError';
 import { UserValidation } from '../../Shared/validation/user-validation/user-validation';
-
+import { Router } from '@angular/router';
+import { PdfServiceService } from '../../service/pdf/pdf-service.service';
+import { HttpError } from '../../Shared/httpError/HttpError';
+import Swal from 'sweetalert2';
+import { API_URL, WEBSOCKETENDPOINT, WEBSOCKETTOPIC } from '../../app.constants';
 
 @Component({
   selector: 'app-pdf-list',
@@ -18,6 +18,7 @@ export class PdfListComponent implements OnInit {
   pdfs: PdfModel[] = [];
 
   validation: UserValidation = new UserValidation();
+  apiUrl = API_URL;
 
   //Filter Option Implement
   filteredPdf: PdfModel[] = [];
@@ -39,14 +40,12 @@ export class PdfListComponent implements OnInit {
       pdf.adminStaffId.adminStaffId.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
       pdf.addedDate.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1
     );
-   
+
   }
 
   constructor(
     private router: Router,
     private pdfService: PdfServiceService,
-
-
 
   ) { }
 
@@ -61,13 +60,9 @@ export class PdfListComponent implements OnInit {
       response => {
         this.pdfs = response;
         this.filteredPdf = this.pdfs;
-        //for(let pdf of this.pdfs){
         console.log(this.pdfs);
-        // }
-        // this.handleErrorResponse(this.pdfs[0].adminStaff==null);
       },
       error => {
-        //this.errorMessage=response;
         this.handleErrorResponse(error);
       }
     )
@@ -78,7 +73,6 @@ export class PdfListComponent implements OnInit {
     httpError.ErrorResponse(error);
   }
   closeError() {
-
     this.errorMessage = "";
   }
 
@@ -86,7 +80,6 @@ export class PdfListComponent implements OnInit {
   moreDetails(pdfId) {
     console.log("in pdflistcomTS " + pdfId);
     this.router.navigate(['pdf-more-details', pdfId]);
-    // console.log(this.router.navigate(['pdf-more-details',pdfId]));
   }
 
   addPdf() {
@@ -95,7 +88,7 @@ export class PdfListComponent implements OnInit {
     console.log("In pdflist com ts 2");
   }
 
-  //delete Student
+  //delete Pdf
   deletePdf(pdfId: Number) {
     console.log("INpdfDelinCOMTS");
     Swal.fire({
@@ -113,23 +106,25 @@ export class PdfListComponent implements OnInit {
         this.pdfService.deletePdf(pdfId).subscribe(
           response => {
             this.pdfList();
-            Swal.fire(
-              'Deleted!',
-              'Pdf details Record has been deleted.',
-              'success'
-            )
+            Swal.fire({
+              position: 'center',
+              type: 'success',
+              title: 'PDf id :' + pdfId + ' record was successfuly deldeted',
+              showConfirmButton: false,
+              timer: 3000
+            });
           },
           error => {
             console.log("error");
             console.log(error);
-            console.log("error");
             this.handleErrorResponse(error);
             Swal.fire({
+              position: 'center',
               type: 'error',
-              title: 'Oops...',
-              text: 'Delete Is Not Successful!',
-              footer: 'Something bad happened, please try again later.'
-            })
+              title: 'PDf id :' +pdfId + '\'s record was not successfuly deleted',
+              showConfirmButton: false,
+              timer: 3000
+            });
           }
 
         )
@@ -137,36 +132,4 @@ export class PdfListComponent implements OnInit {
     })
   }
 
-
-
-  /*
-    //navigate to studentRegister Page
-    addStudent(){
-        this.router.navigate(['student-add'])
-    }
-  
-   
-  
-    //navigate to student-package
-    addPackage(studentId:Number){
-      console.log(studentId);
-      this.router.navigate(['student-package-add',studentId])
-    }
-  
-    //navigate to student-payment 
-    addPayment(studentId){
-      this.router.navigate(['student-payment',studentId])
-    }
-  
-    //navigate to more details page
-    
-  
-    
-  
-    handleErrorResponse(error){
-      this.errorMessage="There is a problem with the service. please try again later.";
-      let httpError = new HttpError();
-      httpError.ErrorResponse(error);
-    }
-  */
 }

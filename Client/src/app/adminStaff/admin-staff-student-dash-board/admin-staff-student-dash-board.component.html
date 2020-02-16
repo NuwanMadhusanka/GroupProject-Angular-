@@ -6,14 +6,23 @@
     <div class="col-lg-6">
       <div class="card card-chart">
         <div class="card-header">
-          <h5 class="card-category">Pass Rate Written Examination</h5>
-          <h4 class="card-title">Written Exam</h4>
-          <div ngbDropdown>
-            <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" ngbDropdownToggle>
-              <i class="now-ui-icons loader_gear"></i>
-            </button>
-            <div ngbDropdownMenu class="dropdown-menu-right">
-              <a class="dropdown-item" routerLink="/student-exam-result-add" >Add Written Exam Result Data</a>
+          <div class="row">
+            <div class="col-md-10">
+              <h5 class="card-category">Pass Rate Written Examination in {{selectedYearWrittenExam}}</h5>
+              <h4 class="card-title">Written Exam</h4>
+              <a (click)=addExamResult()><button type="button" class="btn btn-info btn-sm" title="Add Written Exam Result"><i class="fas fa-plus"></i></button></a>
+            </div>
+            <div class="col-md-2">
+              <li class="nav-item pointer" style="list-style-type:none" ngbDropdown>
+                <a  class="nav-link" id="dropdownBasic1" ngbDropdownToggle>
+                  <i class="now-ui-icons ui-1_settings-gear-63" title="Setting" ></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-left" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <div *ngFor="let year of years">
+                    <a (click)="getSelectYearWrittenExam(year)" class="dropdown-item" >{{year}}</a>
+                  </div>
+                </div>
+              </li>  
             </div>
           </div>
         </div>
@@ -39,14 +48,23 @@
     <div class="col-lg-6 col-md-6">
       <div class="card card-chart">
         <div class="card-header">
-          <h5 class="card-category">Pass Rate Trial Examination</h5>
-          <h4 class="card-title">Trial Exam</h4>
-          <div ngbDropdown>
-            <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" ngbDropdownToggle>
-              <i class="now-ui-icons loader_gear"></i>
-            </button>
-            <div ngbDropdownMenu class="dropdown-menu-right">
-              <a class="dropdown-item" routerLink="/student-exam-result-add" >Add Trial Exam Result Data</a>
+          <div class="row">
+            <div class="col-md-10">
+              <h5 class="card-category">Pass Rate Trial Examination in {{selectedYearTrialExam}}</h5>
+              <h4 class="card-title">Trial Exam</h4>
+              <a (click)=addExamResult()><button type="button" class="btn btn-info btn-sm" title="Add Trial Exam Result"><i class="fas fa-plus"></i></button></a>
+            </div>
+            <div class="col-md-2">
+              <li class="nav-item pointer" style="list-style-type:none" ngbDropdown>
+                <a  class="nav-link" id="dropdownBasic1" ngbDropdownToggle>
+                  <i class="now-ui-icons ui-1_settings-gear-63" title="Setting" ></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-left" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <div *ngFor="let year of years">
+                    <a (click)="getSelectYearTrialExam(year)" class="dropdown-item" >{{year}}</a>
+                  </div>
+                </div>
+              </li>  
             </div>
           </div>
         </div>
@@ -87,7 +105,7 @@
               <!-- <button type="button" aria-hidden="true" class="close">
                 <i class="now-ui-icons ui-1_simple-remove"></i>
               </button> -->
-              <span>No any students for today Trial Examination.</span>
+              <span>No any students for today Written Examination.</span>
           </div>
           <!-- End Notification -->
           <div class="table-responsive">

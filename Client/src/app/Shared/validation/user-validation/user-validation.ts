@@ -89,4 +89,14 @@ export class UserValidation {
     return false;
   }
 
+   //url validation
+   public isValidURL(url: String) {
+    this.regExp = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');
+    this.test = this.regExp.test(url);
+    if (this.test) {
+      return true;
+    }
+    return false;
+  }
+
 }

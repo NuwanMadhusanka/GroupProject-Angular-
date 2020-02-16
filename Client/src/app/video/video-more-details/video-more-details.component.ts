@@ -98,15 +98,13 @@ export class VideoMoreDetailsComponent implements OnInit {
     if ((option === 1)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New Title"; this.updateName = "Title"; this.updateVariable = this.videoData.title; }
     if ((option === 2)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New Description"; this.updateName = "Description"; this.updateVariable = this.videoData.description; }
     if ((option === 3)) { this.isUpdateVariable = true; this.selectOption = option; this.placeHolder = "New URL"; this.updateName = "URL"; this.updateVariable = this.videoData.url; }
-    //if( (option === 3)){  this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Exam Date"; this.updateName="Exam Date"; this.updateVariable=this.studentData.examDate;}
-    //if( (option === 4)){ this.isUpdateVariable=true;  this.selectOption=option;  this.placeHolder="New Trial Date"; this.updateName="Trial Date"; this.updateVariable=this.studentData.trialDate;}
   }
 
   update() {
 
     this.setAdminStaffAndAdminStaffId();
 
-  //title
+    //title
     if (this.selectOption == 1) {
       if ((this.updateVariable == "")) {
         this.errorUpdateMessage = "Insert Valid Title.";
@@ -134,6 +132,8 @@ export class VideoMoreDetailsComponent implements OnInit {
     if (this.selectOption == 3) {
       if ((this.updateVariable == "")) {
         this.errorUpdateMessage = "Insert Valid URL.";
+      } else if (!this.userValidation.isValidURL(this.videoData.url)) {
+        this.errorUpdateMessage = "Enter Valid URL";
       } else {
         this.videoData.url = this.updateVariable;
         this.videoData.adminStaffId = this.adminStaff;
@@ -146,46 +146,11 @@ export class VideoMoreDetailsComponent implements OnInit {
       }
     }
 
-
-
-    /*
-    //URL
-    if(this.selectOption==2){
-     
-      if( (this.updateVariable == "")){
-        this.errorUpdateMessage="Insert Valid URL.";
-      }else if( !(this.userValidation.isValidDate(this.updateVariable,this.studentData.trialDate))){
-        this.errorUpdateMessage="Exam Date must be future Date & Exam should be held before Trial Date";
-      }else{
-        this.studentData.examDate=this.updateVariable;
-        this.errorUpdateMessage="";
-        this.isUpdateVariable=false;
-        this.confirmUpdate=true;
-      }
-    }
-
-    //Trial Date
-    if(this.selectOption==4){
-      if( (this.updateVariable == "")){
-        this.errorUpdateMessage="Insert Valid Trial Date.";
-      }else if(!(this.userValidation.isValidDate(this.studentData.examDate,this.updateVariable))){
-        this.errorUpdateMessage="Trial Date must be future Date & Trial should be held after Exam Date"
-      }else{
-        this.studentData.trialDate=this.updateVariable;
-        this.errorUpdateMessage="";
-        this.isUpdateVariable=false;
-        this.confirmUpdate=true;
-      }
-    }*/
-
   }
-
 
   close() {
     this.isUpdateVariable = false;
   }
-
-
 
   //save updates
   saveUpdate() {
@@ -211,7 +176,6 @@ export class VideoMoreDetailsComponent implements OnInit {
 
     )
   }
-
 
   //error handling
   private handleErrorResponse(error: HttpErrorResponse) {

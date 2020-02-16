@@ -6,6 +6,7 @@ import { throwError } from 'rxjs';
 import { StudentServiceService } from '../../service/student/student-service.service';
 import Swal from 'sweetalert2';
 import { PackageModel } from '../../ClassModel/PackageModel';
+import { HttpError } from '../../Shared/httpError/HttpError';
 
 //Store Student selected package details
 export class StudentPackage{
@@ -171,7 +172,8 @@ export class StudentPackageAddComponent implements OnInit {
   deletePackage(packageId,title){
     Swal.fire({
       title: 'Are you sure?',
-      text: "You won't be able to revert payment details relevant to this "+title+" package of the student!",
+      // text: "You won't be able to revert payment details relevant to this "+title+" package of the student!",
+      text:"Remove "+title+" package",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -182,14 +184,16 @@ export class StudentPackageAddComponent implements OnInit {
         
         //delete confiirm
         //call to API to delete the relevant package of the student follow
-        this.studentService.studentPackegeDelete(this.studentId,packageId).subscribe(
+        this.studentService.studentPackageDelete(this.studentId,packageId).subscribe(
           response => {
-            Swal.fire(
-              'Deleted!',
-              'Your file has been deleted.',
-              'success'
-            )
-            console.log("Hello")
+            Swal.fire({
+              position: 'center',
+              type: 'success',
+              title: title+' package deleted.',
+              showConfirmButton: false,
+              timer: 3000
+            });
+
             //refresh the student packages
             this.studentPackages=[];
             this.studentPackageList();
@@ -200,37 +204,24 @@ export class StudentPackageAddComponent implements OnInit {
             this.handleErrorResponse(error);
 
             Swal.fire({
+              position: 'center',
               type: 'error',
-              title: 'Oops...',
-              text: 'Something went wrong!',
-              footer: ''+this.errorMessage
-            })
-
-            
+              title: title+' package not deleted.',
+              showConfirmButton: false,
+              timer: 3500
+            });
+   
           }
         )
       }
     })
   }
 
-  private handleErrorResponse(error: HttpErrorResponse) {
-    this.errorMessage="Not successful request";
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      this.errorMessage="Check the Network Connection"
-      console.error('An error occurred:', error.error.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
-    }
-    // return an observable with a user-facing error message
-    return throwError(
-      'Something bad happened; please try again later.');
+
+  handleErrorResponse(error: HttpErrorResponse) {
+    this.errorMessage="There is a problem with the service. please try again later.";
+    let httpError = new HttpError();
+    httpError.ErrorResponse(error);
   };
-
   
-
 }

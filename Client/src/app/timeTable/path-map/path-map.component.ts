@@ -228,7 +228,14 @@ export class PathMapComponent implements OnInit {
                 response =>{
                   let msg="";
                   (type==1 ? msg="Submission is Completed." :msg="Update Successful.");
-                  Swal.fire(msg);
+                  
+                  Swal.fire({
+                    position: 'center',
+                    type: 'success',
+                    title: ''+msg,
+                    showConfirmButton: false,
+                    timer: 2500
+                  });
 
                   pathMap.pathName="";
                   pathMap.origin="";
@@ -247,10 +254,11 @@ export class PathMapComponent implements OnInit {
                   (type==1 ? msg="submission is not Successful!" : msg="Update not Successful!");
 
                   Swal.fire({
+                    position: 'top-end',
                     type: 'error',
-                    title: 'Oops...',
-                    text: msg,
-                    footer: 'Something bad happened, please try again later.'
+                    title: ''+msg,
+                    showConfirmButton: false,
+                    timer: 3000
                   });
                   console.log(error);
                   this.handleErrorResponse(error);
@@ -259,7 +267,13 @@ export class PathMapComponent implements OnInit {
           }else{
                 let msg="";
                 (type==1 ? msg="Submission is Completed." :msg="Update Successful.");
-                Swal.fire(msg);
+                Swal.fire({
+                  position: 'center',
+                  type: 'success',
+                  title: ''+msg,
+                  showConfirmButton: false,
+                  timer: 25000
+                });
                
                 (type==1 ? this.isAddMap=false : this.isUpdateMap=false);
                 this.getPathList();
@@ -270,10 +284,11 @@ export class PathMapComponent implements OnInit {
           let msg;
           (type==1 ? msg="submission is not Successful!" : msg="Update not Successful!");
           Swal.fire({
+            position: 'top-end',
             type: 'error',
-            title: 'Oops...',
-            text: msg,
-            footer: 'Something bad happened, please try again later.'
+            title: ''+msg,
+            showConfirmButton: false,
+            timer: 3000
           });
         }
       )
@@ -282,8 +297,30 @@ export class PathMapComponent implements OnInit {
     }
   }
 
-  deletePath(){
-
+  deletePath(path:Path){
+   this.timeTableService.deletePath(path.pathId).subscribe(
+     response => {
+      Swal.fire({
+        position: 'center',
+        type: 'success',
+        title: path.origin+' - '+path.destination+' path is deleted.',
+        showConfirmButton: false,
+        timer: 3000
+      });
+      this.getPathList();
+     },
+     error => {
+       console.log(error);
+       Swal.fire({
+        position: 'center',
+        type: 'error',
+        title: path.origin+' - '+path.destination+' path is not deleted.',
+        showConfirmButton: false,
+        timer: 3000
+      });
+       this.handleErrorResponse(error);
+     }
+   )
   }
 
   isUpdate(path:Path){
@@ -297,9 +334,10 @@ export class PathMapComponent implements OnInit {
     this.getSubPathList(path.pathId);
         this.delay(1000).then(any=>{
           this.updateSubPaths=this.subPathList;
-          if(this.updateSubPaths.length > 0){
-            this.isUpdateSubpath=true;
-          }
+          // if(this.updateSubPaths.length > 0){
+          //   this.isUpdateSubpath=true;
+          // }
+          this.isUpdateSubpath=true;
         });
   }
 
