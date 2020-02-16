@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 import { HttpError } from '../../Shared/httpError/HttpError';
 import { UserValidation } from '../../Shared/validation/user-validation/user-validation';
 import { API_URL, WEBSOCKETENDPOINT, WEBSOCKETTOPIC } from '../../app.constants';
+import { ActivatedRoute } from '@angular/router';
+
 
 
 @Component({
@@ -19,6 +21,7 @@ export class PaperMarkListComponent implements OnInit {
 
   errorMessage = "";
   papers: StudentPaperModel[] = [];
+  studentId;
 
   validation: UserValidation = new UserValidation();
 
@@ -37,10 +40,10 @@ export class PaperMarkListComponent implements OnInit {
   //Filtering method
   filterPaper(searchString: string) {
     return this.papers.filter(paper =>
-      paper.student.userId.firstName.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      paper.studentId.userId.firstName.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
       paper.paperId.title.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
-      paper.student.userId.lastName.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
-      paper.date.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 
+      paper.studentId.userId.lastName.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
+      paper.date.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1
       //paper.addedDate.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1
     );
 
@@ -48,6 +51,7 @@ export class PaperMarkListComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private paperService: PaperServiceService,
     private paperMarksService: PaperMarksServiceService,
 
@@ -56,7 +60,12 @@ export class PaperMarkListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.paperList();
+    this.studentId = this.route.snapshot.params['id'];
+    if (this.studentId != null) {
+        //this.filteredPaper=this.filteredPaper(this.studentId);
+    } else
+      this.paperList();
+
   }
 
   //to get the list of Papers
@@ -66,8 +75,9 @@ export class PaperMarkListComponent implements OnInit {
       response => {
         this.papers = response;
         this.filteredPaper = this.papers;
-        //for(let paper of this.papers){
-        console.log(this.papers);
+      //   this.filteredPaper = this.papers.filter(paper =>
+      // paper.studentId.userId.firstName.toString().toLocaleLowerCase().indexOf(this.studentId.toLocaleLowerCase()) !== -1 );
+      //   console.log(this.papers);
         // }
         // this.handleErrorResponse(this.papers[0].adminStaff==null);
       },

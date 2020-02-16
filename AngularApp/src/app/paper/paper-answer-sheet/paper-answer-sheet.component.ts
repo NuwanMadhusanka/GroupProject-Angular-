@@ -153,6 +153,7 @@ export class PaperAnswerSheetComponent implements OnInit {
       }
     )
   }
+  
 
   loadPaper() { //method to load paper //ERROR
     console.log(this.paperId);

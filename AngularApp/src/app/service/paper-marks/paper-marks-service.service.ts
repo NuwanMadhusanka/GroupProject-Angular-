@@ -18,5 +18,5 @@ export class PaperMarksServiceService {
     return this.http.get<StudentPaperModel[]>(`${API_URL}/paperMarks`);
   }
 
- 
+  
 }

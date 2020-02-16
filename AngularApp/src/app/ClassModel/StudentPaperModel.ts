@@ -5,7 +5,7 @@ import { PaperModel } from './PaperModel';
 export class StudentPaperModel {
   constructor(
     public studentPaperId: Number,
-    public student: StudentModel,
+    public studentId: StudentModel,
     public paperId: PaperModel,
     public date: Date,
     public marks:Number

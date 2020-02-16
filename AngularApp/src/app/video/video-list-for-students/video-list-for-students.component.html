@@ -20,11 +20,11 @@
           <div class="row">
             <div class="col-md-9">
               <h4 class="card-title"> Video List</h4>
-              </div>
+            </div>
 
             <div class="col-md-3">
               <form>
-             
+
                 <div class="input-group no-border">
                   <input type="text" [(ngModel)]="searchTerm" name="search" class="form-control" placeholder="Search..." id="searchBox">
                   <div class="input-group-append">
@@ -41,19 +41,14 @@
             <div class="table-responsive">
               <table class="table">
                 <thead class=" text-primary">
+
                   <th></th>
-                  <th>Title</th>
-                  <th>Description</th>
-                  <th>URL</th>
-                  <th>Added Date</th>
                 </thead>
                 <tbody>
                   <tr *ngFor="let video of filteredVideos">
-                    <td>{{video.videoId}}</td>
-                    <td>{{video.title}}</td>
-                    <td>{{video.description}}</td>
-                    <td><a href="{{video.url}}">{{video.url}}</a></td>  
-                    <td>{{video.addedDate}}</td>
+
+                    <td>{{video.title}} : {{video.description}} :-</td>
+                    <td><i class="media-1_button-play">&nbsp;</i><a href="{{video.url}}">{{video.url}}</a></td>
                     
                   </tr>
                 </tbody>
