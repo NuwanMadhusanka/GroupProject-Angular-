@@ -100,4 +100,6 @@ export class VehicleServiceService {
   addVehicleFuelData(userId:Number,fuelData:FuelPaymentModel){
     return this.http.post<any>(`${API_URL}/vehicle/fuel/${userId}`,fuelData);
   }
+
+  
 }

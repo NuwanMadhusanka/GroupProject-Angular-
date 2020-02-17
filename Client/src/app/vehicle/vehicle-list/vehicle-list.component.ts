@@ -40,8 +40,8 @@ export class VehicleListComponent {
       vehicle.brand.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
       vehicle.model.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
       vehicle.number.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
-      vehicle.transmission.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 ||
-      vehicle.instructorId.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1
+      vehicle.transmission.toString().toLocaleLowerCase().indexOf(searchString.toLocaleLowerCase()) !== -1 
+     
     );
   }
   
@@ -110,6 +110,11 @@ export class VehicleListComponent {
       console.log(vehicleId)
       this.router.navigate(['vehicle-more-details' ,vehicleId]);
       console.log("In vehicle-more-details in vhclListCom TS22");
+    }
+
+    instructorAssign(){
+      console.log("In instructor assign in vhclListCom ts");
+      this.router.navigate(['instructor-assign']);
     }
 
     // deleteVehicle(vehicleId){
