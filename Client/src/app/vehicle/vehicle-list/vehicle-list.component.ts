@@ -112,6 +112,12 @@ export class VehicleListComponent {
       console.log("In vehicle-more-details in vhclListCom TS22");
     }
 
+    vehicleMaintainance(vehicleId){
+    
+      this.router.navigate(['vehicle-maintainance',vehicleId]);
+      console.log("In vehicleMaintainance in vhclListCom TS22");
+    }
+
     instructorAssign(){
       console.log("In instructor assign in vhclListCom ts");
       this.router.navigate(['instructor-assign']);

@@ -102,8 +102,8 @@ export class VehicleCategoryAddComponent implements OnInit {
 
   updateConfirm(){
     console.log("in updateconfirm vehicle ctgry add cmts");
-    this.errorCategoryNew="";
-    this.errorNum_studentNew="";
+    this.errorCategory="";
+    this.errorNum_student="";
     if(this.updateVehicleCategory.category!=null){
       if(this.updateVehicleCategory.numStudent!=null){
         console.log(this.updateVehicleCategory.category);
@@ -118,10 +118,12 @@ export class VehicleCategoryAddComponent implements OnInit {
           confirmButtonText: 'Yes, update it!'
         }).then((result) => {
           if (result.value) {
-            
+            //console.log(result);
+ 
             //Call to API
             this.vehicleService.updateVehicleCategory(this.updateVehicleCategory).subscribe(
               response => {
+                console.log(response);
                   Swal.fire({
                     position: 'center',
                     type: 'success',
@@ -148,14 +150,12 @@ export class VehicleCategoryAddComponent implements OnInit {
           }
         });
       }else{
-        this.errorCategory="Insert Valid Category name";
+        this.errorCategory="Insert Valid Num_student";
       }
+    }else{
+      this.errorNum_student="Insert Valid Category";
     }
-
-    else{
-      this.errorNum_student="Insert Valid number of students";
-    }
-}
+  }
    
   // Finish update time slot data 
 

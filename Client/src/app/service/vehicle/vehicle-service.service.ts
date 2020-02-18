@@ -5,6 +5,7 @@ import { API_URL } from '../../app.constants';
 import { InsurancePaymentModel } from '../../ClassModel/InsurancePaymentModel';
 import { FuelPaymentModel } from '../../ClassModel/FuelPaymentModel';
 import { VehicleCategoryModel } from '../../ClassModel/MapObject/VehicleCategory';
+import { InstructorModel } from '../../ClassModel/InstructorModel';
 
 @Injectable({
   providedIn: 'root'
@@ -71,10 +72,13 @@ export class VehicleServiceService {
    
    
   
-  updateVehicleCategory(vehicleCategoryId){
+  updateVehicleCategory(vehicleCategory:VehicleCategoryModel){
     console.log("vhcle list service updateVehicleCategory");
-    return this.http.put<VehicleCategoryModel>(`${API_URL}/vehicles/vehiclecategory`,vehicleCategoryId);  
+    console.log(vehicleCategory);
+    return this.http.put<VehicleCategoryModel>(`${API_URL}/vehicles/vehiclecategory/`,vehicleCategory);  
   }
+
+ 
 
   deleteVehicleCategory(vehicleCategoryId){
     console.log(vehicleCategoryId);
@@ -101,5 +105,8 @@ export class VehicleServiceService {
     return this.http.post<any>(`${API_URL}/vehicle/fuel/${userId}`,fuelData);
   }
 
-  
+  getInstructorbyVehicleID(vehicleId){
+    return this.http.get<InstructorModel>(`${API_URL}/instructor/${vehicleId}`);
+
+  }
 }
