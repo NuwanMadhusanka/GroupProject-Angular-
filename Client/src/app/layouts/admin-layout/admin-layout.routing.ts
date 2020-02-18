@@ -54,6 +54,7 @@ import { VehicleCategoryAddComponent } from '../../vehicle/vehicle-category-add/
 import { VehicleMoreDetailsComponent } from '../../vehicle/vehicle-more-details/vehicle-more-details.component';
 
 import { InstructorAssignComponent } from '../../vehicle/instructor-assign/instructor-assign.component';
+import { VehicleMaintainanceComponent } from '../../vehicle/vehicle-maintainance/vehicle-maintainance.component';
 
 
 
@@ -80,6 +81,7 @@ export const AdminLayoutRoutes: Routes = [
     {path:'vehicle-category-add', component:VehicleCategoryAddComponent, canActivate:[RouteGuardServiceService]},
     {path:'vehicle-more-details/:id', component:VehicleMoreDetailsComponent, canActivate:[RouteGuardServiceService]},
     {path:'instructor-assign', component:InstructorAssignComponent, canActivate:[RouteGuardServiceService]},
+    {path:'vehicle-maintainance/:id', component:VehicleMaintainanceComponent, canActivate:[RouteGuardServiceService]},
 
     {path:'vehicle-insurance/:id/:vehName/:vehNumber', component:VehicleInsuranceComponent, canActivate:[RouteGuardServiceService]},
     {path:'vehicle-insurance-add/:id/:vehName/:vehNumber', component:VehicleInsuranceAddComponent, canActivate:[RouteGuardServiceService]},

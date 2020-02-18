@@ -59,6 +59,8 @@ import { VehicleCategoryAddComponent } from '../../vehicle/vehicle-category-add/
 import { VehicleMoreDetailsComponent } from '../../vehicle/vehicle-more-details/vehicle-more-details.component';
 import { InstructorAssignComponent } from '../../vehicle/instructor-assign/instructor-assign.component';
 
+import { VehicleMaintainanceComponent } from '../../vehicle/vehicle-maintainance/vehicle-maintainance.component';
+
 
 
 
@@ -97,6 +99,7 @@ import { InstructorAssignComponent } from '../../vehicle/instructor-assign/instr
     VehicleFuelComponent,
     VehicleMoreDetailsComponent,
     InstructorAssignComponent,
+    VehicleMaintainanceComponent,
  
     
     StudentListComponent,
