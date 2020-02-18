@@ -1,0 +1,99 @@
+<div class="panel-header panel-header-sm" >
+</div>
+
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Vehicle Maintainance Settings</h4>
+            <a (click)=addVehicleCategory()><button type="button" class="btn btn-success" title="Add New VehicleCategory"><i class="fas fa-plus"></i></button></a>
+        </div>
+        <div class="card-body">
+
+          <!-- Add new AddVehicleCategory -->
+          <div *ngIf="isAddMaintainance" class="card">
+              <div class="card-header">
+                  <button (click)=closeAddMaintainance() type="button" aria-hidden="true" class="close">
+                      <i class="now-ui-icons ui-1_simple-remove"></i>
+                    </button>
+              </div>
+              <div class="card-body">
+                <div class="col-sm-6 col-lg-4">
+                    <div class="form-group">
+                        <label>Type:</label>
+                        <input type="text"  class="form-control"  name="Type"  [(ngModel)]="type"/>
+                        <small *ngIf="errorType" class="text-danger">{{errorType}}</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Description:</label>
+                        <input type="text"  class="form-control"  name="Description"  [(ngModel)]="description"/>
+                        <small *ngIf="errorDescription" class="text-danger">{{errorDescription}}</small>
+                    </div>
+                    <div class="form-group">
+                      <label>Amount:</label>
+                      <input type="number"  class="form-control"  name="Amount"  [(ngModel)]="amount"/>
+                      <small *ngIf="errorAmount" class="text-danger">{{errorAmount}}</small>
+                  </div>
+                  </div>
+                  <button  (click)="saveConfirm()" type="button" class="btn btn-secondary btn-round">Save</button>
+                </div>
+          </div>
+          <!-- add new time slot finish -->
+         
+            <div class="table-responsive">
+                <table class="table">
+                  <thead class=" text-primary">
+                    <th></th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Option</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let maintain of maintainanceListData; let i=index;">
+                        <td>{{i+1}})</td>
+                      <td>{{maintain.type}}</td>
+                      <td>{{maintain.description}}</td>
+                      <td>{{maintain.amount}}</td>
+                      <td>
+                          <a  (click)=isUpdate(vehicleCategory.vehicleCategoryId)><button class="btn btn-secondary btn-sm"><i class="fas fa-edit fa-sm" title="Update VehicleCategory"></i></button></a>
+                          <a  (click)=delete(vehicleCategory.vehicleCategoryId)><button class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm" title="Delete VehicleCategory"></i></button></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+
+          <!-- Update -->
+          <!-- <div *ngIf="isUpdateVariable" class="card">
+              <div class="card-header">
+                  <button (click)=close() type="button" aria-hidden="true" class="close">
+                      <i class="now-ui-icons ui-1_simple-remove"></i>
+                    </button>
+              </div>
+              <div class="card-body">
+                <div class="col-sm-6 col-lg-4">
+                    <div class="form-group">
+                        <label>Category:</label>
+                        <input type="text"  class="form-control"  name="from"  [(ngModel)]="updateVehicleCategory.category"/>
+                        <small *ngIf="errorCategory" class="text-danger">{{errorCategory}}</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Number of Students:</label>
+                        <input type="text"  class="form-control"  name="to"  [(ngModel)]="updateVehicleCategory.numStudent"/>
+                        <small *ngIf="errorNum_student" class="text-danger">{{errorNum_student}}</small>
+                    </div>
+                  </div>
+                  <button  (click)="updateConfirm()" type="button" class="btn btn-secondary btn-round">Update</button>
+                </div>
+          </div> -->
+          <!-- Update -->
+
+         
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
